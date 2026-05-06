@@ -1,7 +1,7 @@
 {
   "extends": "@tsconfig/node-lts/tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./src",
+    "rootDir": ".",
     "outDir": "./dist",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -9,5 +9,5 @@
     "verbatimModuleSyntax": true,
     "rewriteRelativeImportExtensions": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "scripts/**/*"]
 }
