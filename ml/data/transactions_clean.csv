@@ -1,0 +1,925 @@
+date,category,account,amount,currency,tags,sub_category,payment_method,user_id,type,year,month,month_name,day_of_week,day_name,hour,is_weekend,is_night,week,quarter
+2025-11-30,Health,acct_1,114.0,BYN,tag_1,Health,Unknown,USER_0,expense,2025,11,Nov,6,Sun,21,1,1,48,4
+2025-11-29,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_1,expense,2025,11,Nov,5,Sat,9,1,0,48,4
+2025-11-27,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_2,expense,2025,11,Nov,3,Thu,18,0,0,48,4
+2025-11-27,Cafe,acct_1,10.0,BYN,tag_1,Cafe,Unknown,USER_3,expense,2025,11,Nov,3,Thu,7,0,0,48,4
+2025-11-27,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_4,expense,2025,11,Nov,3,Thu,16,0,0,48,4
+2025-11-26,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_5,expense,2025,11,Nov,2,Wed,11,0,0,48,4
+2025-11-26,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_6,expense,2025,11,Nov,2,Wed,14,0,0,48,4
+2025-11-25,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_7,expense,2025,11,Nov,1,Tue,6,0,0,48,4
+2025-11-25,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_8,expense,2025,11,Nov,1,Tue,18,0,0,48,4
+2025-11-25,Cafe,acct_1,11.0,BYN,tag_1,Cafe,Unknown,USER_9,expense,2025,11,Nov,1,Tue,8,0,0,48,4
+2025-11-25,Taxi,acct_1,18.0,BYN,tag_1,Taxi,Unknown,USER_10,expense,2025,11,Nov,1,Tue,17,0,0,48,4
+2025-11-24,Food,acct_1,9.0,BYN,tag_1,Food,Unknown,USER_11,expense,2025,11,Nov,0,Mon,10,0,0,48,4
+2025-11-24,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_12,expense,2025,11,Nov,0,Mon,8,0,0,48,4
+2025-11-24,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_13,expense,2025,11,Nov,0,Mon,19,0,0,48,4
+2025-11-24,Cafe,acct_3,4.0,BYN,tag_1,Cafe,Unknown,USER_14,expense,2025,11,Nov,0,Mon,17,0,0,48,4
+2025-11-24,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_15,expense,2025,11,Nov,0,Mon,23,0,1,48,4
+2025-11-24,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_16,expense,2025,11,Nov,0,Mon,22,0,1,48,4
+2025-11-22,Food,acct_1,11.0,BYN,tag_1,Food,Unknown,USER_17,expense,2025,11,Nov,5,Sat,22,1,1,47,4
+2025-11-21,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_18,expense,2025,11,Nov,4,Fri,7,0,0,47,4
+2025-11-21,Cafe,acct_1,11.0,BYN,tag_1,Cafe,Unknown,USER_19,expense,2025,11,Nov,4,Fri,19,0,0,47,4
+2025-11-21,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_20,expense,2025,11,Nov,4,Fri,15,0,0,47,4
+2025-11-21,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_21,expense,2025,11,Nov,4,Fri,16,0,0,47,4
+2025-11-20,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_22,expense,2025,11,Nov,3,Thu,20,0,1,47,4
+2025-11-20,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_23,expense,2025,11,Nov,3,Thu,7,0,0,47,4
+2025-11-20,Cafe,acct_1,9.0,BYN,tag_1,Cafe,Unknown,USER_24,expense,2025,11,Nov,3,Thu,8,0,0,47,4
+2025-11-20,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_25,expense,2025,11,Nov,3,Thu,19,0,0,47,4
+2025-11-20,Cafe,acct_3,8.0,BYN,tag_1,Cafe,Unknown,USER_26,expense,2025,11,Nov,3,Thu,13,0,0,47,4
+2025-11-19,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_27,expense,2025,11,Nov,2,Wed,13,0,0,47,4
+2025-11-18,Gifts,acct_1,79.0,BYN,tag_1,Gifts,Unknown,USER_28,expense,2025,11,Nov,1,Tue,7,0,0,47,4
+2025-11-18,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_29,expense,2025,11,Nov,1,Tue,13,0,0,47,4
+2025-11-18,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_30,expense,2025,11,Nov,1,Tue,6,0,0,47,4
+2025-11-18,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_31,expense,2025,11,Nov,1,Tue,14,0,0,47,4
+2025-11-18,Taxi,acct_1,9.0,BYN,tag_1,Taxi,Unknown,USER_32,expense,2025,11,Nov,1,Tue,22,0,1,47,4
+2025-11-18,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_33,expense,2025,11,Nov,1,Tue,20,0,1,47,4
+2025-11-18,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_34,expense,2025,11,Nov,1,Tue,17,0,0,47,4
+2025-11-17,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_35,expense,2025,11,Nov,0,Mon,21,0,1,47,4
+2025-11-17,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_36,expense,2025,11,Nov,0,Mon,14,0,0,47,4
+2025-11-17,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_37,expense,2025,11,Nov,0,Mon,12,0,0,47,4
+2025-11-17,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_38,expense,2025,11,Nov,0,Mon,8,0,0,47,4
+2025-11-16,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_39,expense,2025,11,Nov,6,Sun,7,1,0,46,4
+2025-11-15,Food,acct_3,3.0,BYN,tag_1,Food,Unknown,USER_40,expense,2025,11,Nov,5,Sat,22,1,1,46,4
+2025-11-15,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_41,expense,2025,11,Nov,5,Sat,9,1,0,46,4
+2025-11-15,Food,acct_3,3.0,BYN,tag_1,Food,Unknown,USER_42,expense,2025,11,Nov,5,Sat,12,1,0,46,4
+2025-11-15,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_43,expense,2025,11,Nov,5,Sat,13,1,0,46,4
+2025-11-15,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_44,expense,2025,11,Nov,5,Sat,14,1,0,46,4
+2025-11-13,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_45,expense,2025,11,Nov,3,Thu,13,0,0,46,4
+2025-11-13,Loan given,acct_1,23.0,BYN,tag_1,Loan given,Unknown,USER_46,expense,2025,11,Nov,3,Thu,23,0,1,46,4
+2025-11-13,Cafe,acct_1,4.0,BYN,tag_1,Cafe,Unknown,USER_47,expense,2025,11,Nov,3,Thu,9,0,0,46,4
+2025-11-13,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_48,expense,2025,11,Nov,3,Thu,16,0,0,46,4
+2025-11-13,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_49,expense,2025,11,Nov,3,Thu,18,0,0,46,4
+2025-11-13,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_50,expense,2025,11,Nov,3,Thu,12,0,0,46,4
+2025-11-13,Health,acct_1,36.0,BYN,tag_1,Health,Unknown,USER_51,expense,2025,11,Nov,3,Thu,10,0,0,46,4
+2025-11-13,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_52,expense,2025,11,Nov,3,Thu,7,0,0,46,4
+2025-11-12,Cafe,acct_1,10.0,BYN,tag_1,Cafe,Unknown,USER_53,expense,2025,11,Nov,2,Wed,7,0,0,46,4
+2025-11-12,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_54,expense,2025,11,Nov,2,Wed,17,0,0,46,4
+2025-11-11,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_55,expense,2025,11,Nov,1,Tue,9,0,0,46,4
+2025-11-11,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_56,expense,2025,11,Nov,1,Tue,18,0,0,46,4
+2025-11-11,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_57,expense,2025,11,Nov,1,Tue,14,0,0,46,4
+2025-11-10,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_58,expense,2025,11,Nov,0,Mon,13,0,0,46,4
+2025-11-10,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_59,expense,2025,11,Nov,0,Mon,21,0,1,46,4
+2025-11-10,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_60,expense,2025,11,Nov,0,Mon,19,0,0,46,4
+2025-11-10,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_61,expense,2025,11,Nov,0,Mon,23,0,1,46,4
+2025-11-07,Cafe,acct_1,11.0,BYN,tag_1,Cafe,Unknown,USER_62,expense,2025,11,Nov,4,Fri,6,0,0,45,4
+2025-11-07,Leisure,acct_1,35.0,BYN,tag_1,Leisure,Unknown,USER_63,expense,2025,11,Nov,4,Fri,15,0,0,45,4
+2025-11-06,Cafe,acct_1,31.0,BYN,tag_1,Cafe,Unknown,USER_64,expense,2025,11,Nov,3,Thu,22,0,1,45,4
+2025-11-05,Clothes,acct_1,299.0,BYN,tag_1,Clothes,Unknown,USER_65,expense,2025,11,Nov,2,Wed,17,0,0,45,4
+2025-11-05,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_66,expense,2025,11,Nov,2,Wed,14,0,0,45,4
+2025-11-05,Cafe,acct_1,12.0,BYN,tag_1,Cafe,Unknown,USER_67,expense,2025,11,Nov,2,Wed,10,0,0,45,4
+2025-11-05,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_68,expense,2025,11,Nov,2,Wed,9,0,0,45,4
+2025-11-04,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_69,expense,2025,11,Nov,1,Tue,6,0,0,45,4
+2025-11-04,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_70,expense,2025,11,Nov,1,Tue,12,0,0,45,4
+2025-11-04,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_71,expense,2025,11,Nov,1,Tue,14,0,0,45,4
+2025-11-04,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_72,expense,2025,11,Nov,1,Tue,21,0,1,45,4
+2025-11-04,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_73,expense,2025,11,Nov,1,Tue,11,0,0,45,4
+2025-11-03,Leisure,acct_3,38.0,BYN,tag_1,Leisure,Unknown,USER_74,expense,2025,11,Nov,0,Mon,19,0,0,45,4
+2025-11-03,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_75,expense,2025,11,Nov,0,Mon,10,0,0,45,4
+2025-11-03,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_76,expense,2025,11,Nov,0,Mon,21,0,1,45,4
+2025-11-03,Cafe,acct_1,11.0,BYN,tag_1,Cafe,Unknown,USER_77,expense,2025,11,Nov,0,Mon,14,0,0,45,4
+2025-11-03,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_78,expense,2025,11,Nov,0,Mon,18,0,0,45,4
+2025-11-03,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_79,expense,2025,11,Nov,0,Mon,15,0,0,45,4
+2025-11-01,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_80,expense,2025,11,Nov,5,Sat,13,1,0,44,4
+2025-11-01,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_81,expense,2025,11,Nov,5,Sat,23,1,1,44,4
+2025-10-31,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_82,expense,2025,10,Oct,4,Fri,12,0,0,44,4
+2025-10-31,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_83,expense,2025,10,Oct,4,Fri,18,0,0,44,4
+2025-10-31,Gifts,acct_3,30.0,BYN,tag_1,Gifts,Unknown,USER_84,expense,2025,10,Oct,4,Fri,18,0,0,44,4
+2025-10-30,Health,acct_3,1.0,BYN,tag_1,Health,Unknown,USER_85,expense,2025,10,Oct,3,Thu,12,0,0,44,4
+2025-10-30,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_86,expense,2025,10,Oct,3,Thu,13,0,0,44,4
+2025-10-30,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_87,expense,2025,10,Oct,3,Thu,21,0,1,44,4
+2025-10-29,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_88,expense,2025,10,Oct,2,Wed,7,0,0,44,4
+2025-10-29,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_89,expense,2025,10,Oct,2,Wed,8,0,0,44,4
+2025-10-29,Leisure,acct_1,20.0,BYN,tag_1,Leisure,Unknown,USER_90,expense,2025,10,Oct,2,Wed,21,0,1,44,4
+2025-10-29,Leisure,acct_1,17.0,BYN,tag_1,Leisure,Unknown,USER_91,expense,2025,10,Oct,2,Wed,10,0,0,44,4
+2025-10-29,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_92,expense,2025,10,Oct,2,Wed,11,0,0,44,4
+2025-10-29,Food,acct_1,22.0,BYN,tag_1,Food,Unknown,USER_93,expense,2025,10,Oct,2,Wed,23,0,1,44,4
+2025-10-29,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_94,expense,2025,10,Oct,2,Wed,17,0,0,44,4
+2025-10-29,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_95,expense,2025,10,Oct,2,Wed,10,0,0,44,4
+2025-10-29,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_96,expense,2025,10,Oct,2,Wed,16,0,0,44,4
+2025-10-28,Public transport,acct_3,1.0,BYN,tag_1,Public transport,Unknown,USER_97,expense,2025,10,Oct,1,Tue,14,0,0,44,4
+2025-10-28,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_98,expense,2025,10,Oct,1,Tue,9,0,0,44,4
+2025-10-28,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_99,expense,2025,10,Oct,1,Tue,17,0,0,44,4
+2025-10-28,Bought for myself,acct_1,64.0,BYN,tag_1,Bought for myself,Unknown,USER_100,expense,2025,10,Oct,1,Tue,8,0,0,44,4
+2025-10-28,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_101,expense,2025,10,Oct,1,Tue,20,0,1,44,4
+2025-10-28,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_102,expense,2025,10,Oct,1,Tue,14,0,0,44,4
+2025-10-28,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_103,expense,2025,10,Oct,1,Tue,15,0,0,44,4
+2025-10-26,Public transport,acct_1,5.0,BYN,tag_1,Public transport,Unknown,USER_104,expense,2025,10,Oct,6,Sun,18,1,0,43,4
+2025-10-26,Health,acct_1,128.0,BYN,tag_1,Health,Unknown,USER_105,expense,2025,10,Oct,6,Sun,20,1,1,43,4
+2025-10-26,Gifts,acct_1,44.0,BYN,tag_1,Gifts,Unknown,USER_106,expense,2025,10,Oct,6,Sun,9,1,0,43,4
+2025-10-26,Public transport,acct_1,5.0,BYN,tag_1,Public transport,Unknown,USER_107,expense,2025,10,Oct,6,Sun,14,1,0,43,4
+2025-10-26,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_108,expense,2025,10,Oct,6,Sun,18,1,0,43,4
+2025-10-25,Food,acct_1,4.0,BYN,tag_1,Food,Unknown,USER_109,expense,2025,10,Oct,5,Sat,11,1,0,43,4
+2025-10-25,Cafe,acct_1,11.0,BYN,tag_1,Cafe,Unknown,USER_110,expense,2025,10,Oct,5,Sat,7,1,0,43,4
+2025-10-25,Public transport,acct_1,5.0,BYN,tag_1,Public transport,Unknown,USER_111,expense,2025,10,Oct,5,Sat,21,1,1,43,4
+2025-10-24,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_112,expense,2025,10,Oct,4,Fri,14,0,0,43,4
+2025-10-24,Taxi,acct_1,10.0,BYN,tag_1,Taxi,Unknown,USER_113,expense,2025,10,Oct,4,Fri,18,0,0,43,4
+2025-10-23,Cafe,acct_1,17.0,BYN,tag_1,Cafe,Unknown,USER_114,expense,2025,10,Oct,3,Thu,19,0,0,43,4
+2025-10-21,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_115,expense,2025,10,Oct,1,Tue,6,0,0,43,4
+2025-10-21,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_116,expense,2025,10,Oct,1,Tue,6,0,0,43,4
+2025-10-21,Cafe,acct_1,9.0,BYN,tag_1,Cafe,Unknown,USER_117,expense,2025,10,Oct,1,Tue,21,0,1,43,4
+2025-10-21,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_118,expense,2025,10,Oct,1,Tue,8,0,0,43,4
+2025-10-21,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_119,expense,2025,10,Oct,1,Tue,14,0,0,43,4
+2025-10-20,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_120,expense,2025,10,Oct,0,Mon,15,0,0,43,4
+2025-10-20,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_121,expense,2025,10,Oct,0,Mon,12,0,0,43,4
+2025-10-20,Cafe,acct_1,4.0,BYN,tag_1,Cafe,Unknown,USER_122,expense,2025,10,Oct,0,Mon,10,0,0,43,4
+2025-10-20,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_123,expense,2025,10,Oct,0,Mon,20,0,1,43,4
+2025-10-19,Gifts,acct_1,43.0,BYN,tag_1,Gifts,Unknown,USER_124,expense,2025,10,Oct,6,Sun,10,1,0,42,4
+2025-10-19,Food,acct_1,18.0,BYN,tag_1,Food,Unknown,USER_125,expense,2025,10,Oct,6,Sun,11,1,0,42,4
+2025-10-19,Gifts,acct_3,15.0,BYN,tag_1,Gifts,Unknown,USER_126,expense,2025,10,Oct,6,Sun,11,1,0,42,4
+2025-10-18,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_127,expense,2025,10,Oct,5,Sat,14,1,0,42,4
+2025-10-18,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_128,expense,2025,10,Oct,5,Sat,21,1,1,42,4
+2025-10-18,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_129,expense,2025,10,Oct,5,Sat,8,1,0,42,4
+2025-10-18,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_130,expense,2025,10,Oct,5,Sat,21,1,1,42,4
+2025-10-18,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_131,expense,2025,10,Oct,5,Sat,6,1,0,42,4
+2025-10-18,Leisure,acct_3,29.0,BYN,tag_1,Leisure,Unknown,USER_132,expense,2025,10,Oct,5,Sat,23,1,1,42,4
+2025-10-18,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_133,expense,2025,10,Oct,5,Sat,6,1,0,42,4
+2025-10-17,Health,acct_1,70.0,BYN,tag_1,Health,Unknown,USER_134,expense,2025,10,Oct,4,Fri,6,0,0,42,4
+2025-10-16,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_135,expense,2025,10,Oct,3,Thu,6,0,0,42,4
+2025-10-16,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_136,expense,2025,10,Oct,3,Thu,21,0,1,42,4
+2025-10-16,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_137,expense,2025,10,Oct,3,Thu,17,0,0,42,4
+2025-10-16,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_138,expense,2025,10,Oct,3,Thu,22,0,1,42,4
+2025-10-16,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_139,expense,2025,10,Oct,3,Thu,13,0,0,42,4
+2025-10-15,Loan given,acct_1,854.0,BYN,tag_1,Loan given,Unknown,USER_140,expense,2025,10,Oct,2,Wed,19,0,0,42,4
+2025-10-15,Other,acct_1,11.0,BYN,tag_1,Other,Unknown,USER_141,expense,2025,10,Oct,2,Wed,13,0,0,42,4
+2025-10-15,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_143,expense,2025,10,Oct,2,Wed,6,0,0,42,4
+2025-10-15,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_144,expense,2025,10,Oct,2,Wed,8,0,0,42,4
+2025-10-15,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_145,expense,2025,10,Oct,2,Wed,7,0,0,42,4
+2025-10-15,Cafe,acct_1,4.0,BYN,tag_1,Cafe,Unknown,USER_146,expense,2025,10,Oct,2,Wed,9,0,0,42,4
+2025-10-15,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_147,expense,2025,10,Oct,2,Wed,9,0,0,42,4
+2025-10-14,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_148,expense,2025,10,Oct,1,Tue,15,0,0,42,4
+2025-10-14,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_149,expense,2025,10,Oct,1,Tue,22,0,1,42,4
+2025-10-14,Gifts,acct_1,27.0,BYN,tag_1,Gifts,Unknown,USER_150,expense,2025,10,Oct,1,Tue,21,0,1,42,4
+2025-10-14,Food,acct_3,3.0,BYN,tag_1,Food,Unknown,USER_151,expense,2025,10,Oct,1,Tue,8,0,0,42,4
+2025-10-14,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_152,expense,2025,10,Oct,1,Tue,20,0,1,42,4
+2025-10-14,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_153,expense,2025,10,Oct,1,Tue,17,0,0,42,4
+2025-10-14,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_154,expense,2025,10,Oct,1,Tue,22,0,1,42,4
+2025-10-14,Taxi,acct_1,9.0,BYN,tag_1,Taxi,Unknown,USER_155,expense,2025,10,Oct,1,Tue,22,0,1,42,4
+2025-10-13,Food,acct_3,15.0,BYN,tag_1,Food,Unknown,USER_156,expense,2025,10,Oct,0,Mon,12,0,0,42,4
+2025-10-13,Cafe,acct_3,9.0,BYN,tag_1,Cafe,Unknown,USER_157,expense,2025,10,Oct,0,Mon,22,0,1,42,4
+2025-10-13,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_158,expense,2025,10,Oct,0,Mon,22,0,1,42,4
+2025-10-13,Leisure,acct_3,35.0,BYN,tag_1,Leisure,Unknown,USER_159,expense,2025,10,Oct,0,Mon,21,0,1,42,4
+2025-10-12,Public transport,acct_1,5.0,BYN,tag_1,Public transport,Unknown,USER_160,expense,2025,10,Oct,6,Sun,10,1,0,41,4
+2025-10-10,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_161,expense,2025,10,Oct,4,Fri,11,0,0,41,4
+2025-10-10,Food,acct_1,15.0,BYN,tag_1,Food,Unknown,USER_162,expense,2025,10,Oct,4,Fri,18,0,0,41,4
+2025-10-10,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_163,expense,2025,10,Oct,4,Fri,19,0,0,41,4
+2025-10-10,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_164,expense,2025,10,Oct,4,Fri,8,0,0,41,4
+2025-10-10,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_165,expense,2025,10,Oct,4,Fri,10,0,0,41,4
+2025-10-09,Taxi,acct_1,17.0,BYN,tag_1,Taxi,Unknown,USER_166,expense,2025,10,Oct,3,Thu,10,0,0,41,4
+2025-10-09,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_167,expense,2025,10,Oct,3,Thu,18,0,0,41,4
+2025-10-09,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_168,expense,2025,10,Oct,3,Thu,18,0,0,41,4
+2025-10-08,Food,acct_1,10.0,BYN,tag_1,Food,Unknown,USER_169,expense,2025,10,Oct,2,Wed,17,0,0,41,4
+2025-10-08,Public transport,acct_3,1.0,BYN,tag_2,Public transport,Unknown,USER_170,expense,2025,10,Oct,2,Wed,18,0,0,41,4
+2025-10-07,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_171,expense,2025,10,Oct,1,Tue,14,0,0,41,4
+2025-10-07,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_172,expense,2025,10,Oct,1,Tue,17,0,0,41,4
+2025-10-07,Taxi,acct_1,14.0,BYN,tag_1,Taxi,Unknown,USER_173,expense,2025,10,Oct,1,Tue,12,0,0,41,4
+2025-10-06,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_174,expense,2025,10,Oct,0,Mon,10,0,0,41,4
+2025-10-06,Gifts,acct_3,15.0,BYN,tag_1,Gifts,Unknown,USER_175,expense,2025,10,Oct,0,Mon,11,0,0,41,4
+2025-10-06,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_176,expense,2025,10,Oct,0,Mon,22,0,1,41,4
+2025-10-06,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_177,expense,2025,10,Oct,0,Mon,6,0,0,41,4
+2025-10-05,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_178,expense,2025,10,Oct,6,Sun,21,1,1,40,4
+2025-10-05,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_179,expense,2025,10,Oct,6,Sun,10,1,0,40,4
+2025-10-04,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_180,expense,2025,10,Oct,5,Sat,22,1,1,40,4
+2025-10-04,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_181,expense,2025,10,Oct,5,Sat,9,1,0,40,4
+2025-10-04,Loan given,acct_1,52.0,BYN,tag_1,Loan given,Unknown,USER_182,expense,2025,10,Oct,5,Sat,17,1,0,40,4
+2025-10-04,Loan given,acct_1,86.0,BYN,tag_1,Loan given,Unknown,USER_183,expense,2025,10,Oct,5,Sat,8,1,0,40,4
+2025-10-03,Cafe,acct_3,59.0,BYN,tag_1,Cafe,Unknown,USER_184,expense,2025,10,Oct,4,Fri,17,0,0,40,4
+2025-10-02,Taxi,acct_3,4.0,BYN,tag_1,Taxi,Unknown,USER_185,expense,2025,10,Oct,3,Thu,9,0,0,40,4
+2025-10-02,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_186,expense,2025,10,Oct,3,Thu,21,0,1,40,4
+2025-10-02,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_187,expense,2025,10,Oct,3,Thu,15,0,0,40,4
+2025-10-02,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_188,expense,2025,10,Oct,3,Thu,14,0,0,40,4
+2025-10-01,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_189,expense,2025,10,Oct,2,Wed,18,0,0,40,4
+2025-10-01,Cafe,acct_1,14.0,BYN,tag_1,Cafe,Unknown,USER_190,expense,2025,10,Oct,2,Wed,23,0,1,40,4
+2025-10-01,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_191,expense,2025,10,Oct,2,Wed,18,0,0,40,4
+2025-10-01,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_192,expense,2025,10,Oct,2,Wed,10,0,0,40,4
+2025-10-01,Cafe,acct_3,4.0,BYN,tag_1,Cafe,Unknown,USER_193,expense,2025,10,Oct,2,Wed,20,0,1,40,4
+2025-10-01,Cafe,acct_3,5.0,BYN,tag_1,Cafe,Unknown,USER_194,expense,2025,10,Oct,2,Wed,11,0,0,40,4
+2025-10-01,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_195,expense,2025,10,Oct,2,Wed,10,0,0,40,4
+2025-10-01,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_196,expense,2025,10,Oct,2,Wed,23,0,1,40,4
+2025-09-30,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_197,expense,2025,9,Sep,1,Tue,9,0,0,40,3
+2025-09-30,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_198,expense,2025,9,Sep,1,Tue,15,0,0,40,3
+2025-09-30,University,acct_3,4.0,BYN,tag_1,University,Unknown,USER_199,expense,2025,9,Sep,1,Tue,22,0,1,40,3
+2025-09-30,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_200,expense,2025,9,Sep,1,Tue,18,0,0,40,3
+2025-09-30,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_201,expense,2025,9,Sep,1,Tue,13,0,0,40,3
+2025-09-30,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_202,expense,2025,9,Sep,1,Tue,7,0,0,40,3
+2025-09-30,Public transport,acct_2,2.0,BYN,tag_3,Public transport,Unknown,USER_203,expense,2025,9,Sep,1,Tue,12,0,0,40,3
+2025-09-30,Leisure,acct_1,31.0,BYN,tag_1,Leisure,Unknown,USER_204,expense,2025,9,Sep,1,Tue,17,0,0,40,3
+2025-09-29,Food,acct_3,5.0,BYN,tag_1,Food,Unknown,USER_205,expense,2025,9,Sep,0,Mon,20,0,1,40,3
+2025-09-29,Clothes,acct_1,88.0,BYN,tag_1,Clothes,Unknown,USER_206,expense,2025,9,Sep,0,Mon,14,0,0,40,3
+2025-09-29,Bought for myself,acct_1,1129.0,BYN,tag_1,Bought for myself,Unknown,USER_207,expense,2025,9,Sep,0,Mon,12,0,0,40,3
+2025-09-29,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_208,expense,2025,9,Sep,0,Mon,17,0,0,40,3
+2025-09-29,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_209,expense,2025,9,Sep,0,Mon,18,0,0,40,3
+2025-09-29,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_210,expense,2025,9,Sep,0,Mon,21,0,1,40,3
+2025-09-29,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_211,expense,2025,9,Sep,0,Mon,9,0,0,40,3
+2025-09-29,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_212,expense,2025,9,Sep,0,Mon,8,0,0,40,3
+2025-09-28,Food,acct_3,9.0,BYN,tag_1,Food,Unknown,USER_213,expense,2025,9,Sep,6,Sun,14,1,0,39,3
+2025-09-28,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_214,expense,2025,9,Sep,6,Sun,21,1,1,39,3
+2025-09-28,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_215,expense,2025,9,Sep,6,Sun,22,1,1,39,3
+2025-09-27,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_216,expense,2025,9,Sep,5,Sat,15,1,0,39,3
+2025-09-27,Food,acct_3,10.0,BYN,tag_1,Food,Unknown,USER_217,expense,2025,9,Sep,5,Sat,22,1,1,39,3
+2025-09-27,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_218,expense,2025,9,Sep,5,Sat,12,1,0,39,3
+2025-09-27,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_219,expense,2025,9,Sep,5,Sat,10,1,0,39,3
+2025-09-27,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_220,expense,2025,9,Sep,5,Sat,11,1,0,39,3
+2025-09-27,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_221,expense,2025,9,Sep,5,Sat,12,1,0,39,3
+2025-09-27,Taxi,acct_3,24.0,BYN,tag_1,Taxi,Unknown,USER_222,expense,2025,9,Sep,5,Sat,17,1,0,39,3
+2025-09-27,Food,acct_1,65.0,BYN,tag_1,Food,Unknown,USER_223,expense,2025,9,Sep,5,Sat,10,1,0,39,3
+2025-09-26,Taxi,acct_1,25.0,BYN,tag_1,Taxi,Unknown,USER_224,expense,2025,9,Sep,4,Fri,16,0,0,39,3
+2025-09-26,Leisure,acct_1,232.0,BYN,tag_1,Leisure,Unknown,USER_225,expense,2025,9,Sep,4,Fri,18,0,0,39,3
+2025-09-26,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_226,expense,2025,9,Sep,4,Fri,12,0,0,39,3
+2025-09-25,Food,acct_1,81.0,BYN,tag_1,Food,Unknown,USER_227,expense,2025,9,Sep,3,Thu,19,0,0,39,3
+2025-09-25,Food,acct_1,313.0,BYN,tag_1,Food,Unknown,USER_228,expense,2025,9,Sep,3,Thu,8,0,0,39,3
+2025-09-25,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_229,expense,2025,9,Sep,3,Thu,21,0,1,39,3
+2025-09-25,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_230,expense,2025,9,Sep,3,Thu,13,0,0,39,3
+2025-09-25,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_231,expense,2025,9,Sep,3,Thu,18,0,0,39,3
+2025-09-24,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_232,expense,2025,9,Sep,2,Wed,7,0,0,39,3
+2025-09-24,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_233,expense,2025,9,Sep,2,Wed,16,0,0,39,3
+2025-09-24,Cafe,acct_1,16.0,BYN,tag_1,Cafe,Unknown,USER_234,expense,2025,9,Sep,2,Wed,13,0,0,39,3
+2025-09-24,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_235,expense,2025,9,Sep,2,Wed,6,0,0,39,3
+2025-09-24,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_236,expense,2025,9,Sep,2,Wed,11,0,0,39,3
+2025-09-24,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_237,expense,2025,9,Sep,2,Wed,6,0,0,39,3
+2025-09-24,Food,acct_3,11.0,BYN,tag_1,Food,Unknown,USER_238,expense,2025,9,Sep,2,Wed,16,0,0,39,3
+2025-09-23,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_239,expense,2025,9,Sep,1,Tue,21,0,1,39,3
+2025-09-23,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_240,expense,2025,9,Sep,1,Tue,13,0,0,39,3
+2025-09-23,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_241,expense,2025,9,Sep,1,Tue,18,0,0,39,3
+2025-09-22,Cafe,acct_3,8.0,BYN,tag_1,Cafe,Unknown,USER_242,expense,2025,9,Sep,0,Mon,13,0,0,39,3
+2025-09-22,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_243,expense,2025,9,Sep,0,Mon,19,0,0,39,3
+2025-09-22,Gifts,acct_3,12.0,BYN,tag_1,Gifts,Unknown,USER_244,expense,2025,9,Sep,0,Mon,7,0,0,39,3
+2025-09-21,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_245,expense,2025,9,Sep,6,Sun,21,1,1,38,3
+2025-09-21,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_246,expense,2025,9,Sep,6,Sun,12,1,0,38,3
+2025-09-20,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_247,expense,2025,9,Sep,5,Sat,8,1,0,38,3
+2025-09-20,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_248,expense,2025,9,Sep,5,Sat,21,1,1,38,3
+2025-09-17,Health,acct_1,73.0,BYN,tag_1,Health,Unknown,USER_249,expense,2025,9,Sep,2,Wed,19,0,0,38,3
+2025-09-17,University,acct_1,12.0,BYN,tag_1,University,Unknown,USER_250,expense,2025,9,Sep,2,Wed,11,0,0,38,3
+2025-09-17,Cafe,acct_3,4.0,BYN,tag_1,Cafe,Unknown,USER_251,expense,2025,9,Sep,2,Wed,12,0,0,38,3
+2025-09-17,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_252,expense,2025,9,Sep,2,Wed,14,0,0,38,3
+2025-09-16,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_253,expense,2025,9,Sep,1,Tue,22,0,1,38,3
+2025-09-15,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_254,expense,2025,9,Sep,0,Mon,13,0,0,38,3
+2025-09-14,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_255,expense,2025,9,Sep,6,Sun,19,1,0,37,3
+2025-09-14,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_256,expense,2025,9,Sep,6,Sun,8,1,0,37,3
+2025-09-14,University,acct_1,5.0,BYN,tag_1,University,Unknown,USER_257,expense,2025,9,Sep,6,Sun,12,1,0,37,3
+2025-09-14,Taxi,acct_1,15.0,BYN,tag_1,Taxi,Unknown,USER_258,expense,2025,9,Sep,6,Sun,10,1,0,37,3
+2025-09-14,Cafe,acct_1,9.0,BYN,tag_1,Cafe,Unknown,USER_259,expense,2025,9,Sep,6,Sun,15,1,0,37,3
+2025-09-13,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_260,expense,2025,9,Sep,5,Sat,18,1,0,37,3
+2025-09-13,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_261,expense,2025,9,Sep,5,Sat,10,1,0,37,3
+2025-09-13,Taxi,acct_1,6.0,BYN,tag_1,Taxi,Unknown,USER_262,expense,2025,9,Sep,5,Sat,7,1,0,37,3
+2025-09-12,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_263,expense,2025,9,Sep,4,Fri,12,0,0,37,3
+2025-09-12,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_264,expense,2025,9,Sep,4,Fri,6,0,0,37,3
+2025-09-11,Food,acct_1,10.0,BYN,tag_1,Food,Unknown,USER_265,expense,2025,9,Sep,3,Thu,23,0,1,37,3
+2025-09-11,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_266,expense,2025,9,Sep,3,Thu,17,0,0,37,3
+2025-09-11,Loan given,acct_1,457.0,BYN,tag_1,Loan given,Unknown,USER_267,expense,2025,9,Sep,3,Thu,7,0,0,37,3
+2025-09-11,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_268,expense,2025,9,Sep,3,Thu,8,0,0,37,3
+2025-09-11,Cafe,acct_1,9.0,BYN,tag_1,Cafe,Unknown,USER_269,expense,2025,9,Sep,3,Thu,8,0,0,37,3
+2025-09-10,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_270,expense,2025,9,Sep,2,Wed,13,0,0,37,3
+2025-09-10,Cafe,acct_1,9.0,BYN,tag_1,Cafe,Unknown,USER_271,expense,2025,9,Sep,2,Wed,14,0,0,37,3
+2025-09-10,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_272,expense,2025,9,Sep,2,Wed,19,0,0,37,3
+2025-09-09,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_273,expense,2025,9,Sep,1,Tue,19,0,0,37,3
+2025-09-09,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_274,expense,2025,9,Sep,1,Tue,8,0,0,37,3
+2025-09-09,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_275,expense,2025,9,Sep,1,Tue,21,0,1,37,3
+2025-09-09,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_276,expense,2025,9,Sep,1,Tue,22,0,1,37,3
+2025-09-09,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_277,expense,2025,9,Sep,1,Tue,22,0,1,37,3
+2025-09-08,University,acct_1,17.0,BYN,tag_1,University,Unknown,USER_278,expense,2025,9,Sep,0,Mon,6,0,0,37,3
+2025-09-08,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_279,expense,2025,9,Sep,0,Mon,8,0,0,37,3
+2025-09-08,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_280,expense,2025,9,Sep,0,Mon,23,0,1,37,3
+2025-09-07,Taxi,acct_1,18.0,BYN,tag_1,Taxi,Unknown,USER_281,expense,2025,9,Sep,6,Sun,16,1,0,36,3
+2025-09-07,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_282,expense,2025,9,Sep,6,Sun,21,1,1,36,3
+2025-09-06,Taxi,acct_1,20.0,BYN,tag_1,Taxi,Unknown,USER_283,expense,2025,9,Sep,5,Sat,6,1,0,36,3
+2025-09-06,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_284,expense,2025,9,Sep,5,Sat,6,1,0,36,3
+2025-09-06,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_285,expense,2025,9,Sep,5,Sat,13,1,0,36,3
+2025-09-06,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_286,expense,2025,9,Sep,5,Sat,17,1,0,36,3
+2025-09-06,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_287,expense,2025,9,Sep,5,Sat,22,1,1,36,3
+2025-09-06,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_288,expense,2025,9,Sep,5,Sat,15,1,0,36,3
+2025-09-06,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_289,expense,2025,9,Sep,5,Sat,10,1,0,36,3
+2025-09-06,Taxi,acct_1,9.0,BYN,tag_1,Taxi,Unknown,USER_290,expense,2025,9,Sep,5,Sat,16,1,0,36,3
+2025-09-06,Cafe,acct_1,9.0,BYN,tag_1,Cafe,Unknown,USER_291,expense,2025,9,Sep,5,Sat,17,1,0,36,3
+2025-09-05,Gifts,acct_1,5.0,BYN,tag_1,Gifts,Unknown,USER_292,expense,2025,9,Sep,4,Fri,19,0,0,36,3
+2025-09-05,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_293,expense,2025,9,Sep,4,Fri,10,0,0,36,3
+2025-09-05,Cafe,acct_1,4.0,BYN,tag_1,Cafe,Unknown,USER_294,expense,2025,9,Sep,4,Fri,8,0,0,36,3
+2025-09-05,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_295,expense,2025,9,Sep,4,Fri,11,0,0,36,3
+2025-09-04,Food,acct_1,15.0,BYN,tag_1,Food,Unknown,USER_296,expense,2025,9,Sep,3,Thu,10,0,0,36,3
+2025-09-03,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_297,expense,2025,9,Sep,2,Wed,6,0,0,36,3
+2025-09-03,Public transport,acct_1,5.0,BYN,tag_1,Public transport,Unknown,USER_298,expense,2025,9,Sep,2,Wed,20,0,1,36,3
+2025-09-03,Cafe,acct_1,4.0,BYN,tag_1,Cafe,Unknown,USER_299,expense,2025,9,Sep,2,Wed,21,0,1,36,3
+2025-09-03,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_300,expense,2025,9,Sep,2,Wed,22,0,1,36,3
+2025-09-02,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_301,expense,2025,9,Sep,1,Tue,11,0,0,36,3
+2025-09-02,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_302,expense,2025,9,Sep,1,Tue,12,0,0,36,3
+2025-09-01,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_303,expense,2025,9,Sep,0,Mon,13,0,0,36,3
+2025-09-01,Leisure,acct_1,21.0,BYN,tag_1,Leisure,Unknown,USER_304,expense,2025,9,Sep,0,Mon,13,0,0,36,3
+2025-09-01,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_305,expense,2025,9,Sep,0,Mon,16,0,0,36,3
+2025-08-31,Cafe,acct_1,11.0,BYN,tag_1,Cafe,Unknown,USER_306,expense,2025,8,Aug,6,Sun,12,1,0,35,3
+2025-08-31,Cafe,acct_1,17.0,BYN,tag_1,Cafe,Unknown,USER_307,expense,2025,8,Aug,6,Sun,6,1,0,35,3
+2025-08-31,Cafe,acct_1,55.0,BYN,tag_1,Cafe,Unknown,USER_308,expense,2025,8,Aug,6,Sun,16,1,0,35,3
+2025-08-31,Taxi,acct_1,12.0,BYN,tag_1,Taxi,Unknown,USER_309,expense,2025,8,Aug,6,Sun,6,1,0,35,3
+2025-08-31,Public transport,acct_1,10.0,BYN,tag_1,Public transport,Unknown,USER_310,expense,2025,8,Aug,6,Sun,16,1,0,35,3
+2025-08-31,Leisure,acct_1,12.0,BYN,tag_1,Leisure,Unknown,USER_311,expense,2025,8,Aug,6,Sun,6,1,0,35,3
+2025-08-31,Food,acct_1,10.0,BYN,tag_1,Food,Unknown,USER_312,expense,2025,8,Aug,6,Sun,13,1,0,35,3
+2025-08-30,Cafe,acct_1,22.0,BYN,tag_1,Cafe,Unknown,USER_313,expense,2025,8,Aug,5,Sat,18,1,0,35,3
+2025-08-30,Bought for myself,acct_1,9.0,BYN,tag_1,Bought for myself,Unknown,USER_314,expense,2025,8,Aug,5,Sat,9,1,0,35,3
+2025-08-30,Public transport,acct_1,10.0,BYN,tag_1,Public transport,Unknown,USER_315,expense,2025,8,Aug,5,Sat,16,1,0,35,3
+2025-08-29,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_316,expense,2025,8,Aug,4,Fri,12,0,0,35,3
+2025-08-28,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_317,expense,2025,8,Aug,3,Thu,22,0,1,35,3
+2025-08-28,Gifts,acct_1,11.0,BYN,tag_1,Gifts,Unknown,USER_318,expense,2025,8,Aug,3,Thu,18,0,0,35,3
+2025-08-28,Leisure,acct_1,93.0,BYN,tag_1,Leisure,Unknown,USER_319,expense,2025,8,Aug,3,Thu,14,0,0,35,3
+2025-08-28,Gifts,acct_1,32.0,BYN,tag_1,Gifts,Unknown,USER_320,expense,2025,8,Aug,3,Thu,6,0,0,35,3
+2025-08-28,Public transport,acct_2,2.0,BYN,tag_4,Public transport,Unknown,USER_321,expense,2025,8,Aug,3,Thu,18,0,0,35,3
+2025-08-27,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_322,expense,2025,8,Aug,2,Wed,21,0,1,35,3
+2025-08-27,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_323,expense,2025,8,Aug,2,Wed,14,0,0,35,3
+2025-08-27,Cafe,acct_3,13.0,BYN,tag_1,Cafe,Unknown,USER_324,expense,2025,8,Aug,2,Wed,21,0,1,35,3
+2025-08-27,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_325,expense,2025,8,Aug,2,Wed,11,0,0,35,3
+2025-08-26,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_326,expense,2025,8,Aug,1,Tue,9,0,0,35,3
+2025-08-26,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_327,expense,2025,8,Aug,1,Tue,10,0,0,35,3
+2025-08-26,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_328,expense,2025,8,Aug,1,Tue,10,0,0,35,3
+2025-08-26,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_329,expense,2025,8,Aug,1,Tue,6,0,0,35,3
+2025-08-25,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_330,expense,2025,8,Aug,0,Mon,20,0,1,35,3
+2025-08-25,Food,acct_3,3.0,BYN,tag_1,Food,Unknown,USER_331,expense,2025,8,Aug,0,Mon,10,0,0,35,3
+2025-08-25,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_332,expense,2025,8,Aug,0,Mon,23,0,1,35,3
+2025-08-25,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_333,expense,2025,8,Aug,0,Mon,7,0,0,35,3
+2025-08-23,Food,acct_1,55.0,BYN,tag_1,Food,Unknown,USER_334,expense,2025,8,Aug,5,Sat,9,1,0,34,3
+2025-08-23,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_335,expense,2025,8,Aug,5,Sat,11,1,0,34,3
+2025-08-23,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_336,expense,2025,8,Aug,5,Sat,11,1,0,34,3
+2025-08-22,Food,acct_3,4.0,BYN,tag_1,Food,Unknown,USER_337,expense,2025,8,Aug,4,Fri,11,0,0,34,3
+2025-08-22,Food,acct_3,6.0,BYN,tag_1,Food,Unknown,USER_338,expense,2025,8,Aug,4,Fri,19,0,0,34,3
+2025-08-22,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_339,expense,2025,8,Aug,4,Fri,12,0,0,34,3
+2025-08-22,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_340,expense,2025,8,Aug,4,Fri,21,0,1,34,3
+2025-08-22,Leisure,acct_1,16.0,BYN,tag_1,Leisure,Unknown,USER_341,expense,2025,8,Aug,4,Fri,18,0,0,34,3
+2025-08-22,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_342,expense,2025,8,Aug,4,Fri,15,0,0,34,3
+2025-08-21,Food,acct_3,5.0,BYN,tag_1,Food,Unknown,USER_343,expense,2025,8,Aug,3,Thu,17,0,0,34,3
+2025-08-20,Cafe,acct_3,8.0,BYN,tag_1,Cafe,Unknown,USER_344,expense,2025,8,Aug,2,Wed,13,0,0,34,3
+2025-08-20,Leisure,acct_1,5.0,BYN,tag_1,Leisure,Unknown,USER_345,expense,2025,8,Aug,2,Wed,15,0,0,34,3
+2025-08-20,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_346,expense,2025,8,Aug,2,Wed,21,0,1,34,3
+2025-08-20,Taxi,acct_1,12.0,BYN,tag_1,Taxi,Unknown,USER_347,expense,2025,8,Aug,2,Wed,7,0,0,34,3
+2025-08-19,Public transport,acct_1,5.0,BYN,tag_1,Public transport,Unknown,USER_348,expense,2025,8,Aug,1,Tue,16,0,0,34,3
+2025-08-19,Bought for myself,acct_1,71.0,BYN,tag_1,Bought for myself,Unknown,USER_349,expense,2025,8,Aug,1,Tue,14,0,0,34,3
+2025-08-18,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_350,expense,2025,8,Aug,0,Mon,13,0,0,34,3
+2025-08-17,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_351,expense,2025,8,Aug,6,Sun,18,1,0,33,3
+2025-08-17,Cafe,acct_1,20.0,BYN,tag_1,Cafe,Unknown,USER_352,expense,2025,8,Aug,6,Sun,7,1,0,33,3
+2025-08-17,Leisure,acct_1,11.0,BYN,tag_1,Leisure,Unknown,USER_353,expense,2025,8,Aug,6,Sun,19,1,0,33,3
+2025-08-17,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_354,expense,2025,8,Aug,6,Sun,16,1,0,33,3
+2025-08-16,Gifts,acct_1,10.0,BYN,tag_1,Gifts,Unknown,USER_355,expense,2025,8,Aug,5,Sat,13,1,0,33,3
+2025-08-16,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_356,expense,2025,8,Aug,5,Sat,13,1,0,33,3
+2025-08-15,Food,acct_1,22.0,BYN,tag_1,Food,Unknown,USER_358,expense,2025,8,Aug,4,Fri,8,0,0,33,3
+2025-08-15,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_359,expense,2025,8,Aug,4,Fri,15,0,0,33,3
+2025-08-15,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_360,expense,2025,8,Aug,4,Fri,12,0,0,33,3
+2025-08-15,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_361,expense,2025,8,Aug,4,Fri,19,0,0,33,3
+2025-08-15,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_362,expense,2025,8,Aug,4,Fri,16,0,0,33,3
+2025-08-14,Food,acct_1,11.0,BYN,tag_1,Food,Unknown,USER_363,expense,2025,8,Aug,3,Thu,9,0,0,33,3
+2025-08-13,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_364,expense,2025,8,Aug,2,Wed,23,0,1,33,3
+2025-08-13,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_365,expense,2025,8,Aug,2,Wed,21,0,1,33,3
+2025-08-13,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_366,expense,2025,8,Aug,2,Wed,19,0,0,33,3
+2025-08-12,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_367,expense,2025,8,Aug,1,Tue,15,0,0,33,3
+2025-08-12,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_368,expense,2025,8,Aug,1,Tue,7,0,0,33,3
+2025-08-12,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_369,expense,2025,8,Aug,1,Tue,12,0,0,33,3
+2025-08-12,Leisure,acct_1,25.0,BYN,tag_1,Leisure,Unknown,USER_370,expense,2025,8,Aug,1,Tue,10,0,0,33,3
+2025-08-11,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_371,expense,2025,8,Aug,0,Mon,23,0,1,33,3
+2025-08-11,Public transport,acct_1,5.0,BYN,tag_4,Public transport,Unknown,USER_372,expense,2025,8,Aug,0,Mon,15,0,0,33,3
+2025-08-08,Food,acct_1,4.0,BYN,tag_1,Food,Unknown,USER_373,expense,2025,8,Aug,4,Fri,12,0,0,32,3
+2025-08-06,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_374,expense,2025,8,Aug,2,Wed,11,0,0,32,3
+2025-08-05,Food,acct_1,10.0,BYN,tag_1,Food,Unknown,USER_375,expense,2025,8,Aug,1,Tue,10,0,0,32,3
+2025-08-05,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_376,expense,2025,8,Aug,1,Tue,16,0,0,32,3
+2025-08-05,Loan given,acct_1,59.0,BYN,tag_1,Loan given,Unknown,USER_377,expense,2025,8,Aug,1,Tue,14,0,0,32,3
+2025-08-04,Public transport,acct_2,3.0,BYN,tag_4,Public transport,Unknown,USER_378,expense,2025,8,Aug,0,Mon,18,0,0,32,3
+2025-08-04,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_379,expense,2025,8,Aug,0,Mon,12,0,0,32,3
+2025-08-04,Taxi,acct_1,5.0,BYN,tag_1,Taxi,Unknown,USER_380,expense,2025,8,Aug,0,Mon,22,0,1,32,3
+2025-08-03,Cafe,acct_1,9.0,BYN,tag_1,Cafe,Unknown,USER_381,expense,2025,8,Aug,6,Sun,11,1,0,31,3
+2025-08-03,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_382,expense,2025,8,Aug,6,Sun,18,1,0,31,3
+2025-08-03,Cafe,acct_1,34.0,BYN,tag_1,Cafe,Unknown,USER_383,expense,2025,8,Aug,6,Sun,18,1,0,31,3
+2025-08-02,Cafe,acct_1,18.0,BYN,tag_1,Cafe,Unknown,USER_384,expense,2025,8,Aug,5,Sat,14,1,0,31,3
+2025-08-01,Food,acct_3,5.0,BYN,tag_1,Food,Unknown,USER_385,expense,2025,8,Aug,4,Fri,12,0,0,31,3
+2025-08-01,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_386,expense,2025,8,Aug,4,Fri,16,0,0,31,3
+2025-07-31,Health,acct_3,31.0,BYN,tag_1,Health,Unknown,USER_387,expense,2025,7,Jul,3,Thu,11,0,0,31,3
+2025-07-31,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_388,expense,2025,7,Jul,3,Thu,22,0,1,31,3
+2025-07-31,Food,acct_3,14.0,BYN,tag_1,Food,Unknown,USER_389,expense,2025,7,Jul,3,Thu,13,0,0,31,3
+2025-07-31,Leisure,acct_1,10.0,BYN,tag_1,Leisure,Unknown,USER_390,expense,2025,7,Jul,3,Thu,14,0,0,31,3
+2025-07-30,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_391,expense,2025,7,Jul,2,Wed,9,0,0,31,3
+2025-07-30,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_392,expense,2025,7,Jul,2,Wed,6,0,0,31,3
+2025-07-28,Health,acct_1,12.0,BYN,tag_1,Health,Unknown,USER_394,expense,2025,7,Jul,0,Mon,11,0,0,31,3
+2025-07-23,Food,acct_1,16.0,BYN,tag_1,Food,Unknown,USER_395,expense,2025,7,Jul,2,Wed,6,0,0,30,3
+2025-07-22,Public transport,acct_2,2.0,BYN,tag_4,Public transport,Unknown,USER_396,expense,2025,7,Jul,1,Tue,18,0,0,30,3
+2025-07-22,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_398,expense,2025,7,Jul,1,Tue,19,0,0,30,3
+2025-07-22,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_399,expense,2025,7,Jul,1,Tue,8,0,0,30,3
+2025-07-21,Food,acct_1,27.0,BYN,tag_1,Food,Unknown,USER_400,expense,2025,7,Jul,0,Mon,10,0,0,30,3
+2025-07-21,Food,acct_1,4.0,BYN,tag_1,Food,Unknown,USER_401,expense,2025,7,Jul,0,Mon,12,0,0,30,3
+2025-07-21,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_402,expense,2025,7,Jul,0,Mon,14,0,0,30,3
+2025-07-21,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_403,expense,2025,7,Jul,0,Mon,21,0,1,30,3
+2025-07-21,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_404,expense,2025,7,Jul,0,Mon,14,0,0,30,3
+2025-07-21,Food,acct_3,3.0,BYN,tag_1,Food,Unknown,USER_405,expense,2025,7,Jul,0,Mon,23,0,1,30,3
+2025-07-21,Leisure,acct_3,11.0,BYN,tag_1,Leisure,Unknown,USER_406,expense,2025,7,Jul,0,Mon,13,0,0,30,3
+2025-07-20,Taxi,acct_3,14.0,BYN,tag_1,Taxi,Unknown,USER_407,expense,2025,7,Jul,6,Sun,8,1,0,29,3
+2025-07-20,Public transport,acct_2,2.0,BYN,tag_3,Public transport,Unknown,USER_408,expense,2025,7,Jul,6,Sun,12,1,0,29,3
+2025-07-20,Job,acct_1,64.0,BYN,tag_1,Job,Unknown,USER_409,expense,2025,7,Jul,6,Sun,22,1,1,29,3
+2025-07-20,Cafe,acct_1,8.0,BYN,tag_1,Cafe,Unknown,USER_410,expense,2025,7,Jul,6,Sun,10,1,0,29,3
+2025-07-20,Food,acct_1,10.0,BYN,tag_1,Food,Unknown,USER_411,expense,2025,7,Jul,6,Sun,18,1,0,29,3
+2025-07-20,Leisure,acct_1,11.0,BYN,tag_1,Leisure,Unknown,USER_412,expense,2025,7,Jul,6,Sun,22,1,1,29,3
+2025-07-19,Food,acct_1,40.0,BYN,tag_1,Food,Unknown,USER_413,expense,2025,7,Jul,5,Sat,16,1,0,29,3
+2025-07-19,Job,acct_3,11.0,BYN,tag_1,Job,Unknown,USER_414,expense,2025,7,Jul,5,Sat,18,1,0,29,3
+2025-07-18,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_415,expense,2025,7,Jul,4,Fri,6,0,0,29,3
+2025-07-17,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_416,expense,2025,7,Jul,3,Thu,11,0,0,29,3
+2025-07-17,Health,acct_1,36.0,BYN,tag_1,Health,Unknown,USER_417,expense,2025,7,Jul,3,Thu,11,0,0,29,3
+2025-07-17,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_418,expense,2025,7,Jul,3,Thu,19,0,0,29,3
+2025-07-16,Fines,acct_1,24.0,BYN,tag_1,Fines,Unknown,USER_419,expense,2025,7,Jul,2,Wed,8,0,0,29,3
+2025-07-16,Food,acct_1,4.0,BYN,tag_1,Food,Unknown,USER_420,expense,2025,7,Jul,2,Wed,13,0,0,29,3
+2025-07-16,Taxi,acct_1,21.0,BYN,tag_1,Taxi,Unknown,USER_421,expense,2025,7,Jul,2,Wed,20,0,1,29,3
+2025-07-16,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_422,expense,2025,7,Jul,2,Wed,12,0,0,29,3
+2025-07-16,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_423,expense,2025,7,Jul,2,Wed,12,0,0,29,3
+2025-07-16,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_424,expense,2025,7,Jul,2,Wed,23,0,1,29,3
+2025-07-15,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_425,expense,2025,7,Jul,1,Tue,10,0,0,29,3
+2025-07-12,Gifts,acct_1,36.0,BYN,tag_1,Gifts,Unknown,USER_426,expense,2025,7,Jul,5,Sat,15,1,0,28,3
+2025-07-12,Food,acct_1,12.0,BYN,tag_1,Food,Unknown,USER_427,expense,2025,7,Jul,5,Sat,22,1,1,28,3
+2025-07-12,Food,acct_1,4.0,BYN,tag_1,Food,Unknown,USER_428,expense,2025,7,Jul,5,Sat,18,1,0,28,3
+2025-07-12,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_429,expense,2025,7,Jul,5,Sat,21,1,1,28,3
+2025-07-11,Gifts,acct_1,4.0,BYN,tag_1,Gifts,Unknown,USER_430,expense,2025,7,Jul,4,Fri,21,0,1,28,3
+2025-07-11,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_431,expense,2025,7,Jul,4,Fri,10,0,0,28,3
+2025-07-11,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_432,expense,2025,7,Jul,4,Fri,20,0,1,28,3
+2025-07-11,Food,acct_1,27.0,BYN,tag_1,Food,Unknown,USER_433,expense,2025,7,Jul,4,Fri,8,0,0,28,3
+2025-07-09,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_434,expense,2025,7,Jul,2,Wed,20,0,1,28,3
+2025-07-09,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_435,expense,2025,7,Jul,2,Wed,12,0,0,28,3
+2025-07-09,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_436,expense,2025,7,Jul,2,Wed,18,0,0,28,3
+2025-07-09,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_437,expense,2025,7,Jul,2,Wed,16,0,0,28,3
+2025-07-09,Cafe,acct_3,14.0,BYN,tag_1,Cafe,Unknown,USER_438,expense,2025,7,Jul,2,Wed,17,0,0,28,3
+2025-07-09,Cafe,acct_3,4.0,BYN,tag_1,Cafe,Unknown,USER_439,expense,2025,7,Jul,2,Wed,20,0,1,28,3
+2025-07-08,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_440,expense,2025,7,Jul,1,Tue,16,0,0,28,3
+2025-07-08,Cafe,acct_3,10.0,BYN,tag_1,Cafe,Unknown,USER_441,expense,2025,7,Jul,1,Tue,18,0,0,28,3
+2025-07-07,Job,acct_3,32.0,BYN,2th_work,Job,Unknown,USER_442,expense,2025,7,Jul,0,Mon,16,0,0,28,3
+2025-07-07,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_443,expense,2025,7,Jul,0,Mon,8,0,0,28,3
+2025-07-07,Taxi,acct_1,9.0,BYN,tag_1,Taxi,Unknown,USER_444,expense,2025,7,Jul,0,Mon,10,0,0,28,3
+2025-07-07,Taxi,acct_1,17.0,BYN,tag_1,Taxi,Unknown,USER_445,expense,2025,7,Jul,0,Mon,19,0,0,28,3
+2025-07-07,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_446,expense,2025,7,Jul,0,Mon,16,0,0,28,3
+2025-07-07,Cafe,acct_1,10.0,BYN,tag_1,Cafe,Unknown,USER_447,expense,2025,7,Jul,0,Mon,11,0,0,28,3
+2025-07-06,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_448,expense,2025,7,Jul,6,Sun,16,1,0,27,3
+2025-07-06,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_449,expense,2025,7,Jul,6,Sun,12,1,0,27,3
+2025-07-06,Food,acct_1,11.0,BYN,tag_1,Food,Unknown,USER_450,expense,2025,7,Jul,6,Sun,22,1,1,27,3
+2025-07-06,Leisure,acct_1,28.0,BYN,tag_1,Leisure,Unknown,USER_451,expense,2025,7,Jul,6,Sun,10,1,0,27,3
+2025-07-06,Food,acct_1,23.0,BYN,tag_1,Food,Unknown,USER_452,expense,2025,7,Jul,6,Sun,21,1,1,27,3
+2025-07-06,Loan given,acct_1,17.0,BYN,tag_1,Loan given,Unknown,USER_453,expense,2025,7,Jul,6,Sun,8,1,0,27,3
+2025-07-05,Taxi,acct_1,11.0,BYN,tag_1,Taxi,Unknown,USER_454,expense,2025,7,Jul,5,Sat,21,1,1,27,3
+2025-07-05,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_455,expense,2025,7,Jul,5,Sat,22,1,1,27,3
+2025-07-04,Food,acct_1,15.0,BYN,tag_1,Food,Unknown,USER_456,expense,2025,7,Jul,4,Fri,7,0,0,27,3
+2025-07-04,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_457,expense,2025,7,Jul,4,Fri,15,0,0,27,3
+2025-07-04,Public transport,acct_2,2.0,BYN,tag_1,Public transport,Unknown,USER_458,expense,2025,7,Jul,4,Fri,15,0,0,27,3
+2025-07-04,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_459,expense,2025,7,Jul,4,Fri,23,0,1,27,3
+2025-07-04,Leisure,acct_1,21.0,BYN,tag_1,Leisure,Unknown,USER_460,expense,2025,7,Jul,4,Fri,18,0,0,27,3
+2025-07-03,Cafe,acct_1,9.0,BYN,tag_1,Cafe,Unknown,USER_461,expense,2025,7,Jul,3,Thu,12,0,0,27,3
+2025-07-03,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_462,expense,2025,7,Jul,3,Thu,8,0,0,27,3
+2025-07-02,Gifts,acct_1,59.0,BYN,tag_1,Gifts,Unknown,USER_463,expense,2025,7,Jul,2,Wed,16,0,0,27,3
+2025-07-02,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_464,expense,2025,7,Jul,2,Wed,16,0,0,27,3
+2025-07-02,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_465,expense,2025,7,Jul,2,Wed,13,0,0,27,3
+2025-07-02,Food,acct_1,4.0,BYN,tag_1,Food,Unknown,USER_466,expense,2025,7,Jul,2,Wed,12,0,0,27,3
+2025-07-02,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_467,expense,2025,7,Jul,2,Wed,22,0,1,27,3
+2025-07-02,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_468,expense,2025,7,Jul,2,Wed,16,0,0,27,3
+2025-07-01,Food,acct_1,4.0,BYN,tag_1,Food,Unknown,USER_469,expense,2025,7,Jul,1,Tue,20,0,1,27,3
+2025-06-30,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_470,expense,2025,6,Jun,0,Mon,19,0,0,27,2
+2025-06-30,Cafe,acct_1,21.0,BYN,tag_1,Cafe,Unknown,USER_471,expense,2025,6,Jun,0,Mon,16,0,0,27,2
+2025-06-30,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_472,expense,2025,6,Jun,0,Mon,15,0,0,27,2
+2025-06-30,Food,acct_1,8.0,BYN,tag_1,Food,Unknown,USER_473,expense,2025,6,Jun,0,Mon,6,0,0,27,2
+2025-06-30,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_474,expense,2025,6,Jun,0,Mon,12,0,0,27,2
+2025-06-29,Food,acct_1,17.0,BYN,tag_1,Food,Unknown,USER_475,expense,2025,6,Jun,6,Sun,14,1,0,26,2
+2025-06-28,Leisure,acct_3,11.0,BYN,tag_1,Leisure,Unknown,USER_476,expense,2025,6,Jun,5,Sat,6,1,0,26,2
+2025-06-28,Cafe,acct_1,20.0,BYN,tag_1,Cafe,Unknown,USER_477,expense,2025,6,Jun,5,Sat,15,1,0,26,2
+2025-06-28,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_478,expense,2025,6,Jun,5,Sat,14,1,0,26,2
+2025-06-28,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_479,expense,2025,6,Jun,5,Sat,9,1,0,26,2
+2025-06-27,Taxi,acct_1,18.0,BYN,tag_1,Taxi,Unknown,USER_480,expense,2025,6,Jun,4,Fri,7,0,0,26,2
+2025-06-27,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_481,expense,2025,6,Jun,4,Fri,19,0,0,26,2
+2025-06-27,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_482,expense,2025,6,Jun,4,Fri,22,0,1,26,2
+2025-06-27,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_483,expense,2025,6,Jun,4,Fri,8,0,0,26,2
+2025-06-27,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_484,expense,2025,6,Jun,4,Fri,7,0,0,26,2
+2025-06-26,Cafe,acct_1,11.0,BYN,tag_1,Cafe,Unknown,USER_485,expense,2025,6,Jun,3,Thu,9,0,0,26,2
+2025-06-26,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_486,expense,2025,6,Jun,3,Thu,7,0,0,26,2
+2025-06-25,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_487,expense,2025,6,Jun,2,Wed,17,0,0,26,2
+2025-06-25,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_488,expense,2025,6,Jun,2,Wed,21,0,1,26,2
+2025-06-25,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_489,expense,2025,6,Jun,2,Wed,17,0,0,26,2
+2025-06-25,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_490,expense,2025,6,Jun,2,Wed,22,0,1,26,2
+2025-06-25,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_491,expense,2025,6,Jun,2,Wed,9,0,0,26,2
+2025-06-24,Taxi,acct_1,16.0,BYN,tag_1,Taxi,Unknown,USER_492,expense,2025,6,Jun,1,Tue,9,0,0,26,2
+2025-06-24,Cafe,acct_1,4.0,BYN,tag_1,Cafe,Unknown,USER_493,expense,2025,6,Jun,1,Tue,6,0,0,26,2
+2025-06-24,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_494,expense,2025,6,Jun,1,Tue,23,0,1,26,2
+2025-06-23,Cafe,acct_1,16.0,BYN,tag_1,Cafe,Unknown,USER_495,expense,2025,6,Jun,0,Mon,13,0,0,26,2
+2025-06-22,Leisure,acct_1,8.0,BYN,tag_1,Leisure,Unknown,USER_496,expense,2025,6,Jun,6,Sun,10,1,0,25,2
+2025-06-21,Health,acct_1,25.0,BYN,tag_1,Health,Unknown,USER_497,expense,2025,6,Jun,5,Sat,7,1,0,25,2
+2025-06-20,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_498,expense,2025,6,Jun,4,Fri,23,0,1,25,2
+2025-06-20,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_499,expense,2025,6,Jun,4,Fri,12,0,0,25,2
+2025-06-20,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_500,expense,2025,6,Jun,4,Fri,7,0,0,25,2
+2025-06-20,Taxi,acct_1,21.0,BYN,tag_5,Taxi,Unknown,USER_501,expense,2025,6,Jun,4,Fri,9,0,0,25,2
+2025-06-20,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_502,expense,2025,6,Jun,4,Fri,11,0,0,25,2
+2025-06-20,Cafe,acct_1,29.0,BYN,tag_1,Cafe,Unknown,USER_503,expense,2025,6,Jun,4,Fri,19,0,0,25,2
+2025-06-20,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_504,expense,2025,6,Jun,4,Fri,23,0,1,25,2
+2025-06-19,Cafe,acct_1,15.0,BYN,tag_1,Cafe,Unknown,USER_505,expense,2025,6,Jun,3,Thu,16,0,0,25,2
+2025-06-19,Taxi,acct_1,11.0,BYN,2th_work,Taxi,Unknown,USER_506,expense,2025,6,Jun,3,Thu,18,0,0,25,2
+2025-06-18,Leisure,acct_1,28.0,BYN,tag_1,Leisure,Unknown,USER_507,expense,2025,6,Jun,2,Wed,10,0,0,25,2
+2025-06-18,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_508,expense,2025,6,Jun,2,Wed,21,0,1,25,2
+2025-06-18,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_509,expense,2025,6,Jun,2,Wed,12,0,0,25,2
+2025-06-17,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_510,expense,2025,6,Jun,1,Tue,6,0,0,25,2
+2025-06-16,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_511,expense,2025,6,Jun,0,Mon,9,0,0,25,2
+2025-06-16,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_512,expense,2025,6,Jun,0,Mon,23,0,1,25,2
+2025-06-16,Health,acct_1,5.0,BYN,tag_1,Health,Unknown,USER_513,expense,2025,6,Jun,0,Mon,6,0,0,25,2
+2025-06-16,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_514,expense,2025,6,Jun,0,Mon,19,0,0,25,2
+2025-06-16,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_515,expense,2025,6,Jun,0,Mon,18,0,0,25,2
+2025-06-16,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_516,expense,2025,6,Jun,0,Mon,6,0,0,25,2
+2025-06-16,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_517,expense,2025,6,Jun,0,Mon,7,0,0,25,2
+2025-06-14,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_518,expense,2025,6,Jun,5,Sat,17,1,0,24,2
+2025-06-14,Taxi,acct_1,16.0,BYN,tag_1,Taxi,Unknown,USER_519,expense,2025,6,Jun,5,Sat,10,1,0,24,2
+2025-06-13,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_520,expense,2025,6,Jun,4,Fri,14,0,0,24,2
+2025-06-12,Food,acct_1,16.0,BYN,tag_1,Food,Unknown,USER_521,expense,2025,6,Jun,3,Thu,13,0,0,24,2
+2025-06-11,Health,acct_1,43.0,BYN,tag_1,Health,Unknown,USER_522,expense,2025,6,Jun,2,Wed,14,0,0,24,2
+2025-06-11,Food,acct_1,11.0,BYN,tag_1,Food,Unknown,USER_523,expense,2025,6,Jun,2,Wed,8,0,0,24,2
+2025-06-11,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_524,expense,2025,6,Jun,2,Wed,6,0,0,24,2
+2025-06-10,Taxi,acct_3,13.0,BYN,tag_1,Taxi,Unknown,USER_525,expense,2025,6,Jun,1,Tue,9,0,0,24,2
+2025-06-10,Taxi,acct_1,10.0,BYN,tag_1,Taxi,Unknown,USER_526,expense,2025,6,Jun,1,Tue,10,0,0,24,2
+2025-06-10,Health,acct_1,12.0,BYN,tag_1,Health,Unknown,USER_527,expense,2025,6,Jun,1,Tue,17,0,0,24,2
+2025-06-10,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_528,expense,2025,6,Jun,1,Tue,9,0,0,24,2
+2025-06-10,Health,acct_1,43.0,BYN,tag_1,Health,Unknown,USER_529,expense,2025,6,Jun,1,Tue,16,0,0,24,2
+2025-06-10,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_530,expense,2025,6,Jun,1,Tue,23,0,1,24,2
+2025-06-10,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_531,expense,2025,6,Jun,1,Tue,10,0,0,24,2
+2025-06-09,Food,acct_1,10.0,BYN,tag_1,Food,Unknown,USER_532,expense,2025,6,Jun,0,Mon,9,0,0,24,2
+2025-06-09,Taxi,acct_3,11.0,BYN,tag_1,Taxi,Unknown,USER_533,expense,2025,6,Jun,0,Mon,10,0,0,24,2
+2025-06-09,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_534,expense,2025,6,Jun,0,Mon,8,0,0,24,2
+2025-06-09,Loan given,acct_1,18.0,BYN,tag_1,Loan given,Unknown,USER_535,expense,2025,6,Jun,0,Mon,20,0,1,24,2
+2025-06-08,Food,acct_3,19.0,BYN,tag_1,Food,Unknown,USER_536,expense,2025,6,Jun,6,Sun,15,1,0,23,2
+2025-06-08,Gifts,acct_1,10.0,BYN,tag_1,Gifts,Unknown,USER_537,expense,2025,6,Jun,6,Sun,8,1,0,23,2
+2025-06-07,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_538,expense,2025,6,Jun,5,Sat,15,1,0,23,2
+2025-06-07,Food,acct_1,10.0,BYN,tag_1,Food,Unknown,USER_539,expense,2025,6,Jun,5,Sat,7,1,0,23,2
+2025-06-06,Taxi,acct_1,15.0,BYN,tag_1,Taxi,Unknown,USER_540,expense,2025,6,Jun,4,Fri,7,0,0,23,2
+2025-06-06,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_541,expense,2025,6,Jun,4,Fri,11,0,0,23,2
+2025-06-04,Health,acct_1,27.0,BYN,tag_1,Health,Unknown,USER_542,expense,2025,6,Jun,2,Wed,19,0,0,23,2
+2025-06-04,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_543,expense,2025,6,Jun,2,Wed,14,0,0,23,2
+2025-06-03,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_544,expense,2025,6,Jun,1,Tue,12,0,0,23,2
+2025-06-03,Food,acct_1,23.0,BYN,tag_1,Food,Unknown,USER_545,expense,2025,6,Jun,1,Tue,17,0,0,23,2
+2025-06-03,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_546,expense,2025,6,Jun,1,Tue,23,0,1,23,2
+2025-06-03,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_547,expense,2025,6,Jun,1,Tue,23,0,1,23,2
+2025-06-03,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_548,expense,2025,6,Jun,1,Tue,12,0,0,23,2
+2025-06-03,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_549,expense,2025,6,Jun,1,Tue,19,0,0,23,2
+2025-06-02,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_550,expense,2025,6,Jun,0,Mon,6,0,0,23,2
+2025-06-02,Public transport,acct_1,5.0,BYN,tag_4,Public transport,Unknown,USER_551,expense,2025,6,Jun,0,Mon,12,0,0,23,2
+2025-06-02,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_552,expense,2025,6,Jun,0,Mon,19,0,0,23,2
+2025-06-02,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_553,expense,2025,6,Jun,0,Mon,17,0,0,23,2
+2025-05-30,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_554,expense,2025,5,May,4,Fri,6,0,0,22,2
+2025-05-30,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_555,expense,2025,5,May,4,Fri,19,0,0,22,2
+2025-05-30,Food,acct_1,11.0,BYN,tag_1,Food,Unknown,USER_556,expense,2025,5,May,4,Fri,6,0,0,22,2
+2025-05-29,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_557,expense,2025,5,May,3,Thu,14,0,0,22,2
+2025-05-29,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_558,expense,2025,5,May,3,Thu,10,0,0,22,2
+2025-05-29,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_559,expense,2025,5,May,3,Thu,17,0,0,22,2
+2025-05-29,University,acct_3,2.0,BYN,tag_1,University,Unknown,USER_560,expense,2025,5,May,3,Thu,23,0,1,22,2
+2025-05-28,Public transport,acct_2,2.0,BYN,tag_6,Public transport,Unknown,USER_561,expense,2025,5,May,2,Wed,16,0,0,22,2
+2025-05-28,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_562,expense,2025,5,May,2,Wed,12,0,0,22,2
+2025-05-28,Cafe,acct_3,6.0,BYN,tag_1,Cafe,Unknown,USER_563,expense,2025,5,May,2,Wed,16,0,0,22,2
+2025-05-28,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_564,expense,2025,5,May,2,Wed,16,0,0,22,2
+2025-05-27,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_565,expense,2025,5,May,1,Tue,20,0,1,22,2
+2025-05-27,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_566,expense,2025,5,May,1,Tue,9,0,0,22,2
+2025-05-27,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_567,expense,2025,5,May,1,Tue,13,0,0,22,2
+2025-05-27,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_568,expense,2025,5,May,1,Tue,12,0,0,22,2
+2025-05-25,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_569,expense,2025,5,May,6,Sun,15,1,0,21,2
+2025-05-25,Taxi,acct_3,18.0,BYN,tag_1,Taxi,Unknown,USER_570,expense,2025,5,May,6,Sun,8,1,0,21,2
+2025-05-25,Gifts,acct_1,139.0,BYN,tag_1,Gifts,Unknown,USER_571,expense,2025,5,May,6,Sun,7,1,0,21,2
+2025-05-24,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_572,expense,2025,5,May,5,Sat,21,1,1,21,2
+2025-05-24,Cafe,acct_1,20.0,BYN,tag_1,Cafe,Unknown,USER_573,expense,2025,5,May,5,Sat,22,1,1,21,2
+2025-05-24,Leisure,acct_3,42.0,BYN,tag_1,Leisure,Unknown,USER_574,expense,2025,5,May,5,Sat,19,1,0,21,2
+2025-05-24,Taxi,acct_1,24.0,BYN,tag_1,Taxi,Unknown,USER_575,expense,2025,5,May,5,Sat,8,1,0,21,2
+2025-05-23,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_576,expense,2025,5,May,4,Fri,22,0,1,21,2
+2025-05-23,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_577,expense,2025,5,May,4,Fri,17,0,0,21,2
+2025-05-23,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_578,expense,2025,5,May,4,Fri,15,0,0,21,2
+2025-05-23,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_579,expense,2025,5,May,4,Fri,14,0,0,21,2
+2025-05-22,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_580,expense,2025,5,May,3,Thu,12,0,0,21,2
+2025-05-22,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_581,expense,2025,5,May,3,Thu,10,0,0,21,2
+2025-05-21,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_582,expense,2025,5,May,2,Wed,9,0,0,21,2
+2025-05-21,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_583,expense,2025,5,May,2,Wed,22,0,1,21,2
+2025-05-21,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_584,expense,2025,5,May,2,Wed,11,0,0,21,2
+2025-05-21,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_585,expense,2025,5,May,2,Wed,21,0,1,21,2
+2025-05-21,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_586,expense,2025,5,May,2,Wed,19,0,0,21,2
+2025-05-20,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_587,expense,2025,5,May,1,Tue,16,0,0,21,2
+2025-05-20,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_588,expense,2025,5,May,1,Tue,15,0,0,21,2
+2025-05-20,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_589,expense,2025,5,May,1,Tue,17,0,0,21,2
+2025-05-19,Job,acct_3,3.0,BYN,2th_work,Job,Unknown,USER_590,expense,2025,5,May,0,Mon,12,0,0,21,2
+2025-05-19,Job,acct_3,23.0,BYN,tag_1,Job,Unknown,USER_591,expense,2025,5,May,0,Mon,22,0,1,21,2
+2025-05-18,Gifts,acct_1,9.0,BYN,tag_1,Gifts,Unknown,USER_592,expense,2025,5,May,6,Sun,12,1,0,20,2
+2025-05-18,Food,acct_1,6.0,BYN,tag_1,Food,Unknown,USER_593,expense,2025,5,May,6,Sun,15,1,0,20,2
+2025-05-16,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_594,expense,2025,5,May,4,Fri,8,0,0,20,2
+2025-05-16,Taxi,acct_1,14.0,BYN,tag_1,Taxi,Unknown,USER_595,expense,2025,5,May,4,Fri,21,0,1,20,2
+2025-05-15,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_596,expense,2025,5,May,3,Thu,10,0,0,20,2
+2025-05-15,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_597,expense,2025,5,May,3,Thu,15,0,0,20,2
+2025-05-15,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_598,expense,2025,5,May,3,Thu,19,0,0,20,2
+2025-05-15,Gifts,acct_1,33.0,BYN,tag_1,Gifts,Unknown,USER_599,expense,2025,5,May,3,Thu,17,0,0,20,2
+2025-05-15,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_600,expense,2025,5,May,3,Thu,19,0,0,20,2
+2025-05-15,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_601,expense,2025,5,May,3,Thu,21,0,1,20,2
+2025-05-14,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_602,expense,2025,5,May,2,Wed,9,0,0,20,2
+2025-05-14,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_603,expense,2025,5,May,2,Wed,14,0,0,20,2
+2025-05-14,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_604,expense,2025,5,May,2,Wed,17,0,0,20,2
+2025-05-13,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_605,expense,2025,5,May,1,Tue,11,0,0,20,2
+2025-05-13,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_606,expense,2025,5,May,1,Tue,19,0,0,20,2
+2025-05-13,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_607,expense,2025,5,May,1,Tue,23,0,1,20,2
+2025-05-13,Cafe,acct_1,8.0,BYN,tag_1,Cafe,Unknown,USER_608,expense,2025,5,May,1,Tue,15,0,0,20,2
+2025-05-12,Gifts,acct_1,42.0,BYN,tag_1,Gifts,Unknown,USER_609,expense,2025,5,May,0,Mon,19,0,0,20,2
+2025-05-12,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_610,expense,2025,5,May,0,Mon,18,0,0,20,2
+2025-05-12,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_611,expense,2025,5,May,0,Mon,12,0,0,20,2
+2025-05-11,Taxi,acct_1,10.0,BYN,tag_1,Taxi,Unknown,USER_612,expense,2025,5,May,6,Sun,6,1,0,19,2
+2025-05-09,Cafe,acct_1,11.0,BYN,tag_1,Cafe,Unknown,USER_613,expense,2025,5,May,4,Fri,19,0,0,19,2
+2025-05-09,Gifts,acct_1,9.0,BYN,tag_1,Gifts,Unknown,USER_614,expense,2025,5,May,4,Fri,10,0,0,19,2
+2025-05-09,Gifts,acct_1,8.0,BYN,tag_1,Gifts,Unknown,USER_615,expense,2025,5,May,4,Fri,18,0,0,19,2
+2025-05-08,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_616,expense,2025,5,May,3,Thu,19,0,0,19,2
+2025-05-07,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_617,expense,2025,5,May,2,Wed,9,0,0,19,2
+2025-05-07,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_618,expense,2025,5,May,2,Wed,8,0,0,19,2
+2025-05-07,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_619,expense,2025,5,May,2,Wed,15,0,0,19,2
+2025-05-07,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_620,expense,2025,5,May,2,Wed,21,0,1,19,2
+2025-05-06,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_621,expense,2025,5,May,1,Tue,14,0,0,19,2
+2025-05-06,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_622,expense,2025,5,May,1,Tue,8,0,0,19,2
+2025-05-06,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_623,expense,2025,5,May,1,Tue,14,0,0,19,2
+2025-05-06,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_624,expense,2025,5,May,1,Tue,12,0,0,19,2
+2025-05-05,Food,acct_1,4.0,BYN,tag_1,Food,Unknown,USER_625,expense,2025,5,May,0,Mon,7,0,0,19,2
+2025-05-05,Taxi,acct_1,14.0,BYN,tag_1,Taxi,Unknown,USER_626,expense,2025,5,May,0,Mon,14,0,0,19,2
+2025-05-05,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_627,expense,2025,5,May,0,Mon,19,0,0,19,2
+2025-05-05,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_628,expense,2025,5,May,0,Mon,20,0,1,19,2
+2025-05-04,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_629,expense,2025,5,May,6,Sun,22,1,1,18,2
+2025-05-04,Cafe,acct_1,17.0,BYN,tag_1,Cafe,Unknown,USER_630,expense,2025,5,May,6,Sun,13,1,0,18,2
+2025-05-03,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_631,expense,2025,5,May,5,Sat,20,1,1,18,2
+2025-05-03,Taxi,acct_1,16.0,BYN,tag_1,Taxi,Unknown,USER_632,expense,2025,5,May,5,Sat,14,1,0,18,2
+2025-05-02,Leisure,acct_1,33.0,BYN,tag_1,Leisure,Unknown,USER_633,expense,2025,5,May,4,Fri,23,0,1,18,2
+2025-05-02,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_634,expense,2025,5,May,4,Fri,12,0,0,18,2
+2025-05-02,Cafe,acct_1,4.0,BYN,tag_1,Cafe,Unknown,USER_635,expense,2025,5,May,4,Fri,10,0,0,18,2
+2025-05-01,Taxi,acct_1,12.0,BYN,tag_1,Taxi,Unknown,USER_636,expense,2025,5,May,3,Thu,14,0,0,18,2
+2025-05-01,Food,acct_1,11.0,BYN,tag_1,Food,Unknown,USER_637,expense,2025,5,May,3,Thu,9,0,0,18,2
+2025-04-29,Other,acct_1,654.0,BYN,tag_1,Other,Unknown,USER_638,expense,2025,4,Apr,1,Tue,20,0,1,18,2
+2025-04-28,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_639,expense,2025,4,Apr,0,Mon,20,0,1,18,2
+2025-04-27,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_642,expense,2025,4,Apr,6,Sun,16,1,0,17,2
+2025-04-27,Leisure,acct_1,5.0,BYN,tag_1,Leisure,Unknown,USER_643,expense,2025,4,Apr,6,Sun,16,1,0,17,2
+2025-04-26,Taxi,acct_1,12.0,BYN,tag_1,Taxi,Unknown,USER_644,expense,2025,4,Apr,5,Sat,23,1,1,17,2
+2025-04-26,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_645,expense,2025,4,Apr,5,Sat,20,1,1,17,2
+2025-04-25,Food,acct_1,16.0,BYN,tag_1,Food,Unknown,USER_646,expense,2025,4,Apr,4,Fri,20,0,1,17,2
+2025-04-25,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_647,expense,2025,4,Apr,4,Fri,9,0,0,17,2
+2025-04-25,Health,acct_1,25.0,BYN,tag_1,Health,Unknown,USER_648,expense,2025,4,Apr,4,Fri,9,0,0,17,2
+2025-04-25,Taxi,acct_1,11.0,BYN,tag_1,Taxi,Unknown,USER_649,expense,2025,4,Apr,4,Fri,23,0,1,17,2
+2025-04-23,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_650,expense,2025,4,Apr,2,Wed,16,0,0,17,2
+2025-04-23,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_651,expense,2025,4,Apr,2,Wed,15,0,0,17,2
+2025-04-23,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_652,expense,2025,4,Apr,2,Wed,9,0,0,17,2
+2025-04-23,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_653,expense,2025,4,Apr,2,Wed,13,0,0,17,2
+2025-04-23,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_654,expense,2025,4,Apr,2,Wed,19,0,0,17,2
+2025-04-22,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_655,expense,2025,4,Apr,1,Tue,12,0,0,17,2
+2025-04-22,Cafe,acct_1,23.0,BYN,tag_1,Cafe,Unknown,USER_656,expense,2025,4,Apr,1,Tue,23,0,1,17,2
+2025-04-22,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_657,expense,2025,4,Apr,1,Tue,20,0,1,17,2
+2025-04-22,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_658,expense,2025,4,Apr,1,Tue,22,0,1,17,2
+2025-04-21,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_659,expense,2025,4,Apr,0,Mon,20,0,1,17,2
+2025-04-21,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_660,expense,2025,4,Apr,0,Mon,20,0,1,17,2
+2025-04-21,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_661,expense,2025,4,Apr,0,Mon,23,0,1,17,2
+2025-04-19,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_662,expense,2025,4,Apr,5,Sat,13,1,0,16,2
+2025-04-18,Cafe,acct_1,15.0,BYN,tag_1,Cafe,Unknown,USER_663,expense,2025,4,Apr,4,Fri,10,0,0,16,2
+2025-04-18,Gifts,acct_3,12.0,BYN,tag_1,Gifts,Unknown,USER_664,expense,2025,4,Apr,4,Fri,23,0,1,16,2
+2025-04-18,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_665,expense,2025,4,Apr,4,Fri,21,0,1,16,2
+2025-04-18,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_666,expense,2025,4,Apr,4,Fri,18,0,0,16,2
+2025-04-17,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_667,expense,2025,4,Apr,3,Thu,22,0,1,16,2
+2025-04-16,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_668,expense,2025,4,Apr,2,Wed,6,0,0,16,2
+2025-04-16,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_669,expense,2025,4,Apr,2,Wed,22,0,1,16,2
+2025-04-16,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_670,expense,2025,4,Apr,2,Wed,10,0,0,16,2
+2025-04-16,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_671,expense,2025,4,Apr,2,Wed,17,0,0,16,2
+2025-04-15,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_672,expense,2025,4,Apr,1,Tue,11,0,0,16,2
+2025-04-15,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_673,expense,2025,4,Apr,1,Tue,15,0,0,16,2
+2025-04-15,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_674,expense,2025,4,Apr,1,Tue,23,0,1,16,2
+2025-04-15,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_675,expense,2025,4,Apr,1,Tue,15,0,0,16,2
+2025-04-14,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_676,expense,2025,4,Apr,0,Mon,20,0,1,16,2
+2025-04-14,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_677,expense,2025,4,Apr,0,Mon,14,0,0,16,2
+2025-04-14,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_678,expense,2025,4,Apr,0,Mon,15,0,0,16,2
+2025-04-14,Gifts,acct_1,9.0,BYN,tag_1,Gifts,Unknown,USER_679,expense,2025,4,Apr,0,Mon,10,0,0,16,2
+2025-04-14,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_680,expense,2025,4,Apr,0,Mon,14,0,0,16,2
+2025-04-12,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_681,expense,2025,4,Apr,5,Sat,10,1,0,15,2
+2025-04-12,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_682,expense,2025,4,Apr,5,Sat,12,1,0,15,2
+2025-04-11,Clothes,acct_1,161.0,BYN,tag_1,Clothes,Unknown,USER_683,expense,2025,4,Apr,4,Fri,16,0,0,15,2
+2025-04-11,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_684,expense,2025,4,Apr,4,Fri,16,0,0,15,2
+2025-04-10,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_685,expense,2025,4,Apr,3,Thu,17,0,0,15,2
+2025-04-10,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_686,expense,2025,4,Apr,3,Thu,22,0,1,15,2
+2025-04-10,Taxi,acct_1,9.0,BYN,tag_1,Taxi,Unknown,USER_687,expense,2025,4,Apr,3,Thu,8,0,0,15,2
+2025-04-10,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_688,expense,2025,4,Apr,3,Thu,17,0,0,15,2
+2025-04-09,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_689,expense,2025,4,Apr,2,Wed,20,0,1,15,2
+2025-04-09,Food,acct_1,11.0,BYN,tag_1,Food,Unknown,USER_690,expense,2025,4,Apr,2,Wed,18,0,0,15,2
+2025-04-09,Cafe,acct_1,4.0,BYN,tag_1,Cafe,Unknown,USER_691,expense,2025,4,Apr,2,Wed,17,0,0,15,2
+2025-04-09,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_692,expense,2025,4,Apr,2,Wed,9,0,0,15,2
+2025-04-09,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_693,expense,2025,4,Apr,2,Wed,20,0,1,15,2
+2025-04-08,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_694,expense,2025,4,Apr,1,Tue,11,0,0,15,2
+2025-04-08,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_695,expense,2025,4,Apr,1,Tue,20,0,1,15,2
+2025-04-08,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_696,expense,2025,4,Apr,1,Tue,21,0,1,15,2
+2025-04-08,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_697,expense,2025,4,Apr,1,Tue,8,0,0,15,2
+2025-04-08,Taxi,acct_1,9.0,BYN,tag_1,Taxi,Unknown,USER_698,expense,2025,4,Apr,1,Tue,16,0,0,15,2
+2025-04-07,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_699,expense,2025,4,Apr,0,Mon,16,0,0,15,2
+2025-04-07,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_700,expense,2025,4,Apr,0,Mon,9,0,0,15,2
+2025-04-07,Leisure,acct_3,41.0,BYN,tag_1,Leisure,Unknown,USER_701,expense,2025,4,Apr,0,Mon,10,0,0,15,2
+2025-04-07,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_702,expense,2025,4,Apr,0,Mon,12,0,0,15,2
+2025-04-05,Taxi,acct_1,5.0,BYN,tag_1,Taxi,Unknown,USER_703,expense,2025,4,Apr,5,Sat,15,1,0,14,2
+2025-04-05,Taxi,acct_1,13.0,BYN,tag_1,Taxi,Unknown,USER_704,expense,2025,4,Apr,5,Sat,6,1,0,14,2
+2025-04-04,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_705,expense,2025,4,Apr,4,Fri,10,0,0,14,2
+2025-04-04,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_706,expense,2025,4,Apr,4,Fri,14,0,0,14,2
+2025-04-04,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_707,expense,2025,4,Apr,4,Fri,6,0,0,14,2
+2025-04-03,Food,acct_1,14.0,BYN,tag_1,Food,Unknown,USER_708,expense,2025,4,Apr,3,Thu,23,0,1,14,2
+2025-04-03,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_709,expense,2025,4,Apr,3,Thu,6,0,0,14,2
+2025-04-03,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_710,expense,2025,4,Apr,3,Thu,21,0,1,14,2
+2025-04-03,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_711,expense,2025,4,Apr,3,Thu,8,0,0,14,2
+2025-04-02,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_712,expense,2025,4,Apr,2,Wed,11,0,0,14,2
+2025-04-02,Food,acct_3,4.0,BYN,tag_1,Food,Unknown,USER_713,expense,2025,4,Apr,2,Wed,18,0,0,14,2
+2025-04-02,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_714,expense,2025,4,Apr,2,Wed,20,0,1,14,2
+2025-04-02,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_715,expense,2025,4,Apr,2,Wed,18,0,0,14,2
+2025-04-02,Public transport,acct_2,2.0,BYN,tag_3,Public transport,Unknown,USER_716,expense,2025,4,Apr,2,Wed,14,0,0,14,2
+2025-04-02,Taxi,acct_3,7.0,BYN,tag_1,Taxi,Unknown,USER_717,expense,2025,4,Apr,2,Wed,21,0,1,14,2
+2025-04-02,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_718,expense,2025,4,Apr,2,Wed,21,0,1,14,2
+2025-04-02,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_719,expense,2025,4,Apr,2,Wed,13,0,0,14,2
+2025-04-02,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_720,expense,2025,4,Apr,2,Wed,15,0,0,14,2
+2025-04-01,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_721,expense,2025,4,Apr,1,Tue,20,0,1,14,2
+2025-04-01,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_722,expense,2025,4,Apr,1,Tue,6,0,0,14,2
+2025-04-01,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_723,expense,2025,4,Apr,1,Tue,21,0,1,14,2
+2025-04-01,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_724,expense,2025,4,Apr,1,Tue,8,0,0,14,2
+2025-04-01,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_725,expense,2025,4,Apr,1,Tue,14,0,0,14,2
+2025-04-01,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_726,expense,2025,4,Apr,1,Tue,17,0,0,14,2
+2025-03-31,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_727,expense,2025,3,Mar,0,Mon,22,0,1,14,1
+2025-03-31,Taxi,acct_3,15.0,BYN,tag_1,Taxi,Unknown,USER_728,expense,2025,3,Mar,0,Mon,7,0,0,14,1
+2025-03-31,Other,acct_3,12.0,BYN,tag_1,Other,Unknown,USER_729,expense,2025,3,Mar,0,Mon,7,0,0,14,1
+2025-03-31,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_730,expense,2025,3,Mar,0,Mon,6,0,0,14,1
+2025-03-31,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_731,expense,2025,3,Mar,0,Mon,6,0,0,14,1
+2025-03-31,Public transport,acct_2,1.0,BYN,tag_1,Public transport,Unknown,USER_732,expense,2025,3,Mar,0,Mon,10,0,0,14,1
+2025-03-29,Food,acct_3,9.0,BYN,tag_1,Food,Unknown,USER_734,expense,2025,3,Mar,5,Sat,22,1,1,13,1
+2025-03-28,Taxi,acct_3,3.0,BYN,tag_1,Taxi,Unknown,USER_735,expense,2025,3,Mar,4,Fri,15,0,0,13,1
+2025-03-28,Taxi,acct_3,2.0,BYN,tag_1,Taxi,Unknown,USER_736,expense,2025,3,Mar,4,Fri,6,0,0,13,1
+2025-03-28,Other,acct_1,36.0,BYN,tag_1,Other,Unknown,USER_737,expense,2025,3,Mar,4,Fri,11,0,0,13,1
+2025-03-28,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_738,expense,2025,3,Mar,4,Fri,19,0,0,13,1
+2025-03-28,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_739,expense,2025,3,Mar,4,Fri,16,0,0,13,1
+2025-03-28,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_740,expense,2025,3,Mar,4,Fri,18,0,0,13,1
+2025-03-28,Cafe,acct_3,6.0,BYN,tag_1,Cafe,Unknown,USER_741,expense,2025,3,Mar,4,Fri,13,0,0,13,1
+2025-03-28,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_742,expense,2025,3,Mar,4,Fri,21,0,1,13,1
+2025-03-27,Taxi,acct_3,16.0,BYN,tag_1,Taxi,Unknown,USER_743,expense,2025,3,Mar,3,Thu,15,0,0,13,1
+2025-03-27,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_744,expense,2025,3,Mar,3,Thu,23,0,1,13,1
+2025-03-27,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_745,expense,2025,3,Mar,3,Thu,18,0,0,13,1
+2025-03-27,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_746,expense,2025,3,Mar,3,Thu,20,0,1,13,1
+2025-03-27,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_747,expense,2025,3,Mar,3,Thu,22,0,1,13,1
+2025-03-26,Gifts,acct_1,58.0,BYN,tag_1,Gifts,Unknown,USER_748,expense,2025,3,Mar,2,Wed,12,0,0,13,1
+2025-03-26,Food,acct_3,14.0,BYN,tag_1,Food,Unknown,USER_749,expense,2025,3,Mar,2,Wed,17,0,0,13,1
+2025-03-26,Leisure,acct_1,42.0,BYN,tag_1,Leisure,Unknown,USER_750,expense,2025,3,Mar,2,Wed,9,0,0,13,1
+2025-03-25,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_751,expense,2025,3,Mar,1,Tue,17,0,0,13,1
+2025-03-25,Gifts,acct_1,29.0,BYN,tag_1,Gifts,Unknown,USER_752,expense,2025,3,Mar,1,Tue,13,0,0,13,1
+2025-03-25,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_753,expense,2025,3,Mar,1,Tue,23,0,1,13,1
+2025-03-25,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_754,expense,2025,3,Mar,1,Tue,16,0,0,13,1
+2025-03-25,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_755,expense,2025,3,Mar,1,Tue,21,0,1,13,1
+2025-03-25,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_756,expense,2025,3,Mar,1,Tue,15,0,0,13,1
+2025-03-24,Cafe,acct_3,24.0,BYN,tag_1,Cafe,Unknown,USER_757,expense,2025,3,Mar,0,Mon,16,0,0,13,1
+2025-03-24,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_758,expense,2025,3,Mar,0,Mon,18,0,0,13,1
+2025-03-24,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_759,expense,2025,3,Mar,0,Mon,19,0,0,13,1
+2025-03-24,Cafe,acct_3,4.0,BYN,tag_1,Cafe,Unknown,USER_760,expense,2025,3,Mar,0,Mon,15,0,0,13,1
+2025-03-24,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_761,expense,2025,3,Mar,0,Mon,16,0,0,13,1
+2025-03-22,Taxi,acct_1,12.0,BYN,tag_1,Taxi,Unknown,USER_762,expense,2025,3,Mar,5,Sat,20,1,1,12,1
+2025-03-21,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_763,expense,2025,3,Mar,4,Fri,17,0,0,12,1
+2025-03-21,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_764,expense,2025,3,Mar,4,Fri,15,0,0,12,1
+2025-03-21,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_766,expense,2025,3,Mar,4,Fri,19,0,0,12,1
+2025-03-21,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_767,expense,2025,3,Mar,4,Fri,20,0,1,12,1
+2025-03-20,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_768,expense,2025,3,Mar,3,Thu,18,0,0,12,1
+2025-03-20,Loan given,acct_1,12.0,BYN,tag_1,Loan given,Unknown,USER_769,expense,2025,3,Mar,3,Thu,22,0,1,12,1
+2025-03-19,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_770,expense,2025,3,Mar,2,Wed,10,0,0,12,1
+2025-03-19,Taxi,acct_1,10.0,BYN,tag_1,Taxi,Unknown,USER_771,expense,2025,3,Mar,2,Wed,6,0,0,12,1
+2025-03-19,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_772,expense,2025,3,Mar,2,Wed,15,0,0,12,1
+2025-03-18,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_773,expense,2025,3,Mar,1,Tue,18,0,0,12,1
+2025-03-18,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_774,expense,2025,3,Mar,1,Tue,6,0,0,12,1
+2025-03-18,Gifts,acct_1,21.0,BYN,tag_1,Gifts,Unknown,USER_775,expense,2025,3,Mar,1,Tue,19,0,0,12,1
+2025-03-18,Health,acct_1,6.0,BYN,tag_1,Health,Unknown,USER_776,expense,2025,3,Mar,1,Tue,8,0,0,12,1
+2025-03-18,Other,acct_1,53.0,BYN,tag_1,Other,Unknown,USER_777,expense,2025,3,Mar,1,Tue,11,0,0,12,1
+2025-03-17,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_778,expense,2025,3,Mar,0,Mon,11,0,0,12,1
+2025-03-17,Cafe,acct_3,4.0,BYN,tag_1,Cafe,Unknown,USER_779,expense,2025,3,Mar,0,Mon,10,0,0,12,1
+2025-03-16,Taxi,acct_1,4.0,BYN,tag_1,Taxi,Unknown,USER_780,expense,2025,3,Mar,6,Sun,12,1,0,11,1
+2025-03-15,Other,acct_1,43.0,BYN,tag_1,Other,Unknown,USER_781,expense,2025,3,Mar,5,Sat,19,1,0,11,1
+2025-03-15,Other,acct_1,33.0,BYN,tag_1,Other,Unknown,USER_782,expense,2025,3,Mar,5,Sat,7,1,0,11,1
+2025-03-13,Gifts,acct_1,34.0,BYN,tag_1,Gifts,Unknown,USER_783,expense,2025,3,Mar,3,Thu,13,0,0,11,1
+2025-03-13,Gifts,acct_1,24.0,BYN,tag_1,Gifts,Unknown,USER_784,expense,2025,3,Mar,3,Thu,7,0,0,11,1
+2025-03-13,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_785,expense,2025,3,Mar,3,Thu,14,0,0,11,1
+2025-03-13,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_786,expense,2025,3,Mar,3,Thu,16,0,0,11,1
+2025-03-12,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_787,expense,2025,3,Mar,2,Wed,21,0,1,11,1
+2025-03-12,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_788,expense,2025,3,Mar,2,Wed,12,0,0,11,1
+2025-03-12,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_789,expense,2025,3,Mar,2,Wed,13,0,0,11,1
+2025-03-12,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_790,expense,2025,3,Mar,2,Wed,18,0,0,11,1
+2025-03-12,Gifts,acct_1,82.0,BYN,tag_1,Gifts,Unknown,USER_791,expense,2025,3,Mar,2,Wed,18,0,0,11,1
+2025-03-11,Gifts,acct_1,6.0,BYN,tag_1,Gifts,Unknown,USER_792,expense,2025,3,Mar,1,Tue,17,0,0,11,1
+2025-03-11,Other,acct_3,7.0,BYN,tag_1,Other,Unknown,USER_793,expense,2025,3,Mar,1,Tue,21,0,1,11,1
+2025-03-11,Other,acct_3,5.0,BYN,tag_1,Other,Unknown,USER_794,expense,2025,3,Mar,1,Tue,19,0,0,11,1
+2025-03-11,Other,acct_3,36.0,BYN,tag_1,Other,Unknown,USER_795,expense,2025,3,Mar,1,Tue,18,0,0,11,1
+2025-03-10,Cafe,acct_3,1.0,BYN,tag_1,Cafe,Unknown,USER_796,expense,2025,3,Mar,0,Mon,11,0,0,11,1
+2025-03-10,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_797,expense,2025,3,Mar,0,Mon,15,0,0,11,1
+2025-03-10,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_798,expense,2025,3,Mar,0,Mon,8,0,0,11,1
+2025-03-09,Other,acct_3,43.0,BYN,tag_1,Other,Unknown,USER_799,expense,2025,3,Mar,6,Sun,7,1,0,10,1
+2025-03-08,Gifts,acct_1,10.0,BYN,tag_1,Gifts,Unknown,USER_800,expense,2025,3,Mar,5,Sat,21,1,1,10,1
+2025-03-07,Food,acct_1,10.0,BYN,tag_1,Food,Unknown,USER_801,expense,2025,3,Mar,4,Fri,23,0,1,10,1
+2025-03-07,Food,acct_1,4.0,BYN,tag_1,Food,Unknown,USER_802,expense,2025,3,Mar,4,Fri,17,0,0,10,1
+2025-03-07,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_803,expense,2025,3,Mar,4,Fri,15,0,0,10,1
+2025-03-07,Taxi,acct_1,11.0,BYN,tag_1,Taxi,Unknown,USER_804,expense,2025,3,Mar,4,Fri,11,0,0,10,1
+2025-03-06,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_805,expense,2025,3,Mar,3,Thu,18,0,0,10,1
+2025-03-06,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_806,expense,2025,3,Mar,3,Thu,21,0,1,10,1
+2025-03-06,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_807,expense,2025,3,Mar,3,Thu,13,0,0,10,1
+2025-03-05,Loan given,acct_1,1172.0,BYN,tag_1,Loan given,Unknown,USER_808,expense,2025,3,Mar,2,Wed,20,0,1,10,1
+2025-03-05,Other,acct_1,1156.0,BYN,tag_1,Other,Unknown,USER_809,expense,2025,3,Mar,2,Wed,23,0,1,10,1
+2025-03-05,Cafe,acct_3,2.0,BYN,tag_1,Cafe,Unknown,USER_810,expense,2025,3,Mar,2,Wed,23,0,1,10,1
+2025-03-05,Gifts,acct_1,11.0,BYN,tag_1,Gifts,Unknown,USER_811,expense,2025,3,Mar,2,Wed,22,0,1,10,1
+2025-03-05,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_812,expense,2025,3,Mar,2,Wed,9,0,0,10,1
+2025-03-05,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_813,expense,2025,3,Mar,2,Wed,10,0,0,10,1
+2025-03-05,Gifts,acct_3,8.0,BYN,tag_1,Gifts,Unknown,USER_814,expense,2025,3,Mar,2,Wed,15,0,0,10,1
+2025-03-04,Gifts,acct_1,5.0,BYN,tag_1,Gifts,Unknown,USER_816,expense,2025,3,Mar,1,Tue,17,0,0,10,1
+2025-03-04,Gifts,acct_1,89.0,BYN,tag_1,Gifts,Unknown,USER_817,expense,2025,3,Mar,1,Tue,9,0,0,10,1
+2025-03-04,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_818,expense,2025,3,Mar,1,Tue,21,0,1,10,1
+2025-03-04,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_819,expense,2025,3,Mar,1,Tue,18,0,0,10,1
+2025-03-04,Cafe,acct_3,3.0,BYN,tag_1,Cafe,Unknown,USER_820,expense,2025,3,Mar,1,Tue,13,0,0,10,1
+2025-03-04,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_821,expense,2025,3,Mar,1,Tue,13,0,0,10,1
+2025-03-03,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_823,expense,2025,3,Mar,0,Mon,11,0,0,10,1
+2025-03-03,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_824,expense,2025,3,Mar,0,Mon,22,0,1,10,1
+2025-03-01,Cafe,acct_1,24.0,BYN,tag_1,Cafe,Unknown,USER_825,expense,2025,3,Mar,5,Sat,15,1,0,9,1
+2025-02-28,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_826,expense,2025,2,Feb,4,Fri,18,0,0,9,1
+2025-02-28,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_827,expense,2025,2,Feb,4,Fri,9,0,0,9,1
+2025-02-28,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_828,expense,2025,2,Feb,4,Fri,11,0,0,9,1
+2025-02-27,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_829,expense,2025,2,Feb,3,Thu,10,0,0,9,1
+2025-02-27,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_830,expense,2025,2,Feb,3,Thu,19,0,0,9,1
+2025-02-27,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_831,expense,2025,2,Feb,3,Thu,21,0,1,9,1
+2025-02-26,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_832,expense,2025,2,Feb,2,Wed,23,0,1,9,1
+2025-02-26,Public transport,acct_2,2.0,BYN,tag_4,Public transport,Unknown,USER_833,expense,2025,2,Feb,2,Wed,12,0,0,9,1
+2025-02-26,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_834,expense,2025,2,Feb,2,Wed,12,0,0,9,1
+2025-02-26,Leisure,acct_1,8.0,BYN,tag_1,Leisure,Unknown,USER_835,expense,2025,2,Feb,2,Wed,13,0,0,9,1
+2025-02-25,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_836,expense,2025,2,Feb,1,Tue,17,0,0,9,1
+2025-02-25,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_837,expense,2025,2,Feb,1,Tue,13,0,0,9,1
+2025-02-25,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_838,expense,2025,2,Feb,1,Tue,7,0,0,9,1
+2025-02-25,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_839,expense,2025,2,Feb,1,Tue,10,0,0,9,1
+2025-02-22,Gifts,acct_1,11.0,BYN,tag_1,Gifts,Unknown,USER_840,expense,2025,2,Feb,5,Sat,7,1,0,8,1
+2025-02-22,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_841,expense,2025,2,Feb,5,Sat,16,1,0,8,1
+2025-02-21,Loan given,acct_1,59.0,BYN,tag_1,Loan given,Unknown,USER_842,expense,2025,2,Feb,4,Fri,19,0,0,8,1
+2025-02-21,Gifts,acct_1,18.0,BYN,tag_1,Gifts,Unknown,USER_843,expense,2025,2,Feb,4,Fri,7,0,0,8,1
+2025-02-21,Food,acct_1,13.0,BYN,tag_1,Food,Unknown,USER_844,expense,2025,2,Feb,4,Fri,23,0,1,8,1
+2025-02-19,Food,acct_1,21.0,BYN,tag_1,Food,Unknown,USER_845,expense,2025,2,Feb,2,Wed,9,0,0,8,1
+2025-02-19,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_846,expense,2025,2,Feb,2,Wed,17,0,0,8,1
+2025-02-19,University,acct_1,8.0,BYN,tag_1,University,Unknown,USER_847,expense,2025,2,Feb,2,Wed,19,0,0,8,1
+2025-02-19,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_848,expense,2025,2,Feb,2,Wed,10,0,0,8,1
+2025-02-18,Cafe,acct_1,71.0,BYN,tag_1,Cafe,Unknown,USER_849,expense,2025,2,Feb,1,Tue,12,0,0,8,1
+2025-02-18,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_850,expense,2025,2,Feb,1,Tue,6,0,0,8,1
+2025-02-18,University,acct_1,10.0,BYN,tag_1,University,Unknown,USER_851,expense,2025,2,Feb,1,Tue,10,0,0,8,1
+2025-02-18,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_852,expense,2025,2,Feb,1,Tue,8,0,0,8,1
+2025-02-17,Health,acct_1,19.0,BYN,tag_1,Health,Unknown,USER_853,expense,2025,2,Feb,0,Mon,7,0,0,8,1
+2025-02-17,Health,acct_1,18.0,BYN,tag_1,Health,Unknown,USER_854,expense,2025,2,Feb,0,Mon,17,0,0,8,1
+2025-02-17,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_855,expense,2025,2,Feb,0,Mon,11,0,0,8,1
+2025-02-17,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_856,expense,2025,2,Feb,0,Mon,17,0,0,8,1
+2025-02-17,University,acct_1,13.0,BYN,tag_1,University,Unknown,USER_857,expense,2025,2,Feb,0,Mon,10,0,0,8,1
+2025-02-15,Cafe,acct_1,6.0,BYN,tag_1,Cafe,Unknown,USER_858,expense,2025,2,Feb,5,Sat,11,1,0,7,1
+2025-02-15,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_859,expense,2025,2,Feb,5,Sat,23,1,1,7,1
+2025-02-14,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_860,expense,2025,2,Feb,4,Fri,21,0,1,7,1
+2025-02-13,University,acct_1,10.0,BYN,tag_1,University,Unknown,USER_861,expense,2025,2,Feb,3,Thu,21,0,1,7,1
+2025-02-13,Public transport,acct_1,5.0,BYN,tag_1,Public transport,Unknown,USER_862,expense,2025,2,Feb,3,Thu,7,0,0,7,1
+2025-02-11,Health,acct_1,9.0,BYN,tag_1,Health,Unknown,USER_863,expense,2025,2,Feb,1,Tue,15,0,0,7,1
+2025-02-10,Taxi,acct_1,8.0,BYN,tag_1,Taxi,Unknown,USER_864,expense,2025,2,Feb,0,Mon,14,0,0,7,1
+2025-02-07,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_865,expense,2025,2,Feb,4,Fri,6,0,0,6,1
+2025-02-07,Other,acct_1,16.0,BYN,tag_1,Other,Unknown,USER_866,expense,2025,2,Feb,4,Fri,20,0,1,6,1
+2025-02-07,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_867,expense,2025,2,Feb,4,Fri,8,0,0,6,1
+2025-02-07,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_868,expense,2025,2,Feb,4,Fri,17,0,0,6,1
+2025-02-06,Cafe,acct_1,17.0,BYN,tag_1,Cafe,Unknown,USER_869,expense,2025,2,Feb,3,Thu,22,0,1,6,1
+2025-02-06,Food,acct_1,4.0,BYN,tag_1,Food,Unknown,USER_870,expense,2025,2,Feb,3,Thu,20,0,1,6,1
+2025-02-05,Other,acct_1,19.0,BYN,tag_1,Other,Unknown,USER_871,expense,2025,2,Feb,2,Wed,14,0,0,6,1
+2025-02-05,Other,acct_1,48.0,BYN,tag_1,Other,Unknown,USER_872,expense,2025,2,Feb,2,Wed,9,0,0,6,1
+2025-02-05,Other,acct_1,29.0,BYN,tag_1,Other,Unknown,USER_873,expense,2025,2,Feb,2,Wed,23,0,1,6,1
+2025-02-04,Cafe,acct_1,34.0,BYN,tag_1,Cafe,Unknown,USER_874,expense,2025,2,Feb,1,Tue,8,0,0,6,1
+2025-02-04,Health,acct_1,48.0,BYN,tag_1,Health,Unknown,USER_875,expense,2025,2,Feb,1,Tue,7,0,0,6,1
+2025-02-04,Public transport,acct_2,2.0,BYN,tag_3,Public transport,Unknown,USER_876,expense,2025,2,Feb,1,Tue,17,0,0,6,1
+2025-02-04,Taxi,acct_1,15.0,BYN,tag_1,Taxi,Unknown,USER_877,expense,2025,2,Feb,1,Tue,17,0,0,6,1
+2025-02-03,Leisure,acct_1,26.0,BYN,tag_1,Leisure,Unknown,USER_878,expense,2025,2,Feb,0,Mon,11,0,0,6,1
+2025-02-02,Cafe,acct_1,5.0,BYN,tag_1,Cafe,Unknown,USER_879,expense,2025,2,Feb,6,Sun,9,1,0,5,1
+2025-01-31,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_880,expense,2025,1,Jan,4,Fri,21,0,1,5,1
+2025-01-31,Other,acct_1,42.0,BYN,tag_1,Other,Unknown,USER_881,expense,2025,1,Jan,4,Fri,6,0,0,5,1
+2025-01-30,Other,acct_1,60.0,BYN,tag_1,Other,Unknown,USER_882,expense,2025,1,Jan,3,Thu,10,0,0,5,1
+2025-01-30,Health,acct_1,23.0,BYN,tag_1,Health,Unknown,USER_883,expense,2025,1,Jan,3,Thu,20,0,1,5,1
+2025-01-30,Public transport,acct_1,5.0,BYN,tag_1,Public transport,Unknown,USER_884,expense,2025,1,Jan,3,Thu,16,0,0,5,1
+2025-01-28,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_886,expense,2025,1,Jan,1,Tue,19,0,0,5,1
+2025-01-28,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_887,expense,2025,1,Jan,1,Tue,18,0,0,5,1
+2025-01-28,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_888,expense,2025,1,Jan,1,Tue,19,0,0,5,1
+2025-01-28,Public transport,acct_2,2.0,BYN,tag_4,Public transport,Unknown,USER_889,expense,2025,1,Jan,1,Tue,13,0,0,5,1
+2025-01-28,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_890,expense,2025,1,Jan,1,Tue,6,0,0,5,1
+2025-01-27,Taxi,acct_1,12.0,BYN,tag_1,Taxi,Unknown,USER_891,expense,2025,1,Jan,0,Mon,20,0,1,5,1
+2025-01-27,Taxi,acct_1,4.0,BYN,tag_1,Taxi,Unknown,USER_892,expense,2025,1,Jan,0,Mon,22,0,1,5,1
+2025-01-27,Food,acct_1,31.0,BYN,tag_1,Food,Unknown,USER_893,expense,2025,1,Jan,0,Mon,6,0,0,5,1
+2025-01-25,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_894,expense,2025,1,Jan,5,Sat,19,1,0,4,1
+2025-01-25,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_896,expense,2025,1,Jan,5,Sat,18,1,0,4,1
+2025-01-24,Food,acct_3,12.0,BYN,tag_1,Food,Unknown,USER_897,expense,2025,1,Jan,4,Fri,22,0,1,4,1
+2025-01-24,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_898,expense,2025,1,Jan,4,Fri,10,0,0,4,1
+2025-01-24,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_899,expense,2025,1,Jan,4,Fri,22,0,1,4,1
+2025-01-23,Other,acct_1,55.0,BYN,tag_1,Other,Unknown,USER_900,expense,2025,1,Jan,3,Thu,15,0,0,4,1
+2025-01-23,Other,acct_1,210.0,BYN,tag_1,Other,Unknown,USER_901,expense,2025,1,Jan,3,Thu,19,0,0,4,1
+2025-01-22,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_903,expense,2025,1,Jan,2,Wed,17,0,0,4,1
+2025-01-22,Cafe,acct_1,70.0,BYN,tag_1,Cafe,Unknown,USER_904,expense,2025,1,Jan,2,Wed,10,0,0,4,1
+2025-01-22,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_905,expense,2025,1,Jan,2,Wed,23,0,1,4,1
+2025-01-21,Fines,acct_3,21.0,BYN,tag_1,Fines,Unknown,USER_906,expense,2025,1,Jan,1,Tue,12,0,0,4,1
+2025-01-21,Taxi,acct_3,6.0,BYN,tag_1,Taxi,Unknown,USER_907,expense,2025,1,Jan,1,Tue,21,0,1,4,1
+2025-01-20,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_908,expense,2025,1,Jan,0,Mon,23,0,1,4,1
+2025-01-20,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_909,expense,2025,1,Jan,0,Mon,21,0,1,4,1
+2025-01-20,Public transport,acct_2,2.0,BYN,tag_2,Public transport,Unknown,USER_910,expense,2025,1,Jan,0,Mon,17,0,0,4,1
+2025-01-18,Gifts,acct_3,8.0,BYN,tag_1,Gifts,Unknown,USER_912,expense,2025,1,Jan,5,Sat,13,1,0,3,1
+2025-01-18,Gifts,acct_1,170.0,BYN,tag_1,Gifts,Unknown,USER_913,expense,2025,1,Jan,5,Sat,6,1,0,3,1
+2025-01-18,Other,acct_3,61.0,BYN,tag_1,Other,Unknown,USER_914,expense,2025,1,Jan,5,Sat,14,1,0,3,1
+2025-01-18,Food,acct_3,14.0,BYN,tag_1,Food,Unknown,USER_915,expense,2025,1,Jan,5,Sat,10,1,0,3,1
+2025-01-17,Taxi,acct_3,9.0,BYN,tag_1,Taxi,Unknown,USER_916,expense,2025,1,Jan,4,Fri,10,0,0,3,1
+2025-01-17,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_917,expense,2025,1,Jan,4,Fri,12,0,0,3,1
+2025-01-16,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_918,expense,2025,1,Jan,3,Thu,13,0,0,3,1
+2025-01-16,Taxi,acct_3,10.0,BYN,tag_1,Taxi,Unknown,USER_919,expense,2025,1,Jan,3,Thu,13,0,0,3,1
+2025-01-15,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_920,expense,2025,1,Jan,2,Wed,11,0,0,3,1
+2025-01-15,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_921,expense,2025,1,Jan,2,Wed,22,0,1,3,1
+2025-01-15,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_922,expense,2025,1,Jan,2,Wed,18,0,0,3,1
+2025-01-15,Food,acct_3,2.0,BYN,tag_1,Food,Unknown,USER_923,expense,2025,1,Jan,2,Wed,18,0,0,3,1
+2025-01-15,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_924,expense,2025,1,Jan,2,Wed,10,0,0,3,1
+2025-01-15,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_925,expense,2025,1,Jan,2,Wed,14,0,0,3,1
+2025-01-14,Public transport,acct_2,1.0,BYN,tag_3,Public transport,Unknown,USER_926,expense,2025,1,Jan,1,Tue,7,0,0,3,1
+2025-01-13,Food,acct_3,1.0,BYN,tag_1,Food,Unknown,USER_927,expense,2025,1,Jan,0,Mon,13,0,0,3,1
+2025-01-13,Food,acct_1,13.0,BYN,tag_1,Food,Unknown,USER_928,expense,2025,1,Jan,0,Mon,17,0,0,3,1
+2025-01-13,Public transport,acct_2,1.0,BYN,tag_6,Public transport,Unknown,USER_929,expense,2025,1,Jan,0,Mon,11,0,0,3,1
+2025-01-13,Public transport,acct_2,1.0,BYN,tag_4,Public transport,Unknown,USER_930,expense,2025,1,Jan,0,Mon,11,0,0,3,1
+2025-01-12,Other,acct_3,70.0,BYN,tag_1,Other,Unknown,USER_931,expense,2025,1,Jan,6,Sun,9,1,0,2,1
+2025-01-11,Food,acct_3,6.0,BYN,tag_1,Food,Unknown,USER_932,expense,2025,1,Jan,5,Sat,18,1,0,2,1
+2025-01-10,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_933,expense,2025,1,Jan,4,Fri,19,0,0,2,1
+2025-01-10,Public transport,acct_2,1.0,BYN,tag_2,Public transport,Unknown,USER_934,expense,2025,1,Jan,4,Fri,23,0,1,2,1
+2025-01-09,Taxi,acct_1,14.0,BYN,tag_1,Taxi,Unknown,USER_935,expense,2025,1,Jan,3,Thu,23,0,1,2,1
+2025-01-08,Taxi,acct_1,15.0,BYN,tag_1,Taxi,Unknown,USER_936,expense,2025,1,Jan,2,Wed,15,0,0,2,1
+2025-01-07,Food,acct_1,5.0,BYN,tag_1,Food,Unknown,USER_937,expense,2025,1,Jan,1,Tue,17,0,0,2,1
