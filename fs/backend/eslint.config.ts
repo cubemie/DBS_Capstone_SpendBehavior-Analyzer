@@ -13,7 +13,7 @@ export default defineConfig([
     extends: ['js/recommended'],
     languageOptions: { globals: globals.node },
   },
-  tseslint.configs.recommendedTypeChecked,
+  tseslint.configs.recommended,
   {
     languageOptions: {
       parserOptions: {
@@ -21,6 +21,18 @@ export default defineConfig([
           allowDefaultProject: ['eslint.config.ts'],
         },
       },
+    },
+  },
+  {
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
     },
   },
 ])

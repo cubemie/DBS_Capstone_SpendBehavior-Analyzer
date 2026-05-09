@@ -1,0 +1,29 @@
+info:
+  name: Register
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}/users"
+  body:
+    type: json
+    data: |-
+      {
+        "fullName": "Makise Kurisu",
+        "email": "makise@amadeus.com",
+        "password": "supersecretpassword"
+      }
+  auth: inherit
+
+runtime:
+  assertions:
+    - expression: ""
+      operator: eq
+      value: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
