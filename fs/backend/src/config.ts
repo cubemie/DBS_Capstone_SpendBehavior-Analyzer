@@ -8,5 +8,6 @@ export const env = z
     PORT: z.coerce.number().default(3000),
     APP_URL: z.url().default('http://localhost:3000'),
     DATABASE_URL: z.url().startsWith('postgres://'),
+    JWT_SECRET: z.string(),
   })
   .parse(process.env)
