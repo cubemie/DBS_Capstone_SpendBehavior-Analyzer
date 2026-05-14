@@ -1,0 +1,66 @@
+{
+  "project": "BUDU - SpendBehavior Analyzer",
+  "team": "CC26-PSU268",
+  "currency": "IDR",
+  "usd_to_idr": 16000,
+  "data_mode": "dummy",
+  "n_transactions": 49501,
+  "n_users": 1000,
+  "date_range": [
+    "2023-01-01",
+    "2024-12-30"
+  ],
+  "null_count": 1000,
+  "median_amount_idr": 210400,
+  "fraud_rate_pct": 0.996,
+  "n_categories": 17,
+  "n_payment_methods": 8,
+  "feature_cols": [
+    "total_spending_idr",
+    "avg_txn_idr",
+    "median_txn_idr",
+    "txn_count",
+    "std_amount_idr",
+    "weekend_ratio",
+    "night_ratio",
+    "unique_categories",
+    "impulse_score",
+    "spending_cov",
+    "above_avg_ratio",
+    "spike_ratio",
+    "active_months",
+    "avg_dist_merchant"
+  ],
+  "n_features": 14,
+  "n_classes": 3,
+  "class_labels": [
+    "Emotional Spender",
+    "Impulsive Spender",
+    "Rational Spender"
+  ],
+  "label_encoding": {
+    "Emotional Spender": 0,
+    "Impulsive Spender": 1,
+    "Rational Spender": 2
+  },
+  "train_samples": 700,
+  "val_samples": 150,
+  "test_samples": 150,
+  "segments": [
+    "E Miskin",
+    "D Menengah Bawah",
+    "C Menengah",
+    "B Menengah Atas",
+    "A Kaya"
+  ],
+  "ai_recommended_tools": [
+    "TensorFlow >= 2.13 (Functional API)",
+    "Custom Layer: BehaviorNormLayer",
+    "Custom Loss: FocalLoss (gamma=2.0)",
+    "Custom Callback: EarlyStopOnAccuracy",
+    "imbalanced-learn (SMOTE)",
+    "TensorBoard (./logs/budu)",
+    "SHAP (explainability)",
+    "Optuna (hyperparameter tuning)"
+  ]
+}
