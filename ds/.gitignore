@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+__pycache__/
+*.py[cod]
+desktop.ini
+=======
 node_modules/
 dist/
 build/
@@ -23,3 +28,4 @@ env/
 .idea/
 .DS_Store
 Thumbs.db
+>>>>>>> 3e57ab55177169f56c1c00c40a254d23492b2e47

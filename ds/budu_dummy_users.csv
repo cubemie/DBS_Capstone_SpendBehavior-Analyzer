@@ -1,0 +1,1001 @@
+user_id,nama,gender,usia,dob,segmen,segmen_label,pekerjaan,kota,tier_kota,populasi_kota,lat,long,pendapatan_bulan,pengeluaran_bulan,tabungan_bulan,spending_ratio,payment_dominan,punya_smartphone,txn_per_month_min,txn_per_month_max,impulse_base,weekend_boost,night_prob
+BUDU00001,Dhea Hidayat,P,37,1987-07-26,D,Kelas D (Menengah Bawah),Pedagang Warung,Desa Rawa Indah,Desa,6500,-6.0989,107.0081,1733991,1577158,156833,0.91,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00002,Rahma Nugroho,P,40,1984-12-25,E,Kelas E (Miskin),Buruh Tani,Purwokerto,Kota Kecil,290000,-7.5391,109.7257,1003860,875535,128325,0.872,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00003,Wati Purnomo,P,18,2006-02-20,E,Kelas E (Miskin),Buruh Pabrik,Blitar,Kota Kecil,150000,-8.5639,112.5779,968717,876951,91766,0.905,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00004,Mira Kusuma,P,42,1982-02-10,D,Kelas D (Menengah Bawah),Pedagang Warung,Blitar,Kota Kecil,150000,-8.0279,112.1894,2842241,2262791,579450,0.796,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00005,Mulyadi Tobing,L,44,1980-01-25,B,Kelas B (Menengah Atas),Dokter,Tangerang,Metropolitan,2100000,-6.3767,106.1543,19829530,12537256,7292274,0.632,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00006,Kukuh Rajasa,L,46,1978-08-12,B,Kelas B (Menengah Atas),Engineer Senior,Denpasar,Kota Besar,900000,-8.5017,115.3785,11301674,7592501,3709173,0.672,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00007,Joko Susanto,L,38,1986-10-23,C,Kelas C (Menengah),Staf Administrasi,Bandung,Kota Besar,2500000,-6.7068,107.23,6083868,3692387,2391481,0.607,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00008,Dimas Purwanto,L,42,1982-07-07,C,Kelas C (Menengah),Guru Tetap,Semarang,Kota Besar,1800000,-6.5503,110.5192,4641531,3734267,907264,0.805,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00009,Maya Rajasa,P,44,1980-12-20,B,Kelas B (Menengah Atas),Wirausaha Menengah,Bekasi,Metropolitan,2700000,-6.6128,106.8459,18603266,9431554,9171712,0.507,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00010,Bunga Susanto,P,18,2006-08-27,C,Kelas C (Menengah),Guru Tetap,Purwokerto,Kota Kecil,290000,-7.6522,108.9866,4669644,3334751,1334893,0.714,OVO,1,25,60,0.4,1.3,0.25
+BUDU00011,Hadi Iskandar,L,31,1993-01-05,C,Kelas C (Menengah),Sales,Tasikmalaya,Kota Kecil,700000,-6.874,108.1293,4139361,3310737,828624,0.8,OVO,1,25,60,0.4,1.3,0.25
+BUDU00012,Putra Manurung,L,49,1975-07-04,D,Kelas D (Menengah Bawah),Admin Kantor,Tasikmalaya,Kota Kecil,700000,-7.1224,108.0861,1621279,1440982,180297,0.889,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00013,Rizki Hartono,L,23,2001-04-28,B,Kelas B (Menengah Atas),Analis Keuangan,Medan,Kota Besar,2400000,3.9047,98.5209,15808336,9844395,5963941,0.623,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00014,Siti Wahyudi,P,28,1996-09-18,D,Kelas D (Menengah Bawah),Driver Ojek Online,Medan,Kota Besar,2400000,3.3238,98.3472,2887040,2654238,232802,0.919,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00015,Prita Purnomo,P,34,1990-03-16,A,Kelas A (Kaya),Konsultan Senior,Palembang,Kota Besar,1700000,-2.6962,104.9174,130065948,63160310,66905638,0.486,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00016,Intan Situmorang,P,35,1989-02-14,C,Kelas C (Menengah),Staf Administrasi,Yogyakarta,Kota Besar,420000,-7.3011,110.0454,5194935,3488856,1706079,0.672,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00017,Nisa Susanto,P,35,1989-01-16,C,Kelas C (Menengah),Perawat,Denpasar,Kota Besar,900000,-8.92,115.3025,3374699,2687105,687594,0.796,OVO,1,25,60,0.4,1.3,0.25
+BUDU00018,Nadia Pasaribu,P,33,1991-01-05,C,Kelas C (Menengah),Pegawai Swasta,Semarang,Kota Besar,1800000,-7.4689,110.5658,3920741,2757801,1162940,0.703,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00019,Bunga Prasetyo,P,47,1977-01-14,D,Kelas D (Menengah Bawah),SPG/SPB,Bandung,Kota Besar,2500000,-7.3422,107.4248,2949982,2399388,550594,0.813,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00020,Dewi Panggabean,P,24,2000-06-23,D,Kelas D (Menengah Bawah),Driver Ojek Online,Cirebon,Kota Kecil,320000,-6.9094,108.901,1710126,1367948,342178,0.8,OVO,1,15,35,0.25,1.15,0.15
+BUDU00021,Indri Panggabean,P,47,1977-10-07,B,Kelas B (Menengah Atas),Wirausaha Menengah,Jakarta,Metropolitan,10500000,-6.6379,106.7424,13519711,7226269,6293442,0.534,OVO,1,40,90,0.55,1.5,0.35
+BUDU00022,Tono Siregar,L,28,1996-10-22,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Cikaret,Desa,2800,-6.6612,106.6033,2386249,2102044,284205,0.881,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00023,Rina Rahayu,P,19,2005-04-15,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Rawa Indah,Desa,6500,-5.7305,107.0146,2549268,2102190,447078,0.825,OVO,1,15,35,0.25,1.15,0.15
+BUDU00024,Tono Purnomo,L,43,1981-01-26,E,Kelas E (Miskin),Asisten Rumah Tangga,Desa Panyingkiran,Desa,3700,-6.6061,106.4829,1440649,1362748,77901,0.946,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00025,Dewi Nugroho,P,33,1991-03-05,C,Kelas C (Menengah),Perawat,Semarang,Kota Besar,1800000,-7.4472,109.961,3480658,2222653,1258005,0.639,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00026,Ella Iskandar,P,30,1994-05-23,E,Kelas E (Miskin),Pedagang Kaki Lima,Semarang,Kota Besar,1800000,-7.4479,110.2949,833641,767049,66592,0.92,DANA,1,8,20,0.15,1.05,0.08
+BUDU00027,Zara Wijaya,P,18,2006-11-20,C,Kelas C (Menengah),Guru Tetap,Semarang,Kota Besar,1800000,-7.3647,110.7315,5301896,3631494,1670402,0.685,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00028,Elisa Tobing,P,27,1997-02-19,A,Kelas A (Kaya),Pengusaha,Bekasi,Metropolitan,2700000,-6.4159,107.3345,100373004,32943259,67429745,0.328,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00029,Farida Wahyudi,P,41,1983-04-25,C,Kelas C (Menengah),Pegawai Swasta,Tegal,Kota Kecil,285000,-6.6188,109.447,6213923,3902914,2311009,0.628,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00030,Gita Sinaga,P,45,1979-01-23,D,Kelas D (Menengah Bawah),Admin Kantor,Bandung,Kota Besar,2500000,-7.0398,107.6534,2626306,2369556,256750,0.902,DANA,1,15,35,0.25,1.15,0.15
+BUDU00031,Mulyadi Sutrisno,L,20,2004-07-28,D,Kelas D (Menengah Bawah),Teknisi,Medan,Kota Besar,2400000,3.5882,98.2555,2925092,2528239,396853,0.864,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00032,Yanti Iskandar,P,49,1975-10-05,B,Kelas B (Menengah Atas),Pengacara,Depok,Metropolitan,2200000,-6.7854,106.4372,16581462,11055146,5526316,0.667,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00033,Lukman Purnomo,L,45,1979-10-02,B,Kelas B (Menengah Atas),Wirausaha Menengah,Medan,Kota Besar,2400000,3.6765,99.0353,8057534,5534012,2523522,0.687,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00034,Maya Tambunan,P,41,1983-12-22,A,Kelas A (Kaya),Investor,Depok,Metropolitan,2200000,-6.7913,106.7868,111660967,47058611,64602356,0.421,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00035,Bunga Iskandar,P,38,1986-12-25,C,Kelas C (Menengah),PNS Golongan II,Blitar,Kota Kecil,150000,-8.0699,112.1049,4499482,3659759,839723,0.813,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00036,Ella Wahyudi,P,52,1972-04-03,E,Kelas E (Miskin),Buruh Tani,Desa Sukamaju,Desa,5000,-6.4832,106.5945,1286787,1244517,42270,0.967,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00037,Dimas Hartono,L,50,1974-12-24,E,Kelas E (Miskin),Buruh Pabrik,Desa Cikaret,Desa,2800,-6.0532,106.6883,1234092,1205302,28790,0.977,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00038,Ayu Purnomo,P,35,1989-04-13,A,Kelas A (Kaya),Konsultan Senior,Tangerang Selatan,Metropolitan,1700000,-6.7105,107.1509,109015052,47315210,61699842,0.434,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00039,Farida Setiawan,P,18,2006-01-22,C,Kelas C (Menengah),Pegawai Swasta,Jakarta,Metropolitan,10500000,-6.3321,107.0952,6242213,4901799,1340414,0.785,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00040,Gilang Santoso,L,22,2002-07-06,B,Kelas B (Menengah Atas),Dosen,Bogor,Metropolitan,1100000,-6.1005,106.8614,15992287,10223394,5768893,0.639,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00041,Eko Santoso,L,48,1976-04-01,D,Kelas D (Menengah Bawah),Pedagang Warung,Blitar,Kota Kecil,150000,-8.5761,112.1668,2507551,2243934,263617,0.895,OVO,1,15,35,0.25,1.15,0.15
+BUDU00042,Nadia Gunawan,P,21,2003-07-15,C,Kelas C (Menengah),Staf Administrasi,Medan,Kota Besar,2400000,3.3082,98.3086,6138673,4504431,1634242,0.734,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00043,Sinta Budiman,P,30,1994-12-23,C,Kelas C (Menengah),PNS Golongan II,Makassar,Kota Besar,1500000,-5.5006,119.8593,5094409,3130881,1963528,0.615,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00044,Ani Pratama,P,25,1999-11-16,E,Kelas E (Miskin),Ojek Konvensional,Kediri,Kota Kecil,320000,-8.1885,111.6631,1039094,977315,61779,0.941,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00045,Kiki Tobing,P,44,1980-10-19,C,Kelas C (Menengah),Pegawai Swasta,Pekalongan,Kota Kecil,310000,-7.2999,109.2959,3163474,2520428,643046,0.797,OVO,1,25,60,0.4,1.3,0.25
+BUDU00046,Yanto Purnomo,L,21,2003-09-22,E,Kelas E (Miskin),Buruh Pabrik,Denpasar,Kota Besar,900000,-8.7932,114.7152,857231,749209,108022,0.874,OVO,0,8,20,0.15,1.05,0.08
+BUDU00047,Samsul Sanjaya,L,37,1987-07-14,D,Kelas D (Menengah Bawah),Guru Honorer,Palembang,Kota Besar,1700000,-3.3284,104.4085,2193802,1843801,350001,0.84,DANA,1,15,35,0.25,1.15,0.15
+BUDU00048,Gilang Wibowo,L,21,2003-07-05,E,Kelas E (Miskin),Buruh Pabrik,Tasikmalaya,Kota Kecil,700000,-7.6392,108.0458,927598,845613,81985,0.912,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00049,Bella Firmansyah,P,35,1989-02-15,D,Kelas D (Menengah Bawah),Admin Kantor,Purwokerto,Kota Kecil,290000,-7.5428,109.0799,2618159,2122113,496046,0.811,OVO,1,15,35,0.25,1.15,0.15
+BUDU00050,Rahma Siregar,P,32,1992-06-23,A,Kelas A (Kaya),Notaris,Palembang,Kota Besar,1700000,-3.191,104.4488,83415274,22145975,61269299,0.265,Kartu Debit,1,50,150,0.65,1.7,0.45
+BUDU00051,Hana Tambunan,P,51,1973-04-28,E,Kelas E (Miskin),Nelayan,Desa Panyingkiran,Desa,3700,-6.4421,106.4709,1442176,1326160,116016,0.92,OVO,0,8,20,0.15,1.05,0.08
+BUDU00052,Wulan Rahayu,P,44,1980-04-19,C,Kelas C (Menengah),Perawat,Semarang,Kota Besar,1800000,-7.3784,110.5309,3798027,2407796,1390231,0.634,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00053,Rahma Rahayu,P,27,1997-10-05,C,Kelas C (Menengah),Sales,Bogor,Metropolitan,1100000,-6.4125,106.3939,3253499,2496248,757251,0.767,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00054,Gilang Simatupang,L,20,2004-05-28,C,Kelas C (Menengah),Guru Tetap,Blitar,Kota Kecil,150000,-7.6074,111.8736,6860107,5234581,1625526,0.763,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00055,Putri Wahyudi,P,39,1985-12-03,C,Kelas C (Menengah),Pegawai Swasta,Medan,Kota Besar,2400000,3.729,99.0801,3657063,2509981,1147082,0.686,DANA,1,25,60,0.4,1.3,0.25
+BUDU00056,Joko Sinaga,L,34,1990-06-01,B,Kelas B (Menengah Atas),Pengacara,Jakarta,Metropolitan,10500000,-6.3534,106.7371,16718921,11312323,5406598,0.677,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00057,Rizki Susanto,L,34,1990-08-10,C,Kelas C (Menengah),Guru Tetap,Makassar,Kota Besar,1500000,-5.1523,119.6742,3557088,2252947,1304141,0.633,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00058,Erwin Purwanto,L,36,1988-10-05,D,Kelas D (Menengah Bawah),Teknisi,Pekalongan,Kota Kecil,310000,-6.8521,109.5541,2815148,2492927,322221,0.886,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00059,Hadi Wijaya,L,18,2006-03-19,E,Kelas E (Miskin),Ojek Konvensional,Tegal,Kota Kecil,285000,-6.5426,109.5993,1195855,1061239,134616,0.887,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00060,Afifah Kusuma,P,34,1990-08-28,C,Kelas C (Menengah),Sales,Magelang,Kota Kecil,130000,-7.1896,109.7407,5371851,3904172,1467679,0.727,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00061,Ahmad Sanjaya,L,43,1981-06-11,C,Kelas C (Menengah),Sales,Tegal,Kota Kecil,285000,-7.2039,108.8265,4803357,3801267,1002090,0.791,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00062,Ella Purnomo,P,38,1986-10-20,C,Kelas C (Menengah),Guru Tetap,Medan,Kota Besar,2400000,3.4934,98.7096,6151159,4320906,1830253,0.702,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00063,Dhea Panggabean,P,33,1991-04-06,C,Kelas C (Menengah),Staf Administrasi,Makassar,Kota Besar,1500000,-5.0671,119.565,3135516,2236683,898833,0.713,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00064,Prio Siregar,L,27,1997-08-17,A,Kelas A (Kaya),Konsultan Senior,Tangerang Selatan,Metropolitan,1700000,-6.0367,106.4203,58947468,23017191,35930277,0.39,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00065,Lutfi Sutrisno,L,19,2005-03-15,C,Kelas C (Menengah),Sales,Bandung,Kota Besar,2500000,-7.0167,107.6787,5110590,3442288,1668302,0.674,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00066,Sari Saputra,P,51,1973-02-28,E,Kelas E (Miskin),Buruh Tani,Yogyakarta,Kota Besar,420000,-7.5796,110.5284,1360524,1191132,169392,0.875,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00067,Hasna Prasetyo,P,22,2002-01-28,C,Kelas C (Menengah),Guru Tetap,Blitar,Kota Kecil,150000,-7.876,112.5243,3952731,3192898,759833,0.808,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00068,Nanda Kurniawan,L,41,1983-01-23,E,Kelas E (Miskin),Pedagang Kaki Lima,Desa Sejahtera,Desa,4100,-6.117,106.7214,1393689,1245488,148201,0.894,OVO,1,8,20,0.15,1.05,0.08
+BUDU00069,Hadi Harahap,L,39,1985-06-09,B,Kelas B (Menengah Atas),Manajer,Semarang,Kota Besar,1800000,-6.5187,110.7001,12669644,7245235,5424409,0.572,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00070,Ayu Gunawan,P,29,1995-08-02,B,Kelas B (Menengah Atas),Pengacara,Palembang,Kota Besar,1700000,-2.831,104.6971,15235216,7509740,7725476,0.493,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00071,Nanda Nasution,L,44,1980-09-06,D,Kelas D (Menengah Bawah),Karyawan Toko,Pekalongan,Kota Kecil,310000,-6.5589,109.3817,1600763,1273094,327669,0.795,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00072,Agus Saputra,L,42,1982-10-21,C,Kelas C (Menengah),Pegawai Swasta,Yogyakarta,Kota Besar,420000,-7.9417,110.8281,4532554,3320973,1211581,0.733,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00073,Lukman Wahyudi,L,29,1995-01-27,D,Kelas D (Menengah Bawah),Pedagang Warung,Cirebon,Kota Kecil,320000,-6.8354,109.0064,1945682,1469576,476106,0.755,OVO,1,15,35,0.25,1.15,0.15
+BUDU00074,Dhea Gunawan,P,33,1991-11-02,D,Kelas D (Menengah Bawah),Driver Ojek Online,Jombang,Kota Kecil,190000,-7.9727,112.4571,2434998,2016534,418464,0.828,OVO,1,15,35,0.25,1.15,0.15
+BUDU00075,Putra Simatupang,L,18,2006-12-19,E,Kelas E (Miskin),Buruh Tani,Tasikmalaya,Kota Kecil,700000,-7.7138,108.6685,1020217,982962,37255,0.963,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00076,Gita Prasetyo,P,36,1988-06-08,C,Kelas C (Menengah),PNS Golongan II,Denpasar,Kota Besar,900000,-8.4773,114.7642,3998672,3019903,978769,0.755,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00077,Rudi Siregar,L,47,1977-05-07,B,Kelas B (Menengah Atas),Analis Keuangan,Bekasi,Metropolitan,2700000,-6.3131,107.2849,10865537,7183612,3681925,0.661,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00078,Ayu Sanjaya,P,37,1987-03-12,D,Kelas D (Menengah Bawah),SPG/SPB,Desa Rawa Indah,Desa,6500,-6.1697,106.741,1680850,1414794,266056,0.842,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00079,Nanda Pasaribu,L,46,1978-10-12,B,Kelas B (Menengah Atas),Dosen,Surabaya,Kota Besar,3100000,-6.7672,112.2523,10028473,6867167,3161306,0.685,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00080,Mira Tobing,P,23,2001-12-25,B,Kelas B (Menengah Atas),Analis Keuangan,Bandung,Kota Besar,2500000,-6.6492,107.5369,14549843,9211039,5338804,0.633,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00081,Bagas Purwanto,L,44,1980-05-25,E,Kelas E (Miskin),Buruh Pabrik,Denpasar,Kota Besar,900000,-8.7427,115.0969,994085,946592,47493,0.952,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00082,Udin Wahyudi,L,51,1973-02-25,E,Kelas E (Miskin),Nelayan,Desa Cikaret,Desa,2800,-5.8622,106.5306,1320346,1152594,167752,0.873,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00083,Deni Rahayu,L,43,1981-06-15,D,Kelas D (Menengah Bawah),Karyawan Toko,Magelang,Kota Kecil,130000,-6.9848,109.8916,1824486,1677391,147095,0.919,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00084,Irwan Situmorang,L,38,1986-05-02,B,Kelas B (Menengah Atas),Manajer,Medan,Kota Besar,2400000,3.2247,99.0609,12946617,5940628,7005989,0.459,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00085,Tari Mahendra,P,31,1993-06-08,D,Kelas D (Menengah Bawah),Teknisi,Desa Makmur,Desa,3200,-6.619,106.5202,2543571,1934279,609292,0.76,DANA,0,15,35,0.25,1.15,0.15
+BUDU00086,Deni Mahendra,L,37,1987-01-06,B,Kelas B (Menengah Atas),Manajer,Tangerang,Metropolitan,2100000,-5.8196,107.0075,13776384,7021444,6754940,0.51,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00087,Yanto Budiman,L,31,1993-05-11,A,Kelas A (Kaya),Artis/Influencer,Bekasi,Metropolitan,2700000,-6.606,106.8247,144970987,36291462,108679525,0.25,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00088,Ulfa Iskandar,P,23,2001-11-17,C,Kelas C (Menengah),Guru Tetap,Cirebon,Kota Kecil,320000,-6.598,108.5923,5239377,3470225,1769152,0.662,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00089,Firmansyah Rajasa,L,41,1983-05-22,E,Kelas E (Miskin),Buruh Pabrik,Cirebon,Kota Kecil,320000,-6.2847,108.2187,1456059,1303122,152937,0.895,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00090,Joko Tobing,L,30,1994-11-03,C,Kelas C (Menengah),Sales,Makassar,Kota Besar,1500000,-5.6256,119.2563,5377583,3525285,1852298,0.656,DANA,1,25,60,0.4,1.3,0.25
+BUDU00091,Firmansyah Tobing,L,52,1972-03-13,E,Kelas E (Miskin),Buruh Pabrik,Magelang,Kota Kecil,130000,-7.1398,110.4905,1397946,1361057,36889,0.974,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00092,Rudi Hartono,L,45,1979-04-06,D,Kelas D (Menengah Bawah),Karyawan Toko,Tasikmalaya,Kota Kecil,700000,-7.5299,108.4427,2640141,2272589,367552,0.861,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00093,Zara Sihombing,P,48,1976-09-17,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Sejahtera,Desa,4100,-5.8552,107.061,1636746,1481275,155471,0.905,OVO,1,15,35,0.25,1.15,0.15
+BUDU00094,Kevin Situmorang,L,25,1999-07-17,A,Kelas A (Kaya),Notaris,Jakarta,Metropolitan,10500000,-6.5083,106.8372,98949838,34412541,64537297,0.348,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00095,Irwan Gunawan,L,18,2006-02-18,C,Kelas C (Menengah),Staf Administrasi,Yogyakarta,Kota Besar,420000,-7.6386,110.6266,4919755,2994734,1925021,0.609,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00096,Maman Nugroho,L,44,1980-06-22,C,Kelas C (Menengah),PNS Golongan II,Yogyakarta,Kota Besar,420000,-8.2858,110.196,3841398,3050675,790723,0.794,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00097,Julia Siregar,P,29,1995-06-07,E,Kelas E (Miskin),Nelayan,Cirebon,Kota Kecil,320000,-7.1908,108.7227,940601,872239,68362,0.927,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00098,Bunga Nugroho,P,41,1983-02-28,C,Kelas C (Menengah),Staf Administrasi,Medan,Kota Besar,2400000,3.5796,98.833,6206912,4794487,1412425,0.772,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00099,Nanang Sanjaya,L,20,2004-06-12,C,Kelas C (Menengah),Staf Administrasi,Purwokerto,Kota Kecil,290000,-7.7024,109.7184,3988412,3158037,830375,0.792,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00100,Putra Kusuma,L,18,2006-03-22,C,Kelas C (Menengah),Guru Tetap,Medan,Kota Besar,2400000,3.7455,98.3717,4329258,2996054,1333204,0.692,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00101,Nadia Nasution,P,41,1983-08-20,D,Kelas D (Menengah Bawah),Driver Ojek Online,Palembang,Kota Besar,1700000,-2.4885,104.3155,2443147,1844569,598578,0.755,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00102,Yuni Mahendra,P,43,1981-07-10,D,Kelas D (Menengah Bawah),SPG/SPB,Purwokerto,Kota Kecil,290000,-7.2986,109.3741,2988199,2447044,541155,0.819,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00103,Wati Sanjaya,P,31,1993-05-05,C,Kelas C (Menengah),Sales,Palembang,Kota Besar,1700000,-2.6054,104.7207,3276531,2393339,883192,0.73,OVO,1,25,60,0.4,1.3,0.25
+BUDU00104,Zulfi Wijaya,L,45,1979-05-01,D,Kelas D (Menengah Bawah),Karyawan Toko,Desa Rawa Indah,Desa,6500,-6.463,106.5347,2660209,2230217,429992,0.838,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00105,Siti Setiawan,P,25,1999-11-12,D,Kelas D (Menengah Bawah),SPG/SPB,Desa Cikaret,Desa,2800,-6.3206,106.9055,2560165,2287530,272635,0.894,OVO,1,15,35,0.25,1.15,0.15
+BUDU00106,Yuni Rahayu,P,27,1997-04-18,B,Kelas B (Menengah Atas),Analis Keuangan,Makassar,Kota Besar,1500000,-4.7111,118.972,19827008,9814421,10012587,0.495,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00107,Joko Nugroho,L,23,2001-05-18,E,Kelas E (Miskin),Nelayan,Desa Makmur,Desa,3200,-6.3769,107.2731,1475583,1281034,194549,0.868,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00108,Lutfi Hidayat,L,53,1971-01-23,E,Kelas E (Miskin),Buruh Tani,Desa Rawa Indah,Desa,6500,-5.7367,106.5553,1270821,1193075,77746,0.939,OVO,0,8,20,0.15,1.05,0.08
+BUDU00109,Putri Nugroho,P,21,2003-09-14,C,Kelas C (Menengah),Wirausaha Kecil,Denpasar,Kota Besar,900000,-8.5116,115.1065,6674711,4516685,2158026,0.677,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00110,Rini Pasaribu,P,31,1993-09-21,D,Kelas D (Menengah Bawah),Admin Kantor,Semarang,Kota Besar,1800000,-6.8427,110.6855,2350524,2067494,283030,0.88,OVO,0,15,35,0.25,1.15,0.15
+BUDU00111,Galih Santoso,L,25,1999-06-07,B,Kelas B (Menengah Atas),Dokter,Semarang,Kota Besar,1800000,-6.8834,110.4837,7074862,3977299,3097563,0.562,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00112,Putra Budiman,L,20,2004-03-08,D,Kelas D (Menengah Bawah),Karyawan Toko,Jombang,Kota Kecil,190000,-7.668,112.5922,2502319,2021904,480415,0.808,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00113,Ivan Wibowo,L,35,1989-11-16,D,Kelas D (Menengah Bawah),SPG/SPB,Semarang,Kota Besar,1800000,-6.5377,109.9385,2324121,1771254,552867,0.762,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00114,Yuni Purwanto,P,57,1967-06-19,A,Kelas A (Kaya),Notaris,Bogor,Metropolitan,1100000,-6.8122,106.6133,33184707,14079595,19105112,0.424,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00115,Ani Pratama,P,33,1991-09-11,E,Kelas E (Miskin),Buruh Tani,Denpasar,Kota Besar,900000,-8.6453,115.4216,886255,864259,21996,0.975,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00116,Siti Pratama,P,34,1990-06-21,C,Kelas C (Menengah),Pegawai Swasta,Jombang,Kota Kecil,190000,-7.4012,111.9037,6536825,5216420,1320405,0.798,DANA,1,25,60,0.4,1.3,0.25
+BUDU00117,Ivan Purwanto,L,26,1998-03-04,D,Kelas D (Menengah Bawah),SPG/SPB,Surabaya,Kota Besar,3100000,-6.9908,112.4018,2135607,1869230,266377,0.875,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00118,Maman Siregar,L,22,2002-03-28,B,Kelas B (Menengah Atas),Wirausaha Menengah,Jakarta,Metropolitan,10500000,-6.3179,106.9401,9680420,5020605,4659815,0.519,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00119,Cantika Iskandar,P,37,1987-11-07,C,Kelas C (Menengah),Sales,Semarang,Kota Besar,1800000,-6.7689,110.4987,4364360,2872958,1491402,0.658,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00120,Rini Hidayat,P,27,1997-06-09,C,Kelas C (Menengah),Guru Tetap,Semarang,Kota Besar,1800000,-7.4256,110.7207,5468623,3607390,1861233,0.66,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00121,Elisa Susanto,P,23,2001-02-23,C,Kelas C (Menengah),Perawat,Medan,Kota Besar,2400000,3.8259,98.6374,4513905,3659322,854583,0.811,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00122,Zara Simatupang,P,32,1992-12-17,D,Kelas D (Menengah Bawah),Admin Kantor,Medan,Kota Besar,2400000,4.0224,98.4068,1951279,1707995,243284,0.875,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00123,Bagas Nasution,L,24,2000-06-18,B,Kelas B (Menengah Atas),Pengacara,Bogor,Metropolitan,1100000,-6.271,107.088,17242725,8266374,8976351,0.479,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00124,Mulyadi Nasution,L,29,1995-09-09,D,Kelas D (Menengah Bawah),SPG/SPB,Palembang,Kota Besar,1700000,-3.0289,104.876,2264586,1919644,344942,0.848,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00125,Hadi Budiman,L,40,1984-03-24,C,Kelas C (Menengah),Pegawai Swasta,Medan,Kota Besar,2400000,3.8852,98.4769,5129924,3103792,2026132,0.605,OVO,1,25,60,0.4,1.3,0.25
+BUDU00126,Joko Harahap,L,36,1988-10-25,D,Kelas D (Menengah Bawah),Pedagang Warung,Tasikmalaya,Kota Kecil,700000,-6.9278,108.2054,2362745,1899601,463144,0.804,DANA,0,15,35,0.25,1.15,0.15
+BUDU00127,Vina Mahendra,P,27,1997-02-04,A,Kelas A (Kaya),Dokter Spesialis,Semarang,Kota Besar,1800000,-6.7165,110.0423,37571617,15097875,22473742,0.402,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00128,Rizki Sinaga,L,23,2001-02-28,C,Kelas C (Menengah),PNS Golongan II,Makassar,Kota Besar,1500000,-4.8669,119.3925,4459192,3415455,1043737,0.766,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00129,Tono Sutrisno,L,22,2002-05-09,C,Kelas C (Menengah),Staf Administrasi,Kediri,Kota Kecil,320000,-7.6243,111.5735,6130784,3987197,2143587,0.65,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00130,Ahmad Firmansyah,L,34,1990-07-18,D,Kelas D (Menengah Bawah),Guru Honorer,Palembang,Kota Besar,1700000,-2.822,104.6296,1696065,1483573,212492,0.875,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00131,Andi Sihombing,L,33,1991-06-15,B,Kelas B (Menengah Atas),Pengacara,Bogor,Metropolitan,1100000,-6.8819,106.3181,14567926,7279798,7288128,0.5,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00132,Maman Yulianto,L,27,1997-11-21,E,Kelas E (Miskin),Buruh Pabrik,Desa Makmur,Desa,3200,-6.5728,107.1647,1391049,1293440,97609,0.93,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00133,Nanang Pratama,L,25,1999-01-24,B,Kelas B (Menengah Atas),Pengacara,Tangerang,Metropolitan,2100000,-6.5938,106.4196,11100289,7497585,3602704,0.675,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00134,Sinta Hidayat,P,42,1982-08-17,C,Kelas C (Menengah),Staf Administrasi,Blitar,Kota Kecil,150000,-7.7158,111.7743,5455734,4089892,1365842,0.75,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00135,Oscar Santoso,L,20,2004-08-03,E,Kelas E (Miskin),Buruh Pabrik,Makassar,Kota Besar,1500000,-5.2601,119.3946,808475,756715,51760,0.936,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00136,Hendra Setiawan,L,39,1985-08-10,D,Kelas D (Menengah Bawah),Driver Ojek Online,Desa Cikaret,Desa,2800,-5.8011,107.0825,1531417,1151278,380139,0.752,Transfer Bank,0,15,35,0.25,1.15,0.15
+BUDU00137,Mulyadi Situmorang,L,34,1990-02-10,D,Kelas D (Menengah Bawah),SPG/SPB,Blitar,Kota Kecil,150000,-8.4843,112.1546,2698071,2095399,602672,0.777,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00138,Nanda Purnomo,L,31,1993-11-14,E,Kelas E (Miskin),Buruh Pabrik,Pekalongan,Kota Kecil,310000,-7.1148,110.1036,1107583,1034433,73150,0.934,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00139,Yanti Nugroho,P,47,1977-02-21,D,Kelas D (Menengah Bawah),SPG/SPB,Blitar,Kota Kecil,150000,-7.8501,112.2264,2632562,2218340,414222,0.843,OVO,1,15,35,0.25,1.15,0.15
+BUDU00140,Mira Pratama,P,30,1994-05-15,A,Kelas A (Kaya),Investor,Denpasar,Kota Besar,900000,-8.6646,115.5533,31943215,15251464,16691751,0.477,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00141,Clara Lubis,P,36,1988-07-12,C,Kelas C (Menengah),Pegawai Swasta,Denpasar,Kota Besar,900000,-9.0097,115.2706,5545165,4402413,1142752,0.794,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00142,Nanang Mahendra,L,24,2000-10-21,D,Kelas D (Menengah Bawah),Admin Kantor,Cirebon,Kota Kecil,320000,-6.8766,108.8361,2599606,2320912,278694,0.893,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00143,Firmansyah Harahap,L,31,1993-03-23,B,Kelas B (Menengah Atas),Engineer Senior,Bekasi,Metropolitan,2700000,-6.3666,106.9382,13114147,6613494,6500653,0.504,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00144,Afifah Iskandar,P,18,2006-06-14,E,Kelas E (Miskin),Asisten Rumah Tangga,Magelang,Kota Kecil,130000,-7.5774,110.592,1048845,970599,78246,0.925,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00145,Hana Mahendra,P,34,1990-03-28,C,Kelas C (Menengah),Staf Administrasi,Palembang,Kota Besar,1700000,-3.3271,104.9708,6300197,4760995,1539202,0.756,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00146,Hafizh Simatupang,L,31,1993-07-01,B,Kelas B (Menengah Atas),Manajer,Medan,Kota Besar,2400000,3.8966,98.9388,8151805,4977829,3173976,0.611,OVO,1,40,90,0.55,1.5,0.35
+BUDU00147,Intan Sihombing,P,36,1988-12-11,C,Kelas C (Menengah),PNS Golongan II,Bogor,Metropolitan,1100000,-6.9126,106.6682,5959945,4494129,1465816,0.754,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00148,Maya Gunawan,P,43,1981-03-21,C,Kelas C (Menengah),Wirausaha Kecil,Bekasi,Metropolitan,2700000,-5.8622,107.3315,3224544,2243443,981101,0.696,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00149,Julia Purwanto,P,26,1998-07-18,A,Kelas A (Kaya),Dokter Spesialis,Semarang,Kota Besar,1800000,-6.7277,110.0792,138220724,51093402,87127322,0.37,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00150,Rudi Simatupang,L,29,1995-10-22,B,Kelas B (Menengah Atas),Arsitek,Semarang,Kota Besar,1800000,-6.7061,110.8951,10402173,5850546,4551627,0.562,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00151,Hafizh Harahap,L,39,1985-11-25,B,Kelas B (Menengah Atas),Pengacara,Medan,Kota Besar,2400000,3.4425,99.072,11496965,6749640,4747325,0.587,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00152,Ella Manurung,P,33,1991-09-05,E,Kelas E (Miskin),Buruh Tani,Desa Sejahtera,Desa,4100,-5.9748,106.4912,1486907,1381498,105409,0.929,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00153,Fajar Kurniawan,L,39,1985-01-17,D,Kelas D (Menengah Bawah),Karyawan Toko,Jombang,Kota Kecil,190000,-7.2561,112.2777,2970775,2472868,497907,0.832,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00154,Intan Wijaya,P,21,2003-03-07,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Panyingkiran,Desa,3700,-5.8936,106.7592,2318147,1840529,477618,0.794,OVO,1,15,35,0.25,1.15,0.15
+BUDU00155,Samsul Wibowo,L,24,2000-05-15,D,Kelas D (Menengah Bawah),Admin Kantor,Medan,Kota Besar,2400000,4.0418,98.7324,2819372,2145781,673591,0.761,OVO,1,15,35,0.25,1.15,0.15
+BUDU00156,Rahma Yulianto,P,20,2004-04-23,C,Kelas C (Menengah),Staf Administrasi,Medan,Kota Besar,2400000,3.5363,98.3678,6288412,4170288,2118124,0.663,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00157,Ella Hidayat,P,44,1980-08-18,B,Kelas B (Menengah Atas),Dosen,Tangerang,Metropolitan,2100000,-6.5042,106.7537,9053412,4700768,4352644,0.519,OVO,1,40,90,0.55,1.5,0.35
+BUDU00158,Budi Hidayat,L,56,1968-12-16,A,Kelas A (Kaya),CEO/Direktur,Tangerang Selatan,Metropolitan,1700000,-5.8189,107.0673,39773556,15971550,23802006,0.402,Kartu Debit,1,50,150,0.65,1.7,0.45
+BUDU00159,Rudi Simatupang,L,47,1977-04-28,A,Kelas A (Kaya),Dokter Spesialis,Depok,Metropolitan,2200000,-6.2156,106.3872,134650608,69624788,65025820,0.517,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00160,Lina Tobing,P,28,1996-06-18,E,Kelas E (Miskin),Buruh Pabrik,Jombang,Kota Kecil,190000,-7.5766,112.5505,877523,839354,38169,0.957,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00161,Intan Nasution,P,25,1999-10-01,B,Kelas B (Menengah Atas),Dokter,Bandung,Kota Besar,2500000,-6.6778,107.3104,10118363,6123959,3994404,0.605,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00162,Tari Simatupang,P,49,1975-03-01,D,Kelas D (Menengah Bawah),SPG/SPB,Surabaya,Kota Besar,3100000,-7.4426,112.2559,1689397,1332293,357104,0.789,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00163,Deni Purwanto,L,46,1978-06-15,B,Kelas B (Menengah Atas),Engineer Senior,Makassar,Kota Besar,1500000,-5.2394,119.6919,9764376,6264005,3500371,0.642,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00164,Bella Pasaribu,P,46,1978-11-23,B,Kelas B (Menengah Atas),Arsitek,Palembang,Kota Besar,1700000,-3.0157,105.14,9198053,5088274,4109779,0.553,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00165,Vino Panggabean,L,22,2002-06-23,B,Kelas B (Menengah Atas),Manajer,Tangerang Selatan,Metropolitan,1700000,-5.8759,106.9644,8656901,6020439,2636462,0.695,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00166,Clara Sanjaya,P,23,2001-05-04,C,Kelas C (Menengah),Guru Tetap,Tasikmalaya,Kota Kecil,700000,-7.3818,108.0196,3386137,2200303,1185834,0.65,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00167,Rina Rajasa,P,41,1983-09-14,C,Kelas C (Menengah),Staf Administrasi,Bogor,Metropolitan,1100000,-6.2589,106.5913,4361623,3572153,789470,0.819,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00168,Wulan Harahap,P,28,1996-12-01,B,Kelas B (Menengah Atas),Arsitek,Jakarta,Metropolitan,10500000,-6.0396,107.1749,16588354,7569025,9019329,0.456,OVO,1,40,90,0.55,1.5,0.35
+BUDU00169,Hadi Wibowo,L,34,1990-10-20,C,Kelas C (Menengah),Guru Tetap,Medan,Kota Besar,2400000,3.5404,98.961,4773520,3402183,1371337,0.713,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00170,Deni Siregar,L,27,1997-08-02,E,Kelas E (Miskin),Buruh Tani,Yogyakarta,Kota Besar,420000,-7.6615,109.9404,1131027,1050192,80835,0.929,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00171,Nanang Santoso,L,34,1990-01-03,B,Kelas B (Menengah Atas),Dosen,Bogor,Metropolitan,1100000,-6.6228,106.8969,9549270,4315468,5233802,0.452,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00172,Erwin Manurung,L,32,1992-05-17,D,Kelas D (Menengah Bawah),Teknisi,Pekalongan,Kota Kecil,310000,-6.4568,109.5723,1827764,1536002,291762,0.84,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00173,Yanti Pratama,P,40,1984-03-11,B,Kelas B (Menengah Atas),Arsitek,Bandung,Kota Besar,2500000,-7.0276,107.849,8709358,5473903,3235455,0.629,OVO,1,40,90,0.55,1.5,0.35
+BUDU00174,Wahyu Iskandar,L,43,1981-05-08,C,Kelas C (Menengah),PNS Golongan II,Kediri,Kota Kecil,320000,-8.2759,112.3828,6451522,4415709,2035813,0.684,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00175,Oki Rajasa,L,32,1992-01-01,C,Kelas C (Menengah),Pegawai Swasta,Bandung,Kota Besar,2500000,-6.4758,107.7877,4616958,3672183,944775,0.795,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00176,Eko Iskandar,L,41,1983-04-06,C,Kelas C (Menengah),PNS Golongan II,Tangerang Selatan,Metropolitan,1700000,-5.9577,107.2017,3482233,2412657,1069576,0.693,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00177,Kevin Manurung,L,47,1977-01-25,D,Kelas D (Menengah Bawah),Admin Kantor,Semarang,Kota Besar,1800000,-7.1058,110.7721,2593760,2080386,513374,0.802,OVO,1,15,35,0.25,1.15,0.15
+BUDU00178,Firmansyah Sinaga,L,45,1979-12-12,B,Kelas B (Menengah Atas),Dokter,Yogyakarta,Kota Besar,420000,-7.4059,109.8818,18916258,11849077,7067181,0.626,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00179,Zulfi Prasetyo,L,35,1989-05-24,C,Kelas C (Menengah),Staf Administrasi,Depok,Metropolitan,2200000,-6.8771,106.94,6047627,4141974,1905653,0.685,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00180,Widya Setiawan,P,36,1988-04-24,B,Kelas B (Menengah Atas),Wirausaha Menengah,Tangerang,Metropolitan,2100000,-6.5028,107.1122,19844467,11437632,8406835,0.576,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00181,Yanto Sihombing,L,30,1994-02-06,A,Kelas A (Kaya),Investor,Tangerang Selatan,Metropolitan,1700000,-6.6567,107.0459,118307769,40720353,77587416,0.344,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00182,Rini Tobing,P,30,1994-04-17,B,Kelas B (Menengah Atas),Dosen,Semarang,Kota Besar,1800000,-6.5131,110.3982,12011654,7693170,4318484,0.64,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00183,Nanang Mahendra,L,29,1995-03-26,B,Kelas B (Menengah Atas),Engineer Senior,Semarang,Kota Besar,1800000,-7.2582,110.751,7749418,4611810,3137608,0.595,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00184,Firmansyah Wahyudi,L,25,1999-01-03,E,Kelas E (Miskin),Asisten Rumah Tangga,Jombang,Kota Kecil,190000,-7.2553,112.1903,1416220,1334667,81553,0.942,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00185,Yanto Mahendra,L,42,1982-12-22,B,Kelas B (Menengah Atas),Manajer,Tangerang,Metropolitan,2100000,-6.6125,106.821,8698480,5967249,2731231,0.686,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00186,Putra Sinaga,L,36,1988-07-26,E,Kelas E (Miskin),Buruh Tani,Blitar,Kota Kecil,150000,-8.1571,112.2744,1143992,1105415,38577,0.966,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00187,Fajar Kurniawan,L,43,1981-09-08,C,Kelas C (Menengah),Sales,Bandung,Kota Besar,2500000,-7.1191,107.3595,6415847,4482304,1933543,0.699,DANA,1,25,60,0.4,1.3,0.25
+BUDU00188,Okta Hartono,P,38,1986-06-22,C,Kelas C (Menengah),Staf Administrasi,Surabaya,Kota Besar,3100000,-7.125,112.8966,5890827,3895764,1995063,0.661,DANA,1,25,60,0.4,1.3,0.25
+BUDU00189,Hasna Yulianto,P,49,1975-08-26,D,Kelas D (Menengah Bawah),Teknisi,Kediri,Kota Kecil,320000,-8.2723,111.853,2742703,2408320,334383,0.878,OVO,1,15,35,0.25,1.15,0.15
+BUDU00190,Siti Firmansyah,P,41,1983-08-23,B,Kelas B (Menengah Atas),Dokter,Yogyakarta,Kota Besar,420000,-7.6082,109.894,13339161,6372778,6966383,0.478,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00191,Sinta Sutrisno,P,36,1988-02-08,B,Kelas B (Menengah Atas),Pengacara,Tangerang,Metropolitan,2100000,-5.9631,106.1904,8468111,5222399,3245712,0.617,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00192,Dewi Hidayat,P,27,1997-08-23,D,Kelas D (Menengah Bawah),Pedagang Warung,Tegal,Kota Kecil,285000,-6.5272,109.1892,2859166,2318293,540873,0.811,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00193,Maman Lubis,L,41,1983-10-10,C,Kelas C (Menengah),Staf Administrasi,Semarang,Kota Besar,1800000,-6.8106,110.1622,6285727,4190711,2095016,0.667,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00194,Rina Pratama,P,47,1977-08-18,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Makmur,Desa,3200,-6.5662,106.9296,2102168,1613345,488823,0.767,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00195,Bella Sinaga,P,36,1988-01-23,D,Kelas D (Menengah Bawah),Teknisi,Pekalongan,Kota Kecil,310000,-7.1418,109.9162,2374899,1833631,541268,0.772,Transfer Bank,0,15,35,0.25,1.15,0.15
+BUDU00196,Rina Firmansyah,P,42,1982-03-13,C,Kelas C (Menengah),PNS Golongan II,Yogyakarta,Kota Besar,420000,-7.3315,109.9588,4689538,3396250,1293288,0.724,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00197,Sari Lubis,P,33,1991-11-13,A,Kelas A (Kaya),Artis/Influencer,Depok,Metropolitan,2200000,-5.9517,106.9967,43764940,17183078,26581862,0.393,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00198,Ayu Prasetyo,P,31,1993-07-28,C,Kelas C (Menengah),Staf Administrasi,Yogyakarta,Kota Besar,420000,-8.0867,110.2382,6463280,5099337,1363943,0.789,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00199,Uci Tambunan,P,41,1983-09-09,D,Kelas D (Menengah Bawah),Teknisi,Palembang,Kota Besar,1700000,-3.2604,104.9532,2804644,2547282,257362,0.908,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00200,Maya Nasution,P,43,1981-06-22,E,Kelas E (Miskin),Ojek Konvensional,Desa Sejahtera,Desa,4100,-6.3322,106.3581,1205422,1040258,165164,0.863,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00201,Januar Panggabean,L,40,1984-01-04,C,Kelas C (Menengah),Perawat,Purwokerto,Kota Kecil,290000,-7.5173,109.2734,6795383,5160879,1634504,0.759,OVO,1,25,60,0.4,1.3,0.25
+BUDU00202,Wahyu Budiman,L,43,1981-07-28,B,Kelas B (Menengah Atas),Dosen,Semarang,Kota Besar,1800000,-6.5172,110.0459,10474284,5715242,4759042,0.546,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00203,Agus Sinaga,L,28,1996-09-01,D,Kelas D (Menengah Bawah),Guru Honorer,Jombang,Kota Kecil,190000,-7.6761,111.7303,2608539,2346311,262228,0.899,OVO,1,15,35,0.25,1.15,0.15
+BUDU00204,Putri Pasaribu,P,34,1990-08-08,C,Kelas C (Menengah),PNS Golongan II,Blitar,Kota Kecil,150000,-8.5326,111.8968,3828379,2695746,1132633,0.704,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00205,Rina Manurung,P,54,1970-07-05,E,Kelas E (Miskin),Buruh Pabrik,Pekalongan,Kota Kecil,310000,-7.0229,109.4007,1171516,1124814,46702,0.96,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00206,Irwan Hidayat,L,38,1986-12-11,D,Kelas D (Menengah Bawah),Driver Ojek Online,Magelang,Kota Kecil,130000,-7.6424,110.4427,1889857,1437377,452480,0.761,DANA,0,15,35,0.25,1.15,0.15
+BUDU00207,Mulyadi Wahyudi,L,19,2005-01-18,E,Kelas E (Miskin),Ojek Konvensional,Tegal,Kota Kecil,285000,-6.4071,109.2611,1011341,931501,79840,0.921,OVO,1,8,20,0.15,1.05,0.08
+BUDU00208,Bagas Rahayu,L,30,1994-12-13,C,Kelas C (Menengah),Sales,Yogyakarta,Kota Besar,420000,-7.3006,110.3967,3199916,2596213,603703,0.811,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00209,Intan Manurung,P,34,1990-12-11,D,Kelas D (Menengah Bawah),Karyawan Toko,Denpasar,Kota Besar,900000,-9.0974,115.3349,2188445,1913709,274736,0.874,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00210,Dhea Hartono,P,49,1975-07-08,D,Kelas D (Menengah Bawah),SPG/SPB,Magelang,Kota Kecil,130000,-7.7324,110.3583,1742507,1533072,209435,0.88,OVO,0,15,35,0.25,1.15,0.15
+BUDU00211,Vevi Saputra,P,43,1981-12-28,B,Kelas B (Menengah Atas),Arsitek,Bekasi,Metropolitan,2700000,-6.4132,107.3376,9972798,5120586,4852212,0.513,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00212,Putra Pratama,L,18,2006-04-09,D,Kelas D (Menengah Bawah),Teknisi,Surabaya,Kota Besar,3100000,-6.7642,112.297,1730710,1324725,405985,0.765,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00213,Kukuh Sihombing,L,28,1996-01-18,E,Kelas E (Miskin),Pedagang Kaki Lima,Desa Rawa Indah,Desa,6500,-6.3414,106.9566,1494709,1459835,34874,0.977,OVO,0,8,20,0.15,1.05,0.08
+BUDU00214,Bunga Setiawan,P,19,2005-01-22,E,Kelas E (Miskin),Nelayan,Desa Rawa Indah,Desa,6500,-6.2686,107.0192,1406739,1349282,57457,0.959,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00215,Agus Manurung,L,51,1973-05-14,E,Kelas E (Miskin),Buruh Tani,Cirebon,Kota Kecil,320000,-7.0273,108.6434,1346255,1150059,196196,0.854,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00216,Kevin Yulianto,L,31,1993-03-15,C,Kelas C (Menengah),PNS Golongan II,Makassar,Kota Besar,1500000,-4.921,119.7066,6243514,4454404,1789110,0.713,DANA,1,25,60,0.4,1.3,0.25
+BUDU00217,Tono Setiawan,L,28,1996-05-09,C,Kelas C (Menengah),Sales,Palembang,Kota Besar,1700000,-3.1139,104.9985,3000046,1806688,1193358,0.602,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00218,Fitri Purwanto,P,44,1980-06-19,C,Kelas C (Menengah),Perawat,Makassar,Kota Besar,1500000,-4.8886,119.5423,5652188,4277444,1374744,0.757,OVO,1,25,60,0.4,1.3,0.25
+BUDU00219,Hafizh Iskandar,L,28,1996-06-21,B,Kelas B (Menengah Atas),Pengacara,Yogyakarta,Kota Besar,420000,-8.2171,110.414,14052123,7268530,6783593,0.517,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00220,Dimas Saputra,L,31,1993-01-04,C,Kelas C (Menengah),Pegawai Swasta,Medan,Kota Besar,2400000,3.8542,98.2747,6796834,4335426,2461408,0.638,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00221,Andi Wibowo,L,50,1974-11-06,A,Kelas A (Kaya),Konsultan Senior,Bogor,Metropolitan,1100000,-6.2354,106.5801,139729287,40891934,98837353,0.293,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00222,Dewi Gunawan,P,40,1984-12-16,D,Kelas D (Menengah Bawah),Admin Kantor,Bandung,Kota Besar,2500000,-7.1055,107.6016,2343109,1910431,432678,0.815,OVO,0,15,35,0.25,1.15,0.15
+BUDU00223,Afifah Sanjaya,P,44,1980-02-23,E,Kelas E (Miskin),Nelayan,Purwokerto,Kota Kecil,290000,-7.2154,109.2768,964481,880276,84205,0.913,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00224,Tiara Sutrisno,P,32,1992-11-11,E,Kelas E (Miskin),Ojek Konvensional,Desa Cikaret,Desa,2800,-6.075,106.6165,1405707,1240622,165085,0.883,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00225,Zara Sutrisno,P,34,1990-04-16,C,Kelas C (Menengah),Pegawai Swasta,Tegal,Kota Kecil,285000,-7.0626,108.9932,3651260,2536599,1114661,0.695,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00226,Rahma Sutrisno,P,40,1984-11-02,B,Kelas B (Menengah Atas),Analis Keuangan,Bandung,Kota Besar,2500000,-6.7758,107.7906,9670218,6239698,3430520,0.645,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00227,Dinda Tobing,P,31,1993-10-09,B,Kelas B (Menengah Atas),Pengacara,Makassar,Kota Besar,1500000,-4.6706,119.0358,19744793,10877411,8867382,0.551,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00228,Bunga Sihombing,P,32,1992-07-27,C,Kelas C (Menengah),PNS Golongan II,Medan,Kota Besar,2400000,3.3637,98.4597,5421930,3424855,1997075,0.632,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00229,Januar Harahap,L,26,1998-06-20,C,Kelas C (Menengah),Perawat,Denpasar,Kota Besar,900000,-8.6171,115.3542,5396178,3535557,1860621,0.655,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00230,Intan Rahayu,P,26,1998-04-27,C,Kelas C (Menengah),Wirausaha Kecil,Jakarta,Metropolitan,10500000,-6.5917,106.7947,5390673,4107896,1282777,0.762,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00231,Samsul Firmansyah,L,41,1983-09-13,B,Kelas B (Menengah Atas),Dokter,Semarang,Kota Besar,1800000,-6.5569,110.4623,12305971,6765316,5540655,0.55,OVO,1,40,90,0.55,1.5,0.35
+BUDU00232,Dimas Rahayu,L,49,1975-01-10,B,Kelas B (Menengah Atas),Manajer,Medan,Kota Besar,2400000,3.9853,98.2565,7108159,3658412,3449747,0.515,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00233,Julia Sutrisno,P,33,1991-01-11,C,Kelas C (Menengah),Wirausaha Kecil,Magelang,Kota Kecil,130000,-7.7757,110.3717,5550752,4232554,1318198,0.763,DANA,1,25,60,0.4,1.3,0.25
+BUDU00234,Hendra Mahendra,L,20,2004-02-03,E,Kelas E (Miskin),Pedagang Kaki Lima,Cirebon,Kota Kecil,320000,-6.8598,108.3853,950741,923409,27332,0.971,OVO,0,8,20,0.15,1.05,0.08
+BUDU00235,Fery Budiman,L,38,1986-08-27,C,Kelas C (Menengah),Pegawai Swasta,Tasikmalaya,Kota Kecil,700000,-6.9298,108.3027,5085796,4019521,1066275,0.79,OVO,1,25,60,0.4,1.3,0.25
+BUDU00236,Bella Nasution,P,33,1991-10-11,B,Kelas B (Menengah Atas),Analis Keuangan,Tangerang,Metropolitan,2100000,-6.1352,106.2846,15293405,10035315,5258090,0.656,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00237,Irwan Purwanto,L,36,1988-07-11,D,Kelas D (Menengah Bawah),Pedagang Warung,Denpasar,Kota Besar,900000,-8.8895,115.4256,2236643,1738126,498517,0.777,OVO,1,15,35,0.25,1.15,0.15
+BUDU00238,Fery Rajasa,L,39,1985-07-03,D,Kelas D (Menengah Bawah),Admin Kantor,Medan,Kota Besar,2400000,3.901,98.1802,2721188,2288639,432549,0.841,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00239,Udin Situmorang,L,44,1980-07-05,D,Kelas D (Menengah Bawah),Teknisi,Kediri,Kota Kecil,320000,-8.0847,111.8298,1990113,1662804,327309,0.836,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00240,Cantika Lubis,P,44,1980-07-16,D,Kelas D (Menengah Bawah),SPG/SPB,Pekalongan,Kota Kecil,310000,-7.0927,109.6345,2622533,2069262,553271,0.789,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00241,Lukman Nasution,L,44,1980-06-12,E,Kelas E (Miskin),Pedagang Kaki Lima,Desa Sukamaju,Desa,5000,-6.3548,106.7142,1160453,1082126,78327,0.933,OVO,1,8,20,0.15,1.05,0.08
+BUDU00242,Nanang Rajasa,L,26,1998-07-23,C,Kelas C (Menengah),Guru Tetap,Pekalongan,Kota Kecil,310000,-7.169,110.1352,3974917,2748538,1226379,0.691,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00243,Sari Santoso,P,23,2001-02-19,C,Kelas C (Menengah),Pegawai Swasta,Makassar,Kota Besar,1500000,-5.1152,119.0481,5186741,4176820,1009921,0.805,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00244,Ayu Kurniawan,P,21,2003-10-17,C,Kelas C (Menengah),Pegawai Swasta,Denpasar,Kota Besar,900000,-8.7512,114.7307,5715590,4275914,1439676,0.748,DANA,1,25,60,0.4,1.3,0.25
+BUDU00245,Dhea Sinaga,P,37,1987-09-22,C,Kelas C (Menengah),Pegawai Swasta,Bandung,Kota Besar,2500000,-6.9524,107.9933,5893774,3968857,1924917,0.673,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00246,Oki Sutrisno,L,45,1979-03-11,B,Kelas B (Menengah Atas),Pengacara,Yogyakarta,Kota Besar,420000,-8.2801,110.1504,7984096,5344056,2640040,0.669,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00247,Uci Wibowo,P,20,2004-09-17,D,Kelas D (Menengah Bawah),Guru Honorer,Pekalongan,Kota Kecil,310000,-6.9551,110.1725,1611158,1227542,383616,0.762,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00248,Rina Wahyudi,P,35,1989-11-27,C,Kelas C (Menengah),Staf Administrasi,Yogyakarta,Kota Besar,420000,-7.8116,109.8748,4516906,2813171,1703735,0.623,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00249,Rini Prasetyo,P,37,1987-07-26,E,Kelas E (Miskin),Buruh Pabrik,Desa Sejahtera,Desa,4100,-6.0795,107.0423,1330951,1261072,69879,0.947,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00250,Dewi Nasution,P,40,1984-04-10,B,Kelas B (Menengah Atas),Dokter,Bekasi,Metropolitan,2700000,-6.428,106.9046,14524487,7270429,7254058,0.501,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00251,Andi Simatupang,L,45,1979-10-12,D,Kelas D (Menengah Bawah),SPG/SPB,Cirebon,Kota Kecil,320000,-7.0983,108.4962,2618630,2085034,533596,0.796,OVO,0,15,35,0.25,1.15,0.15
+BUDU00252,Januar Susanto,L,35,1989-01-13,C,Kelas C (Menengah),Perawat,Palembang,Kota Besar,1700000,-3.2574,104.8707,6303670,4859461,1444209,0.771,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00253,Rizki Panggabean,L,24,2000-05-20,B,Kelas B (Menengah Atas),Dosen,Bandung,Kota Besar,2500000,-6.9535,107.3831,11788513,6022152,5766361,0.511,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00254,Rizki Situmorang,L,42,1982-11-24,C,Kelas C (Menengah),Guru Tetap,Bogor,Metropolitan,1100000,-6.2717,107.1509,4301162,3249547,1051615,0.756,DANA,1,25,60,0.4,1.3,0.25
+BUDU00255,Ulfa Tambunan,P,53,1971-10-03,A,Kelas A (Kaya),Konsultan Senior,Bogor,Metropolitan,1100000,-6.779,107.2672,149691678,72618648,77073030,0.485,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00256,Gilang Siregar,L,18,2006-08-18,C,Kelas C (Menengah),Guru Tetap,Denpasar,Kota Besar,900000,-8.3334,115.3321,5824634,4026333,1798301,0.691,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00257,Fajar Tobing,L,38,1986-11-02,C,Kelas C (Menengah),Guru Tetap,Semarang,Kota Besar,1800000,-6.9237,110.7887,5829588,3936250,1893338,0.675,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00258,Rudi Nugroho,L,31,1993-06-17,C,Kelas C (Menengah),PNS Golongan II,Tangerang Selatan,Metropolitan,1700000,-6.7334,106.6652,4844667,3827292,1017375,0.79,OVO,1,25,60,0.4,1.3,0.25
+BUDU00259,Elisa Setiawan,P,20,2004-11-25,E,Kelas E (Miskin),Buruh Tani,Desa Sejahtera,Desa,4100,-5.9522,107.1103,1254047,1140145,113902,0.909,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00260,Wati Harahap,P,36,1988-01-23,C,Kelas C (Menengah),Guru Tetap,Yogyakarta,Kota Besar,420000,-7.4928,110.8304,3685736,2984627,701109,0.81,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00261,Widya Wijaya,P,47,1977-10-11,B,Kelas B (Menengah Atas),Pengacara,Palembang,Kota Besar,1700000,-2.7735,104.3419,14706922,8849328,5857594,0.602,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00262,Dhea Kurniawan,P,36,1988-11-15,B,Kelas B (Menengah Atas),Dokter,Denpasar,Kota Besar,900000,-8.884,115.5152,15884899,8006891,7878008,0.504,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00263,Putri Wibowo,P,40,1984-04-28,C,Kelas C (Menengah),Wirausaha Kecil,Jakarta,Metropolitan,10500000,-6.0395,107.2375,3268066,2238074,1029992,0.685,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00264,Firmansyah Harahap,L,20,2004-08-10,E,Kelas E (Miskin),Buruh Pabrik,Desa Cikaret,Desa,2800,-5.7269,107.0593,852374,760670,91704,0.892,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00265,Fery Iskandar,L,29,1995-04-13,D,Kelas D (Menengah Bawah),Pedagang Warung,Pekalongan,Kota Kecil,310000,-6.4904,109.9521,1593847,1217803,376044,0.764,DANA,1,15,35,0.25,1.15,0.15
+BUDU00266,Zulfi Sinaga,L,22,2002-06-10,C,Kelas C (Menengah),Sales,Purwokerto,Kota Kecil,290000,-7.9185,108.9167,5022035,3520991,1501044,0.701,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00267,Cantika Mahendra,P,32,1992-09-16,D,Kelas D (Menengah Bawah),SPG/SPB,Bandung,Kota Besar,2500000,-6.5553,107.433,2320856,2042533,278323,0.88,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00268,Rudi Kusuma,L,41,1983-09-12,A,Kelas A (Kaya),Partner Law Firm,Denpasar,Kota Besar,900000,-9.0535,115.5123,82813512,31982328,50831184,0.386,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00269,Irwan Gunawan,L,44,1980-06-19,B,Kelas B (Menengah Atas),Analis Keuangan,Tangerang Selatan,Metropolitan,1700000,-6.142,106.4402,16571117,10529299,6041818,0.635,OVO,1,40,90,0.55,1.5,0.35
+BUDU00270,Zulfi Simatupang,L,45,1979-03-13,D,Kelas D (Menengah Bawah),Pedagang Warung,Yogyakarta,Kota Besar,420000,-7.3685,110.8394,2109835,1868500,241335,0.886,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00271,Candra Tobing,L,43,1981-04-25,D,Kelas D (Menengah Bawah),Pedagang Warung,Tegal,Kota Kecil,285000,-6.4953,108.8899,1537856,1310327,227529,0.852,OVO,1,15,35,0.25,1.15,0.15
+BUDU00272,Maman Firmansyah,L,34,1990-01-24,E,Kelas E (Miskin),Nelayan,Makassar,Kota Besar,1500000,-4.703,119.5426,1140291,1038633,101658,0.911,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00273,Zara Wijaya,P,38,1986-01-07,C,Kelas C (Menengah),Wirausaha Kecil,Palembang,Kota Besar,1700000,-2.6485,104.4461,6740688,4111817,2628871,0.61,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00274,Kevin Purnomo,L,30,1994-12-21,C,Kelas C (Menengah),Sales,Tasikmalaya,Kota Kecil,700000,-6.9976,108.6467,3200972,1938169,1262803,0.605,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00275,Kevin Nugroho,L,37,1987-09-25,C,Kelas C (Menengah),Perawat,Tangerang,Metropolitan,2100000,-6.2904,106.9416,3756556,2723737,1032819,0.725,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00276,Ahmad Nasution,L,33,1991-07-24,C,Kelas C (Menengah),Pegawai Swasta,Tegal,Kota Kecil,285000,-6.62,109.0713,4549290,3148509,1400781,0.692,OVO,1,25,60,0.4,1.3,0.25
+BUDU00277,Andi Sutrisno,L,38,1986-11-17,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Cikaret,Desa,2800,-5.8519,107.2472,2480075,2244960,235115,0.905,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00278,Dimas Gunawan,L,40,1984-07-28,D,Kelas D (Menengah Bawah),Admin Kantor,Purwokerto,Kota Kecil,290000,-7.7793,109.0557,2985163,2662399,322764,0.892,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00279,Lutfi Purwanto,L,31,1993-11-09,A,Kelas A (Kaya),Konsultan Senior,Tangerang Selatan,Metropolitan,1700000,-6.3379,107.1236,51198617,20033408,31165209,0.391,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00280,Afifah Saputra,P,22,2002-08-05,C,Kelas C (Menengah),Wirausaha Kecil,Jakarta,Metropolitan,10500000,-6.7019,106.558,3459187,2621256,837931,0.758,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00281,Hadi Lubis,L,30,1994-07-16,B,Kelas B (Menengah Atas),Engineer Senior,Palembang,Kota Besar,1700000,-2.5359,104.8792,10531231,5054704,5476527,0.48,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00282,Widya Wibowo,P,43,1981-04-15,C,Kelas C (Menengah),Guru Tetap,Jombang,Kota Kecil,190000,-7.6577,112.084,4735375,3604852,1130523,0.761,OVO,1,25,60,0.4,1.3,0.25
+BUDU00283,Lina Yulianto,P,33,1991-07-03,C,Kelas C (Menengah),Wirausaha Kecil,Semarang,Kota Besar,1800000,-7.4824,110.7469,4643428,2886922,1756506,0.622,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00284,Januar Tobing,L,26,1998-11-16,E,Kelas E (Miskin),Buruh Pabrik,Purwokerto,Kota Kecil,290000,-7.2629,109.2748,1348450,1277334,71116,0.947,OVO,0,8,20,0.15,1.05,0.08
+BUDU00285,Zulfi Simatupang,L,25,1999-10-21,C,Kelas C (Menengah),Perawat,Magelang,Kota Kecil,130000,-7.9524,110.2413,3960282,2911098,1049184,0.735,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00286,Cantika Nasution,P,41,1983-06-06,D,Kelas D (Menengah Bawah),Karyawan Toko,Palembang,Kota Besar,1700000,-2.6704,104.6036,2843826,2306107,537719,0.811,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00287,Wati Hidayat,P,44,1980-06-27,B,Kelas B (Menengah Atas),Wirausaha Menengah,Yogyakarta,Kota Besar,420000,-7.363,109.9881,17159573,9526828,7632745,0.555,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00288,Julia Harahap,P,24,2000-11-18,C,Kelas C (Menengah),Staf Administrasi,Palembang,Kota Besar,1700000,-2.6312,104.4994,6884603,5058910,1825693,0.735,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00289,Ayu Yulianto,P,37,1987-04-03,A,Kelas A (Kaya),Notaris,Yogyakarta,Kota Besar,420000,-7.9759,110.3077,72417008,20404382,52012626,0.282,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00290,Joko Prasetyo,L,20,2004-04-08,D,Kelas D (Menengah Bawah),Teknisi,Palembang,Kota Besar,1700000,-3.3198,104.4955,1735219,1395130,340089,0.804,OVO,1,15,35,0.25,1.15,0.15
+BUDU00291,Kukuh Wijaya,L,56,1968-08-12,A,Kelas A (Kaya),Artis/Influencer,Jakarta,Metropolitan,10500000,-6.4231,106.437,139134670,63060204,76074466,0.453,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00292,Dhea Lubis,P,40,1984-06-24,C,Kelas C (Menengah),PNS Golongan II,Semarang,Kota Besar,1800000,-6.7251,110.4208,6378663,4506427,1872236,0.706,DANA,1,25,60,0.4,1.3,0.25
+BUDU00293,Prio Rahayu,L,26,1998-11-03,C,Kelas C (Menengah),Pegawai Swasta,Yogyakarta,Kota Besar,420000,-7.3299,110.2647,6313952,4979070,1334882,0.789,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00294,Budi Harahap,L,32,1992-07-11,B,Kelas B (Menengah Atas),Manajer,Jakarta,Metropolitan,10500000,-6.1053,107.0051,12907241,6790798,6116443,0.526,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00295,Hendra Lubis,L,31,1993-12-02,D,Kelas D (Menengah Bawah),Pedagang Warung,Jombang,Kota Kecil,190000,-7.2506,112.4531,1756404,1322257,434147,0.753,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00296,Sinta Saputra,P,24,2000-11-21,C,Kelas C (Menengah),Staf Administrasi,Jakarta,Metropolitan,10500000,-6.4773,107.214,6339788,5096692,1243096,0.804,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00297,Nanda Yulianto,L,18,2006-10-16,D,Kelas D (Menengah Bawah),Admin Kantor,Denpasar,Kota Besar,900000,-8.9226,115.4103,1516953,1278054,238899,0.843,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00298,Putri Kurniawan,P,22,2002-07-14,D,Kelas D (Menengah Bawah),Teknisi,Desa Rawa Indah,Desa,6500,-5.8676,107.1056,1791671,1370432,421239,0.765,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00299,Ahmad Nugroho,L,28,1996-07-16,E,Kelas E (Miskin),Nelayan,Magelang,Kota Kecil,130000,-7.4872,110.1598,1032398,951725,80673,0.922,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00300,Ivan Sihombing,L,47,1977-04-25,D,Kelas D (Menengah Bawah),Pedagang Warung,Pekalongan,Kota Kecil,310000,-7.263,109.3466,1902261,1652148,250113,0.869,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00301,Mira Firmansyah,P,46,1978-04-15,D,Kelas D (Menengah Bawah),SPG/SPB,Purwokerto,Kota Kecil,290000,-7.2735,109.6176,1945930,1732149,213781,0.89,DANA,0,15,35,0.25,1.15,0.15
+BUDU00302,Galih Prasetyo,L,20,2004-04-12,D,Kelas D (Menengah Bawah),Karyawan Toko,Surabaya,Kota Besar,3100000,-7.2529,112.3694,1621844,1375692,246152,0.848,OVO,0,15,35,0.25,1.15,0.15
+BUDU00303,Dimas Wijaya,L,34,1990-10-02,B,Kelas B (Menengah Atas),Arsitek,Tangerang Selatan,Metropolitan,1700000,-6.7632,106.64,15044037,8861655,6182382,0.589,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00304,Hadi Tambunan,L,35,1989-11-28,B,Kelas B (Menengah Atas),Arsitek,Bogor,Metropolitan,1100000,-6.3317,106.559,9535116,4436230,5098886,0.465,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00305,Galih Susanto,L,28,1996-10-27,D,Kelas D (Menengah Bawah),Pedagang Warung,Cirebon,Kota Kecil,320000,-6.6566,108.4814,2391362,1982179,409183,0.829,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00306,Mulyadi Prasetyo,L,47,1977-06-25,A,Kelas A (Kaya),CEO/Direktur,Jakarta,Metropolitan,10500000,-5.7119,106.5291,130428032,45596525,84831507,0.35,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00307,Dimas Mahendra,L,40,1984-07-28,C,Kelas C (Menengah),Sales,Semarang,Kota Besar,1800000,-7.3186,110.2162,6109821,4200713,1909108,0.688,DANA,1,25,60,0.4,1.3,0.25
+BUDU00308,Dinda Iskandar,P,36,1988-10-14,B,Kelas B (Menengah Atas),Wirausaha Menengah,Tangerang Selatan,Metropolitan,1700000,-5.9865,107.0734,8168399,5135307,3033092,0.629,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00309,Zara Firmansyah,P,37,1987-01-13,D,Kelas D (Menengah Bawah),Guru Honorer,Medan,Kota Besar,2400000,3.3488,98.9285,2519449,1944313,575136,0.772,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00310,Hadi Hartono,L,42,1982-07-14,C,Kelas C (Menengah),PNS Golongan II,Tasikmalaya,Kota Kecil,700000,-7.0191,108.6367,3509477,2796135,713342,0.797,OVO,1,25,60,0.4,1.3,0.25
+BUDU00311,Joko Wibowo,L,42,1982-05-03,C,Kelas C (Menengah),Wirausaha Kecil,Pekalongan,Kota Kecil,310000,-7.2965,109.9906,4426384,3206755,1219629,0.724,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00312,Vino Tambunan,L,28,1996-05-28,C,Kelas C (Menengah),Guru Tetap,Bandung,Kota Besar,2500000,-7.1026,107.2157,3902910,3180461,722449,0.815,DANA,1,25,60,0.4,1.3,0.25
+BUDU00313,Lutfi Yulianto,L,42,1982-03-01,C,Kelas C (Menengah),Perawat,Bandung,Kota Besar,2500000,-7.0148,107.7916,4280109,3222168,1057941,0.753,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00314,Wulan Sihombing,P,21,2003-04-13,D,Kelas D (Menengah Bawah),Teknisi,Medan,Kota Besar,2400000,3.5952,98.9024,1885115,1659796,225319,0.88,OVO,0,15,35,0.25,1.15,0.15
+BUDU00315,Samsul Sutrisno,L,25,1999-08-10,D,Kelas D (Menengah Bawah),Admin Kantor,Kediri,Kota Kecil,320000,-7.7309,112.0526,2285345,2092988,192357,0.916,OVO,0,15,35,0.25,1.15,0.15
+BUDU00316,Galih Manurung,L,25,1999-11-06,C,Kelas C (Menengah),PNS Golongan II,Pekalongan,Kota Kecil,310000,-7.1363,109.4831,5092852,4150404,942448,0.815,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00317,Agus Wahyudi,L,42,1982-04-25,C,Kelas C (Menengah),Perawat,Semarang,Kota Besar,1800000,-7.1346,110.8316,5801727,4660549,1141178,0.803,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00318,Rina Wahyudi,P,57,1967-07-14,A,Kelas A (Kaya),Dokter Spesialis,Jakarta,Metropolitan,10500000,-6.4579,106.466,59941065,21200405,38740660,0.354,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00319,Erwin Firmansyah,L,26,1998-03-28,B,Kelas B (Menengah Atas),Wirausaha Menengah,Tangerang Selatan,Metropolitan,1700000,-5.8457,107.0831,19970742,11057928,8912814,0.554,OVO,1,40,90,0.55,1.5,0.35
+BUDU00320,Widya Lubis,P,31,1993-07-22,D,Kelas D (Menengah Bawah),Teknisi,Desa Makmur,Desa,3200,-6.2226,106.9018,1703033,1363366,339667,0.801,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00321,Rina Gunawan,P,37,1987-06-26,D,Kelas D (Menengah Bawah),Teknisi,Desa Makmur,Desa,3200,-5.8281,106.877,1822374,1530967,291407,0.84,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00322,Bella Rajasa,P,26,1998-03-15,C,Kelas C (Menengah),PNS Golongan II,Makassar,Kota Besar,1500000,-5.5671,119.8723,6479751,4604174,1875577,0.711,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00323,Andi Nugroho,L,44,1980-02-26,D,Kelas D (Menengah Bawah),Karyawan Toko,Bandung,Kota Besar,2500000,-7.0944,108.1068,1915603,1449821,465782,0.757,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00324,Candra Prasetyo,L,18,2006-10-01,C,Kelas C (Menengah),Wirausaha Kecil,Palembang,Kota Besar,1700000,-3.454,105.2579,3596563,2337305,1259258,0.65,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00325,Andi Iskandar,L,28,1996-06-18,C,Kelas C (Menengah),Staf Administrasi,Tangerang,Metropolitan,2100000,-5.9181,107.0457,5397844,4213056,1184788,0.781,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00326,Sinta Tobing,P,23,2001-02-12,B,Kelas B (Menengah Atas),Analis Keuangan,Jakarta,Metropolitan,10500000,-6.6942,106.593,19159916,11520328,7639588,0.601,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00327,Rini Siregar,P,19,2005-07-05,D,Kelas D (Menengah Bawah),Guru Honorer,Kediri,Kota Kecil,320000,-7.9427,112.1365,2645538,2075133,570405,0.784,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00328,Januar Pratama,L,48,1976-03-08,D,Kelas D (Menengah Bawah),SPG/SPB,Desa Cikaret,Desa,2800,-6.6927,106.3258,1905929,1494845,411084,0.784,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00329,Agus Wibowo,L,42,1982-02-09,D,Kelas D (Menengah Bawah),Driver Ojek Online,Tasikmalaya,Kota Kecil,700000,-7.5202,108.3075,2854145,2202203,651942,0.772,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00330,Mulyadi Firmansyah,L,31,1993-11-06,E,Kelas E (Miskin),Buruh Pabrik,Surabaya,Kota Besar,3100000,-6.8294,112.3432,1279019,1198641,80378,0.937,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00331,Eko Sinaga,L,18,2006-01-04,C,Kelas C (Menengah),Sales,Purwokerto,Kota Kecil,290000,-6.9538,109.2924,3708329,2418288,1290041,0.652,OVO,1,25,60,0.4,1.3,0.25
+BUDU00332,Nanda Wijaya,L,39,1985-02-15,E,Kelas E (Miskin),Nelayan,Desa Makmur,Desa,3200,-6.0723,106.9475,1445703,1393166,52537,0.964,DANA,1,8,20,0.15,1.05,0.08
+BUDU00333,Mulyadi Santoso,L,33,1991-07-22,B,Kelas B (Menengah Atas),Engineer Senior,Bekasi,Metropolitan,2700000,-5.9244,106.7623,9351594,6154779,3196815,0.658,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00334,Vevi Manurung,P,46,1978-03-08,B,Kelas B (Menengah Atas),Engineer Senior,Denpasar,Kota Besar,900000,-8.6019,114.7718,14131649,7758279,6373370,0.549,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00335,Samsul Nasution,L,34,1990-05-25,E,Kelas E (Miskin),Ojek Konvensional,Desa Sejahtera,Desa,4100,-6.0308,106.7838,1086359,957836,128523,0.882,DANA,1,8,20,0.15,1.05,0.08
+BUDU00336,Yanto Kusuma,L,19,2005-08-19,C,Kelas C (Menengah),Wirausaha Kecil,Semarang,Kota Besar,1800000,-6.7939,110.2509,4419327,3425746,993581,0.775,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00337,Vina Lubis,P,26,1998-06-21,C,Kelas C (Menengah),Perawat,Surabaya,Kota Besar,3100000,-7.4693,112.2586,3243714,2119336,1124378,0.653,DANA,1,25,60,0.4,1.3,0.25
+BUDU00338,Andi Susanto,L,24,2000-03-01,E,Kelas E (Miskin),Nelayan,Tasikmalaya,Kota Kecil,700000,-7.489,107.8437,863995,736930,127065,0.853,OVO,1,8,20,0.15,1.05,0.08
+BUDU00339,Indri Hartono,P,38,1986-03-23,B,Kelas B (Menengah Atas),Manajer,Depok,Metropolitan,2200000,-6.6468,106.6216,12585753,6288612,6297141,0.5,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00340,Rizki Nasution,L,31,1993-09-16,D,Kelas D (Menengah Bawah),Admin Kantor,Surabaya,Kota Besar,3100000,-7.2394,112.4661,1765989,1506076,259913,0.853,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00341,Farida Purnomo,P,27,1997-01-16,D,Kelas D (Menengah Bawah),Karyawan Toko,Tegal,Kota Kecil,285000,-6.9109,109.2048,1999171,1505817,493354,0.753,DANA,0,15,35,0.25,1.15,0.15
+BUDU00342,Mulyadi Hidayat,L,35,1989-09-21,C,Kelas C (Menengah),Staf Administrasi,Bekasi,Metropolitan,2700000,-5.8758,106.9897,3003717,2404715,599002,0.801,OVO,1,25,60,0.4,1.3,0.25
+BUDU00343,Tono Iskandar,L,54,1970-07-21,E,Kelas E (Miskin),Pedagang Kaki Lima,Desa Sejahtera,Desa,4100,-5.8137,106.4514,1454180,1270545,183635,0.874,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00344,Zulfi Rahayu,L,37,1987-03-18,A,Kelas A (Kaya),Konsultan Senior,Bogor,Metropolitan,1100000,-6.8649,106.7113,46855532,24667283,22188249,0.526,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00345,Yuni Situmorang,P,31,1993-03-23,B,Kelas B (Menengah Atas),Manajer,Tangerang,Metropolitan,2100000,-6.2935,106.4794,8861097,4579892,4281205,0.517,OVO,1,40,90,0.55,1.5,0.35
+BUDU00346,Lutfi Sutrisno,L,46,1978-07-27,B,Kelas B (Menengah Atas),Dosen,Palembang,Kota Besar,1700000,-2.7858,105.2204,17206087,7974042,9232045,0.463,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00347,Firmansyah Rajasa,L,39,1985-06-14,C,Kelas C (Menengah),Guru Tetap,Pekalongan,Kota Kecil,310000,-6.7263,109.9271,4781638,3198162,1583476,0.669,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00348,Budi Tobing,L,42,1982-08-22,B,Kelas B (Menengah Atas),Manajer,Tangerang Selatan,Metropolitan,1700000,-6.4796,107.0701,10280091,6808242,3471849,0.662,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00349,Galih Pasaribu,L,24,2000-04-05,D,Kelas D (Menengah Bawah),Guru Honorer,Purwokerto,Kota Kecil,290000,-7.1285,109.7237,2266670,2023241,243429,0.893,OVO,1,15,35,0.25,1.15,0.15
+BUDU00350,Okta Tambunan,P,41,1983-08-20,C,Kelas C (Menengah),Guru Tetap,Palembang,Kota Besar,1700000,-3.15,104.3463,3450361,2549481,900880,0.739,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00351,Irwan Mahendra,L,42,1982-04-17,D,Kelas D (Menengah Bawah),Karyawan Toko,Desa Cikaret,Desa,2800,-6.1724,106.4716,1832275,1531669,300606,0.836,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00352,Doni Sihombing,L,24,2000-01-05,C,Kelas C (Menengah),Perawat,Makassar,Kota Besar,1500000,-5.1797,119.3434,5652584,4411592,1240992,0.78,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00353,Maman Hartono,L,24,2000-02-04,C,Kelas C (Menengah),Wirausaha Kecil,Palembang,Kota Besar,1700000,-3.1645,105.1211,5051498,3414326,1637172,0.676,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00354,Hendra Wijaya,L,18,2006-04-22,E,Kelas E (Miskin),Buruh Tani,Kediri,Kota Kecil,320000,-7.5637,112.2441,1390715,1259946,130769,0.906,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00355,Nanda Sihombing,L,31,1993-01-28,E,Kelas E (Miskin),Pedagang Kaki Lima,Pekalongan,Kota Kecil,310000,-7.2806,109.4079,964149,868636,95513,0.901,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00356,Ivan Iskandar,L,44,1980-01-15,B,Kelas B (Menengah Atas),Dokter,Tangerang Selatan,Metropolitan,1700000,-6.0087,106.6711,17051385,9040323,8011062,0.53,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00357,Budi Purwanto,L,44,1980-04-18,C,Kelas C (Menengah),PNS Golongan II,Palembang,Kota Besar,1700000,-2.6173,104.6013,3389467,2644297,745170,0.78,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00358,Widya Hidayat,P,27,1997-01-17,D,Kelas D (Menengah Bawah),Admin Kantor,Desa Sejahtera,Desa,4100,-6.2718,106.3614,1850351,1663288,187063,0.899,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00359,Mulyadi Mahendra,L,45,1979-02-23,B,Kelas B (Menengah Atas),Wirausaha Menengah,Denpasar,Kota Besar,900000,-9.0062,115.4958,19919191,10375946,9543245,0.521,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00360,Budi Nasution,L,35,1989-05-01,D,Kelas D (Menengah Bawah),Pedagang Warung,Tegal,Kota Kecil,285000,-7.2304,109.0803,2933172,2583553,349619,0.881,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00361,Gita Kurniawan,P,31,1993-07-12,A,Kelas A (Kaya),Partner Law Firm,Tangerang,Metropolitan,2100000,-5.9157,106.5857,57565908,17285313,40280595,0.3,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00362,Rizki Siregar,L,41,1983-04-01,D,Kelas D (Menengah Bawah),Driver Ojek Online,Pekalongan,Kota Kecil,310000,-6.5955,109.3958,1733659,1581895,151764,0.912,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00363,Kevin Firmansyah,L,31,1993-11-25,A,Kelas A (Kaya),Notaris,Bekasi,Metropolitan,2700000,-6.6262,107.4709,111774310,43977343,67796967,0.393,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00364,Mira Mahendra,P,34,1990-09-23,B,Kelas B (Menengah Atas),Dosen,Bekasi,Metropolitan,2700000,-5.8108,107.3099,16694329,10165366,6528963,0.609,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00365,Firmansyah Simatupang,L,44,1980-12-17,D,Kelas D (Menengah Bawah),Driver Ojek Online,Denpasar,Kota Besar,900000,-8.8706,115.3554,2138996,1863393,275603,0.871,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00366,Andi Firmansyah,L,34,1990-09-23,D,Kelas D (Menengah Bawah),Teknisi,Desa Makmur,Desa,3200,-6.3839,106.3557,2118549,1661717,456832,0.784,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00367,Erwin Gunawan,L,24,2000-09-02,C,Kelas C (Menengah),Wirausaha Kecil,Blitar,Kota Kecil,150000,-8.2906,112.5947,4589085,3340597,1248488,0.728,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00368,Nanda Tobing,L,32,1992-01-18,C,Kelas C (Menengah),Pegawai Swasta,Makassar,Kota Besar,1500000,-5.3199,119.3048,5915479,3554281,2361198,0.601,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00369,Hasna Purnomo,P,26,1998-11-15,C,Kelas C (Menengah),PNS Golongan II,Bekasi,Metropolitan,2700000,-5.8157,106.9134,3866316,2850762,1015554,0.737,OVO,1,25,60,0.4,1.3,0.25
+BUDU00370,Erwin Sutrisno,L,37,1987-01-12,B,Kelas B (Menengah Atas),Arsitek,Medan,Kota Besar,2400000,3.8915,99.0051,17553487,12028493,5524994,0.685,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00371,Zara Panggabean,P,40,1984-01-17,C,Kelas C (Menengah),Staf Administrasi,Blitar,Kota Kecil,150000,-7.8493,112.0256,3080092,2355843,724249,0.765,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00372,Agus Pasaribu,L,38,1986-04-03,C,Kelas C (Menengah),Pegawai Swasta,Medan,Kota Besar,2400000,3.7084,98.9778,6869084,4914904,1954180,0.716,DANA,1,25,60,0.4,1.3,0.25
+BUDU00373,Firmansyah Manurung,L,31,1993-04-08,C,Kelas C (Menengah),Staf Administrasi,Bogor,Metropolitan,1100000,-6.4338,107.1451,3157060,2489443,667617,0.789,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00374,Lukman Wijaya,L,54,1970-03-02,A,Kelas A (Kaya),Dokter Spesialis,Bogor,Metropolitan,1100000,-6.1997,106.4254,141774192,61564018,80210174,0.434,Kartu Debit,1,50,150,0.65,1.7,0.45
+BUDU00375,Dimas Sutrisno,L,28,1996-11-21,D,Kelas D (Menengah Bawah),Guru Honorer,Medan,Kota Besar,2400000,3.7756,98.4463,1632201,1372696,259505,0.841,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00376,Maman Manurung,L,19,2005-05-25,C,Kelas C (Menengah),Perawat,Bogor,Metropolitan,1100000,-6.6617,107.2591,5238978,3365685,1873293,0.642,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00377,Sari Gunawan,P,22,2002-03-01,E,Kelas E (Miskin),Buruh Pabrik,Cirebon,Kota Kecil,320000,-6.8523,108.6695,1195091,1034691,160400,0.866,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00378,Galih Nugroho,L,31,1993-08-26,C,Kelas C (Menengah),Staf Administrasi,Surabaya,Kota Besar,3100000,-6.9444,112.5096,4337770,3018976,1318794,0.696,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00379,Rudi Siregar,L,33,1991-02-07,C,Kelas C (Menengah),Perawat,Bandung,Kota Besar,2500000,-7.0896,107.8562,6573618,4401165,2172453,0.67,DANA,1,25,60,0.4,1.3,0.25
+BUDU00380,Rizki Gunawan,L,39,1985-06-24,B,Kelas B (Menengah Atas),Wirausaha Menengah,Bogor,Metropolitan,1100000,-6.5791,106.9202,11219919,6382411,4837508,0.569,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00381,Prita Nugroho,P,28,1996-11-10,B,Kelas B (Menengah Atas),Pengacara,Bekasi,Metropolitan,2700000,-6.1581,106.6088,13563848,7544733,6019115,0.556,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00382,Nisa Pasaribu,P,45,1979-02-15,D,Kelas D (Menengah Bawah),Karyawan Toko,Desa Sejahtera,Desa,4100,-5.8392,106.6462,2132568,1638081,494487,0.768,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00383,Galih Wijaya,L,49,1975-04-01,D,Kelas D (Menengah Bawah),Pedagang Warung,Semarang,Kota Besar,1800000,-6.645,110.6055,2401188,1915971,485217,0.798,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00384,Putri Kusuma,P,47,1977-05-26,D,Kelas D (Menengah Bawah),Karyawan Toko,Purwokerto,Kota Kecil,290000,-7.0696,109.3017,2319610,2032869,286741,0.876,OVO,0,15,35,0.25,1.15,0.15
+BUDU00385,Ulfa Wijaya,P,18,2006-07-26,C,Kelas C (Menengah),Sales,Denpasar,Kota Besar,900000,-8.5888,115.4789,6403807,4756173,1647634,0.743,DANA,1,25,60,0.4,1.3,0.25
+BUDU00386,Gita Wibowo,P,27,1997-07-08,B,Kelas B (Menengah Atas),Manajer,Denpasar,Kota Besar,900000,-8.9865,115.4691,12230849,7631423,4599426,0.624,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00387,Ella Sihombing,P,54,1970-07-27,A,Kelas A (Kaya),Pengusaha,Semarang,Kota Besar,1800000,-6.6546,110.7289,46459533,17828737,28630796,0.384,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00388,Lina Purnomo,P,37,1987-06-20,B,Kelas B (Menengah Atas),Analis Keuangan,Bogor,Metropolitan,1100000,-6.1201,106.4929,12043645,7456875,4586770,0.619,OVO,1,40,90,0.55,1.5,0.35
+BUDU00389,Rina Pasaribu,P,24,2000-09-08,D,Kelas D (Menengah Bawah),Teknisi,Medan,Kota Besar,2400000,3.8932,98.9107,2885497,2263941,621556,0.785,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00390,Zara Firmansyah,P,59,1965-12-02,A,Kelas A (Kaya),Artis/Influencer,Bogor,Metropolitan,1100000,-6.2466,107.0469,124239221,43218620,81020601,0.348,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00391,Mulyadi Wibowo,L,30,1994-12-20,B,Kelas B (Menengah Atas),Arsitek,Bekasi,Metropolitan,2700000,-6.6167,107.4435,10899082,7314220,3584862,0.671,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00392,Widya Lubis,P,31,1993-01-27,D,Kelas D (Menengah Bawah),Pedagang Warung,Cirebon,Kota Kecil,320000,-6.298,108.1834,2116097,1939266,176831,0.916,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00393,Udin Manurung,L,33,1991-11-04,C,Kelas C (Menengah),PNS Golongan II,Magelang,Kota Kecil,130000,-7.2228,110.4068,6755507,4767518,1987989,0.706,DANA,1,25,60,0.4,1.3,0.25
+BUDU00394,Rina Tambunan,P,50,1974-10-23,E,Kelas E (Miskin),Buruh Tani,Desa Cikaret,Desa,2800,-6.3886,106.7017,910913,810382,100531,0.89,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00395,Hafizh Harahap,L,42,1982-12-07,D,Kelas D (Menengah Bawah),Karyawan Toko,Desa Sejahtera,Desa,4100,-5.7601,106.643,1514315,1149247,365068,0.759,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00396,Yanto Nasution,L,20,2004-12-17,C,Kelas C (Menengah),PNS Golongan II,Tegal,Kota Kecil,285000,-7.2902,108.6873,4127300,2901073,1226227,0.703,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00397,Oki Firmansyah,L,33,1991-08-01,C,Kelas C (Menengah),Perawat,Semarang,Kota Besar,1800000,-7.0162,110.3095,5273727,4075229,1198498,0.773,DANA,1,25,60,0.4,1.3,0.25
+BUDU00398,Zara Lubis,P,19,2005-06-22,C,Kelas C (Menengah),Wirausaha Kecil,Tegal,Kota Kecil,285000,-6.7896,108.9228,6561763,4960564,1601199,0.756,DANA,1,25,60,0.4,1.3,0.25
+BUDU00399,Tiara Susanto,P,37,1987-06-13,C,Kelas C (Menengah),Sales,Makassar,Kota Besar,1500000,-4.778,119.4049,4035169,2650769,1384400,0.657,OVO,1,25,60,0.4,1.3,0.25
+BUDU00400,Ani Sutrisno,P,48,1976-07-22,D,Kelas D (Menengah Bawah),Karyawan Toko,Semarang,Kota Besar,1800000,-6.705,109.9443,1742171,1523768,218403,0.875,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00401,Agus Gunawan,L,55,1969-08-13,A,Kelas A (Kaya),CEO/Direktur,Tangerang Selatan,Metropolitan,1700000,-6.2884,106.8136,27241888,7658428,19583460,0.281,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00402,Oki Nugroho,L,22,2002-08-11,D,Kelas D (Menengah Bawah),Teknisi,Jombang,Kota Kecil,190000,-7.266,112.2131,1755693,1417646,338047,0.807,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00403,Budi Saputra,L,25,1999-11-07,C,Kelas C (Menengah),Guru Tetap,Palembang,Kota Besar,1700000,-3.3965,104.9824,5044375,3658309,1386066,0.725,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00404,Sinta Kurniawan,P,32,1992-12-06,B,Kelas B (Menengah Atas),Dokter,Jakarta,Metropolitan,10500000,-6.4648,107.3123,10412305,6023402,4388903,0.578,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00405,Indri Rajasa,P,26,1998-11-14,C,Kelas C (Menengah),Sales,Magelang,Kota Kecil,130000,-7.7494,109.8241,5751076,3897873,1853203,0.678,OVO,1,25,60,0.4,1.3,0.25
+BUDU00406,Hendra Budiman,L,42,1982-07-18,D,Kelas D (Menengah Bawah),SPG/SPB,Tasikmalaya,Kota Kecil,700000,-7.609,108.3996,2669047,2226859,442188,0.834,DANA,1,15,35,0.25,1.15,0.15
+BUDU00407,Firmansyah Wibowo,L,19,2005-02-05,E,Kelas E (Miskin),Asisten Rumah Tangga,Desa Panyingkiran,Desa,3700,-6.0229,106.419,1122230,1044382,77848,0.931,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00408,Kukuh Panggabean,L,24,2000-06-19,C,Kelas C (Menengah),Perawat,Medan,Kota Besar,2400000,3.6043,98.3115,4644577,3762231,882346,0.81,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00409,Lukman Yulianto,L,29,1995-12-25,B,Kelas B (Menengah Atas),Engineer Senior,Tangerang Selatan,Metropolitan,1700000,-6.7741,106.8549,17110462,7960238,9150224,0.465,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00410,Andi Rajasa,L,36,1988-10-22,C,Kelas C (Menengah),Wirausaha Kecil,Medan,Kota Besar,2400000,3.9113,99.1561,4216378,3445713,770665,0.817,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00411,Ulfa Pratama,P,47,1977-01-25,D,Kelas D (Menengah Bawah),Guru Honorer,Purwokerto,Kota Kecil,290000,-7.4472,109.0763,2627697,2215069,412628,0.843,OVO,1,15,35,0.25,1.15,0.15
+BUDU00412,Candra Wahyudi,L,30,1994-02-06,C,Kelas C (Menengah),Staf Administrasi,Bandung,Kota Besar,2500000,-7.3648,107.5653,3727054,2996939,730115,0.804,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00413,Kiki Rahayu,P,30,1994-06-20,B,Kelas B (Menengah Atas),Manajer,Bogor,Metropolitan,1100000,-6.5976,107.0708,8481556,4937765,3543791,0.582,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00414,Vevi Simatupang,P,36,1988-10-15,E,Kelas E (Miskin),Ojek Konvensional,Cirebon,Kota Kecil,320000,-7.0117,108.1555,893391,820727,72664,0.919,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00415,Zulfi Iskandar,L,40,1984-08-27,C,Kelas C (Menengah),Wirausaha Kecil,Surabaya,Kota Besar,3100000,-7.5,112.3878,4262973,2920449,1342524,0.685,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00416,Prita Manurung,P,36,1988-03-09,B,Kelas B (Menengah Atas),Dokter,Bekasi,Metropolitan,2700000,-6.3939,107.4873,19120525,11486143,7634382,0.601,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00417,Tari Sihombing,P,24,2000-07-06,C,Kelas C (Menengah),Guru Tetap,Cirebon,Kota Kecil,320000,-6.3527,108.5665,6902407,5633373,1269034,0.816,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00418,Deni Wijaya,L,45,1979-12-10,B,Kelas B (Menengah Atas),Pengacara,Semarang,Kota Besar,1800000,-6.7089,110.8672,7716319,4485724,3230595,0.581,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00419,Dewi Saputra,P,42,1982-10-21,E,Kelas E (Miskin),Buruh Tani,Blitar,Kota Kecil,150000,-8.2552,112.3355,1263562,1191597,71965,0.943,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00420,Dhea Nasution,P,55,1969-11-06,A,Kelas A (Kaya),Partner Law Firm,Tangerang Selatan,Metropolitan,1700000,-5.9479,107.0875,85135230,38438392,46696838,0.451,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00421,Rudi Harahap,L,34,1990-02-25,D,Kelas D (Menengah Bawah),Pedagang Warung,Pekalongan,Kota Kecil,310000,-7.202,109.3635,2290575,1872363,418212,0.817,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00422,Intan Budiman,P,25,1999-05-01,E,Kelas E (Miskin),Nelayan,Desa Sejahtera,Desa,4100,-6.4258,106.3266,1178953,1111789,67164,0.943,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00423,Cantika Firmansyah,P,25,1999-10-14,C,Kelas C (Menengah),Staf Administrasi,Medan,Kota Besar,2400000,4.0579,98.8005,4223254,2839233,1384021,0.672,OVO,1,25,60,0.4,1.3,0.25
+BUDU00424,Andi Kusuma,L,40,1984-12-22,C,Kelas C (Menengah),Pegawai Swasta,Tangerang,Metropolitan,2100000,-6.0298,106.4544,5990082,4851164,1138918,0.81,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00425,Tari Panggabean,P,25,1999-12-13,D,Kelas D (Menengah Bawah),Guru Honorer,Purwokerto,Kota Kecil,290000,-6.9455,108.9648,2872252,2230732,641520,0.777,OVO,1,15,35,0.25,1.15,0.15
+BUDU00426,Yuni Manurung,P,26,1998-11-05,C,Kelas C (Menengah),PNS Golongan II,Bekasi,Metropolitan,2700000,-5.751,107.3957,4621886,3029697,1592189,0.656,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00427,Wahyu Pasaribu,L,24,2000-02-09,B,Kelas B (Menengah Atas),Engineer Senior,Semarang,Kota Besar,1800000,-7.0403,110.866,14977881,8496427,6481454,0.567,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00428,Uci Situmorang,P,37,1987-03-01,E,Kelas E (Miskin),Buruh Pabrik,Desa Sejahtera,Desa,4100,-5.9664,107.14,875055,837245,37810,0.957,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00429,Fitri Wijaya,P,39,1985-12-07,D,Kelas D (Menengah Bawah),SPG/SPB,Desa Makmur,Desa,3200,-6.2444,107.191,1526505,1233565,292940,0.808,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00430,Joko Pasaribu,L,49,1975-07-26,D,Kelas D (Menengah Bawah),Karyawan Toko,Medan,Kota Besar,2400000,3.3188,99.0293,1865422,1535474,329948,0.823,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00431,Maman Sinaga,L,43,1981-01-05,C,Kelas C (Menengah),Perawat,Bandung,Kota Besar,2500000,-6.9434,107.9948,6498974,4804687,1694287,0.739,DANA,1,25,60,0.4,1.3,0.25
+BUDU00432,Nanang Tobing,L,36,1988-04-18,C,Kelas C (Menengah),Guru Tetap,Kediri,Kota Kecil,320000,-8.0815,112.1635,4830975,3083473,1747502,0.638,DANA,1,25,60,0.4,1.3,0.25
+BUDU00433,Dinda Situmorang,P,47,1977-04-23,E,Kelas E (Miskin),Asisten Rumah Tangga,Makassar,Kota Besar,1500000,-5.5637,119.7027,1264001,1232863,31138,0.975,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00434,Bagas Nugroho,L,43,1981-10-25,D,Kelas D (Menengah Bawah),Driver Ojek Online,Desa Makmur,Desa,3200,-5.7186,106.9297,1890992,1462521,428471,0.773,OVO,0,15,35,0.25,1.15,0.15
+BUDU00435,Mulyadi Tambunan,L,39,1985-02-18,E,Kelas E (Miskin),Asisten Rumah Tangga,Blitar,Kota Kecil,150000,-8.4243,112.0298,1014126,938767,75359,0.926,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00436,Udin Rahayu,L,43,1981-10-17,D,Kelas D (Menengah Bawah),Karyawan Toko,Cirebon,Kota Kecil,320000,-6.9832,108.9625,2829893,2130440,699453,0.753,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00437,Oscar Simatupang,L,36,1988-09-15,B,Kelas B (Menengah Atas),Arsitek,Jakarta,Metropolitan,10500000,-6.0445,106.689,19476694,8806480,10670214,0.452,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00438,Clara Tobing,P,33,1991-09-01,E,Kelas E (Miskin),Asisten Rumah Tangga,Kediri,Kota Kecil,320000,-7.9336,111.6891,1109885,1026831,83054,0.925,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00439,Lina Pasaribu,P,32,1992-01-11,C,Kelas C (Menengah),Pegawai Swasta,Kediri,Kota Kecil,320000,-7.8091,111.9527,5804576,4653449,1151127,0.802,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00440,Udin Kusuma,L,38,1986-08-28,B,Kelas B (Menengah Atas),Wirausaha Menengah,Bogor,Metropolitan,1100000,-6.8468,107.1377,9500105,5541068,3959037,0.583,OVO,1,40,90,0.55,1.5,0.35
+BUDU00441,Gita Kurniawan,P,22,2002-09-13,C,Kelas C (Menengah),PNS Golongan II,Kediri,Kota Kecil,320000,-8.096,111.6758,4834820,3893905,940915,0.805,DANA,1,25,60,0.4,1.3,0.25
+BUDU00442,Deni Rahayu,L,37,1987-01-19,A,Kelas A (Kaya),CEO/Direktur,Semarang,Kota Besar,1800000,-6.531,110.8848,34232707,16535986,17696721,0.483,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00443,Bella Nugroho,P,20,2004-02-05,C,Kelas C (Menengah),PNS Golongan II,Depok,Metropolitan,2200000,-6.3692,107.2902,3993149,2605847,1387302,0.653,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00444,Nanang Hartono,L,46,1978-03-02,D,Kelas D (Menengah Bawah),Guru Honorer,Denpasar,Kota Besar,900000,-8.3451,114.8592,1903285,1437660,465625,0.755,OVO,0,15,35,0.25,1.15,0.15
+BUDU00445,Bella Purnomo,P,41,1983-05-25,E,Kelas E (Miskin),Buruh Pabrik,Pekalongan,Kota Kecil,310000,-6.8684,109.2124,881032,758889,122143,0.861,OVO,0,8,20,0.15,1.05,0.08
+BUDU00446,Ulfa Wijaya,P,32,1992-06-23,A,Kelas A (Kaya),Pengusaha,Depok,Metropolitan,2200000,-6.7196,106.8616,130517255,55174570,75342685,0.423,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00447,Zulfi Tambunan,L,31,1993-09-02,C,Kelas C (Menengah),Wirausaha Kecil,Cirebon,Kota Kecil,320000,-6.5661,108.875,5805454,4636827,1168627,0.799,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00448,Dinda Situmorang,P,31,1993-10-06,C,Kelas C (Menengah),Staf Administrasi,Bandung,Kota Besar,2500000,-7.2451,107.9915,4293771,2655414,1638357,0.618,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00449,Sinta Siregar,P,25,1999-09-15,C,Kelas C (Menengah),Perawat,Semarang,Kota Besar,1800000,-6.9913,110.3753,3477795,2485212,992583,0.715,DANA,1,25,60,0.4,1.3,0.25
+BUDU00450,Ulfa Pratama,P,41,1983-07-25,C,Kelas C (Menengah),PNS Golongan II,Blitar,Kota Kecil,150000,-8.5192,112.1161,3396950,2498661,898289,0.736,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00451,Yuni Firmansyah,P,28,1996-05-22,A,Kelas A (Kaya),Pengusaha,Surabaya,Kota Besar,3100000,-7.6307,113.1187,61607374,20745730,40861644,0.337,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00452,Ahmad Lubis,L,41,1983-01-01,C,Kelas C (Menengah),Wirausaha Kecil,Jakarta,Metropolitan,10500000,-6.3473,106.7043,6258500,4922965,1335535,0.787,OVO,1,25,60,0.4,1.3,0.25
+BUDU00453,Tono Pasaribu,L,40,1984-02-09,C,Kelas C (Menengah),Wirausaha Kecil,Bandung,Kota Besar,2500000,-6.4997,108.0274,4333199,3131330,1201869,0.723,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00454,Tari Sihombing,P,52,1972-01-16,A,Kelas A (Kaya),CEO/Direktur,Yogyakarta,Kota Besar,420000,-7.7439,110.2261,109645798,38225599,71420199,0.349,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00455,Rizki Panggabean,L,26,1998-09-02,D,Kelas D (Menengah Bawah),Driver Ojek Online,Palembang,Kota Besar,1700000,-3.0572,105.0513,1614933,1462973,151960,0.906,OVO,0,15,35,0.25,1.15,0.15
+BUDU00456,Joko Kurniawan,L,27,1997-10-24,C,Kelas C (Menengah),PNS Golongan II,Tasikmalaya,Kota Kecil,700000,-7.3314,107.9527,3755942,3033406,722536,0.808,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00457,Dimas Kusuma,L,29,1995-05-26,A,Kelas A (Kaya),Artis/Influencer,Tangerang,Metropolitan,2100000,-5.9416,106.6683,84160675,21139101,63021574,0.251,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00458,Intan Iskandar,P,42,1982-07-19,A,Kelas A (Kaya),Konsultan Senior,Bogor,Metropolitan,1100000,-6.8964,107.1862,39664356,10130622,29533734,0.255,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00459,Januar Lubis,L,49,1975-03-11,E,Kelas E (Miskin),Ojek Konvensional,Yogyakarta,Kota Besar,420000,-7.4197,110.6527,1129925,1052256,77669,0.931,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00460,Ulfa Susanto,P,26,1998-08-28,A,Kelas A (Kaya),Artis/Influencer,Bekasi,Metropolitan,2700000,-6.0116,106.6257,108396322,57119680,51276642,0.527,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00461,Wulan Purwanto,P,20,2004-08-09,E,Kelas E (Miskin),Nelayan,Tegal,Kota Kecil,285000,-7.2272,108.693,943303,821372,121931,0.871,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00462,Hadi Firmansyah,L,38,1986-02-02,B,Kelas B (Menengah Atas),Manajer,Tangerang Selatan,Metropolitan,1700000,-5.8166,106.2324,16399742,8856269,7543473,0.54,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00463,Udin Prasetyo,L,21,2003-06-02,E,Kelas E (Miskin),Buruh Pabrik,Desa Panyingkiran,Desa,3700,-6.5441,106.5434,1499894,1394032,105862,0.929,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00464,Tari Siregar,P,27,1997-04-10,E,Kelas E (Miskin),Ojek Konvensional,Desa Makmur,Desa,3200,-5.9111,106.9818,980990,878567,102423,0.896,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00465,Nadia Hidayat,P,32,1992-10-25,B,Kelas B (Menengah Atas),Engineer Senior,Yogyakarta,Kota Besar,420000,-8.1052,110.2362,17147445,8472723,8674722,0.494,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00466,Putra Situmorang,L,45,1979-12-05,A,Kelas A (Kaya),Dokter Spesialis,Bekasi,Metropolitan,2700000,-5.7628,106.6488,92032906,46941057,45091849,0.51,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00467,Gita Mahendra,P,37,1987-10-09,B,Kelas B (Menengah Atas),Engineer Senior,Bogor,Metropolitan,1100000,-6.2997,107.0261,16840048,11332818,5507230,0.673,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00468,Fery Purwanto,L,35,1989-12-21,D,Kelas D (Menengah Bawah),Guru Honorer,Yogyakarta,Kota Besar,420000,-8.1751,110.721,2509667,2267521,242146,0.904,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00469,Afifah Tobing,P,52,1972-02-09,E,Kelas E (Miskin),Ojek Konvensional,Cirebon,Kota Kecil,320000,-6.2704,108.8274,1265096,1107392,157704,0.875,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00470,Kiki Santoso,P,41,1983-01-08,B,Kelas B (Menengah Atas),Arsitek,Yogyakarta,Kota Besar,420000,-7.329,110.3217,8841024,6110103,2730921,0.691,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00471,Indri Susanto,P,27,1997-07-14,C,Kelas C (Menengah),Guru Tetap,Medan,Kota Besar,2400000,3.7984,98.1939,5898231,4035097,1863134,0.684,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00472,Lukman Mahendra,L,32,1992-12-17,C,Kelas C (Menengah),Staf Administrasi,Palembang,Kota Besar,1700000,-3.2067,104.5529,6554568,4743073,1811495,0.724,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00473,Rizki Pratama,L,35,1989-09-15,D,Kelas D (Menengah Bawah),Karyawan Toko,Desa Sukamaju,Desa,5000,-6.3846,106.9826,1622210,1414439,207771,0.872,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00474,Wahyu Sanjaya,L,38,1986-08-01,C,Kelas C (Menengah),Staf Administrasi,Palembang,Kota Besar,1700000,-2.8113,104.3806,3759738,2937836,821902,0.781,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00475,Samsul Tobing,L,44,1980-01-26,C,Kelas C (Menengah),PNS Golongan II,Kediri,Kota Kecil,320000,-8.279,112.0804,5838948,4078214,1760734,0.698,OVO,1,25,60,0.4,1.3,0.25
+BUDU00476,Vina Firmansyah,P,54,1970-12-17,A,Kelas A (Kaya),Notaris,Bekasi,Metropolitan,2700000,-6.1528,106.8464,90407599,24232181,66175418,0.268,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00477,Gita Hidayat,P,38,1986-11-25,B,Kelas B (Menengah Atas),Dosen,Bogor,Metropolitan,1100000,-6.1292,107.1958,7512428,4676808,2835620,0.623,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00478,Nisa Budiman,P,31,1993-07-05,C,Kelas C (Menengah),Perawat,Yogyakarta,Kota Besar,420000,-7.8819,110.6197,6332766,4416783,1915983,0.697,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00479,Putri Lubis,P,42,1982-01-27,C,Kelas C (Menengah),Perawat,Yogyakarta,Kota Besar,420000,-8.2358,110.7581,6185142,4118282,2066860,0.666,OVO,1,25,60,0.4,1.3,0.25
+BUDU00480,Hadi Gunawan,L,21,2003-07-10,C,Kelas C (Menengah),PNS Golongan II,Denpasar,Kota Besar,900000,-8.4086,115.2177,6543688,4123876,2419812,0.63,DANA,1,25,60,0.4,1.3,0.25
+BUDU00481,Wulan Kusuma,P,30,1994-09-26,D,Kelas D (Menengah Bawah),Admin Kantor,Surabaya,Kota Besar,3100000,-6.8759,112.7673,1771311,1442511,328800,0.814,OVO,0,15,35,0.25,1.15,0.15
+BUDU00482,Gita Siregar,P,25,1999-11-20,A,Kelas A (Kaya),CEO/Direktur,Bekasi,Metropolitan,2700000,-5.7354,107.112,24223257,10064918,14158339,0.416,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00483,Gita Kurniawan,P,23,2001-03-27,B,Kelas B (Menengah Atas),Dokter,Semarang,Kota Besar,1800000,-6.8021,110.8035,7534070,4918742,2615328,0.653,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00484,Uci Lubis,P,26,1998-11-06,E,Kelas E (Miskin),Ojek Konvensional,Cirebon,Kota Kecil,320000,-6.4782,108.6743,1357516,1265047,92469,0.932,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00485,Rizki Hartono,L,33,1991-02-20,D,Kelas D (Menengah Bawah),SPG/SPB,Tasikmalaya,Kota Kecil,700000,-7.5736,107.7841,2075413,1897392,178021,0.914,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00486,Vino Kurniawan,L,26,1998-01-07,E,Kelas E (Miskin),Buruh Pabrik,Jombang,Kota Kecil,190000,-7.963,112.5365,856044,766462,89582,0.895,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00487,Erwin Nugroho,L,22,2002-11-13,B,Kelas B (Menengah Atas),Dokter,Bandung,Kota Besar,2500000,-7.2618,107.3448,16714069,11531804,5182265,0.69,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00488,Ella Sutrisno,P,20,2004-08-13,C,Kelas C (Menengah),Pegawai Swasta,Blitar,Kota Kecil,150000,-8.2722,111.889,6433477,4807412,1626065,0.747,OVO,1,25,60,0.4,1.3,0.25
+BUDU00489,Oki Purwanto,L,27,1997-01-25,B,Kelas B (Menengah Atas),Manajer,Denpasar,Kota Besar,900000,-8.1912,115.409,19575265,9515715,10059550,0.486,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00490,Irwan Prasetyo,L,33,1991-04-03,C,Kelas C (Menengah),Staf Administrasi,Medan,Kota Besar,2400000,3.6492,98.1738,6044023,3945740,2098283,0.653,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00491,Samsul Setiawan,L,24,2000-06-20,D,Kelas D (Menengah Bawah),Admin Kantor,Denpasar,Kota Besar,900000,-8.7503,115.2747,1675033,1437613,237420,0.858,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00492,Dinda Tobing,P,37,1987-08-03,A,Kelas A (Kaya),Artis/Influencer,Denpasar,Kota Besar,900000,-8.2967,115.2144,134622166,52665578,81956588,0.391,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00493,Yanto Sanjaya,L,29,1995-03-17,E,Kelas E (Miskin),Nelayan,Desa Panyingkiran,Desa,3700,-6.6709,107.0691,1324299,1228329,95970,0.928,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00494,Sinta Saputra,P,26,1998-12-06,D,Kelas D (Menengah Bawah),Teknisi,Denpasar,Kota Besar,900000,-8.301,115.4767,2849400,2393986,455414,0.84,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00495,Yuni Manurung,P,23,2001-08-16,C,Kelas C (Menengah),Staf Administrasi,Medan,Kota Besar,2400000,3.636,98.9906,5098002,3138556,1959446,0.616,OVO,1,25,60,0.4,1.3,0.25
+BUDU00496,Nisa Wahyudi,P,44,1980-01-13,D,Kelas D (Menengah Bawah),Teknisi,Blitar,Kota Kecil,150000,-8.1419,112.2783,2287008,2009321,277687,0.879,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00497,Deni Wahyudi,L,33,1991-04-28,B,Kelas B (Menengah Atas),Pengacara,Bekasi,Metropolitan,2700000,-6.304,106.6876,18651337,9224632,9426705,0.495,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00498,Wahyu Kurniawan,L,28,1996-10-05,D,Kelas D (Menengah Bawah),Teknisi,Tasikmalaya,Kota Kecil,700000,-7.0422,108.1064,1944265,1567933,376332,0.806,DANA,0,15,35,0.25,1.15,0.15
+BUDU00499,Bagas Pasaribu,L,35,1989-04-05,C,Kelas C (Menengah),Perawat,Denpasar,Kota Besar,900000,-8.3118,115.3464,3166576,2267482,899094,0.716,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00500,Gilang Tobing,L,36,1988-10-22,C,Kelas C (Menengah),PNS Golongan II,Medan,Kota Besar,2400000,3.303,98.9711,4490628,3363248,1127380,0.749,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00501,Prita Manurung,P,40,1984-08-26,B,Kelas B (Menengah Atas),Manajer,Yogyakarta,Kota Besar,420000,-7.5502,110.2485,11972297,7935422,4036875,0.663,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00502,Oki Firmansyah,L,28,1996-04-09,B,Kelas B (Menengah Atas),Wirausaha Menengah,Tangerang,Metropolitan,2100000,-6.5397,106.1528,10017021,5603976,4413045,0.559,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00503,Budi Prasetyo,L,46,1978-06-05,D,Kelas D (Menengah Bawah),Driver Ojek Online,Pekalongan,Kota Kecil,310000,-7.0512,109.265,1552735,1165635,387100,0.751,DANA,1,15,35,0.25,1.15,0.15
+BUDU00504,Fajar Prasetyo,L,38,1986-09-13,E,Kelas E (Miskin),Buruh Tani,Desa Makmur,Desa,3200,-6.5572,107.0643,802681,732065,70616,0.912,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00505,Hasna Wibowo,P,59,1965-05-09,A,Kelas A (Kaya),Notaris,Tangerang,Metropolitan,2100000,-6.2206,106.9771,34843891,13573843,21270048,0.39,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00506,Maya Prasetyo,P,28,1996-09-26,E,Kelas E (Miskin),Buruh Pabrik,Desa Makmur,Desa,3200,-6.4128,106.8113,1482561,1343019,139542,0.906,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00507,Mira Kusuma,P,36,1988-07-18,D,Kelas D (Menengah Bawah),SPG/SPB,Magelang,Kota Kecil,130000,-7.7053,110.1177,2139183,1913710,225473,0.895,Transfer Bank,0,15,35,0.25,1.15,0.15
+BUDU00508,Dinda Santoso,P,20,2004-05-16,C,Kelas C (Menengah),Pegawai Swasta,Kediri,Kota Kecil,320000,-8.0037,111.6092,4039177,2938732,1100445,0.728,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00509,Candra Gunawan,L,37,1987-10-08,C,Kelas C (Menengah),Guru Tetap,Makassar,Kota Besar,1500000,-5.5479,118.9872,4334816,3055925,1278891,0.705,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00510,Vino Susanto,L,44,1980-07-12,E,Kelas E (Miskin),Ojek Konvensional,Palembang,Kota Besar,1700000,-2.7284,104.5095,1164226,1091918,72308,0.938,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00511,Vina Wibowo,P,31,1993-08-10,C,Kelas C (Menengah),Staf Administrasi,Pekalongan,Kota Kecil,310000,-6.7695,109.3347,6616454,4830656,1785798,0.73,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00512,Nadia Purnomo,P,26,1998-10-23,C,Kelas C (Menengah),Sales,Palembang,Kota Besar,1700000,-2.621,104.7073,4795405,3701496,1093909,0.772,DANA,1,25,60,0.4,1.3,0.25
+BUDU00513,Galih Hartono,L,28,1996-08-11,E,Kelas E (Miskin),Pedagang Kaki Lima,Desa Panyingkiran,Desa,3700,-5.8272,107.1146,1243722,1120679,123043,0.901,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00514,Lina Pratama,P,34,1990-05-22,D,Kelas D (Menengah Bawah),Karyawan Toko,Cirebon,Kota Kecil,320000,-7.0514,108.5379,1992906,1564433,428473,0.785,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00515,Fery Wahyudi,L,47,1977-12-13,D,Kelas D (Menengah Bawah),SPG/SPB,Jombang,Kota Kecil,190000,-7.147,112.6589,2762975,2124667,638308,0.769,OVO,1,15,35,0.25,1.15,0.15
+BUDU00516,Bella Simatupang,P,35,1989-03-08,E,Kelas E (Miskin),Buruh Pabrik,Purwokerto,Kota Kecil,290000,-7.1563,109.0988,826449,754381,72068,0.913,OVO,0,8,20,0.15,1.05,0.08
+BUDU00517,Tari Harahap,P,23,2001-11-20,C,Kelas C (Menengah),Guru Tetap,Tangerang Selatan,Metropolitan,1700000,-6.3748,107.1448,4517462,3272881,1244581,0.724,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00518,Eko Purwanto,L,35,1989-10-06,C,Kelas C (Menengah),Wirausaha Kecil,Surabaya,Kota Besar,3100000,-7.6287,113.1997,5616310,4073249,1543061,0.725,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00519,Vina Purnomo,P,45,1979-04-15,D,Kelas D (Menengah Bawah),SPG/SPB,Palembang,Kota Besar,1700000,-3.3291,104.9863,2349484,1951344,398140,0.831,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00520,Hadi Harahap,L,27,1997-11-21,C,Kelas C (Menengah),Guru Tetap,Bandung,Kota Besar,2500000,-6.8862,107.5188,4171251,3301744,869507,0.792,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00521,Nadia Pasaribu,P,40,1984-07-15,C,Kelas C (Menengah),Staf Administrasi,Palembang,Kota Besar,1700000,-2.8335,105.1252,3795719,2902616,893103,0.765,OVO,1,25,60,0.4,1.3,0.25
+BUDU00522,Clara Wijaya,P,36,1988-01-08,B,Kelas B (Menengah Atas),Manajer,Bandung,Kota Besar,2500000,-7.1143,107.5485,11584984,6281922,5303062,0.542,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00523,Siti Siregar,P,41,1983-06-14,B,Kelas B (Menengah Atas),Analis Keuangan,Surabaya,Kota Besar,3100000,-6.8459,112.5977,18651660,11477066,7174594,0.615,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00524,Oki Tobing,L,29,1995-05-23,D,Kelas D (Menengah Bawah),Karyawan Toko,Purwokerto,Kota Kecil,290000,-7.9061,108.9093,1861866,1670391,191475,0.897,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00525,Maman Budiman,L,41,1983-02-19,D,Kelas D (Menengah Bawah),Driver Ojek Online,Magelang,Kota Kecil,130000,-7.5962,109.8699,2688993,2284973,404020,0.85,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00526,Bella Simatupang,P,30,1994-05-20,C,Kelas C (Menengah),Perawat,Medan,Kota Besar,2400000,3.7412,98.3228,4064085,3053787,1010298,0.751,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00527,Ayu Situmorang,P,34,1990-05-05,B,Kelas B (Menengah Atas),Manajer,Jakarta,Metropolitan,10500000,-6.2184,106.4653,10934829,6440374,4494455,0.589,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00528,Kevin Manurung,L,25,1999-08-15,C,Kelas C (Menengah),Sales,Cirebon,Kota Kecil,320000,-6.9897,108.9768,5403828,3756396,1647432,0.695,OVO,1,25,60,0.4,1.3,0.25
+BUDU00529,Nanang Tobing,L,22,2002-01-17,C,Kelas C (Menengah),Staf Administrasi,Magelang,Kota Kecil,130000,-7.5469,110.2019,5284372,3856683,1427689,0.73,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00530,Fery Sihombing,L,20,2004-04-28,C,Kelas C (Menengah),Perawat,Tegal,Kota Kecil,285000,-6.5338,108.6839,4809256,3909458,899798,0.813,OVO,1,25,60,0.4,1.3,0.25
+BUDU00531,Sari Harahap,P,28,1996-07-26,D,Kelas D (Menengah Bawah),Guru Honorer,Kediri,Kota Kecil,320000,-7.5925,111.7232,2496151,2091550,404601,0.838,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00532,Rini Iskandar,P,41,1983-12-23,B,Kelas B (Menengah Atas),Pengacara,Semarang,Kota Besar,1800000,-6.7089,110.5042,18797021,8789772,10007249,0.468,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00533,Oscar Kusuma,L,27,1997-10-08,D,Kelas D (Menengah Bawah),Driver Ojek Online,Desa Panyingkiran,Desa,3700,-5.9615,107.1669,2506956,2210189,296767,0.882,Transfer Bank,0,15,35,0.25,1.15,0.15
+BUDU00534,Candra Mahendra,L,43,1981-03-15,C,Kelas C (Menengah),Pegawai Swasta,Tegal,Kota Kecil,285000,-6.7516,109.4102,6015254,3980391,2034863,0.662,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00535,Clara Wibowo,P,42,1982-09-05,B,Kelas B (Menengah Atas),Manajer,Surabaya,Kota Besar,3100000,-7.1283,112.9514,16581825,10049382,6532443,0.606,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00536,Hana Pratama,P,48,1976-03-19,E,Kelas E (Miskin),Pedagang Kaki Lima,Desa Makmur,Desa,3200,-5.7381,106.9526,1365417,1202074,163343,0.88,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00537,Mira Purwanto,P,24,2000-03-15,C,Kelas C (Menengah),Pegawai Swasta,Pekalongan,Kota Kecil,310000,-6.7835,109.7352,3703135,2839048,864087,0.767,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00538,Rina Prasetyo,P,43,1981-08-06,B,Kelas B (Menengah Atas),Manajer,Surabaya,Kota Besar,3100000,-6.8825,112.3348,19314989,9578205,9736784,0.496,OVO,1,40,90,0.55,1.5,0.35
+BUDU00539,Candra Iskandar,L,32,1992-09-23,D,Kelas D (Menengah Bawah),Teknisi,Pekalongan,Kota Kecil,310000,-6.607,109.2788,1900814,1720395,180419,0.905,OVO,0,15,35,0.25,1.15,0.15
+BUDU00540,Galih Manurung,L,56,1968-08-09,A,Kelas A (Kaya),Notaris,Bekasi,Metropolitan,2700000,-6.1733,106.5627,91030760,37610576,53420184,0.413,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00541,Deni Sanjaya,L,39,1985-02-24,D,Kelas D (Menengah Bawah),Pedagang Warung,Desa Cikaret,Desa,2800,-6.1681,106.5845,2669329,2244941,424388,0.841,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00542,Budi Siregar,L,38,1986-11-17,D,Kelas D (Menengah Bawah),Pedagang Warung,Desa Rawa Indah,Desa,6500,-6.2555,106.5563,1575761,1269357,306404,0.806,DANA,1,15,35,0.25,1.15,0.15
+BUDU00543,Yanto Sanjaya,L,30,1994-10-05,C,Kelas C (Menengah),Pegawai Swasta,Kediri,Kota Kecil,320000,-8.2868,111.5829,3504612,2175672,1328940,0.621,OVO,1,25,60,0.4,1.3,0.25
+BUDU00544,Widya Situmorang,P,23,2001-11-28,B,Kelas B (Menengah Atas),Manajer,Palembang,Kota Besar,1700000,-2.6195,105.2031,15093142,9970771,5122371,0.661,OVO,1,40,90,0.55,1.5,0.35
+BUDU00545,Vino Santoso,L,31,1993-10-10,C,Kelas C (Menengah),Pegawai Swasta,Medan,Kota Besar,2400000,3.4593,98.8116,6583171,4347757,2235414,0.66,OVO,1,25,60,0.4,1.3,0.25
+BUDU00546,Prio Susanto,L,41,1983-02-04,B,Kelas B (Menengah Atas),Analis Keuangan,Surabaya,Kota Besar,3100000,-7.2309,112.5554,12231116,7548142,4682974,0.617,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00547,Sinta Santoso,P,36,1988-09-22,A,Kelas A (Kaya),Konsultan Senior,Tangerang,Metropolitan,2100000,-5.9673,106.2082,50233849,22528742,27705107,0.448,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00548,Candra Sinaga,L,35,1989-11-13,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Rawa Indah,Desa,6500,-6.4659,106.3498,1584370,1226700,357670,0.774,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00549,Ayu Wahyudi,P,25,1999-09-06,C,Kelas C (Menengah),Guru Tetap,Medan,Kota Besar,2400000,3.6519,98.818,4883139,3514793,1368346,0.72,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00550,Ayu Manurung,P,24,2000-10-24,D,Kelas D (Menengah Bawah),Pedagang Warung,Medan,Kota Besar,2400000,3.9448,98.6523,1904451,1594966,309485,0.837,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00551,Cantika Hidayat,P,21,2003-10-13,E,Kelas E (Miskin),Buruh Tani,Desa Sejahtera,Desa,4100,-6.3372,106.551,884672,841441,43231,0.951,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00552,Tari Tambunan,P,24,2000-11-01,B,Kelas B (Menengah Atas),Wirausaha Menengah,Bogor,Metropolitan,1100000,-6.9139,106.8953,11531832,5366938,6164894,0.465,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00553,Maya Purnomo,P,20,2004-12-23,D,Kelas D (Menengah Bawah),SPG/SPB,Magelang,Kota Kecil,130000,-7.4665,110.2134,2203560,1815166,388394,0.824,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00554,Oki Nasution,L,40,1984-11-20,D,Kelas D (Menengah Bawah),Admin Kantor,Desa Makmur,Desa,3200,-6.0837,106.7439,1948294,1616617,331677,0.83,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00555,Deni Saputra,L,39,1985-08-23,D,Kelas D (Menengah Bawah),Driver Ojek Online,Tegal,Kota Kecil,285000,-6.9377,109.4578,1929336,1521630,407706,0.789,DANA,1,15,35,0.25,1.15,0.15
+BUDU00556,Wahyu Purwanto,L,32,1992-02-27,D,Kelas D (Menengah Bawah),Teknisi,Denpasar,Kota Besar,900000,-8.6131,114.9686,2933459,2645229,288230,0.902,DANA,1,15,35,0.25,1.15,0.15
+BUDU00557,Tari Tobing,P,44,1980-12-03,C,Kelas C (Menengah),Pegawai Swasta,Purwokerto,Kota Kecil,290000,-6.9253,109.5881,4618823,3145534,1473289,0.681,DANA,1,25,60,0.4,1.3,0.25
+BUDU00558,Hadi Budiman,L,40,1984-01-05,D,Kelas D (Menengah Bawah),Admin Kantor,Bandung,Kota Besar,2500000,-6.8349,107.8179,1557545,1398931,158614,0.898,OVO,1,15,35,0.25,1.15,0.15
+BUDU00559,Firmansyah Rajasa,L,20,2004-01-02,C,Kelas C (Menengah),Sales,Depok,Metropolitan,2200000,-6.0187,107.2275,4683586,3157236,1526350,0.674,OVO,1,25,60,0.4,1.3,0.25
+BUDU00560,Nisa Pasaribu,P,40,1984-12-08,C,Kelas C (Menengah),PNS Golongan II,Makassar,Kota Besar,1500000,-5.5226,119.0625,4619439,3464215,1155224,0.75,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00561,Rahma Pasaribu,P,23,2001-05-13,D,Kelas D (Menengah Bawah),Admin Kantor,Desa Makmur,Desa,3200,-5.8794,106.5852,1533852,1235032,298820,0.805,OVO,0,15,35,0.25,1.15,0.15
+BUDU00562,Zara Panggabean,P,43,1981-03-02,C,Kelas C (Menengah),Wirausaha Kecil,Makassar,Kota Besar,1500000,-5.2202,119.2049,5341501,3468814,1872687,0.649,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00563,Ella Iskandar,P,23,2001-08-10,C,Kelas C (Menengah),PNS Golongan II,Tasikmalaya,Kota Kecil,700000,-7.7894,108.3092,6323069,5131130,1191939,0.811,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00564,Fajar Simatupang,L,34,1990-07-19,C,Kelas C (Menengah),Wirausaha Kecil,Yogyakarta,Kota Besar,420000,-7.8307,110.5001,5290731,3805975,1484756,0.719,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00565,Prita Panggabean,P,18,2006-05-07,D,Kelas D (Menengah Bawah),Admin Kantor,Blitar,Kota Kecil,150000,-7.7661,111.9434,2580924,2173631,407293,0.842,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00566,Rina Sihombing,P,52,1972-11-16,E,Kelas E (Miskin),Buruh Tani,Purwokerto,Kota Kecil,290000,-7.5273,108.7438,1241313,1116911,124402,0.9,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00567,Rahma Santoso,P,32,1992-09-23,D,Kelas D (Menengah Bawah),Teknisi,Bandung,Kota Besar,2500000,-7.2999,108.1093,1571758,1375170,196588,0.875,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00568,Candra Pasaribu,L,47,1977-09-07,D,Kelas D (Menengah Bawah),Teknisi,Pekalongan,Kota Kecil,310000,-6.5829,109.7778,1781855,1456705,325150,0.818,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00569,Lutfi Nugroho,L,41,1983-11-25,D,Kelas D (Menengah Bawah),Driver Ojek Online,Semarang,Kota Besar,1800000,-7.336,110.6109,1784235,1382330,401905,0.775,OVO,1,15,35,0.25,1.15,0.15
+BUDU00570,Yanto Firmansyah,L,19,2005-08-02,C,Kelas C (Menengah),Wirausaha Kecil,Medan,Kota Besar,2400000,3.139,98.4988,6545474,4729377,1816097,0.723,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00571,Bunga Mahendra,P,31,1993-05-22,B,Kelas B (Menengah Atas),Arsitek,Tangerang,Metropolitan,2100000,-6.1867,106.8256,15958863,7769784,8189079,0.487,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00572,Siti Gunawan,P,25,1999-05-13,E,Kelas E (Miskin),Asisten Rumah Tangga,Desa Panyingkiran,Desa,3700,-6.6616,106.9215,1304901,1223030,81871,0.937,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00573,Sari Hartono,P,33,1991-08-11,E,Kelas E (Miskin),Nelayan,Tasikmalaya,Kota Kecil,700000,-6.8859,107.7919,1490429,1374501,115928,0.922,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00574,Nanda Wahyudi,L,22,2002-12-06,C,Kelas C (Menengah),Staf Administrasi,Semarang,Kota Besar,1800000,-6.6121,110.177,5875963,3689550,2186413,0.628,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00575,Zara Firmansyah,P,25,1999-01-05,C,Kelas C (Menengah),Guru Tetap,Palembang,Kota Besar,1700000,-2.7813,105.0712,6003160,4608309,1394851,0.768,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00576,Vina Sanjaya,P,29,1995-06-10,C,Kelas C (Menengah),Wirausaha Kecil,Depok,Metropolitan,2200000,-6.2072,106.4363,3289505,2374670,914835,0.722,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00577,Samsul Tobing,L,57,1967-06-16,A,Kelas A (Kaya),Dokter Spesialis,Depok,Metropolitan,2200000,-6.3601,106.8217,74802052,27343799,47458253,0.366,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00578,Ella Manurung,P,24,2000-12-08,D,Kelas D (Menengah Bawah),Guru Honorer,Tegal,Kota Kecil,285000,-7.2359,109.4461,1618047,1260647,357400,0.779,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00579,Budi Firmansyah,L,22,2002-09-04,C,Kelas C (Menengah),Pegawai Swasta,Bandung,Kota Besar,2500000,-6.8525,107.7888,3512752,2796855,715897,0.796,DANA,1,25,60,0.4,1.3,0.25
+BUDU00580,Putri Pratama,P,30,1994-12-25,D,Kelas D (Menengah Bawah),SPG/SPB,Pekalongan,Kota Kecil,310000,-7.0106,109.2782,2973868,2664127,309741,0.896,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00581,Tiara Saputra,P,28,1996-07-14,D,Kelas D (Menengah Bawah),Admin Kantor,Cirebon,Kota Kecil,320000,-6.5995,108.3406,2845947,2371148,474799,0.833,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00582,Ella Santoso,P,30,1994-12-01,D,Kelas D (Menengah Bawah),Pedagang Warung,Semarang,Kota Besar,1800000,-7.2898,110.0672,2143331,1703499,439832,0.795,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00583,Mulyadi Pratama,L,29,1995-05-05,E,Kelas E (Miskin),Buruh Tani,Desa Makmur,Desa,3200,-6.443,106.3209,1493498,1362898,130600,0.913,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00584,Andi Pasaribu,L,35,1989-11-11,C,Kelas C (Menengah),Wirausaha Kecil,Bekasi,Metropolitan,2700000,-6.323,107.2172,5524136,4444213,1079923,0.805,DANA,1,25,60,0.4,1.3,0.25
+BUDU00585,Fajar Situmorang,L,30,1994-04-18,D,Kelas D (Menengah Bawah),Teknisi,Desa Rawa Indah,Desa,6500,-6.5417,106.7557,2720423,2258180,462243,0.83,DANA,0,15,35,0.25,1.15,0.15
+BUDU00586,Irwan Yulianto,L,21,2003-08-15,C,Kelas C (Menengah),Staf Administrasi,Pekalongan,Kota Kecil,310000,-6.8946,109.2938,6369827,4726839,1642988,0.742,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00587,Clara Prasetyo,P,31,1993-07-13,D,Kelas D (Menengah Bawah),Teknisi,Denpasar,Kota Besar,900000,-9.1152,114.9107,2492171,2027856,464315,0.814,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00588,Fajar Purnomo,L,18,2006-08-11,D,Kelas D (Menengah Bawah),Karyawan Toko,Tasikmalaya,Kota Kecil,700000,-7.3151,108.2619,2623736,2141146,482590,0.816,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00589,Julia Gunawan,P,31,1993-03-13,C,Kelas C (Menengah),Pegawai Swasta,Cirebon,Kota Kecil,320000,-6.9154,108.4525,6290591,4883772,1406819,0.776,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00590,Zulfi Iskandar,L,37,1987-09-12,C,Kelas C (Menengah),Sales,Bekasi,Metropolitan,2700000,-6.4103,107.2713,4030782,2457616,1573166,0.61,DANA,1,25,60,0.4,1.3,0.25
+BUDU00591,Vino Lubis,L,28,1996-11-24,A,Kelas A (Kaya),CEO/Direktur,Jakarta,Metropolitan,10500000,-6.0291,106.9546,73678454,21099996,52578458,0.286,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00592,Erwin Kurniawan,L,44,1980-06-20,E,Kelas E (Miskin),Buruh Tani,Desa Sejahtera,Desa,4100,-5.8467,107.1635,1021203,911054,110149,0.892,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00593,Erwin Sutrisno,L,42,1982-06-15,A,Kelas A (Kaya),CEO/Direktur,Bekasi,Metropolitan,2700000,-6.0871,106.6991,81796678,23905945,57890733,0.292,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00594,Clara Tobing,P,27,1997-03-07,C,Kelas C (Menengah),PNS Golongan II,Palembang,Kota Besar,1700000,-2.5823,104.8052,3315922,2718867,597055,0.82,DANA,1,25,60,0.4,1.3,0.25
+BUDU00595,Uci Tobing,P,26,1998-07-04,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Rawa Indah,Desa,6500,-6.0117,106.9041,2846847,2443443,403404,0.858,DANA,0,15,35,0.25,1.15,0.15
+BUDU00596,Dhea Kurniawan,P,22,2002-09-09,D,Kelas D (Menengah Bawah),Guru Honorer,Denpasar,Kota Besar,900000,-8.3658,115.3281,2636203,2173745,462458,0.825,OVO,1,15,35,0.25,1.15,0.15
+BUDU00597,Tiara Hidayat,P,45,1979-09-22,B,Kelas B (Menengah Atas),Arsitek,Bekasi,Metropolitan,2700000,-6.6181,106.7628,18872896,9872370,9000526,0.523,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00598,Bella Wahyudi,P,20,2004-10-24,C,Kelas C (Menengah),Sales,Yogyakarta,Kota Besar,420000,-7.4745,109.9618,5273888,4138260,1135628,0.785,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00599,Tiara Hidayat,P,30,1994-06-10,C,Kelas C (Menengah),Wirausaha Kecil,Kediri,Kota Kecil,320000,-7.4747,112.3126,5891773,4500913,1390860,0.764,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00600,Doni Kurniawan,L,43,1981-12-18,D,Kelas D (Menengah Bawah),Karyawan Toko,Bandung,Kota Besar,2500000,-6.6231,107.2181,2067310,1737970,329340,0.841,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00601,Wahyu Wibowo,L,21,2003-01-05,E,Kelas E (Miskin),Buruh Tani,Desa Cikaret,Desa,2800,-6.5613,106.4273,1295265,1210844,84421,0.935,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00602,Doni Purwanto,L,39,1985-06-28,B,Kelas B (Menengah Atas),Dosen,Semarang,Kota Besar,1800000,-6.5445,110.0901,18180955,8226186,9954769,0.452,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00603,Dinda Lubis,P,31,1993-02-01,D,Kelas D (Menengah Bawah),Admin Kantor,Denpasar,Kota Besar,900000,-8.888,115.2678,2599085,2164076,435009,0.833,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00604,Eko Firmansyah,L,46,1978-04-16,D,Kelas D (Menengah Bawah),Pedagang Warung,Pekalongan,Kota Kecil,310000,-7.3366,110.0595,2295709,1940726,354983,0.845,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00605,Deni Saputra,L,25,1999-01-20,E,Kelas E (Miskin),Buruh Pabrik,Palembang,Kota Besar,1700000,-3.0899,105.2298,1371359,1253872,117487,0.914,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00606,Wati Hartono,P,39,1985-10-17,C,Kelas C (Menengah),Perawat,Surabaya,Kota Besar,3100000,-7.0264,112.4943,4930913,3273126,1657787,0.664,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00607,Mulyadi Purwanto,L,25,1999-11-26,C,Kelas C (Menengah),Wirausaha Kecil,Cirebon,Kota Kecil,320000,-6.4536,108.6609,6355551,4918768,1436783,0.774,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00608,Eko Tobing,L,37,1987-10-16,E,Kelas E (Miskin),Asisten Rumah Tangga,Purwokerto,Kota Kecil,290000,-7.8854,109.2936,884189,857433,26756,0.97,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00609,Fajar Sinaga,L,43,1981-04-03,D,Kelas D (Menengah Bawah),Driver Ojek Online,Tegal,Kota Kecil,285000,-6.8893,109.1316,2568011,2084563,483448,0.812,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00610,Tiara Tobing,P,25,1999-04-28,E,Kelas E (Miskin),Buruh Tani,Kediri,Kota Kecil,320000,-7.6571,112.4209,1361792,1164662,197130,0.855,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00611,Oscar Sutrisno,L,26,1998-10-24,E,Kelas E (Miskin),Pedagang Kaki Lima,Tasikmalaya,Kota Kecil,700000,-6.9145,108.2385,1493690,1404630,89060,0.94,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00612,Lutfi Hidayat,L,43,1981-08-16,E,Kelas E (Miskin),Pedagang Kaki Lima,Desa Sejahtera,Desa,4100,-5.7691,106.4109,846124,733179,112945,0.867,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00613,Fery Harahap,L,54,1970-05-28,E,Kelas E (Miskin),Buruh Pabrik,Desa Makmur,Desa,3200,-6.1372,106.6134,1312123,1252500,59623,0.955,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00614,Kevin Santoso,L,23,2001-09-10,D,Kelas D (Menengah Bawah),Teknisi,Medan,Kota Besar,2400000,3.6203,98.3752,2963175,2278314,684861,0.769,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00615,Hendra Purwanto,L,19,2005-03-17,C,Kelas C (Menengah),Wirausaha Kecil,Surabaya,Kota Besar,3100000,-7.3458,112.5851,4312278,3220915,1091363,0.747,OVO,1,25,60,0.4,1.3,0.25
+BUDU00616,Tono Rajasa,L,54,1970-02-26,E,Kelas E (Miskin),Buruh Tani,Desa Makmur,Desa,3200,-6.5966,106.4807,1235918,1130493,105425,0.915,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00617,Okta Sutrisno,P,18,2006-07-12,C,Kelas C (Menengah),Guru Tetap,Denpasar,Kota Besar,900000,-9.1078,115.5281,4460375,3254138,1206237,0.73,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00618,Clara Tambunan,P,21,2003-01-02,C,Kelas C (Menengah),Guru Tetap,Depok,Metropolitan,2200000,-6.5731,106.882,4342228,3468251,873977,0.799,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00619,Ella Saputra,P,29,1995-04-28,C,Kelas C (Menengah),Perawat,Semarang,Kota Besar,1800000,-6.6518,110.538,3373191,2638769,734422,0.782,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00620,Samsul Setiawan,L,23,2001-12-22,B,Kelas B (Menengah Atas),Dokter,Denpasar,Kota Besar,900000,-8.3769,115.3291,9322175,4262962,5059213,0.457,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00621,Tono Susanto,L,41,1983-11-26,C,Kelas C (Menengah),Pegawai Swasta,Denpasar,Kota Besar,900000,-8.9858,115.0537,6431062,3950603,2480459,0.614,OVO,1,25,60,0.4,1.3,0.25
+BUDU00622,Putra Nasution,L,46,1978-07-15,B,Kelas B (Menengah Atas),Dosen,Tangerang Selatan,Metropolitan,1700000,-6.66,106.7767,16676786,11427625,5249161,0.685,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00623,Wahyu Sihombing,L,18,2006-10-21,C,Kelas C (Menengah),Staf Administrasi,Pekalongan,Kota Kecil,310000,-7.3558,109.6432,6519241,5291711,1227530,0.812,OVO,1,25,60,0.4,1.3,0.25
+BUDU00624,Maman Nugroho,L,45,1979-03-11,B,Kelas B (Menengah Atas),Manajer,Depok,Metropolitan,2200000,-6.744,107.1069,18597987,8417196,10180791,0.453,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00625,Lina Budiman,P,44,1980-01-14,C,Kelas C (Menengah),PNS Golongan II,Magelang,Kota Kecil,130000,-7.2905,110.3254,4795326,3286665,1508661,0.685,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00626,Gilang Iskandar,L,31,1993-02-13,D,Kelas D (Menengah Bawah),Pedagang Warung,Semarang,Kota Besar,1800000,-6.6635,110.4827,1756016,1494647,261369,0.851,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00627,Maya Panggabean,P,53,1971-04-19,E,Kelas E (Miskin),Asisten Rumah Tangga,Pekalongan,Kota Kecil,310000,-7.0308,109.4508,1351711,1251459,100252,0.926,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00628,Rizki Kurniawan,L,29,1995-02-23,C,Kelas C (Menengah),Sales,Semarang,Kota Besar,1800000,-6.5126,110.2706,3006338,2435595,570743,0.81,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00629,Oscar Hartono,L,42,1982-05-20,B,Kelas B (Menengah Atas),Arsitek,Denpasar,Kota Besar,900000,-8.7514,115.4959,10297352,7171741,3125611,0.696,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00630,Galih Hidayat,L,26,1998-08-28,D,Kelas D (Menengah Bawah),Teknisi,Magelang,Kota Kecil,130000,-7.5658,109.9878,1870121,1485270,384851,0.794,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00631,Joko Hidayat,L,26,1998-01-16,C,Kelas C (Menengah),Pegawai Swasta,Jakarta,Metropolitan,10500000,-6.014,106.7871,4113861,3137099,976762,0.763,DANA,1,25,60,0.4,1.3,0.25
+BUDU00632,Zara Hidayat,P,41,1983-08-17,D,Kelas D (Menengah Bawah),Guru Honorer,Tegal,Kota Kecil,285000,-7.1167,109.077,2299028,1761625,537403,0.766,OVO,0,15,35,0.25,1.15,0.15
+BUDU00633,Prio Tobing,L,43,1981-06-01,E,Kelas E (Miskin),Buruh Tani,Desa Rawa Indah,Desa,6500,-6.697,106.5479,1347366,1151494,195872,0.855,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00634,Bunga Sanjaya,P,52,1972-04-20,E,Kelas E (Miskin),Buruh Pabrik,Makassar,Kota Besar,1500000,-4.7091,119.1185,1359466,1180164,179302,0.868,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00635,Yuni Tambunan,P,28,1996-10-22,E,Kelas E (Miskin),Asisten Rumah Tangga,Tasikmalaya,Kota Kecil,700000,-7.2544,108.6342,907355,824578,82777,0.909,DANA,0,8,20,0.15,1.05,0.08
+BUDU00636,Putra Nasution,L,47,1977-04-15,B,Kelas B (Menengah Atas),Analis Keuangan,Tangerang Selatan,Metropolitan,1700000,-5.9929,106.8718,18000520,8201506,9799014,0.456,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00637,Okta Nasution,P,35,1989-07-15,C,Kelas C (Menengah),Staf Administrasi,Bandung,Kota Besar,2500000,-6.8405,107.2713,3072128,2443152,628976,0.795,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00638,Hana Harahap,P,36,1988-08-11,C,Kelas C (Menengah),Staf Administrasi,Yogyakarta,Kota Besar,420000,-7.4926,110.2432,5379330,4374791,1004539,0.813,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00639,Rudi Wibowo,L,39,1985-12-16,A,Kelas A (Kaya),Dokter Spesialis,Depok,Metropolitan,2200000,-6.6455,106.9584,28722185,12834331,15887854,0.447,Kartu Debit,1,50,150,0.65,1.7,0.45
+BUDU00640,Agus Purwanto,L,47,1977-11-09,B,Kelas B (Menengah Atas),Dokter,Palembang,Kota Besar,1700000,-3.1892,104.544,19384347,10021763,9362584,0.517,ShopeePay,1,40,90,0.55,1.5,0.35
+BUDU00641,Rini Harahap,P,24,2000-02-19,D,Kelas D (Menengah Bawah),Karyawan Toko,Desa Sukamaju,Desa,5000,-5.8954,106.4379,1969023,1701289,267734,0.864,OVO,1,15,35,0.25,1.15,0.15
+BUDU00642,Fajar Panggabean,L,47,1977-11-13,B,Kelas B (Menengah Atas),Analis Keuangan,Jakarta,Metropolitan,10500000,-6.342,106.7483,14056937,8835323,5221614,0.629,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00643,Putra Situmorang,L,33,1991-11-09,B,Kelas B (Menengah Atas),Manajer,Bandung,Kota Besar,2500000,-6.9994,108.0301,13344496,9017132,4327364,0.676,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00644,Julia Sihombing,P,34,1990-05-01,D,Kelas D (Menengah Bawah),Karyawan Toko,Purwokerto,Kota Kecil,290000,-7.0732,108.7629,2766782,2197195,569587,0.794,OVO,1,15,35,0.25,1.15,0.15
+BUDU00645,Nanang Siregar,L,42,1982-06-13,C,Kelas C (Menengah),Guru Tetap,Medan,Kota Besar,2400000,4.0422,98.6771,4156772,3250491,906281,0.782,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00646,Irwan Purnomo,L,32,1992-02-24,C,Kelas C (Menengah),Staf Administrasi,Tegal,Kota Kecil,285000,-7.1724,109.053,4760483,2973691,1786792,0.625,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00647,Wahyu Hartono,L,43,1981-02-03,C,Kelas C (Menengah),PNS Golongan II,Tegal,Kota Kecil,285000,-6.8714,109.1944,6895122,4397531,2497591,0.638,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00648,Oki Rajasa,L,23,2001-04-23,C,Kelas C (Menengah),Wirausaha Kecil,Purwokerto,Kota Kecil,290000,-7.2117,109.2762,3856705,3161564,695141,0.82,DANA,1,25,60,0.4,1.3,0.25
+BUDU00649,Ayu Rajasa,P,39,1985-06-22,A,Kelas A (Kaya),Dokter Spesialis,Jakarta,Metropolitan,10500000,-6.2808,107.0039,60226221,20353258,39872963,0.338,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00650,Agus Hidayat,L,35,1989-03-17,E,Kelas E (Miskin),Asisten Rumah Tangga,Pekalongan,Kota Kecil,310000,-7.1513,109.4379,1449530,1359119,90411,0.938,OVO,0,8,20,0.15,1.05,0.08
+BUDU00651,Elisa Mahendra,P,39,1985-05-03,D,Kelas D (Menengah Bawah),Driver Ojek Online,Bandung,Kota Besar,2500000,-7.3859,107.3776,2833679,2462833,370846,0.869,DANA,0,15,35,0.25,1.15,0.15
+BUDU00652,Elisa Nugroho,P,34,1990-01-20,C,Kelas C (Menengah),Staf Administrasi,Medan,Kota Besar,2400000,3.2713,98.9155,3854961,3145868,709093,0.816,OVO,1,25,60,0.4,1.3,0.25
+BUDU00653,Doni Pratama,L,36,1988-12-03,D,Kelas D (Menengah Bawah),Driver Ojek Online,Cirebon,Kota Kecil,320000,-6.4979,108.0831,2128138,1640810,487328,0.771,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00654,Vevi Gunawan,P,24,2000-11-22,E,Kelas E (Miskin),Ojek Konvensional,Desa Sukamaju,Desa,5000,-6.2824,107.0367,1398232,1351843,46389,0.967,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00655,Siti Prasetyo,P,22,2002-09-17,D,Kelas D (Menengah Bawah),SPG/SPB,Medan,Kota Besar,2400000,3.6514,98.5836,2861424,2200094,661330,0.769,OVO,1,15,35,0.25,1.15,0.15
+BUDU00656,Cantika Simatupang,P,45,1979-10-21,D,Kelas D (Menengah Bawah),SPG/SPB,Blitar,Kota Kecil,150000,-8.5822,111.7856,2488283,2245148,243135,0.902,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00657,Dimas Harahap,L,32,1992-02-20,E,Kelas E (Miskin),Ojek Konvensional,Desa Rawa Indah,Desa,6500,-5.9357,106.7927,1154739,1084605,70134,0.939,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00658,Hendra Mahendra,L,25,1999-07-16,B,Kelas B (Menengah Atas),Dosen,Semarang,Kota Besar,1800000,-6.8386,110.6296,8132066,4297886,3834180,0.529,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00659,Udin Siregar,L,26,1998-08-08,C,Kelas C (Menengah),Guru Tetap,Pekalongan,Kota Kecil,310000,-6.5467,109.7587,5811790,4408194,1403596,0.758,OVO,1,25,60,0.4,1.3,0.25
+BUDU00660,Yanti Pratama,P,33,1991-05-17,C,Kelas C (Menengah),Staf Administrasi,Magelang,Kota Kecil,130000,-7.7378,110.594,4409209,3550669,858540,0.805,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00661,Rudi Saputra,L,42,1982-06-13,C,Kelas C (Menengah),Wirausaha Kecil,Semarang,Kota Besar,1800000,-7.0524,110.9149,3115986,2263280,852706,0.726,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00662,Wahyu Wahyudi,L,36,1988-08-03,C,Kelas C (Menengah),Sales,Surabaya,Kota Besar,3100000,-6.8404,112.3861,4808175,3854702,953473,0.802,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00663,Nanang Tambunan,L,22,2002-01-13,C,Kelas C (Menengah),Sales,Blitar,Kota Kecil,150000,-7.8734,112.3667,4771656,3056900,1714756,0.641,OVO,1,25,60,0.4,1.3,0.25
+BUDU00664,Dimas Iskandar,L,37,1987-09-08,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Cikaret,Desa,2800,-6.3349,107.2126,2367878,1989852,378026,0.84,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00665,Ulfa Budiman,P,49,1975-02-23,B,Kelas B (Menengah Atas),Manajer,Bekasi,Metropolitan,2700000,-6.7154,107.3203,17100303,11239951,5860352,0.657,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00666,Intan Situmorang,P,19,2005-05-25,C,Kelas C (Menengah),Pegawai Swasta,Tasikmalaya,Kota Kecil,700000,-7.8447,108.3107,6312173,5148280,1163893,0.816,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00667,Firmansyah Rahayu,L,39,1985-02-20,D,Kelas D (Menengah Bawah),Admin Kantor,Yogyakarta,Kota Besar,420000,-7.9291,110.6253,1632009,1481822,150187,0.908,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00668,Fitri Setiawan,P,47,1977-12-26,D,Kelas D (Menengah Bawah),Teknisi,Kediri,Kota Kecil,320000,-8.3112,112.076,2365438,2000065,365373,0.846,DANA,1,15,35,0.25,1.15,0.15
+BUDU00669,Kevin Tambunan,L,38,1986-11-26,D,Kelas D (Menengah Bawah),Pedagang Warung,Bandung,Kota Besar,2500000,-6.8256,107.8554,2931140,2536407,394733,0.865,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00670,Ahmad Harahap,L,22,2002-12-04,C,Kelas C (Menengah),Pegawai Swasta,Yogyakarta,Kota Besar,420000,-7.9628,110.6244,5581594,3908431,1673163,0.7,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00671,Candra Sanjaya,L,40,1984-02-21,C,Kelas C (Menengah),Staf Administrasi,Purwokerto,Kota Kecil,290000,-7.2418,109.3012,5350777,3816626,1534151,0.713,OVO,1,25,60,0.4,1.3,0.25
+BUDU00672,Vina Sinaga,P,47,1977-12-17,D,Kelas D (Menengah Bawah),Driver Ojek Online,Tasikmalaya,Kota Kecil,700000,-7.3185,108.1206,2154072,1720527,433545,0.799,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00673,Erwin Santoso,L,26,1998-11-06,D,Kelas D (Menengah Bawah),Guru Honorer,Palembang,Kota Besar,1700000,-3.1836,104.9593,1655662,1327755,327907,0.802,DANA,1,15,35,0.25,1.15,0.15
+BUDU00674,Fajar Budiman,L,27,1997-07-18,C,Kelas C (Menengah),Wirausaha Kecil,Purwokerto,Kota Kecil,290000,-7.0883,109.1968,4126038,2999493,1126545,0.727,OVO,1,25,60,0.4,1.3,0.25
+BUDU00675,Siti Sinaga,P,21,2003-05-22,C,Kelas C (Menengah),Perawat,Bandung,Kota Besar,2500000,-7.3875,107.5163,4699322,3844863,854459,0.818,OVO,1,25,60,0.4,1.3,0.25
+BUDU00676,Oscar Sanjaya,L,49,1975-01-21,B,Kelas B (Menengah Atas),Analis Keuangan,Palembang,Kota Besar,1700000,-3.1805,104.8564,18168694,11695567,6473127,0.644,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00677,Kukuh Rahayu,L,26,1998-12-15,D,Kelas D (Menengah Bawah),Pedagang Warung,Bandung,Kota Besar,2500000,-6.6658,107.542,2046959,1785227,261732,0.872,OVO,0,15,35,0.25,1.15,0.15
+BUDU00678,Erwin Pratama,L,27,1997-02-03,C,Kelas C (Menengah),Staf Administrasi,Makassar,Kota Besar,1500000,-5.0227,119.7867,6019760,4422567,1597193,0.735,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00679,Fery Panggabean,L,41,1983-05-25,C,Kelas C (Menengah),Staf Administrasi,Tangerang Selatan,Metropolitan,1700000,-6.4085,106.7868,4804357,3014455,1789902,0.627,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00680,Udin Gunawan,L,43,1981-06-05,D,Kelas D (Menengah Bawah),Guru Honorer,Cirebon,Kota Kecil,320000,-6.7042,108.5923,2239615,1893879,345736,0.846,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00681,Elisa Wijaya,P,28,1996-01-07,C,Kelas C (Menengah),PNS Golongan II,Makassar,Kota Besar,1500000,-4.9285,119.5177,6580266,5324292,1255974,0.809,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00682,Gita Saputra,P,42,1982-01-11,D,Kelas D (Menengah Bawah),Karyawan Toko,Cirebon,Kota Kecil,320000,-6.2932,108.5862,2491460,2179446,312014,0.875,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00683,Mulyadi Prasetyo,L,29,1995-02-07,C,Kelas C (Menengah),Staf Administrasi,Surabaya,Kota Besar,3100000,-6.9392,112.893,5173879,4165915,1007964,0.805,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00684,Vevi Mahendra,P,42,1982-02-14,C,Kelas C (Menengah),Guru Tetap,Semarang,Kota Besar,1800000,-6.9967,110.1973,6076679,4008250,2068429,0.66,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00685,Hendra Panggabean,L,19,2005-11-17,D,Kelas D (Menengah Bawah),Teknisi,Desa Makmur,Desa,3200,-6.1097,107.2347,1910872,1565655,345217,0.819,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00686,Sinta Purnomo,P,44,1980-03-13,E,Kelas E (Miskin),Buruh Pabrik,Bandung,Kota Besar,2500000,-6.5857,107.5889,800036,701458,98578,0.877,OVO,1,8,20,0.15,1.05,0.08
+BUDU00687,Intan Susanto,P,36,1988-10-15,B,Kelas B (Menengah Atas),Pengacara,Tangerang Selatan,Metropolitan,1700000,-5.8539,106.2865,12758182,8697274,4060908,0.682,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00688,Fery Pasaribu,L,20,2004-03-19,D,Kelas D (Menengah Bawah),Pedagang Warung,Blitar,Kota Kecil,150000,-8.1469,111.9156,1535188,1305179,230009,0.85,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00689,Oscar Sutrisno,L,31,1993-11-06,C,Kelas C (Menengah),Staf Administrasi,Jombang,Kota Kecil,190000,-7.5719,111.8515,4793467,2934791,1858676,0.612,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00690,Prio Wahyudi,L,31,1993-11-21,B,Kelas B (Menengah Atas),Dosen,Palembang,Kota Besar,1700000,-2.7775,104.9793,12388252,6962121,5426131,0.562,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00691,Joko Situmorang,L,44,1980-12-28,D,Kelas D (Menengah Bawah),Admin Kantor,Makassar,Kota Besar,1500000,-4.8769,119.2599,2575462,2046558,528904,0.795,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00692,Dewi Saputra,P,38,1986-01-19,D,Kelas D (Menengah Bawah),SPG/SPB,Cirebon,Kota Kecil,320000,-6.9222,108.5742,1944661,1726446,218215,0.888,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00693,Ayu Firmansyah,P,27,1997-04-06,A,Kelas A (Kaya),Artis/Influencer,Yogyakarta,Kota Besar,420000,-7.4493,110.6018,127291767,49670162,77621605,0.39,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00694,Vina Kusuma,P,33,1991-06-25,C,Kelas C (Menengah),Staf Administrasi,Purwokerto,Kota Kecil,290000,-6.9782,108.841,5519682,3625895,1893787,0.657,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00695,Dimas Manurung,L,33,1991-06-17,D,Kelas D (Menengah Bawah),Driver Ojek Online,Tegal,Kota Kecil,285000,-7.0195,109.3485,2095863,1747558,348305,0.834,DANA,1,15,35,0.25,1.15,0.15
+BUDU00696,Farida Sihombing,P,28,1996-11-22,B,Kelas B (Menengah Atas),Wirausaha Menengah,Depok,Metropolitan,2200000,-6.7202,107.2365,13485346,6669347,6815999,0.495,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00697,Erwin Sihombing,L,42,1982-09-05,B,Kelas B (Menengah Atas),Dokter,Bogor,Metropolitan,1100000,-6.5069,107.0013,9746417,5705324,4041093,0.585,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00698,Julia Sihombing,P,43,1981-01-25,B,Kelas B (Menengah Atas),Manajer,Depok,Metropolitan,2200000,-6.5548,107.1706,15465570,9686716,5778854,0.626,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00699,Fitri Hidayat,P,37,1987-10-27,C,Kelas C (Menengah),Guru Tetap,Makassar,Kota Besar,1500000,-5.4537,119.2176,3453894,2687085,766809,0.778,DANA,1,25,60,0.4,1.3,0.25
+BUDU00700,Lina Iskandar,P,24,2000-08-13,D,Kelas D (Menengah Bawah),Admin Kantor,Purwokerto,Kota Kecil,290000,-7.5122,109.6188,2666976,2447474,219502,0.918,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00701,Nisa Kurniawan,P,42,1982-03-13,C,Kelas C (Menengah),Pegawai Swasta,Makassar,Kota Besar,1500000,-5.0677,119.6524,4848561,3312376,1536185,0.683,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00702,Fajar Panggabean,L,37,1987-03-10,E,Kelas E (Miskin),Ojek Konvensional,Tasikmalaya,Kota Kecil,700000,-7.5385,107.7309,926249,811253,114996,0.876,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00703,Prio Kurniawan,L,30,1994-03-02,C,Kelas C (Menengah),PNS Golongan II,Makassar,Kota Besar,1500000,-5.6396,119.1458,4057617,2793116,1264501,0.688,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00704,Ella Rajasa,P,44,1980-04-02,A,Kelas A (Kaya),CEO/Direktur,Medan,Kota Besar,2400000,3.7963,98.4628,55532753,23480595,32052158,0.423,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00705,Rizki Mahendra,L,37,1987-07-20,C,Kelas C (Menengah),Staf Administrasi,Yogyakarta,Kota Besar,420000,-7.5795,110.1927,3057107,2431206,625901,0.795,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00706,Fery Situmorang,L,44,1980-11-17,D,Kelas D (Menengah Bawah),Admin Kantor,Desa Makmur,Desa,3200,-6.6803,107.0356,2985263,2602092,383171,0.872,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00707,Tono Hartono,L,30,1994-08-16,C,Kelas C (Menengah),Sales,Pekalongan,Kota Kecil,310000,-6.7947,109.8208,6535991,4324122,2211869,0.662,DANA,1,25,60,0.4,1.3,0.25
+BUDU00708,Udin Rajasa,L,40,1984-03-22,E,Kelas E (Miskin),Buruh Pabrik,Desa Cikaret,Desa,2800,-6.6003,106.6633,1236627,1079938,156689,0.873,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00709,Kukuh Budiman,L,29,1995-07-22,C,Kelas C (Menengah),Pegawai Swasta,Surabaya,Kota Besar,3100000,-6.807,113.2325,3858940,2709009,1149931,0.702,OVO,1,25,60,0.4,1.3,0.25
+BUDU00710,Widya Susanto,P,23,2001-11-13,E,Kelas E (Miskin),Pedagang Kaki Lima,Desa Sukamaju,Desa,5000,-6.0762,106.489,899353,789873,109480,0.878,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00711,Kukuh Sihombing,L,27,1997-10-28,D,Kelas D (Menengah Bawah),SPG/SPB,Surabaya,Kota Besar,3100000,-6.7686,113.2012,2196768,1732491,464277,0.789,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00712,Galih Purnomo,L,39,1985-09-07,D,Kelas D (Menengah Bawah),Admin Kantor,Desa Cikaret,Desa,2800,-6.3541,106.648,1606984,1312870,294114,0.817,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00713,Hadi Sutrisno,L,21,2003-03-27,C,Kelas C (Menengah),Staf Administrasi,Surabaya,Kota Besar,3100000,-7.509,112.8946,5933446,4470021,1463425,0.753,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00714,Putri Tambunan,P,24,2000-11-12,C,Kelas C (Menengah),PNS Golongan II,Semarang,Kota Besar,1800000,-6.997,110.745,3042767,1930008,1112759,0.634,DANA,1,25,60,0.4,1.3,0.25
+BUDU00715,Fitri Kusuma,P,23,2001-10-03,D,Kelas D (Menengah Bawah),Teknisi,Pekalongan,Kota Kecil,310000,-7.0514,109.1895,1831684,1430016,401668,0.781,Transfer Bank,0,15,35,0.25,1.15,0.15
+BUDU00716,Lukman Saputra,L,30,1994-06-16,C,Kelas C (Menengah),Perawat,Denpasar,Kota Besar,900000,-8.795,115.2104,5907454,3787960,2119494,0.641,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00717,Udin Mahendra,L,35,1989-09-05,B,Kelas B (Menengah Atas),Manajer,Semarang,Kota Besar,1800000,-7.2878,110.6575,17761771,9787713,7974058,0.551,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00718,Sinta Gunawan,P,37,1987-06-26,C,Kelas C (Menengah),Pegawai Swasta,Tegal,Kota Kecil,285000,-7.0906,109.1111,5889244,4034235,1855009,0.685,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00719,Fitri Gunawan,P,19,2005-08-19,D,Kelas D (Menengah Bawah),Guru Honorer,Surabaya,Kota Besar,3100000,-7.0927,112.5383,2765218,2357378,407840,0.853,DANA,0,15,35,0.25,1.15,0.15
+BUDU00720,Hana Gunawan,P,40,1984-02-12,B,Kelas B (Menengah Atas),Analis Keuangan,Denpasar,Kota Besar,900000,-8.3881,115.2434,13602051,7929845,5672206,0.583,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00721,Intan Saputra,P,36,1988-08-26,C,Kelas C (Menengah),Pegawai Swasta,Bekasi,Metropolitan,2700000,-5.8042,106.76,4493514,2955658,1537856,0.658,OVO,1,25,60,0.4,1.3,0.25
+BUDU00722,Joko Sihombing,L,39,1985-06-19,E,Kelas E (Miskin),Buruh Pabrik,Pekalongan,Kota Kecil,310000,-6.9905,109.7553,1118722,998750,119972,0.893,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00723,Joko Harahap,L,18,2006-03-26,C,Kelas C (Menengah),Pegawai Swasta,Denpasar,Kota Besar,900000,-8.7874,115.5482,4849422,3613598,1235824,0.745,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00724,Julia Susanto,P,46,1978-04-04,D,Kelas D (Menengah Bawah),Guru Honorer,Tasikmalaya,Kota Kecil,700000,-7.6509,108.2247,1671759,1528310,143449,0.914,DANA,1,15,35,0.25,1.15,0.15
+BUDU00725,Hana Kusuma,P,32,1992-01-06,A,Kelas A (Kaya),Dokter Spesialis,Bekasi,Metropolitan,2700000,-6.236,106.7047,74828147,32829659,41998488,0.439,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00726,Fery Setiawan,L,29,1995-05-26,B,Kelas B (Menengah Atas),Engineer Senior,Bekasi,Metropolitan,2700000,-6.5487,106.6153,11378648,7515666,3862982,0.661,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00727,Clara Kusuma,P,41,1983-11-05,D,Kelas D (Menengah Bawah),SPG/SPB,Blitar,Kota Kecil,150000,-8.1731,112.1261,2432943,2109249,323694,0.867,OVO,1,15,35,0.25,1.15,0.15
+BUDU00728,Irwan Kurniawan,L,45,1979-02-04,B,Kelas B (Menengah Atas),Pengacara,Depok,Metropolitan,2200000,-6.6809,106.5637,11439592,5347700,6091892,0.467,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00729,Rini Nugroho,P,35,1989-02-11,C,Kelas C (Menengah),PNS Golongan II,Palembang,Kota Besar,1700000,-2.7207,104.5425,3858226,2545268,1312958,0.66,DANA,1,25,60,0.4,1.3,0.25
+BUDU00730,Nisa Tambunan,P,34,1990-07-28,D,Kelas D (Menengah Bawah),Admin Kantor,Tasikmalaya,Kota Kecil,700000,-6.9446,107.7596,2098663,1848141,250522,0.881,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00731,Dimas Santoso,L,18,2006-09-20,E,Kelas E (Miskin),Buruh Pabrik,Desa Rawa Indah,Desa,6500,-6.2119,107.012,1162180,1050513,111667,0.904,DANA,1,8,20,0.15,1.05,0.08
+BUDU00732,Nadia Panggabean,P,29,1995-09-04,A,Kelas A (Kaya),CEO/Direktur,Bekasi,Metropolitan,2700000,-6.1411,106.5053,75794775,37782336,38012439,0.498,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00733,Cantika Prasetyo,P,40,1984-12-25,D,Kelas D (Menengah Bawah),Teknisi,Magelang,Kota Kecil,130000,-7.3311,110.4393,2190579,1826894,363685,0.834,OVO,1,15,35,0.25,1.15,0.15
+BUDU00734,Putra Hartono,L,32,1992-02-24,B,Kelas B (Menengah Atas),Wirausaha Menengah,Bogor,Metropolitan,1100000,-6.1016,106.4249,10239268,6627990,3611278,0.647,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00735,Lutfi Wibowo,L,49,1975-04-10,D,Kelas D (Menengah Bawah),SPG/SPB,Desa Sukamaju,Desa,5000,-5.8848,106.3847,2565365,2205731,359634,0.86,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00736,Agus Wibowo,L,41,1983-02-08,A,Kelas A (Kaya),CEO/Direktur,Bogor,Metropolitan,1100000,-6.2481,106.8276,63676139,34607831,29068308,0.543,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00737,Vevi Hidayat,P,18,2006-08-11,C,Kelas C (Menengah),Staf Administrasi,Medan,Kota Besar,2400000,3.675,98.3441,4144240,2539577,1604663,0.613,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00738,Ani Simatupang,P,31,1993-02-06,D,Kelas D (Menengah Bawah),SPG/SPB,Yogyakarta,Kota Besar,420000,-7.5815,110.2394,2048177,1639171,409006,0.8,DANA,1,15,35,0.25,1.15,0.15
+BUDU00739,Nanda Sihombing,L,37,1987-04-16,C,Kelas C (Menengah),Staf Administrasi,Surabaya,Kota Besar,3100000,-6.9266,112.2937,6875691,4841760,2033931,0.704,OVO,1,25,60,0.4,1.3,0.25
+BUDU00740,Prita Budiman,P,44,1980-09-22,C,Kelas C (Menengah),Perawat,Yogyakarta,Kota Besar,420000,-7.9675,110.7777,5522084,3886105,1635979,0.704,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00741,Putra Gunawan,L,31,1993-02-16,E,Kelas E (Miskin),Nelayan,Yogyakarta,Kota Besar,420000,-7.7737,110.5064,994483,974529,19954,0.98,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00742,Elisa Pasaribu,P,24,2000-02-23,B,Kelas B (Menengah Atas),Analis Keuangan,Surabaya,Kota Besar,3100000,-7.2847,112.9292,19384650,12004435,7380215,0.619,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00743,Udin Pratama,L,27,1997-08-21,D,Kelas D (Menengah Bawah),Karyawan Toko,Surabaya,Kota Besar,3100000,-7.3174,112.7645,1702196,1507322,194874,0.886,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00744,Fery Lubis,L,36,1988-04-19,C,Kelas C (Menengah),Staf Administrasi,Palembang,Kota Besar,1700000,-2.6186,104.2756,5352344,4053926,1298418,0.757,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00745,Wulan Wahyudi,P,39,1985-11-02,E,Kelas E (Miskin),Asisten Rumah Tangga,Kediri,Kota Kecil,320000,-8.1303,111.9965,1452744,1258295,194449,0.866,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00746,Yanti Gunawan,P,41,1983-03-15,C,Kelas C (Menengah),PNS Golongan II,Kediri,Kota Kecil,320000,-7.8661,111.8363,4173558,3336109,837449,0.799,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00747,Ivan Iskandar,L,32,1992-04-18,B,Kelas B (Menengah Atas),Wirausaha Menengah,Depok,Metropolitan,2200000,-5.9691,106.6113,9290000,5952449,3337551,0.641,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00748,Rina Gunawan,P,47,1977-11-02,B,Kelas B (Menengah Atas),Wirausaha Menengah,Palembang,Kota Besar,1700000,-2.9159,104.7047,13541722,6693143,6848579,0.494,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00749,Putri Mahendra,P,19,2005-09-13,E,Kelas E (Miskin),Nelayan,Pekalongan,Kota Kecil,310000,-7.1184,109.6799,1424957,1333335,91622,0.936,OVO,0,8,20,0.15,1.05,0.08
+BUDU00750,Rahma Harahap,P,36,1988-08-06,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Sejahtera,Desa,4100,-6.4004,106.9232,2882933,2162662,720271,0.75,OVO,1,15,35,0.25,1.15,0.15
+BUDU00751,Zara Pratama,P,34,1990-05-23,B,Kelas B (Menengah Atas),Wirausaha Menengah,Bekasi,Metropolitan,2700000,-6.3939,106.6773,12328019,6523732,5804287,0.529,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00752,Doni Sihombing,L,22,2002-06-20,D,Kelas D (Menengah Bawah),Pedagang Warung,Kediri,Kota Kecil,320000,-7.3802,112.3186,2628232,2028813,599419,0.772,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00753,Nisa Susanto,P,24,2000-02-10,C,Kelas C (Menengah),Perawat,Yogyakarta,Kota Besar,420000,-7.7986,109.9016,3084689,2270237,814452,0.736,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00754,Lutfi Iskandar,L,23,2001-12-12,E,Kelas E (Miskin),Buruh Tani,Tasikmalaya,Kota Kecil,700000,-7.4343,107.9838,1392908,1359997,32911,0.976,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00755,Dinda Siregar,P,27,1997-07-09,C,Kelas C (Menengah),Sales,Palembang,Kota Besar,1700000,-3.2132,104.3111,5700757,4204333,1496424,0.738,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00756,Maya Sinaga,P,48,1976-12-27,D,Kelas D (Menengah Bawah),Teknisi,Palembang,Kota Besar,1700000,-2.7576,104.3484,2985561,2247069,738492,0.753,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00757,Nanda Firmansyah,L,21,2003-12-04,C,Kelas C (Menengah),PNS Golongan II,Palembang,Kota Besar,1700000,-2.9089,104.8288,5500868,4407885,1092983,0.801,OVO,1,25,60,0.4,1.3,0.25
+BUDU00758,Prio Sanjaya,L,47,1977-02-27,B,Kelas B (Menengah Atas),Wirausaha Menengah,Bogor,Metropolitan,1100000,-6.2084,106.5462,18111699,10368639,7743060,0.572,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00759,Lutfi Yulianto,L,42,1982-09-03,C,Kelas C (Menengah),Sales,Semarang,Kota Besar,1800000,-7.0816,110.4391,5214123,3592600,1621523,0.689,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00760,Indri Wijaya,P,18,2006-09-09,C,Kelas C (Menengah),PNS Golongan II,Medan,Kota Besar,2400000,3.16,98.9349,4902482,3415678,1486804,0.697,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00761,Fery Gunawan,L,28,1996-08-07,C,Kelas C (Menengah),Wirausaha Kecil,Semarang,Kota Besar,1800000,-7.4798,110.3432,4979177,3317475,1661702,0.666,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00762,Intan Nasution,P,52,1972-05-21,E,Kelas E (Miskin),Buruh Pabrik,Desa Sejahtera,Desa,4100,-5.9834,106.8979,1333857,1300587,33270,0.975,OVO,1,8,20,0.15,1.05,0.08
+BUDU00763,Hasna Panggabean,P,30,1994-04-23,C,Kelas C (Menengah),Sales,Denpasar,Kota Besar,900000,-8.6001,115.619,6404829,4550672,1854157,0.711,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00764,Yuni Lubis,P,27,1997-05-24,D,Kelas D (Menengah Bawah),Guru Honorer,Makassar,Kota Besar,1500000,-5.1021,119.6395,2812683,2291035,521648,0.815,OVO,1,15,35,0.25,1.15,0.15
+BUDU00765,Hasna Yulianto,P,43,1981-12-19,D,Kelas D (Menengah Bawah),Teknisi,Jombang,Kota Kecil,190000,-7.7732,112.275,2020570,1764869,255701,0.873,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00766,Fery Prasetyo,L,20,2004-09-02,C,Kelas C (Menengah),Pegawai Swasta,Tegal,Kota Kecil,285000,-6.5764,109.5626,5796109,4227304,1568805,0.729,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00767,Dhea Gunawan,P,36,1988-07-16,C,Kelas C (Menengah),Wirausaha Kecil,Tangerang Selatan,Metropolitan,1700000,-6.6983,107.1648,5676320,3793101,1883219,0.668,OVO,1,25,60,0.4,1.3,0.25
+BUDU00768,Nanang Sutrisno,L,44,1980-05-09,C,Kelas C (Menengah),Perawat,Semarang,Kota Besar,1800000,-7.4446,110.524,6688923,4615986,2072937,0.69,OVO,1,25,60,0.4,1.3,0.25
+BUDU00769,Dinda Situmorang,P,21,2003-09-08,D,Kelas D (Menengah Bawah),SPG/SPB,Desa Panyingkiran,Desa,3700,-6.0322,106.3593,2141804,1852923,288881,0.865,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00770,Uci Gunawan,P,27,1997-06-06,C,Kelas C (Menengah),Wirausaha Kecil,Depok,Metropolitan,2200000,-6.5345,106.3718,6382505,5104521,1277984,0.8,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00771,Julia Nugroho,P,27,1997-01-21,D,Kelas D (Menengah Bawah),Admin Kantor,Blitar,Kota Kecil,150000,-8.0662,112.1465,1789204,1470491,318713,0.822,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00772,Lutfi Budiman,L,27,1997-07-26,B,Kelas B (Menengah Atas),Engineer Senior,Denpasar,Kota Besar,900000,-8.6198,115.0027,12382881,5847825,6535056,0.472,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00773,Vino Sanjaya,L,29,1995-04-23,C,Kelas C (Menengah),Pegawai Swasta,Jombang,Kota Kecil,190000,-7.9057,112.4337,6435255,4552173,1883082,0.707,OVO,1,25,60,0.4,1.3,0.25
+BUDU00774,Ani Purwanto,P,27,1997-04-27,B,Kelas B (Menengah Atas),Pengacara,Jakarta,Metropolitan,10500000,-6.6365,107.1318,16946991,8290084,8656907,0.489,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00775,Clara Iskandar,P,38,1986-01-01,C,Kelas C (Menengah),Staf Administrasi,Semarang,Kota Besar,1800000,-7.1269,110.5218,4321523,3515697,805826,0.814,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00776,Putra Susanto,L,33,1991-03-14,C,Kelas C (Menengah),PNS Golongan II,Purwokerto,Kota Kecil,290000,-7.1447,109.5311,3212103,2536464,675639,0.79,OVO,1,25,60,0.4,1.3,0.25
+BUDU00777,Rudi Nasution,L,30,1994-12-23,B,Kelas B (Menengah Atas),Pengacara,Bekasi,Metropolitan,2700000,-6.2644,107.4386,18522893,10675355,7847538,0.576,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00778,Dimas Pasaribu,L,44,1980-09-24,C,Kelas C (Menengah),Perawat,Medan,Kota Besar,2400000,3.2483,98.4415,4597606,2937348,1660258,0.639,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00779,Vina Santoso,P,30,1994-08-04,B,Kelas B (Menengah Atas),Wirausaha Menengah,Bekasi,Metropolitan,2700000,-6.5776,107.1324,17733728,9967360,7766368,0.562,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00780,Mulyadi Budiman,L,27,1997-11-11,C,Kelas C (Menengah),Pegawai Swasta,Semarang,Kota Besar,1800000,-7.3404,110.0032,6387690,5223826,1163864,0.818,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00781,Yanti Manurung,P,30,1994-07-16,C,Kelas C (Menengah),Guru Tetap,Palembang,Kota Besar,1700000,-2.5032,104.5421,6724236,4942153,1782083,0.735,OVO,1,25,60,0.4,1.3,0.25
+BUDU00782,Samsul Kusuma,L,46,1978-03-13,A,Kelas A (Kaya),Investor,Bekasi,Metropolitan,2700000,-6.2757,106.7414,134471284,40403791,94067493,0.3,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00783,Ivan Purnomo,L,18,2006-08-22,C,Kelas C (Menengah),Perawat,Jakarta,Metropolitan,10500000,-6.6055,106.3977,5784138,4555951,1228187,0.788,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00784,Wahyu Gunawan,L,31,1993-03-27,B,Kelas B (Menengah Atas),Dokter,Jakarta,Metropolitan,10500000,-6.0141,107.1151,19461349,11708560,7752789,0.602,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00785,Ulfa Pratama,P,29,1995-10-19,E,Kelas E (Miskin),Pedagang Kaki Lima,Desa Rawa Indah,Desa,6500,-5.9891,106.6038,806303,716598,89705,0.889,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00786,Mulyadi Lubis,L,20,2004-09-24,E,Kelas E (Miskin),Buruh Tani,Makassar,Kota Besar,1500000,-4.9347,119.2062,1303448,1182910,120538,0.908,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00787,Eko Rahayu,L,37,1987-10-28,C,Kelas C (Menengah),Perawat,Palembang,Kota Besar,1700000,-3.3865,104.402,5136759,3740392,1396367,0.728,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00788,Ella Budiman,P,45,1979-06-08,E,Kelas E (Miskin),Nelayan,Desa Panyingkiran,Desa,3700,-6.2722,106.6306,1467177,1403410,63767,0.957,DANA,1,8,20,0.15,1.05,0.08
+BUDU00789,Prio Purnomo,L,47,1977-03-21,B,Kelas B (Menengah Atas),Dokter,Makassar,Kota Besar,1500000,-5.2657,119.4763,18250582,10874546,7376036,0.596,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00790,Yanto Mahendra,L,18,2006-02-20,C,Kelas C (Menengah),Staf Administrasi,Pekalongan,Kota Kecil,310000,-6.8675,110.1725,3035327,2111057,924270,0.695,DANA,1,25,60,0.4,1.3,0.25
+BUDU00791,Ani Manurung,P,45,1979-06-02,B,Kelas B (Menengah Atas),Engineer Senior,Tangerang Selatan,Metropolitan,1700000,-6.3374,106.8632,11605454,7612378,3993076,0.656,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00792,Rini Wijaya,P,32,1992-05-10,C,Kelas C (Menengah),Perawat,Medan,Kota Besar,2400000,3.8979,98.3117,3644184,2662482,981702,0.731,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00793,Irwan Siregar,L,32,1992-04-04,C,Kelas C (Menengah),Pegawai Swasta,Makassar,Kota Besar,1500000,-5.4371,119.8815,3364264,2317394,1046870,0.689,DANA,1,25,60,0.4,1.3,0.25
+BUDU00794,Wati Sanjaya,P,45,1979-03-27,D,Kelas D (Menengah Bawah),Admin Kantor,Magelang,Kota Kecil,130000,-7.5825,109.9299,2895716,2347843,547873,0.811,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00795,Zara Harahap,P,48,1976-10-17,D,Kelas D (Menengah Bawah),SPG/SPB,Cirebon,Kota Kecil,320000,-6.6529,108.6696,2757238,2238559,518679,0.812,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00796,Yanto Tambunan,L,51,1973-11-01,A,Kelas A (Kaya),Pengusaha,Jakarta,Metropolitan,10500000,-5.7637,106.5601,74540153,29151651,45388502,0.391,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00797,Sinta Iskandar,P,40,1984-09-07,C,Kelas C (Menengah),PNS Golongan II,Semarang,Kota Besar,1800000,-7.0611,110.4591,4986895,3905518,1081377,0.783,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00798,Wati Wijaya,P,37,1987-11-09,C,Kelas C (Menengah),Pegawai Swasta,Pekalongan,Kota Kecil,310000,-6.684,109.2745,5605956,3615901,1990055,0.645,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00799,Agus Rajasa,L,46,1978-04-12,D,Kelas D (Menengah Bawah),Pedagang Warung,Jombang,Kota Kecil,190000,-8.0329,112.0818,1782299,1454196,328103,0.816,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00800,Hana Wijaya,P,48,1976-07-21,D,Kelas D (Menengah Bawah),Admin Kantor,Semarang,Kota Besar,1800000,-6.7486,110.0537,2714209,2112136,602073,0.778,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00801,Hendra Sutrisno,L,46,1978-02-03,A,Kelas A (Kaya),CEO/Direktur,Depok,Metropolitan,2200000,-6.1527,106.4305,106084165,27716273,78367892,0.261,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00802,Kevin Sinaga,L,48,1976-10-01,D,Kelas D (Menengah Bawah),Admin Kantor,Surabaya,Kota Besar,3100000,-7.0637,112.6467,1642306,1505591,136715,0.917,OVO,1,15,35,0.25,1.15,0.15
+BUDU00803,Firmansyah Lubis,L,34,1990-09-25,C,Kelas C (Menengah),Wirausaha Kecil,Medan,Kota Besar,2400000,3.2403,98.6643,3839727,2960335,879392,0.771,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00804,Mira Sutrisno,P,18,2006-12-07,D,Kelas D (Menengah Bawah),Admin Kantor,Pekalongan,Kota Kecil,310000,-6.666,109.4967,1762049,1515205,246844,0.86,OVO,1,15,35,0.25,1.15,0.15
+BUDU00805,Ella Gunawan,P,23,2001-05-21,D,Kelas D (Menengah Bawah),Driver Ojek Online,Bandung,Kota Besar,2500000,-6.6222,107.7499,2965251,2337265,627986,0.788,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00806,Hendra Prasetyo,L,25,1999-03-16,A,Kelas A (Kaya),Notaris,Tangerang,Metropolitan,2100000,-5.876,106.3427,20754489,8188201,12566288,0.395,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00807,Samsul Purnomo,L,18,2006-05-10,D,Kelas D (Menengah Bawah),Driver Ojek Online,Makassar,Kota Besar,1500000,-5.2708,119.64,2016657,1652535,364122,0.819,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00808,Fitri Manurung,P,31,1993-11-10,D,Kelas D (Menengah Bawah),Pedagang Warung,Denpasar,Kota Besar,900000,-8.8792,115.085,2392800,1925273,467527,0.805,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00809,Ivan Siregar,L,48,1976-03-13,D,Kelas D (Menengah Bawah),Admin Kantor,Surabaya,Kota Besar,3100000,-7.2635,112.3073,2583372,2225263,358109,0.861,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00810,Mulyadi Budiman,L,32,1992-05-15,C,Kelas C (Menengah),Wirausaha Kecil,Jombang,Kota Kecil,190000,-7.4728,112.6188,4453569,2709790,1743779,0.608,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00811,Wulan Simatupang,P,20,2004-07-07,C,Kelas C (Menengah),Perawat,Tangerang Selatan,Metropolitan,1700000,-6.0747,106.7036,6556369,5078498,1477871,0.775,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00812,Prita Firmansyah,P,44,1980-06-02,D,Kelas D (Menengah Bawah),Karyawan Toko,Desa Sukamaju,Desa,5000,-6.2676,107.1168,2190505,1838419,352086,0.839,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00813,Lutfi Gunawan,L,49,1975-02-10,D,Kelas D (Menengah Bawah),Guru Honorer,Purwokerto,Kota Kecil,290000,-7.8214,109.6747,2609379,2136759,472620,0.819,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00814,Clara Purwanto,P,25,1999-10-13,D,Kelas D (Menengah Bawah),Driver Ojek Online,Palembang,Kota Besar,1700000,-2.9946,104.8068,1637844,1263982,373862,0.772,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00815,Mulyadi Lubis,L,43,1981-04-06,D,Kelas D (Menengah Bawah),Guru Honorer,Desa Rawa Indah,Desa,6500,-5.8578,106.53,1949960,1559903,390057,0.8,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00816,Elisa Kusuma,P,19,2005-12-18,D,Kelas D (Menengah Bawah),Admin Kantor,Cirebon,Kota Kecil,320000,-6.6371,108.3771,2464519,1893099,571420,0.768,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00817,Tiara Firmansyah,P,46,1978-07-03,B,Kelas B (Menengah Atas),Engineer Senior,Bogor,Metropolitan,1100000,-6.9051,107.2104,9715555,5539666,4175889,0.57,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00818,Eko Wahyudi,L,53,1971-11-17,E,Kelas E (Miskin),Buruh Pabrik,Purwokerto,Kota Kecil,290000,-7.0157,109.7242,1464419,1280385,184034,0.874,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00819,Siti Setiawan,P,43,1981-02-04,E,Kelas E (Miskin),Ojek Konvensional,Desa Rawa Indah,Desa,6500,-6.2146,106.6539,1262700,1223138,39562,0.969,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00820,Fitri Gunawan,P,53,1971-03-17,E,Kelas E (Miskin),Buruh Pabrik,Blitar,Kota Kecil,150000,-7.7045,112.5524,1267852,1191831,76021,0.94,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00821,Nadia Tambunan,P,23,2001-04-27,C,Kelas C (Menengah),Pegawai Swasta,Pekalongan,Kota Kecil,310000,-6.7281,109.7899,5285455,3864750,1420705,0.731,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00822,Yuni Prasetyo,P,29,1995-06-27,B,Kelas B (Menengah Atas),Dokter,Surabaya,Kota Besar,3100000,-7.2515,112.4745,13929397,8502122,5427275,0.61,OVO,1,40,90,0.55,1.5,0.35
+BUDU00823,Indri Harahap,P,28,1996-06-18,B,Kelas B (Menengah Atas),Arsitek,Bogor,Metropolitan,1100000,-6.173,106.9764,12138303,5556495,6581808,0.458,OVO,1,40,90,0.55,1.5,0.35
+BUDU00824,Fajar Susanto,L,34,1990-02-04,B,Kelas B (Menengah Atas),Manajer,Tangerang Selatan,Metropolitan,1700000,-6.0799,106.6997,8941999,4953222,3988777,0.554,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00825,Lina Sanjaya,P,34,1990-12-20,C,Kelas C (Menengah),Pegawai Swasta,Bekasi,Metropolitan,2700000,-6.0393,107.4139,3275949,2479455,796494,0.757,OVO,1,25,60,0.4,1.3,0.25
+BUDU00826,Kevin Sinaga,L,24,2000-02-13,E,Kelas E (Miskin),Ojek Konvensional,Cirebon,Kota Kecil,320000,-7.0999,108.6478,893366,778761,114605,0.872,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00827,Ayu Rajasa,P,41,1983-06-15,C,Kelas C (Menengah),PNS Golongan II,Jombang,Kota Kecil,190000,-7.9659,112.0297,3133612,2064695,1068917,0.659,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00828,Wahyu Mahendra,L,30,1994-04-02,B,Kelas B (Menengah Atas),Dokter,Palembang,Kota Besar,1700000,-3.2592,104.3366,12306883,6712239,5594644,0.545,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00829,Uci Susanto,P,33,1991-12-23,C,Kelas C (Menengah),Sales,Jakarta,Metropolitan,10500000,-5.9743,106.8162,5586691,3738579,1848112,0.669,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00830,Rina Sanjaya,P,19,2005-08-06,C,Kelas C (Menengah),Guru Tetap,Depok,Metropolitan,2200000,-6.7984,107.0835,4412097,3518683,893414,0.798,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00831,Erwin Firmansyah,L,43,1981-12-25,C,Kelas C (Menengah),Wirausaha Kecil,Bandung,Kota Besar,2500000,-6.8887,107.8729,3689764,2990339,699425,0.81,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00832,Ella Rahayu,P,38,1986-12-26,D,Kelas D (Menengah Bawah),Pedagang Warung,Cirebon,Kota Kecil,320000,-6.9439,108.3763,2262520,1868814,393706,0.826,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00833,Prita Saputra,P,43,1981-06-23,D,Kelas D (Menengah Bawah),Driver Ojek Online,Tegal,Kota Kecil,285000,-6.7494,108.7876,1674604,1499148,175456,0.895,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00834,Elisa Sutrisno,P,48,1976-05-11,E,Kelas E (Miskin),Ojek Konvensional,Desa Cikaret,Desa,2800,-6.0279,106.5522,1329818,1187238,142580,0.893,OVO,0,8,20,0.15,1.05,0.08
+BUDU00835,Rudi Wibowo,L,20,2004-01-24,C,Kelas C (Menengah),Sales,Palembang,Kota Besar,1700000,-2.5357,104.8299,3842156,2536646,1305510,0.66,OVO,1,25,60,0.4,1.3,0.25
+BUDU00836,Candra Purnomo,L,38,1986-07-22,D,Kelas D (Menengah Bawah),Pedagang Warung,Purwokerto,Kota Kecil,290000,-7.8309,109.4097,2073883,1849581,224302,0.892,OVO,0,15,35,0.25,1.15,0.15
+BUDU00837,Doni Santoso,L,24,2000-04-21,D,Kelas D (Menengah Bawah),Pedagang Warung,Cirebon,Kota Kecil,320000,-7.0049,108.4419,1990637,1495714,494923,0.751,OVO,0,15,35,0.25,1.15,0.15
+BUDU00838,Ahmad Rajasa,L,28,1996-05-12,C,Kelas C (Menengah),Pegawai Swasta,Makassar,Kota Besar,1500000,-4.8128,119.2266,5841550,4363319,1478231,0.747,OVO,1,25,60,0.4,1.3,0.25
+BUDU00839,Maman Manurung,L,31,1993-12-08,C,Kelas C (Menengah),Sales,Blitar,Kota Kecil,150000,-7.6555,111.9357,4084601,2718889,1365712,0.666,OVO,1,25,60,0.4,1.3,0.25
+BUDU00840,Farida Susanto,P,18,2006-05-11,C,Kelas C (Menengah),Staf Administrasi,Palembang,Kota Besar,1700000,-3.2451,105.1497,5175193,3866078,1309115,0.747,OVO,1,25,60,0.4,1.3,0.25
+BUDU00841,Rudi Sihombing,L,29,1995-06-06,D,Kelas D (Menengah Bawah),SPG/SPB,Makassar,Kota Besar,1500000,-5.068,118.9338,2330660,1897302,433358,0.814,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00842,Doni Sutrisno,L,39,1985-07-15,B,Kelas B (Menengah Atas),Wirausaha Menengah,Makassar,Kota Besar,1500000,-5.4432,119.8654,14719366,9417106,5302260,0.64,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00843,Kiki Yulianto,P,38,1986-03-07,B,Kelas B (Menengah Atas),Dosen,Medan,Kota Besar,2400000,3.7894,99.0648,16897545,8447626,8449919,0.5,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00844,Kevin Siregar,L,32,1992-05-21,A,Kelas A (Kaya),CEO/Direktur,Bekasi,Metropolitan,2700000,-6.6926,106.5008,81762046,28014752,53747294,0.343,Kartu Debit,1,50,150,0.65,1.7,0.45
+BUDU00845,Joko Sinaga,L,19,2005-08-18,C,Kelas C (Menengah),Sales,Jombang,Kota Kecil,190000,-7.0935,111.8712,5580548,4333515,1247033,0.777,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00846,Lukman Sihombing,L,43,1981-02-03,C,Kelas C (Menengah),Pegawai Swasta,Makassar,Kota Besar,1500000,-5.0078,119.7049,5408407,3520972,1887435,0.651,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00847,Sinta Susanto,P,46,1978-06-03,E,Kelas E (Miskin),Pedagang Kaki Lima,Magelang,Kota Kecil,130000,-7.2499,109.8824,983350,911310,72040,0.927,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00848,Sari Nugroho,P,28,1996-12-11,C,Kelas C (Menengah),Wirausaha Kecil,Depok,Metropolitan,2200000,-6.4646,107.1367,4452514,3056239,1396275,0.686,DANA,1,25,60,0.4,1.3,0.25
+BUDU00849,Yanto Hidayat,L,18,2006-07-15,E,Kelas E (Miskin),Pedagang Kaki Lima,Yogyakarta,Kota Besar,420000,-7.7058,110.6387,1347423,1277116,70307,0.948,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00850,Joko Santoso,L,37,1987-10-08,A,Kelas A (Kaya),Dokter Spesialis,Bekasi,Metropolitan,2700000,-6.3007,106.6248,141285131,66868997,74416134,0.473,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00851,Putra Wijaya,L,29,1995-01-10,C,Kelas C (Menengah),Pegawai Swasta,Makassar,Kota Besar,1500000,-5.2979,119.246,5420285,4432580,987705,0.818,DANA,1,25,60,0.4,1.3,0.25
+BUDU00852,Hadi Saputra,L,35,1989-06-23,C,Kelas C (Menengah),Pegawai Swasta,Medan,Kota Besar,2400000,3.3644,98.6208,4015536,2784396,1231140,0.693,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00853,Kevin Prasetyo,L,39,1985-07-09,B,Kelas B (Menengah Atas),Wirausaha Menengah,Palembang,Kota Besar,1700000,-2.6846,104.3749,13577783,7521808,6055975,0.554,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00854,Dhea Yulianto,P,42,1982-05-03,D,Kelas D (Menengah Bawah),Driver Ojek Online,Magelang,Kota Kecil,130000,-7.2849,109.7973,2556128,2077845,478283,0.813,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00855,Mulyadi Lubis,L,21,2003-01-25,C,Kelas C (Menengah),Guru Tetap,Bekasi,Metropolitan,2700000,-6.4026,107.3903,5539344,3688407,1850937,0.666,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00856,Hana Panggabean,P,49,1975-07-25,A,Kelas A (Kaya),Notaris,Bekasi,Metropolitan,2700000,-6.5606,107.1115,118549555,44957352,73592203,0.379,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00857,Zulfi Sanjaya,L,30,1994-01-20,C,Kelas C (Menengah),Pegawai Swasta,Yogyakarta,Kota Besar,420000,-7.9592,110.5416,5226874,3437931,1788943,0.658,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00858,Tari Susanto,P,22,2002-09-15,C,Kelas C (Menengah),Perawat,Blitar,Kota Kecil,150000,-7.9884,112.3947,5161176,3227469,1933707,0.625,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00859,Galih Tambunan,L,42,1982-02-20,C,Kelas C (Menengah),Sales,Semarang,Kota Besar,1800000,-7.0107,110.8606,3998721,3102016,896705,0.776,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00860,Bagas Pasaribu,L,22,2002-06-21,E,Kelas E (Miskin),Ojek Konvensional,Semarang,Kota Besar,1800000,-6.9791,110.8,1015848,884652,131196,0.871,OVO,0,8,20,0.15,1.05,0.08
+BUDU00861,Oscar Wijaya,L,47,1977-07-19,D,Kelas D (Menengah Bawah),SPG/SPB,Desa Sejahtera,Desa,4100,-6.3244,106.4411,2095397,1824007,271390,0.87,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00862,Siti Kusuma,P,38,1986-08-11,C,Kelas C (Menengah),Perawat,Bandung,Kota Besar,2500000,-7.2174,107.2144,6353351,3988269,2365082,0.628,DANA,1,25,60,0.4,1.3,0.25
+BUDU00863,Rina Iskandar,P,37,1987-08-23,D,Kelas D (Menengah Bawah),Admin Kantor,Desa Makmur,Desa,3200,-6.6269,106.7623,2749138,2503526,245612,0.911,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00864,Yanti Purnomo,P,39,1985-07-09,C,Kelas C (Menengah),Wirausaha Kecil,Bogor,Metropolitan,1100000,-6.6067,106.6229,5259251,3449087,1810164,0.656,OVO,1,25,60,0.4,1.3,0.25
+BUDU00865,Fajar Tobing,L,31,1993-01-12,B,Kelas B (Menengah Atas),Arsitek,Tangerang Selatan,Metropolitan,1700000,-6.5106,106.654,9445910,4337509,5108401,0.459,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00866,Ahmad Sanjaya,L,35,1989-10-26,B,Kelas B (Menengah Atas),Wirausaha Menengah,Depok,Metropolitan,2200000,-6.3924,106.5384,18629005,12036394,6592611,0.646,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00867,Samsul Hidayat,L,30,1994-05-20,C,Kelas C (Menengah),Wirausaha Kecil,Tasikmalaya,Kota Kecil,700000,-7.1499,107.976,6035648,4732094,1303554,0.784,OVO,1,25,60,0.4,1.3,0.25
+BUDU00868,Vina Firmansyah,P,52,1972-05-19,A,Kelas A (Kaya),Pengusaha,Bogor,Metropolitan,1100000,-6.2587,107.1615,41723011,22569906,19153105,0.541,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00869,Nadia Sinaga,P,23,2001-08-01,E,Kelas E (Miskin),Pedagang Kaki Lima,Desa Makmur,Desa,3200,-6.5844,106.3714,991837,897005,94832,0.904,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00870,Tari Rahayu,P,30,1994-12-25,B,Kelas B (Menengah Atas),Arsitek,Jakarta,Metropolitan,10500000,-6.5861,107.1681,15107137,9545038,5562099,0.632,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00871,Kukuh Saputra,L,30,1994-12-18,D,Kelas D (Menengah Bawah),Teknisi,Cirebon,Kota Kecil,320000,-6.4699,108.4816,2722188,2213727,508461,0.813,Transfer Bank,0,15,35,0.25,1.15,0.15
+BUDU00872,Ella Manurung,P,27,1997-04-20,D,Kelas D (Menengah Bawah),Driver Ojek Online,Desa Panyingkiran,Desa,3700,-6.3633,106.4445,2926668,2402000,524668,0.821,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00873,Deni Mahendra,L,29,1995-02-02,D,Kelas D (Menengah Bawah),Pedagang Warung,Magelang,Kota Kecil,130000,-7.6975,110.5306,1855197,1495110,360087,0.806,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00874,Lutfi Prasetyo,L,38,1986-10-20,C,Kelas C (Menengah),Guru Tetap,Denpasar,Kota Besar,900000,-9.053,114.8923,4044508,2544095,1500413,0.629,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00875,Tono Wibowo,L,26,1998-12-04,C,Kelas C (Menengah),Staf Administrasi,Surabaya,Kota Besar,3100000,-7.5607,112.268,6986935,4820605,2166330,0.69,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00876,Andi Mahendra,L,34,1990-05-04,D,Kelas D (Menengah Bawah),Karyawan Toko,Semarang,Kota Besar,1800000,-6.9998,110.4924,1746446,1553924,192522,0.89,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00877,Galih Mahendra,L,31,1993-05-21,C,Kelas C (Menengah),Pegawai Swasta,Semarang,Kota Besar,1800000,-7.2187,110.7992,4900909,3256040,1644869,0.664,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00878,Budi Budiman,L,49,1975-01-08,D,Kelas D (Menengah Bawah),Driver Ojek Online,Desa Makmur,Desa,3200,-6.6394,107.1868,1746982,1529042,217940,0.875,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00879,Budi Hartono,L,43,1981-06-02,D,Kelas D (Menengah Bawah),SPG/SPB,Palembang,Kota Besar,1700000,-2.6595,105.1439,2263867,1969873,293994,0.87,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00880,Dhea Setiawan,P,44,1980-10-14,B,Kelas B (Menengah Atas),Arsitek,Denpasar,Kota Besar,900000,-8.8645,114.84,8966163,4895783,4070380,0.546,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00881,Prio Rajasa,L,40,1984-05-24,D,Kelas D (Menengah Bawah),Teknisi,Yogyakarta,Kota Besar,420000,-7.8657,110.5111,2598147,2272263,325884,0.875,DANA,0,15,35,0.25,1.15,0.15
+BUDU00882,Dimas Wahyudi,L,30,1994-10-04,C,Kelas C (Menengah),Staf Administrasi,Blitar,Kota Kecil,150000,-8.2248,112.6618,6120767,4382644,1738123,0.716,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00883,Tiara Rahayu,P,48,1976-07-14,D,Kelas D (Menengah Bawah),SPG/SPB,Desa Makmur,Desa,3200,-6.478,106.6429,1790891,1623912,166979,0.907,OVO,1,15,35,0.25,1.15,0.15
+BUDU00884,Tono Nasution,L,39,1985-10-08,C,Kelas C (Menengah),Perawat,Kediri,Kota Kecil,320000,-8.1175,112.2982,6743820,5410545,1333275,0.802,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00885,Agus Setiawan,L,39,1985-02-13,C,Kelas C (Menengah),Sales,Tasikmalaya,Kota Kecil,700000,-6.9639,108.389,3690629,2947559,743070,0.799,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00886,Doni Tambunan,L,32,1992-10-20,B,Kelas B (Menengah Atas),Wirausaha Menengah,Yogyakarta,Kota Besar,420000,-7.7313,110.6624,14325116,9707460,4617656,0.678,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00887,Vina Pasaribu,P,47,1977-08-27,E,Kelas E (Miskin),Nelayan,Desa Makmur,Desa,3200,-5.9985,107.0164,856895,732065,124830,0.854,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00888,Erwin Wibowo,L,26,1998-02-17,D,Kelas D (Menengah Bawah),Guru Honorer,Semarang,Kota Besar,1800000,-7.3235,109.9205,1679650,1533501,146149,0.913,DANA,0,15,35,0.25,1.15,0.15
+BUDU00889,Kiki Nasution,P,27,1997-03-25,C,Kelas C (Menengah),Guru Tetap,Semarang,Kota Besar,1800000,-7.0327,110.4009,4996846,3131803,1865043,0.627,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00890,Vina Iskandar,P,53,1971-03-12,E,Kelas E (Miskin),Nelayan,Desa Panyingkiran,Desa,3700,-6.2852,107.1566,1311348,1270619,40729,0.969,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00891,Intan Nugroho,P,33,1991-06-23,A,Kelas A (Kaya),CEO/Direktur,Tangerang Selatan,Metropolitan,1700000,-6.4907,107.0813,61354396,31106428,30247968,0.507,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00892,Vino Gunawan,L,40,1984-08-07,C,Kelas C (Menengah),Sales,Makassar,Kota Besar,1500000,-4.8555,119.3488,4760025,3815141,944884,0.801,DANA,1,25,60,0.4,1.3,0.25
+BUDU00893,Prio Iskandar,L,23,2001-11-13,D,Kelas D (Menengah Bawah),Pedagang Warung,Desa Panyingkiran,Desa,3700,-5.7066,106.4316,1990969,1779686,211283,0.894,OVO,0,15,35,0.25,1.15,0.15
+BUDU00894,Prita Tambunan,P,42,1982-11-05,C,Kelas C (Menengah),Staf Administrasi,Semarang,Kota Besar,1800000,-6.5951,110.7134,6388629,3973772,2414857,0.622,DANA,1,25,60,0.4,1.3,0.25
+BUDU00895,Ani Tambunan,P,30,1994-04-19,D,Kelas D (Menengah Bawah),Teknisi,Palembang,Kota Besar,1700000,-3.4478,104.9707,1737198,1304005,433193,0.751,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00896,Rudi Rajasa,L,44,1980-03-05,C,Kelas C (Menengah),PNS Golongan II,Kediri,Kota Kecil,320000,-8.2161,111.6668,4647150,3787795,859355,0.815,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00897,Yanti Simatupang,P,20,2004-12-22,E,Kelas E (Miskin),Buruh Tani,Tasikmalaya,Kota Kecil,700000,-7.0769,108.247,1424636,1308329,116307,0.918,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00898,Budi Siregar,L,44,1980-10-18,B,Kelas B (Menengah Atas),Pengacara,Bandung,Kota Besar,2500000,-7.3448,107.9558,18364369,9774416,8589953,0.532,OVO,1,40,90,0.55,1.5,0.35
+BUDU00899,Mira Wahyudi,P,31,1993-12-02,C,Kelas C (Menengah),Pegawai Swasta,Medan,Kota Besar,2400000,3.3478,99.1299,5260693,3407288,1853405,0.648,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00900,Hadi Susanto,L,45,1979-07-02,E,Kelas E (Miskin),Nelayan,Kediri,Kota Kecil,320000,-7.4721,111.9645,937753,918192,19561,0.979,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00901,Lukman Kusuma,L,32,1992-10-20,C,Kelas C (Menengah),Guru Tetap,Medan,Kota Besar,2400000,3.4996,98.3985,5998106,4855505,1142601,0.81,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00902,Rini Kusuma,P,40,1984-03-18,B,Kelas B (Menengah Atas),Dokter,Tangerang Selatan,Metropolitan,1700000,-6.3229,106.6255,14299819,8139142,6160677,0.569,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00903,Afifah Purnomo,P,40,1984-06-10,B,Kelas B (Menengah Atas),Dosen,Tangerang Selatan,Metropolitan,1700000,-6.5757,106.2847,14621102,6834169,7786933,0.467,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00904,Eko Budiman,L,24,2000-05-10,C,Kelas C (Menengah),Pegawai Swasta,Medan,Kota Besar,2400000,3.4405,98.5121,6396283,4765664,1630619,0.745,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00905,Budi Sanjaya,L,39,1985-03-15,C,Kelas C (Menengah),Staf Administrasi,Bandung,Kota Besar,2500000,-6.9799,108.0873,6390259,5144984,1245275,0.805,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00906,Farida Saputra,P,30,1994-11-10,C,Kelas C (Menengah),Pegawai Swasta,Palembang,Kota Besar,1700000,-3.1764,105.0989,6155803,4137071,2018732,0.672,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00907,Ivan Sutrisno,L,40,1984-08-02,B,Kelas B (Menengah Atas),Dokter,Surabaya,Kota Besar,3100000,-7.6439,112.3662,15211378,6980521,8230857,0.459,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00908,Rini Setiawan,P,38,1986-12-18,B,Kelas B (Menengah Atas),Manajer,Medan,Kota Besar,2400000,3.7437,98.2005,17069154,10824926,6244228,0.634,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00909,Agus Kurniawan,L,19,2005-06-27,C,Kelas C (Menengah),PNS Golongan II,Surabaya,Kota Besar,3100000,-7.6799,112.6438,3860930,2658898,1202032,0.689,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00910,Hafizh Pratama,L,38,1986-06-05,A,Kelas A (Kaya),Artis/Influencer,Bekasi,Metropolitan,2700000,-6.3698,107.369,78057909,39126979,38930930,0.501,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00911,Wahyu Santoso,L,21,2003-04-21,D,Kelas D (Menengah Bawah),Teknisi,Tegal,Kota Kecil,285000,-7.2967,109.3543,2835471,2155045,680426,0.76,OVO,0,15,35,0.25,1.15,0.15
+BUDU00912,Rizki Siregar,L,38,1986-12-04,B,Kelas B (Menengah Atas),Arsitek,Bogor,Metropolitan,1100000,-6.8043,106.9855,12845838,6344639,6501199,0.494,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00913,Ayu Lubis,P,42,1982-02-19,C,Kelas C (Menengah),Pegawai Swasta,Palembang,Kota Besar,1700000,-2.8548,104.7969,3930378,2468684,1461694,0.628,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00914,Nadia Budiman,P,20,2004-09-06,E,Kelas E (Miskin),Buruh Pabrik,Purwokerto,Kota Kecil,290000,-7.5424,109.2081,937087,829570,107517,0.885,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00915,Uci Situmorang,P,30,1994-12-04,C,Kelas C (Menengah),Sales,Jakarta,Metropolitan,10500000,-5.9465,106.3848,6087239,4798160,1289079,0.788,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00916,Rizki Santoso,L,24,2000-01-19,B,Kelas B (Menengah Atas),Wirausaha Menengah,Jakarta,Metropolitan,10500000,-6.4962,106.7204,19610996,11746043,7864953,0.599,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00917,Gita Situmorang,P,49,1975-05-15,D,Kelas D (Menengah Bawah),Karyawan Toko,Desa Cikaret,Desa,2800,-6.2535,106.3685,2645086,2037437,607649,0.77,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00918,Rudi Tambunan,L,41,1983-11-06,B,Kelas B (Menengah Atas),Dokter,Jakarta,Metropolitan,10500000,-6.0372,106.7348,12079754,7636344,4443410,0.632,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00919,Elisa Purwanto,P,34,1990-06-25,C,Kelas C (Menengah),Wirausaha Kecil,Bandung,Kota Besar,2500000,-6.99,107.5294,4355932,2814637,1541295,0.646,DANA,1,25,60,0.4,1.3,0.25
+BUDU00920,Kiki Kusuma,P,40,1984-12-24,A,Kelas A (Kaya),Notaris,Tangerang Selatan,Metropolitan,1700000,-6.4422,106.8361,46744227,24149752,22594475,0.517,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00921,Hendra Hidayat,L,44,1980-07-22,D,Kelas D (Menengah Bawah),Teknisi,Tegal,Kota Kecil,285000,-6.9497,108.8284,2785800,2546880,238920,0.914,DANA,0,15,35,0.25,1.15,0.15
+BUDU00922,Tono Sinaga,L,23,2001-03-23,B,Kelas B (Menengah Atas),Wirausaha Menengah,Denpasar,Kota Besar,900000,-9.0669,114.8412,18856837,10100659,8756178,0.536,OVO,1,40,90,0.55,1.5,0.35
+BUDU00923,Kukuh Mahendra,L,47,1977-09-24,E,Kelas E (Miskin),Buruh Tani,Desa Sukamaju,Desa,5000,-5.8353,106.3671,1026504,881100,145404,0.858,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00924,Rahma Sutrisno,P,26,1998-10-02,D,Kelas D (Menengah Bawah),Karyawan Toko,Purwokerto,Kota Kecil,290000,-7.4384,109.5327,2305681,1977417,328264,0.858,OVO,1,15,35,0.25,1.15,0.15
+BUDU00925,Yuni Mahendra,P,48,1976-09-09,E,Kelas E (Miskin),Buruh Pabrik,Tegal,Kota Kecil,285000,-6.5199,109.5917,997087,944860,52227,0.948,Tunai,0,8,20,0.15,1.05,0.08
+BUDU00926,Rahma Nasution,P,51,1973-07-02,E,Kelas E (Miskin),Buruh Pabrik,Pekalongan,Kota Kecil,310000,-6.8371,109.627,1201913,1171393,30520,0.975,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00927,Dhea Situmorang,P,41,1983-09-07,D,Kelas D (Menengah Bawah),Karyawan Toko,Blitar,Kota Kecil,150000,-8.442,112.2041,2072767,1779256,293511,0.858,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00928,Yuni Sutrisno,P,19,2005-05-19,D,Kelas D (Menengah Bawah),Pedagang Warung,Semarang,Kota Besar,1800000,-6.9279,110.1904,2956608,2268284,688324,0.767,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00929,Bella Tobing,P,34,1990-09-24,E,Kelas E (Miskin),Pedagang Kaki Lima,Tasikmalaya,Kota Kecil,700000,-7.4083,108.2747,1126176,984884,141292,0.875,OVO,0,8,20,0.15,1.05,0.08
+BUDU00930,Vino Firmansyah,L,53,1971-12-08,E,Kelas E (Miskin),Asisten Rumah Tangga,Desa Rawa Indah,Desa,6500,-5.8672,106.9144,1485545,1263889,221656,0.851,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00931,Dinda Wijaya,P,39,1985-06-22,C,Kelas C (Menengah),Sales,Medan,Kota Besar,2400000,3.2449,98.3985,5270143,4172111,1098032,0.792,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00932,Okta Siregar,P,52,1972-07-06,A,Kelas A (Kaya),Artis/Influencer,Tangerang,Metropolitan,2100000,-5.9135,106.5941,97320907,32865270,64455637,0.338,Transfer Bank,1,50,150,0.65,1.7,0.45
+BUDU00933,Rina Santoso,P,24,2000-06-08,D,Kelas D (Menengah Bawah),Admin Kantor,Palembang,Kota Besar,1700000,-3.0925,104.2911,1632469,1333538,298931,0.817,OVO,1,15,35,0.25,1.15,0.15
+BUDU00934,Hendra Wijaya,L,47,1977-04-02,E,Kelas E (Miskin),Asisten Rumah Tangga,Magelang,Kota Kecil,130000,-6.9875,110.3733,865774,816717,49057,0.943,OVO,1,8,20,0.15,1.05,0.08
+BUDU00935,Hendra Wijaya,L,30,1994-07-15,D,Kelas D (Menengah Bawah),Teknisi,Purwokerto,Kota Kecil,290000,-7.5184,109.1166,2202326,1948582,253744,0.885,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00936,Rudi Purwanto,L,42,1982-03-27,C,Kelas C (Menengah),Wirausaha Kecil,Cirebon,Kota Kecil,320000,-6.4035,109.0329,4616080,2961602,1654478,0.642,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00937,Sari Sihombing,P,28,1996-04-21,D,Kelas D (Menengah Bawah),Teknisi,Magelang,Kota Kecil,130000,-7.8905,109.7964,1790067,1432709,357358,0.8,OVO,1,15,35,0.25,1.15,0.15
+BUDU00938,Wulan Situmorang,P,30,1994-04-23,C,Kelas C (Menengah),PNS Golongan II,Purwokerto,Kota Kecil,290000,-7.8069,109.7342,4945703,3710524,1235179,0.75,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00939,Nadia Sutrisno,P,39,1985-07-21,C,Kelas C (Menengah),Wirausaha Kecil,Palembang,Kota Besar,1700000,-2.697,105.0002,5690850,3578349,2112501,0.629,DANA,1,25,60,0.4,1.3,0.25
+BUDU00940,Putri Hidayat,P,21,2003-09-11,C,Kelas C (Menengah),Pegawai Swasta,Medan,Kota Besar,2400000,3.191,98.3325,3139623,2465329,674294,0.785,OVO,1,25,60,0.4,1.3,0.25
+BUDU00941,Hendra Hidayat,L,41,1983-03-24,B,Kelas B (Menengah Atas),Pengacara,Medan,Kota Besar,2400000,3.7339,98.5599,15670803,8991966,6678837,0.574,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00942,Lutfi Pasaribu,L,26,1998-03-06,D,Kelas D (Menengah Bawah),Driver Ojek Online,Desa Sukamaju,Desa,5000,-6.2488,106.9036,2077523,1611823,465700,0.776,Transfer Bank,0,15,35,0.25,1.15,0.15
+BUDU00943,Samsul Situmorang,L,40,1984-01-08,D,Kelas D (Menengah Bawah),Driver Ojek Online,Desa Sukamaju,Desa,5000,-5.979,106.9429,1622555,1302362,320193,0.803,Transfer Bank,1,15,35,0.25,1.15,0.15
+BUDU00944,Budi Setiawan,L,36,1988-06-19,D,Kelas D (Menengah Bawah),Teknisi,Desa Rawa Indah,Desa,6500,-6.4215,106.3956,2235178,1984420,250758,0.888,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00945,Cantika Wijaya,P,25,1999-01-13,C,Kelas C (Menengah),PNS Golongan II,Cirebon,Kota Kecil,320000,-6.9873,108.9076,4644163,2970248,1673915,0.64,OVO,1,25,60,0.4,1.3,0.25
+BUDU00946,Candra Kusuma,L,25,1999-03-25,D,Kelas D (Menengah Bawah),SPG/SPB,Magelang,Kota Kecil,130000,-7.5784,110.4366,1511767,1248409,263358,0.826,OVO,0,15,35,0.25,1.15,0.15
+BUDU00947,Mira Gunawan,P,24,2000-02-06,D,Kelas D (Menengah Bawah),Pedagang Warung,Surabaya,Kota Besar,3100000,-7.0043,112.5464,2070011,1630907,439104,0.788,DANA,1,15,35,0.25,1.15,0.15
+BUDU00948,Kevin Rahayu,L,37,1987-04-22,E,Kelas E (Miskin),Ojek Konvensional,Desa Panyingkiran,Desa,3700,-6.486,107.0165,1247731,1192604,55127,0.956,GoPay,1,8,20,0.15,1.05,0.08
+BUDU00949,Farida Harahap,P,28,1996-12-19,C,Kelas C (Menengah),Guru Tetap,Blitar,Kota Kecil,150000,-8.5526,111.8706,5931689,3795178,2136511,0.64,DANA,1,25,60,0.4,1.3,0.25
+BUDU00950,Rizki Sanjaya,L,39,1985-10-22,B,Kelas B (Menengah Atas),Engineer Senior,Bandung,Kota Besar,2500000,-6.8924,107.2025,8465072,3988480,4476592,0.471,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00951,Okta Susanto,P,42,1982-10-18,B,Kelas B (Menengah Atas),Arsitek,Yogyakarta,Kota Besar,420000,-8.0778,110.1967,9876692,6824239,3052453,0.691,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00952,Yuni Nasution,P,57,1967-11-27,A,Kelas A (Kaya),Artis/Influencer,Bogor,Metropolitan,1100000,-6.3343,106.6731,106635459,29579894,77055565,0.277,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00953,Budi Wibowo,L,22,2002-01-20,B,Kelas B (Menengah Atas),Pengacara,Tangerang,Metropolitan,2100000,-5.8332,106.5135,17425302,10080724,7344578,0.579,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00954,Vevi Tobing,P,35,1989-12-20,D,Kelas D (Menengah Bawah),Guru Honorer,Tasikmalaya,Kota Kecil,700000,-7.5413,107.8799,2318554,1809285,509269,0.78,OVO,1,15,35,0.25,1.15,0.15
+BUDU00955,Nanang Setiawan,L,37,1987-07-21,D,Kelas D (Menengah Bawah),Teknisi,Desa Rawa Indah,Desa,6500,-6.5638,106.5504,1717598,1491144,226454,0.868,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00956,Sinta Rahayu,P,44,1980-06-21,C,Kelas C (Menengah),Guru Tetap,Makassar,Kota Besar,1500000,-4.6953,119.7565,5402669,3687120,1715549,0.682,OVO,1,25,60,0.4,1.3,0.25
+BUDU00957,Maman Sanjaya,L,19,2005-08-22,D,Kelas D (Menengah Bawah),Teknisi,Pekalongan,Kota Kecil,310000,-7.2798,109.6482,2737420,2191644,545776,0.801,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00958,Hafizh Setiawan,L,54,1970-04-17,E,Kelas E (Miskin),Buruh Pabrik,Desa Sukamaju,Desa,5000,-6.4086,107.1545,940224,896139,44085,0.953,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00959,Putra Sutrisno,L,28,1996-12-20,C,Kelas C (Menengah),Perawat,Bekasi,Metropolitan,2700000,-5.7752,106.948,5626487,4083483,1543004,0.726,DANA,1,25,60,0.4,1.3,0.25
+BUDU00960,Doni Santoso,L,22,2002-02-12,C,Kelas C (Menengah),Sales,Kediri,Kota Kecil,320000,-7.4397,112.0387,5066613,3670452,1396161,0.724,OVO,1,25,60,0.4,1.3,0.25
+BUDU00961,Maman Kusuma,L,28,1996-08-21,D,Kelas D (Menengah Bawah),Teknisi,Desa Cikaret,Desa,2800,-6.3,107.0299,2671675,2327462,344213,0.871,GoPay,0,15,35,0.25,1.15,0.15
+BUDU00962,Wahyu Rajasa,L,48,1976-05-01,B,Kelas B (Menengah Atas),Pengacara,Bekasi,Metropolitan,2700000,-6.5296,107.2447,18794454,12191630,6602824,0.649,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00963,Fery Purnomo,L,35,1989-08-19,A,Kelas A (Kaya),Dokter Spesialis,Bekasi,Metropolitan,2700000,-6.5675,107.4681,32985221,12456873,20528348,0.378,Kartu Kredit,1,50,150,0.65,1.7,0.45
+BUDU00964,Fery Nasution,L,46,1978-07-14,B,Kelas B (Menengah Atas),Pengacara,Tangerang,Metropolitan,2100000,-6.3867,107.0396,7506640,4853624,2653016,0.647,Transfer Bank,1,40,90,0.55,1.5,0.35
+BUDU00965,Ulfa Purnomo,P,49,1975-10-09,B,Kelas B (Menengah Atas),Wirausaha Menengah,Tangerang,Metropolitan,2100000,-6.2943,106.6724,18044068,12048433,5995635,0.668,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00966,Andi Lubis,L,37,1987-03-24,D,Kelas D (Menengah Bawah),SPG/SPB,Blitar,Kota Kecil,150000,-8.0333,112.5501,2279179,1964314,314865,0.862,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00967,Elisa Hidayat,P,25,1999-12-25,C,Kelas C (Menengah),Guru Tetap,Pekalongan,Kota Kecil,310000,-7.182,109.2858,5693683,3686680,2007003,0.648,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00968,Hafizh Rahayu,L,45,1979-05-12,B,Kelas B (Menengah Atas),Analis Keuangan,Surabaya,Kota Besar,3100000,-7.6376,112.978,10800283,7555332,3244951,0.7,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00969,Dimas Prasetyo,L,25,1999-02-23,E,Kelas E (Miskin),Ojek Konvensional,Kediri,Kota Kecil,320000,-8.0789,112.0145,1212566,1130452,82114,0.932,OVO,1,8,20,0.15,1.05,0.08
+BUDU00970,Rudi Purwanto,L,22,2002-02-19,C,Kelas C (Menengah),Sales,Blitar,Kota Kecil,150000,-7.7477,111.7453,5045947,3034372,2011575,0.601,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00971,Fery Sanjaya,L,31,1993-03-01,C,Kelas C (Menengah),Pegawai Swasta,Bekasi,Metropolitan,2700000,-5.8673,106.8561,4534036,2737551,1796485,0.604,Tunai,1,25,60,0.4,1.3,0.25
+BUDU00972,Samsul Susanto,L,58,1966-10-16,A,Kelas A (Kaya),Dokter Spesialis,Bogor,Metropolitan,1100000,-6.2505,106.7207,43562214,19238022,24324192,0.442,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00973,Dinda Prasetyo,P,38,1986-10-18,B,Kelas B (Menengah Atas),Pengacara,Bekasi,Metropolitan,2700000,-6.4928,106.9222,19392801,9628567,9764234,0.497,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00974,Budi Budiman,L,27,1997-09-07,D,Kelas D (Menengah Bawah),Admin Kantor,Magelang,Kota Kecil,130000,-7.2533,110.1738,2510916,2290225,220691,0.912,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00975,Budi Wibowo,L,45,1979-06-10,B,Kelas B (Menengah Atas),Wirausaha Menengah,Makassar,Kota Besar,1500000,-5.2404,119.9315,15563416,8447792,7115624,0.543,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00976,Hafizh Nasution,L,25,1999-10-13,C,Kelas C (Menengah),Perawat,Bekasi,Metropolitan,2700000,-6.5018,107.2627,3777305,3026502,750803,0.801,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00977,Udin Firmansyah,L,25,1999-02-02,C,Kelas C (Menengah),PNS Golongan II,Semarang,Kota Besar,1800000,-7.1368,110.1116,5614242,4235439,1378803,0.754,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00978,Deni Tobing,L,42,1982-06-17,D,Kelas D (Menengah Bawah),Teknisi,Magelang,Kota Kecil,130000,-7.8099,109.824,1911573,1503398,408175,0.786,Tunai,0,15,35,0.25,1.15,0.15
+BUDU00979,Fajar Wijaya,L,53,1971-05-15,A,Kelas A (Kaya),Notaris,Jakarta,Metropolitan,10500000,-6.3216,107.2546,68748978,17848565,50900413,0.26,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00980,Udin Santoso,L,39,1985-04-09,E,Kelas E (Miskin),Pedagang Kaki Lima,Kediri,Kota Kecil,320000,-8.1105,112.166,937502,858005,79497,0.915,GoPay,0,8,20,0.15,1.05,0.08
+BUDU00981,Kevin Kusuma,L,30,1994-12-23,D,Kelas D (Menengah Bawah),SPG/SPB,Blitar,Kota Kecil,150000,-7.9848,112.0806,2771637,2245228,526409,0.81,OVO,0,15,35,0.25,1.15,0.15
+BUDU00982,Doni Iskandar,L,35,1989-06-07,B,Kelas B (Menengah Atas),Manajer,Tangerang,Metropolitan,2100000,-5.9435,107.0845,19410659,11999540,7411119,0.618,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00983,Elisa Prasetyo,P,34,1990-06-10,B,Kelas B (Menengah Atas),Engineer Senior,Tangerang Selatan,Metropolitan,1700000,-6.6622,107.1253,8328240,4370486,3957754,0.525,GoPay,1,40,90,0.55,1.5,0.35
+BUDU00984,Wahyu Tambunan,L,23,2001-10-13,B,Kelas B (Menengah Atas),Wirausaha Menengah,Bogor,Metropolitan,1100000,-6.7098,107.1477,14302820,7821845,6480975,0.547,Kartu Kredit,1,40,90,0.55,1.5,0.35
+BUDU00985,Wulan Sanjaya,P,20,2004-06-09,C,Kelas C (Menengah),Guru Tetap,Tegal,Kota Kecil,285000,-6.5203,108.8758,3446412,2815812,630600,0.817,OVO,1,25,60,0.4,1.3,0.25
+BUDU00986,Januar Rahayu,L,20,2004-04-15,C,Kelas C (Menengah),Staf Administrasi,Makassar,Kota Besar,1500000,-5.2913,119.5145,5032629,3932931,1099698,0.781,Kartu Debit,1,25,60,0.4,1.3,0.25
+BUDU00987,Nadia Sanjaya,P,41,1983-10-27,C,Kelas C (Menengah),Pegawai Swasta,Pekalongan,Kota Kecil,310000,-6.9022,109.3851,3680932,2888495,792437,0.785,Transfer Bank,1,25,60,0.4,1.3,0.25
+BUDU00988,Doni Saputra,L,43,1981-10-09,D,Kelas D (Menengah Bawah),Karyawan Toko,Magelang,Kota Kecil,130000,-7.4093,109.9682,2158143,1777229,380914,0.823,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00989,Nanang Mahendra,L,48,1976-01-17,B,Kelas B (Menengah Atas),Wirausaha Menengah,Jakarta,Metropolitan,10500000,-6.4739,106.4459,16017252,8804020,7213232,0.55,Kartu Debit,1,40,90,0.55,1.5,0.35
+BUDU00990,Lutfi Gunawan,L,26,1998-07-20,D,Kelas D (Menengah Bawah),Admin Kantor,Medan,Kota Besar,2400000,3.3887,98.3837,1973359,1797961,175398,0.911,DANA,1,15,35,0.25,1.15,0.15
+BUDU00991,Oki Hidayat,L,24,2000-04-06,E,Kelas E (Miskin),Ojek Konvensional,Desa Rawa Indah,Desa,6500,-6.1569,107.2864,1471088,1283405,187683,0.872,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00992,Gita Wahyudi,P,32,1992-04-28,C,Kelas C (Menengah),Staf Administrasi,Depok,Metropolitan,2200000,-6.5496,106.6697,4685359,3385894,1299465,0.723,GoPay,1,25,60,0.4,1.3,0.25
+BUDU00993,Hana Wibowo,P,35,1989-06-02,A,Kelas A (Kaya),Partner Law Firm,Bekasi,Metropolitan,2700000,-6.6725,107.1419,89226933,41773614,47453319,0.468,GoPay,1,50,150,0.65,1.7,0.45
+BUDU00994,Vino Budiman,L,35,1989-06-14,D,Kelas D (Menengah Bawah),Teknisi,Desa Rawa Indah,Desa,6500,-5.7681,106.8127,2556061,1967155,588906,0.77,OVO,0,15,35,0.25,1.15,0.15
+BUDU00995,Andi Purnomo,L,33,1991-02-16,D,Kelas D (Menengah Bawah),Karyawan Toko,Jombang,Kota Kecil,190000,-7.1201,112.0764,2525082,2020870,504212,0.8,Tunai,1,15,35,0.25,1.15,0.15
+BUDU00996,Yuni Kurniawan,P,38,1986-10-17,D,Kelas D (Menengah Bawah),Karyawan Toko,Makassar,Kota Besar,1500000,-4.7913,119.2427,1775124,1447314,327810,0.815,GoPay,1,15,35,0.25,1.15,0.15
+BUDU00997,Elisa Susanto,P,38,1986-02-17,E,Kelas E (Miskin),Buruh Pabrik,Cirebon,Kota Kecil,320000,-6.9712,108.9201,1101501,1033110,68391,0.938,Tunai,1,8,20,0.15,1.05,0.08
+BUDU00998,Tari Sinaga,P,25,1999-10-05,D,Kelas D (Menengah Bawah),Teknisi,Semarang,Kota Besar,1800000,-7.1749,110.5414,2109114,1807090,302024,0.857,OVO,1,15,35,0.25,1.15,0.15
+BUDU00999,Ani Kusuma,P,41,1983-10-15,C,Kelas C (Menengah),PNS Golongan II,Pekalongan,Kota Kecil,310000,-6.7541,109.9394,6223930,4738309,1485621,0.761,GoPay,1,25,60,0.4,1.3,0.25
+BUDU01000,Irwan Sihombing,L,35,1989-02-02,C,Kelas C (Menengah),Guru Tetap,Yogyakarta,Kota Besar,420000,-7.4066,109.9245,4463947,3434966,1028981,0.769,Kartu Debit,1,25,60,0.4,1.3,0.25
