@@ -1,0 +1,41 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend module for SpendBehavior Analyzer application.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch --clear-screen=false ./src/server.ts",
+    "lint": "eslint --flag unstable_native_nodejs_ts_config .",
+    "lint:fix": "eslint --fix --flag unstable_native_nodejs_ts_config .",
+    "format": "prettier . --write",
+    "check": "npm run format && npm run lint:fix",
+    "migrate": "node ./scripts/migrate.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tsconfig/node-lts": "^24.0.0",
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.6.0",
+    "@types/pg": "^8.20.0",
+    "eslint": "^10.3.0",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.2"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.20.0",
+    "zod": "^4.4.3"
+  }
+}

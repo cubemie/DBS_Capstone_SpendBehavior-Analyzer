@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Ini adalah draf `README.md` yang profesional dan lengkap, dirancang khusus untuk merepresentasikan proyek **BUDU — SpendBehavior Analyzer** di repositori GitHub kamu.
 
 Draf ini mencakup penjelasan alur *Data Science*, teknologi yang digunakan, hingga panduan instalasi.
@@ -94,3 +95,9 @@ git push origin DS_Mutia(bisa danti jd brances apa aja)
 
 **Tim CC26-PSU268**
 *Capstone Project - Coding Camp 2026*
+=======
+# SpendBehavior Analyzer
+
+**SpendBehavior Analyzer** merupakan platform berbasis web yang bertujuan untuk membantu pengguna memahami pola pengeluaran mereka dari sisi perilaku, bukan hanya dari nominal. Sistem ini menganalisis data transaksi pengguna untuk mengidentifikasi pola kebiasaan, mengklasifikasikan tipe kepribadian finansial, serta memberikan insight dan peringatan yang bersifat personal.
+
+>>>>>>> 3e57ab55177169f56c1c00c40a254d23492b2e47
