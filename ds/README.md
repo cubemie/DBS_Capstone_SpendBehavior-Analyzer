@@ -70,7 +70,7 @@ pip install streamlit pandas numpy plotly scipy scikit-learn
 3. **Jalankan Aplikasi:**
 ```bash
 
-python -m streamlit run dashboard_app.py
+python -m streamlit run "C:\muti\SMT 6\CAPSTONE_Spendbehavior\ds\dashboard_app.py"
 
 
 ```
