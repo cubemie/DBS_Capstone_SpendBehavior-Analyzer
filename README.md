@@ -74,6 +74,13 @@ python -m streamlit run dashboard_app.py
 
 ```
 
+4. **Push ke github**
+```bash
+git status
+git add . 
+git commit -m "komen"
+git push origin DS_Mutia(bisa danti jd brances apa aja)
+```
 
 
 ## 📂 Struktur File Utama
