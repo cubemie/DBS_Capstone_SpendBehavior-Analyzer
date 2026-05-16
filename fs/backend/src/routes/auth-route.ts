@@ -1,5 +1,5 @@
 import e from 'express'
-import * as authController from '../controllers/auth.ts'
+import { authController } from '../controllers/auth-controller.ts'
 
 export const authRouter = e.Router()
 

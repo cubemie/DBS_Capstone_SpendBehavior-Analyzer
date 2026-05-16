@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import type { JwtPayload } from '../schemas/auth.ts'
+import type { JwtPayload } from '../schemas/auth-schema.ts'
 import { env } from '../config.ts'
 import { AppException } from '../exception.ts'
 
