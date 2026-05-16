@@ -8,6 +8,5 @@
     "noImplicitReturns": true,
     "verbatimModuleSyntax": true,
     "rewriteRelativeImportExtensions": true
-  },
-  "include": ["src/**/*", "scripts/**/*"]
+  }
 }
