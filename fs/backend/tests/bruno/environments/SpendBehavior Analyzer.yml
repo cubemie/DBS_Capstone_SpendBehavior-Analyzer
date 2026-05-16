@@ -3,6 +3,6 @@ variables:
   - name: baseUrl
     value: http://localhost:3000
   - name: loggedInUserId
-    value: 019e0c0c-32e0-7d69-8121-e920920dcdcd
+    value: ""
   - name: accessToken
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTllMGMwYy0zMmUwLTdkNjktODEyMS1lOTIwOTIwZGNkY2QiLCJpYXQiOjE3NzgzMTg3MTcsImV4cCI6MTc3ODQwNTExN30.HBfFB1r1O5GLbaQWkCjao7BFUsxPzWugmYnPfOexLbw
+    value: ""
