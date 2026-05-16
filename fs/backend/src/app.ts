@@ -1,7 +1,7 @@
 import e from 'express'
-import { authRouter } from './routes/auth.ts'
-import { userRouter } from './routes/user.ts'
-import { errorHandler } from './middlewares/error.ts'
+import { authRouter } from './routes/auth-route.ts'
+import { userRouter } from './routes/user-route.ts'
+import { errorHandler } from './middlewares/error-middleware.ts'
 
 const app = e()
 
