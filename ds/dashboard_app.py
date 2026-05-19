@@ -31,85 +31,306 @@ st.set_page_config(
 # ==========================================
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-    html, body, [class*="css"] { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .main { background-color: #f0f4ff; }
-    .block-container { padding: 1.5rem 2rem; }
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+    
+    html, body, [class*="css"] { 
+        font-family: 'Outfit', 'Inter', sans-serif; 
+    }
+    
+    .main { 
+        background: radial-gradient(circle at 10% 20%, #0a0f1d 0%, #171c2f 100%);
+        color: #e2e8f0;
+    }
+    
+    .block-container { 
+        padding: 2rem 2.5rem; 
+    }
+    
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0f172a 0%, #1e3a8a 100%);
+        background: rgba(15, 23, 42, 0.6) !important;
+        backdrop-filter: blur(20px) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
     }
-    [data-testid="stSidebar"] .stRadio label { color: #cbd5e1 !important; font-weight: 500; }
+    
+    [data-testid="stSidebar"] .stRadio label { 
+        color: #e2e8f0 !important; 
+        font-weight: 500; 
+        transition: all 0.3s ease;
+    }
+    
+    [data-testid="stSidebar"] .stRadio label:hover {
+        color: #38bdf8 !important;
+        transform: translateX(4px);
+    }
+    
     [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3, [data-testid="stSidebar"] p { color: #e2e8f0 !important; }
-    [data-testid="stSidebar"] .stMarkdown { color: #94a3b8; }
+    [data-testid="stSidebar"] h3, [data-testid="stSidebar"] p { 
+        color: #f8fafc !important; 
+    }
+    
     [data-testid="metric-container"] {
-        background: white; border-radius: 14px; padding: 16px 20px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 1px 8px rgba(37,99,235,0.07);
-        transition: box-shadow 0.2s;
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(12px);
+        border-radius: 16px; 
+        padding: 16px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
-    [data-testid="metric-container"]:hover { box-shadow: 0 4px 20px rgba(37,99,235,0.13); }
-    [data-testid="stMetricValue"] { font-weight: 800; color: #1e3a8a; }
-    [data-testid="stMetricLabel"] { color: #64748b; font-weight: 600; font-size: 0.82rem; }
+    
+    [data-testid="metric-container"]:hover {
+        box-shadow: 0 8px 28px rgba(56, 189, 248, 0.15);
+        transform: translateY(-4px);
+        border-color: rgba(56, 189, 248, 0.3);
+    }
+    
+    [data-testid="stMetricValue"] { 
+        font-weight: 800; 
+        background: linear-gradient(135deg, #e0f2fe 0%, #38bdf8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 1.6rem !important; 
+    }
+    
+    [data-testid="stMetricLabel"] { 
+        color: #94a3b8; 
+        font-weight: 500; 
+        font-size: 0.85rem; 
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
     .section-title {
-        font-size: 1.15rem; font-weight: 700; color: #1e3a8a;
-        margin-bottom: 0.5rem; padding-left: 10px;
-        border-left: 4px solid #2563eb;
+        font-size: 1.25rem; 
+        font-weight: 700; 
+        color: #f8fafc;
+        margin-bottom: 1rem; 
+        padding: 8px 16px;
+        border-left: 4px solid #38bdf8;
+        background: linear-gradient(90deg, rgba(56,189,248,0.1) 0%, transparent 100%);
+        border-radius: 0 8px 8px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
+    
     .persona-card {
-        border-radius: 14px; padding: 18px 16px; margin-bottom: 8px;
-        transition: transform 0.15s;
+        background: rgba(30, 41, 59, 0.5) !important;
+        backdrop-filter: blur(12px);
+        border-radius: 20px; 
+        padding: 24px 20px; 
+        margin-bottom: 12px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
-    .persona-card:hover { transform: translateY(-2px); }
+    
+    .persona-card:hover { 
+        transform: translateY(-5px) scale(1.02); 
+        box-shadow: 0 12px 32px rgba(0,0,0,0.4); 
+    }
+    
     .insight-box {
-        background: linear-gradient(135deg, #eff6ff, #dbeafe);
-        border-left: 4px solid #2563eb; border-radius: 10px;
-        padding: 14px 18px; margin: 10px 0;
-        color: #1e40af; font-weight: 500;
+        background: rgba(37, 99, 235, 0.1);
+        backdrop-filter: blur(8px);
+        border-left: 4px solid #3b82f6; 
+        border-radius: 12px;
+        padding: 16px 20px; 
+        margin: 12px 0;
+        color: #bfdbfe; 
+        font-weight: 500;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        border-right: 1px solid rgba(255,255,255,0.05);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
     }
+    
     .warn-box {
-        background: linear-gradient(135deg, #fff7ed, #ffedd5);
-        border-left: 4px solid #f59e0b; border-radius: 10px;
-        padding: 14px 18px; margin: 10px 0;
-        color: #92400e; font-weight: 500;
+        background: rgba(245, 158, 11, 0.1);
+        backdrop-filter: blur(8px);
+        border-left: 4px solid #f59e0b; 
+        border-radius: 12px;
+        padding: 16px 20px; 
+        margin: 12px 0;
+        color: #fde68a; 
+        font-weight: 500;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        border-right: 1px solid rgba(255,255,255,0.05);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
     }
+    
     .success-box {
-        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-        border-left: 4px solid #10b981; border-radius: 10px;
-        padding: 14px 18px; margin: 10px 0;
-        color: #065f46; font-weight: 500;
+        background: rgba(16, 185, 129, 0.1);
+        backdrop-filter: blur(8px);
+        border-left: 4px solid #10b981; 
+        border-radius: 12px;
+        padding: 16px 20px; 
+        margin: 12px 0;
+        color: #a7f3d0; 
+        font-weight: 500;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        border-right: 1px solid rgba(255,255,255,0.05);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
     }
+    
     .danger-box {
-        background: linear-gradient(135deg, #fef2f2, #fee2e2);
-        border-left: 4px solid #ef4444; border-radius: 10px;
-        padding: 14px 18px; margin: 10px 0;
-        color: #991b1b; font-weight: 500;
+        background: rgba(239, 68, 68, 0.1);
+        backdrop-filter: blur(8px);
+        border-left: 4px solid #ef4444; 
+        border-radius: 12px;
+        padding: 16px 20px; 
+        margin: 12px 0;
+        color: #fecaca; 
+        font-weight: 500;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        border-right: 1px solid rgba(255,255,255,0.05);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
     }
+    
     .user-profile-card {
-        background: white; border-radius: 18px; padding: 24px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 24px rgba(37,99,235,0.08);
-        margin-bottom: 16px;
+        background: linear-gradient(145deg, rgba(30,41,59,0.8) 0%, rgba(15,23,42,0.9) 100%);
+        backdrop-filter: blur(16px);
+        border-radius: 24px; 
+        padding: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
     }
+    
+    .user-profile-card::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 4px;
+        background: linear-gradient(90deg, #38bdf8, #818cf8, #3b82f6);
+    }
+    
     .user-stat-badge {
-        display: inline-block; background: #eff6ff; color: #2563eb;
-        border-radius: 8px; padding: 4px 12px; font-size: 0.82rem;
-        font-weight: 600; margin: 3px 3px;
+        display: inline-block;
+        background: rgba(56, 189, 248, 0.1);
+        color: #7dd3fc;
+        border-radius: 12px; 
+        padding: 6px 14px; 
+        font-size: 0.85rem;
+        font-weight: 600; 
+        margin: 4px 4px;
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        transition: all 0.2s;
     }
-    .stTabs [data-baseweb="tab-list"] { gap: 4px; }
+    
+    .user-stat-badge:hover {
+        background: rgba(56, 189, 248, 0.2);
+        transform: translateY(-2px);
+    }
+    
+    .stTabs [data-baseweb="tab-list"] { 
+        gap: 8px; 
+        background: rgba(30,41,59,0.4);
+        padding: 8px 8px 0 8px;
+        border-radius: 16px 16px 0 0;
+    }
+    
     .stTabs [data-baseweb="tab"] {
-        border-radius: 8px 8px 0 0; font-weight: 600; color: #64748b;
+        border-radius: 12px 12px 0 0; 
+        font-weight: 600; 
+        color: #94a3b8;
+        padding: 10px 20px;
+        background: transparent;
+        transition: all 0.3s ease;
     }
-    .stTabs [aria-selected="true"] { color: #2563eb !important; }
-    .streamlit-expanderHeader { font-weight: 600; color: #1e3a8a; }
-    hr { border-color: #e2e8f0; margin: 1.2rem 0; }
+    
+    .stTabs [aria-selected="true"] { 
+        color: #fff !important; 
+        background: rgba(56, 189, 248, 0.15) !important;
+        border-bottom: 2px solid #38bdf8 !important;
+    }
+    
+    hr { 
+        border-color: rgba(255,255,255,0.08); 
+        margin: 1.8rem 0; 
+    }
+    
     .header-banner {
-        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #0ea5e9 100%);
-        border-radius: 18px; padding: 28px 36px; margin-bottom: 24px; color: white;
+        background: linear-gradient(135deg, #1e1b4b 0%, #1e3a8a 50%, #0284c7 100%);
+        border-radius: 24px; 
+        padding: 40px 48px; 
+        margin-bottom: 32px; 
+        color: white;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        position: relative; 
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
     }
-    .header-banner h1 { color: white; font-size: 2rem; font-weight: 800; margin-bottom: 4px; }
-    .header-banner p { color: #bfdbfe; font-size: 0.95rem; margin: 0; }
-    .gauge-label { font-size: 0.78rem; color: #64748b; text-align: center; margin-top: 4px; }
+    
+    .header-banner::before {
+        content: '';
+        position: absolute; 
+        top: -50%; right: -10%; 
+        width: 400px; height: 400px;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: pulse 8s infinite alternate;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.5; }
+        100% { transform: scale(1.2); opacity: 1; }
+    }
+    
+    .header-banner h1 { 
+        color: white; 
+        font-size: 2.5rem; 
+        font-weight: 800; 
+        margin-bottom: 10px; 
+        letter-spacing: -0.5px; 
+        text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .header-banner p { 
+        color: #bae6fd; 
+        font-size: 1.05rem; 
+        margin: 0; 
+        font-weight: 400;
+    }
+    
+    .header-stat { 
+        display: inline-block; 
+        background: rgba(255,255,255,0.1); 
+        backdrop-filter: blur(4px);
+        border-radius: 12px;
+        padding: 6px 16px; 
+        margin: 8px 8px 0 0; 
+        font-size: 0.9rem; 
+        color: #f0f9ff; 
+        border: 1px solid rgba(255,255,255,0.2); 
+        font-weight: 500;
+        transition: transform 0.2s;
+    }
+    
+    .header-stat:hover {
+        transform: translateY(-2px);
+        background: rgba(255,255,255,0.15); 
+    }
+    
+    div[data-testid="stSelectbox"] > div,
+    div[data-testid="stMultiSelect"] > div,
+    .stDateInput > div { 
+        border-radius: 12px; 
+        background: rgba(30,41,59,0.6);
+        border-color: rgba(255,255,255,0.1);
+        color: white;
+    }
+    
+    button[kind="primary"], .stDownloadButton button {
+        border-radius: 12px !important; 
+        font-weight: 600 !important;
+        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%) !important;
+        border: none !important;
+        box-shadow: 0 4px 12px rgba(59,130,246,0.3) !important;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+    
+    button[kind="primary"]:hover { 
+        transform: translateY(-2px) !important; 
+        box-shadow: 0 8px 20px rgba(59,130,246,0.4) !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -596,11 +817,23 @@ stats_clust = user_features.groupby('cluster').agg(
     avg_impulse = ('impulse_score', 'mean'),
 ).round(2)
 sorted_clusters = stats_clust.sort_values('avg_impulse').index.tolist()
-cluster_persona_map = {
-    sorted_clusters[0]: 'Rational Spender',
-    sorted_clusters[1]: 'Emotional Spender',
-    sorted_clusters[2]: 'Impulsive Spender',
-}
+# Robust mapping: support any number of clusters, map to 3 persona tiers
+PERSONA_TIER = ['Rational Spender', 'Emotional Spender', 'Impulsive Spender']
+if len(sorted_clusters) >= 3:
+    cluster_persona_map = {
+        sorted_clusters[0]: PERSONA_TIER[0],
+        sorted_clusters[-1]: PERSONA_TIER[2],
+    }
+    # Middle clusters (if >3) all get 'Emotional Spender'
+    for c in sorted_clusters[1:-1]:
+        cluster_persona_map[c] = PERSONA_TIER[1]
+elif len(sorted_clusters) == 2:
+    cluster_persona_map = {
+        sorted_clusters[0]: PERSONA_TIER[0],
+        sorted_clusters[1]: PERSONA_TIER[2],
+    }
+else:
+    cluster_persona_map = {sorted_clusters[0]: PERSONA_TIER[1]}
 user_features['spending_persona'] = user_features['cluster'].map(cluster_persona_map)
 
 # ==========================================
@@ -702,10 +935,17 @@ else:
 # ==========================================
 # HEADER
 # ==========================================
-st.markdown("""
+st.markdown(f"""
 <div class="header-banner">
     <h1>💸 BUDU — SpendBehavior Analyzer</h1>
     <p>Coding Camp 2026 · DBS Foundation · Tim CC26-PSU268 &nbsp;|&nbsp; Dataset Dummy Indonesia Realistis (IDR)</p>
+    <div style="margin-top:14px">
+        <span class="header-stat">👤 {len(df_users):,} User</span>
+        <span class="header-stat">💳 {len(df_tx):,} Transaksi</span>
+        <span class="header-stat">💰 Rp {df_tx['amount'].sum()/1e9:.1f} Miliar IDR</span>
+        <span class="header-stat">📅 {df_tx['date'].min().strftime('%b %Y')} – {df_tx['date'].max().strftime('%b %Y')}</span>
+        <span class="header-stat">🗂️ 5 Segmen Sosio-Ekonomi</span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -1259,36 +1499,8 @@ elif menu == "🔎 User Deep Dive":
     if u_tx.empty:
         st.warning(f"Tidak ada transaksi untuk {selected_uid} di rentang tanggal yang dipilih.")
         st.stop()
-    # ==========================================
-    # TABEL TRANSAKSI USER
-    # ==========================================
-    if show_raw:
-    
-        st.markdown("### 📋 Tabel Transaksi Pengguna")
-    
-        u_tx_display = u_tx.copy()
-    
-        if 'date' in u_tx_display.columns:
-            u_tx_display['date'] = u_tx_display['date'].dt.strftime('%Y-%m-%d %H:%M')
-    
-        cols_show = [
-            'txn_id',
-            'date',
-            'category',
-            'amount',
-            'payment_method'
-        ]
-    
-        cols_show = [c for c in cols_show if c in u_tx_display.columns]
-    
-        st.dataframe(
-            u_tx_display[cols_show].sort_values(
-                by='date',
-                ascending=False
-            ),
-            use_container_width=True,
-            height=350
-        )
+    # NOTE: Raw transaction table is shown at the bottom section (after tabs)
+    # to avoid duplicate rendering. The show_raw toggle controls both locations.
     
     # Profile dari user_features (sudah computed)
     u_profile = user_features[user_features['user_id'] == selected_uid]
@@ -1713,18 +1925,41 @@ elif menu == "🔎 User Deep Dive":
     if show_raw:
         st.markdown("---")
         st.markdown("#### 📋 Riwayat Transaksi Lengkap")
-        show_cols = [c for c in ['txn_id','date','amount','category','sub_category',
-                                  'payment_method','is_weekend','is_night','is_fraud',
-                                  'is_spike','amount_idr_bucket'] if c in u_tx.columns]
-        st.dataframe(u_tx[show_cols].sort_values('date', ascending=False).reset_index(drop=True),
-                     use_container_width=True, height=400)
-        csv_dl = u_tx[show_cols].to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label=f"⬇️ Download transaksi {selected_uid} (.csv)",
-            data=csv_dl,
-            file_name=f"budu_{selected_uid}_transactions.csv",
-            mime="text/csv",
+        u_tx_display = u_tx.copy()
+        if 'date' in u_tx_display.columns:
+            u_tx_display = u_tx_display.copy()
+            u_tx_display['date_str'] = u_tx_display['date'].dt.strftime('%Y-%m-%d %H:%M')
+        show_cols_raw = [c for c in ['txn_id','date_str','amount','category','sub_category',
+                                     'payment_method','is_weekend','is_night','is_fraud'] if c in u_tx_display.columns]
+        st.dataframe(
+            u_tx_display[show_cols_raw].rename(columns={'date_str':'date'})
+                .sort_values('date', ascending=False).reset_index(drop=True),
+            use_container_width=True, height=400
         )
+        # Export buttons side by side
+        col_dl1, col_dl2 = st.columns(2)
+        show_cols_csv = [c for c in ['txn_id','date','amount','category','payment_method',
+                                     'is_weekend','is_night','is_fraud'] if c in u_tx.columns]
+        csv_dl = u_tx[show_cols_csv].sort_values('date', ascending=False).to_csv(index=False).encode('utf-8')
+        with col_dl1:
+            st.download_button(
+                label=f"⬇️ Download transaksi {selected_uid} (.csv)",
+                data=csv_dl,
+                file_name=f"budu_{selected_uid}_transactions.csv",
+                mime="text/csv",
+            )
+        with col_dl2:
+            if len(u_profile) > 0:
+                profile_dl = u_profile.select_dtypes(exclude=['object']).assign(
+                    user_id=selected_uid,
+                    spending_persona=persona,
+                ).to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label=f"⬇️ Download profil {selected_uid} (.csv)",
+                    data=profile_dl,
+                    file_name=f"budu_{selected_uid}_profile.csv",
+                    mime="text/csv",
+                )
 
 
 # ==========================================
