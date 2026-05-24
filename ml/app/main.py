@@ -39,7 +39,7 @@ def get_smart_warnings(profile: dict) -> list:
         warnings.append("✅ Pola pengeluaran stabil, tidak ada anomali terdeteksi.")
         
     return warnings
-# --- 1. ENDPOINT PRODUCTION (Untuk digunakan oleh Tim Backend/Web) ---
+#1. ENDPOINT PRODUCTION (Untuk digunakan oleh Tim Backend/Web) ---
 @app.post("/predict")
 def predict_persona(payload: PredictionRequest):
     if model is None or scaler is None:
@@ -62,7 +62,7 @@ def predict_persona(payload: PredictionRequest):
     }
 
 
-# --- 2. ENDPOINT KHUSUS TES LANGSUNG DI API (TANPA INPUT MANUAL) ---
+# 2. ENDPOINT KHUSUS TES LANGSUNG DI API (TANPA INPUT MANUAL) ---
 @app.get("/test-random")
 def test_random_user_directly():
     if model is None or scaler is None:
@@ -81,7 +81,7 @@ def test_random_user_directly():
             'txn_count', 'std_amount_idr', 'weekend_ratio', 'night_ratio', 
             'month_start_ratio', 'month_end_ratio', 'above_avg_ratio', 'spike_ratio', 
             'impulse_score', 'unique_categories', 'unique_merchants', 'active_months', 
-            'spending_cov', 'avg_dist_merchant'
+            'spending_cov', 'avg_dist_merchant', 'fraud_ratio'
         ]
         cat_cols = [col for col in df.columns if col.startswith('cat_')]
         feature_cols.extend(cat_cols)
@@ -113,7 +113,7 @@ def test_random_user_directly():
                 "persona_ditebak": PERSONA_LABELS[class_idx],
                 "confidence": float(preds[class_idx])
             },
-            "smart_warnings_system": warnings  # <--- INI HASIL RULE-BASED NYA
+            "smart_warnings_system": warnings  # INI HASIL RULE-BASED NYA
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error saat testing: {str(e)}")

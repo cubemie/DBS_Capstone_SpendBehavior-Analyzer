@@ -13,7 +13,7 @@ def load_and_preprocess_data(data_path: str, scaler_save_path: str):
         'txn_count', 'std_amount_idr', 'weekend_ratio', 'night_ratio', 
         'month_start_ratio', 'month_end_ratio', 'above_avg_ratio', 'spike_ratio', 
         'impulse_score', 'unique_categories', 'unique_merchants', 'active_months', 
-        'spending_cov', 'avg_dist_merchant'
+        'spending_cov', 'avg_dist_merchant', 'fraud_ratio'
     ]
     
     # Menambahkan semua fitur kategori belanja (cat_*)
