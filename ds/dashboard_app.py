@@ -741,24 +741,20 @@ def build_user_features(_df_tx, _df_users, _df_profiles=None):
     return uf
 
 
-@st.cache_data(show_spinner="🤖 Menjalankan K-Means clustering...")
+@st.cache_data(show_spinner="🤖 Menjalankan K-Means clustering (Feature v3)...")
 def run_clustering(_uf):
-    # ── FEATURE COLS v3: 20 fitur bersih ──────────────────────────────────────
-    # Lihat IMPLEMENTASI_FITUR_V3.md untuk alasan pemilihan fitur
-    # Transformasi cat_* ke rasio proporsi jika belum ada
+    # ── Feature v3: 20 fitur bersih (cleanup + pendapatan_bulan) ────────────
+    # Transformasi cat_* ke rasio proporsi
     uf_work = _uf.copy()
     if 'total_spending_idr' in uf_work.columns:
-        cat_src = [
-            'cat_makanan_&_minum', 'cat_transportasi', 'cat_kesehatan_&_kec',
-            'cat_sembako_&_kebut', 'cat_kesehatan', 'cat_pendidikan',
-            'cat_belanja_online', 'cat_pulsa_&_data', 'cat_hiburan', 'cat_fashion_&_pakai'
-        ]
+        cat_src = [c for c in uf_work.columns
+                   if c.startswith('cat_') and not c.endswith('_ratio')]
         for col in cat_src:
             ratio_col = col + '_ratio'
-            if ratio_col not in uf_work.columns and col in uf_work.columns:
-                uf_work[ratio_col] = (uf_work[col] / uf_work['total_spending_idr']).fillna(0)
-            elif ratio_col not in uf_work.columns:
-                uf_work[ratio_col] = 0.0
+            if ratio_col not in uf_work.columns:
+                uf_work[ratio_col] = (
+                    uf_work[col] / uf_work['total_spending_idr'].replace(0, np.nan)
+                ).fillna(0)
 
     # Pastikan pendapatan_bulan tersedia
     if 'pendapatan_bulan' not in uf_work.columns:
@@ -769,7 +765,7 @@ def run_clustering(_uf):
         'avg_txn_idr', 'txn_count', 'weekend_ratio', 'night_ratio',
         'above_avg_ratio', 'spike_ratio', 'impulse_score',
         'unique_categories', 'spending_cov',
-        # ✨ BARU v3 — Variabel Pendapatan (1)
+        # Pendapatan (1)
         'pendapatan_bulan',
         # Category Ratios (10)
         'cat_makanan_&_minum_ratio', 'cat_transportasi_ratio',
@@ -991,14 +987,14 @@ with st.sidebar:
 
     st.markdown("---")
     st.caption(f"Dataset: {len(df_users):,} user · {len(df_tx):,} transaksi")
-    st.caption("⚙️ Feature v3 — 20 fitur (+ pendapatan_bulan)")
     st.caption(f"Periode: {df_tx['date'].min().strftime('%b %Y')} – {df_tx['date'].max().strftime('%b %Y')}")
+    st.caption("⚙️ Feature v3 — 20 fitur (+ pendapatan_bulan)")
 
     import os
     if os.path.exists(CSV_TX):
         st.success("📂 Sumber: CSV notebook")
     else:
-        st.info("🔧 Sumber: Data generator")
+        st.info("🔧 Sumber: Data generator (dummy)")
 
     available_segs = sorted(df_tx['segmen'].dropna().unique().tolist()) if 'segmen' in df_tx.columns else ['A','B','C','D','E']
     seg_filter = st.multiselect("Filter Segmen (Global)", options=['A','B','C','D','E'], default=available_segs)
@@ -1022,7 +1018,7 @@ else:
 st.markdown("""
 <div class="header-banner">
     <h1>💸 BUDU — SpendBehavior Analyzer</h1>
-    <p>Coding Camp 2026 · DBS Foundation · Tim CC26-PSU268 &nbsp;|&nbsp; Dataset Dummy Indonesia Realistis (IDR)</p>
+    <p>Coding Camp 2026 · DBS Foundation · Tim CC26-PSU268 &nbsp;|&nbsp; 🇮🇩 Dataset Dummy Indonesia — 1.000 user · 5 Segmen Sosio-Ekonomi (IDR)</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -1482,26 +1478,25 @@ elif menu == "👥 Clustering & Persona":
         st.plotly_chart(fig_imp_dist, use_container_width=True)
 
     agg_dict = {
-        'Jumlah_User'   : ('user_id', 'count'),
-        'Avg_Impulse'   : ('impulse_score', 'mean'),
-        'Avg_TxnCount'  : ('txn_count', 'mean'),
-        'Avg_WeekendR'  : ('weekend_ratio', 'mean'),
-        'Avg_NightR'    : ('night_ratio', 'mean'),
-        'Avg_SpikeR'    : ('spike_ratio', 'mean'),
+        'Jumlah_User'  : ('user_id',           'count'),
+        'Avg_Impulse'  : ('impulse_score',      'mean'),
+        'Avg_TxnCount' : ('txn_count',          'mean'),
+        'Avg_WeekendR' : ('weekend_ratio',      'mean'),
+        'Avg_NightR'   : ('night_ratio',        'mean'),
+        'Avg_SpikeR'   : ('spike_ratio',        'mean'),
     }
     if 'pendapatan_bulan' in uf_f.columns and uf_f['pendapatan_bulan'].sum() > 0:
         agg_dict['Avg_Pendapatan_IDR'] = ('pendapatan_bulan', 'mean')
     if 'total_spending_idr' in uf_f.columns:
         agg_dict['Avg_TotalSpend'] = ('total_spending_idr', 'mean')
-
     cluster_stats = uf_f.groupby('spending_persona').agg(**agg_dict).round(3)
     st.dataframe(cluster_stats, use_container_width=True)
 
-    # Insight: distribusi pendapatan per persona
+    # ── Distribusi pendapatan per persona ───────────────────────────────────
     if 'pendapatan_bulan' in uf_f.columns and uf_f['pendapatan_bulan'].sum() > 0:
         st.markdown("---")
-        st.markdown('<p class="section-title">💰 Distribusi Pendapatan per Persona</p>', unsafe_allow_html=True)
-        st.markdown('<div class="insight-box">📌 <b>Pendapatan bulanan</b> kini digunakan sebagai salah satu dari 20 fitur training AI (Feature v3). Grafik di bawah menunjukkan bagaimana konteks finansial berbeda antar persona.</div>', unsafe_allow_html=True)
+        st.markdown('<p class="section-title">💰 Distribusi Pendapatan per Persona (Fitur v3)</p>', unsafe_allow_html=True)
+        st.markdown('<div class="insight-box">📌 <b>pendapatan_bulan</b> adalah fitur training ke-10 (Feature v3). Grafik ini menunjukkan bagaimana kemampuan finansial berbeda antar persona belanja.</div>', unsafe_allow_html=True)
         fig_inc = px.box(
             uf_f[uf_f['pendapatan_bulan'] > 0],
             x='spending_persona', y='pendapatan_bulan',
@@ -1975,6 +1970,10 @@ elif menu == "📖 Data Dictionary":
     ])
 
     with tab_d[0]:
+        st.markdown('''
+**Sumber Data:** Dataset Dummy Indonesia yang di-generate secara programatik (Cell 1–3 notebook).
+Tidak menggunakan dataset eksternal Kaggle. Semua data merepresentasikan perilaku keuangan 5 segmen sosio-ekonomi Indonesia.
+''')
         seg_dict = pd.DataFrame([
             {'Segmen':'E','Label':'Kelas E (Miskin)',         '% Pop':'15%','Income/Bulan':'Rp 800rb–1,5jt','Metode Bayar Dominan':'Tunai 55%',         'Kota':'Desa / Kota Kecil'},
             {'Segmen':'D','Label':'Kelas D (Menengah Bawah)', '% Pop':'25%','Income/Bulan':'Rp 1,5–3jt',   'Metode Bayar Dominan':'GoPay 30%',         'Kota':'Kota Kecil / Besar'},
@@ -2036,7 +2035,7 @@ elif menu == "📖 Data Dictionary":
             {'Fitur':'fraud_ratio',       'Satuan':'0-1',    'Deskripsi':'Proporsi transaksi fraud'},
             {'Fitur':'avg_dist_merchant', 'Satuan':'derajat','Deskripsi':'Rata-rata jarak user ke merchant'},
             {'Fitur':'spending_ratio',    'Satuan':'0-1',    'Deskripsi':'Rasio pengeluaran vs pendapatan (24 bulan)'},
-            {'Fitur':'pendapatan_bulan', 'Satuan':'IDR',    'Deskripsi':'✨ Pendapatan bulanan (IDR) — BARU v3: fitur training AI untuk konteks kemampuan finansial user'},
+            {'Fitur':'pendapatan_bulan','Satuan':'IDR',    'Deskripsi':'✨ Pendapatan bulanan — fitur training v3 (konteks kemampuan finansial)'},
         ])
         st.dataframe(prof_dict, use_container_width=True, hide_index=True)
 
@@ -2056,11 +2055,11 @@ impulse_score = (weekend_ratio × 0.35) + (night_ratio × 0.30) + (above_avg_rat
 
     with tab_d[5]:
         file_dict = pd.DataFrame([
-            {'File':'budu_transactions_clean_idr.csv', 'Konten':'Semua transaksi bersih (IDR)',    'Digunakan oleh':'Dashboard, REST API'},
-            {'File':'budu_user_profiles_idr.csv',      'Konten':'Profil + persona per user',       'Digunakan oleh':'REST API, Dashboard'},
-            {'File':'budu_dummy_users.csv',             'Konten':'Data demografis user (dummy)',    'Digunakan oleh':'Analisis segmen'},
-            {'File':'X/y_train/val/test.npy',           'Konten':'Array input/output model TF',    'Digunakan oleh':'AI Engineer (TF)'},
-            {'File':'budu_model_metadata.json',         'Konten':'Metadata + saran arsitektur TF', 'Digunakan oleh':'AI Engineer'},
+            {'File':'budu_transactions_clean_idr.csv', 'Konten':'Semua transaksi bersih (IDR)',         'Digunakan oleh':'Dashboard, REST API'},
+            {'File':'budu_user_profiles_idr.csv',      'Konten':'Profil + persona per user (20 fitur)', 'Digunakan oleh':'REST API, Dashboard'},
+            {'File':'budu_dummy_users.csv',             'Konten':'Data demografis 1.000 user dummy',    'Digunakan oleh':'Analisis segmen'},
+            {'File':'X/y_train/val/test.npy',           'Konten':'Array input/output model TF (v3)',    'Digunakan oleh':'AI Engineer (TF)'},
+            {'File':'budu_model_metadata.json',         'Konten':'Metadata + saran arsitektur TF',      'Digunakan oleh':'AI Engineer'},
         ])
         st.dataframe(file_dict, use_container_width=True, hide_index=True)
 

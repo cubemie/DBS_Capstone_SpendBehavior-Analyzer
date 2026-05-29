@@ -2,17 +2,16 @@
   "project": "BUDU - SpendBehavior Analyzer",
   "team": "CC26-PSU268",
   "currency": "IDR",
-  "usd_to_idr": 16000,
-  "data_mode": "dummy",
-  "n_transactions": 49501,
+  "data_source": "Dataset Dummy Indonesia (generated)",
+  "n_transactions": 49503,
   "n_users": 1000,
   "date_range": [
     "2023-01-01",
     "2024-12-30"
   ],
   "null_count": 1000,
-  "median_amount_idr": 210400,
-  "fraud_rate_pct": 0.996,
+  "median_amount_idr": 199300,
+  "fraud_rate_pct": 0.992,
   "n_categories": 17,
   "n_payment_methods": 8,
   "feature_cols": [
@@ -26,18 +25,13 @@
     "unique_categories",
     "spending_cov",
     "pendapatan_bulan",
-    "cat_makanan_&_minum_ratio",
     "cat_transportasi_ratio",
-    "cat_kesehatan_&_kec_ratio",
-    "cat_sembako_&_kebut_ratio",
     "cat_kesehatan_ratio",
     "cat_pendidikan_ratio",
     "cat_belanja_online_ratio",
-    "cat_pulsa_&_data_ratio",
-    "cat_hiburan_ratio",
-    "cat_fashion_&_pakai_ratio"
+    "cat_hiburan_ratio"
   ],
-  "n_features": 20,
+  "n_features": 15,
   "feature_version": "v3",
   "n_classes": 3,
   "class_labels": [
