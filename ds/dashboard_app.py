@@ -27,7 +27,7 @@ st.set_page_config(
 )
 
 # ==========================================
-# CUSTOM CSS
+# CUSTOM CSS  — ORANGE THEME
 # ==========================================
 st.markdown("""
 <style>
@@ -122,8 +122,8 @@ ANOMALY_STD_FACTOR   = 1.5
 SMALL_TXN_MULTIPLIER = 0.5
 FREQ_MONTH_THRESH    = 10
 IMPULSE_THRESHOLD    = 0.55
-PRIMARY, ACCENT, WARN = '#2563EB', '#10B981', '#EF4444'
-PALETTE = ['#2563EB','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#F97316','#06B6D4']
+PRIMARY, ACCENT, WARN = '#E89B7A', '#8BDFDD', '#EF4444'
+PALETTE = [ '#F48F68', '#8BDFDD', '#FFE394', '#F7B7A3', '#FFD6B8', '#A8E6E3', '#F6CFC2', '#E9C46A']
 
 np.random.seed(RANDOM_SEED)
 
@@ -253,7 +253,6 @@ def _try_load_csv():
         df_users = pd.read_csv(CSV_USERS)
         df_tx    = pd.read_csv(CSV_TX, parse_dates=['date'])
 
-        # Load pre-computed user profiles if available
         df_profiles = None
         if os.path.exists(CSV_PROFILES):
             df_profiles = pd.read_csv(CSV_PROFILES)
@@ -296,7 +295,6 @@ def load_data():
     if csv_result is not None:
         return csv_result
 
-    # ── Fallback: generate dummy ──────────────────────────────
     np.random.seed(RANDOM_SEED)
     N_USERS        = 1_000
     N_TRANSACTIONS = 50_000
@@ -425,10 +423,8 @@ def load_data():
 
 @st.cache_data(show_spinner="🔬 Menghitung user features & persona...")
 def build_user_features(_df_tx, _df_users, _df_profiles=None):
-    # If we have pre-computed profiles, use them and just merge user info
     if _df_profiles is not None:
         uf = _df_profiles.copy()
-        # Merge nama dari df_users jika ada
         if 'nama' in _df_users.columns and 'nama' not in uf.columns:
             uf = uf.merge(_df_users[['user_id', 'nama']], on='user_id', how='left')
         if 'pekerjaan' in _df_users.columns and 'pekerjaan' not in uf.columns:
@@ -446,7 +442,6 @@ def build_user_features(_df_tx, _df_users, _df_profiles=None):
         uf[num_cols] = uf[num_cols].fillna(0)
         return uf
 
-    # Compute from scratch
     df = _df_tx.copy()
     if 'above_avg' not in df.columns:
         df['above_avg'] = (df['amount'] > df['amount'].mean()).astype(int)
@@ -607,8 +602,16 @@ user_features['spending_persona'] = user_features['cluster'].map(cluster_persona
 # SIDEBAR
 # ==========================================
 with st.sidebar:
-    st.markdown("## 💸 BUDU")
-    st.markdown("**SpendBehavior Analyzer**")
+    st.markdown(
+        "<h2 style='text-align:center;font-family:Syne,sans-serif;font-weight:800;"
+        "font-size:1.7rem;color:#fff;margin-bottom:2px;'>BUDU</h2>",
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        "<p style='text-align:center;color:#fed7aa;font-size:0.9rem;"
+        "font-weight:500;margin-top:0;'>SpendBehavior Analyzer</p>",
+        unsafe_allow_html=True
+    )
     st.markdown("---")
     menu = st.radio("📌 Navigasi", [
         "🏠 Overview",
@@ -619,59 +622,146 @@ with st.sidebar:
         "📖 Data Dictionary",
     ])
     st.markdown("---")
-    
-    # ==========================================
-    # TEAM SECTION
-    # ==========================================
-    
+
     st.markdown("""
     <div style="
-        background: rgba(255,255,255,0.06);
-        padding: 16px;
-        border-radius: 14px;
-        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.10);
+        padding: 24px 20px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.15);
+        text-align: center;
+        backdrop-filter: blur(6px);
     ">
     
-    <h4 style="color:white; margin-bottom:6px;">
-    👥 Tim CC26-PSU268
-    </h4>
+    <h3 style="
+        color: white;
+        margin-bottom: 6px;
+        font-family: 'Sora', sans-serif;
+        font-size: 1.7rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    ">
+    Tim CC26-PSU268
+    </h3>
     
-    <p style="color:#cbd5e1; font-size:13px; margin-top:0;">
+    <p style="
+        color: #FFF6DE;
+        font-size: 13px;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-weight: 500;
+    ">
     Coding Camp 2026 · DBS Foundation
     </p>
     
-    <hr style="border:0.5px solid rgba(255,255,255,0.1)">
+    <hr style="
+        border: none;
+        border-top: 1px solid rgba(255,255,255,0.15);
+        margin: 18px 0 24px 0;
+    ">
     
-    <p style="color:white; font-size:14px; margin-bottom:6px;">
-    <b>🧠 Data Science</b>
+    <!-- DATA SCIENCE -->
+    <div style="margin-bottom: 22px;">
+    
+    <p style="
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        font-family: 'Sora', sans-serif;
+    ">
+    Data Science
     </p>
     
-    <ul style="color:#cbd5e1; font-size:13px;">
-    <li>Dwi Cahyawati</li>
-    <li>Mutia Saniya Rahma</li>
-    </ul>
-    
-    <p style="color:white; font-size:14px; margin-bottom:6px;">
-    <b>🤖 AI Engineer</b>
+    <p style="
+        color: #FFF6DE;
+        font-size: 14px;
+        margin: 4px 0;
+        font-weight: 500;
+    ">
+    Dwi Cahyawati
     </p>
     
-    <ul style="color:#cbd5e1; font-size:13px;">
-    <li>Aliya Shahira</li>
-    <li>Khalisha Rana Putri</li>
-    </ul>
-    
-    <p style="color:white; font-size:14px; margin-bottom:6px;">
-    <b>💻 Full-Stack Web Developer</b>
+    <p style="
+        color: #FFF6DE;
+        font-size: 14px;
+        margin: 4px 0;
+        font-weight: 500;
+    ">
+    Mutia Saniya Rahma
     </p>
     
-    <ul style="color:#cbd5e1; font-size:13px;">
-    <li>Hamzah Hudzairah</li>
-    <li>Berton Adiwidya Wibowo</li>
-    </ul>
+    </div>
+    
+    <!-- AI ENGINEER -->
+    <div style="margin-bottom: 22px;">
+    
+    <p style="
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        font-family: 'Sora', sans-serif;
+    ">
+    AI Engineer
+    </p>
+    
+    <p style="
+        color: #FFF6DE;
+        font-size: 14px;
+        margin: 4px 0;
+        font-weight: 500;
+    ">
+    Aliya Shahira
+    </p>
+    
+    <p style="
+        color: #FFF6DE;
+        font-size: 14px;
+        margin: 4px 0;
+        font-weight: 500;
+    ">
+    Khalisha Rana Putri
+    </p>
+    
+    </div>
+    
+    <!-- FULLSTACK -->
+    <div>
+    
+    <p style="
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        font-family: 'Sora', sans-serif;
+    ">
+    Full-Stack Web Dev
+    </p>
+    
+    <p style="
+        color: #FFF6DE;
+        font-size: 14px;
+        margin: 4px 0;
+        font-weight: 500;
+    ">
+    Hamzah Hudzairah
+    </p>
+    
+    <p style="
+        color: #FFF6DE;
+        font-size: 14px;
+        margin: 4px 0;
+        font-weight: 500;
+    ">
+    Berton Adiwidya Wibowo
+    </p>
+    
+    </div>
     
     </div>
     """, unsafe_allow_html=True)
-    
+
     st.markdown("---")
     st.caption(f"Dataset: {len(df_users):,} user · {len(df_tx):,} transaksi")
     st.caption(f"Periode: {df_tx['date'].min().strftime('%b %Y')} – {df_tx['date'].max().strftime('%b %Y')}")
@@ -691,7 +781,6 @@ if 'segmen' in df_tx.columns:
 else:
     df_f = df_tx.copy()
 
-# Normalisasi kolom segmen untuk kompatibilitas dataset yang berbeda
 seg_col_uf = 'segmen' if 'segmen' in user_features.columns else ('segmen_label' if 'segmen_label' in user_features.columns else None)
 
 if seg_col_uf is not None:
@@ -765,7 +854,7 @@ if menu == "🏠 Overview":
                           color='Tier', color_discrete_sequence=PALETTE, text_auto=True)
         fig_tier.update_layout(showlegend=False, height=320,
                                plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
-                               yaxis=dict(showgrid=True, gridcolor='#f1f5f9'))
+                               yaxis=dict(showgrid=True, gridcolor='#ffedd5'))
         st.plotly_chart(fig_tier, use_container_width=True)
 
     st.markdown("---")
@@ -773,14 +862,14 @@ if menu == "🏠 Overview":
     cat_spend = df_f.groupby('category')['amount'].sum().sort_values(ascending=False).reset_index()
     cat_spend['amount_M'] = cat_spend['amount'] / 1e6
     fig_cat = px.bar(cat_spend, x='category', y='amount_M',
-                     color='amount_M', color_continuous_scale='Blues',
+                     color='amount_M', color_continuous_scale='Oranges',
                      text=cat_spend['amount_M'].apply(lambda x: f'Rp {x:.1f}M'),
                      labels={'amount_M': 'Total (Juta IDR)', 'category': 'Kategori'})
     fig_cat.update_traces(textposition='outside')
     fig_cat.update_layout(coloraxis_showscale=False, showlegend=False, height=380,
                           plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
                           xaxis_tickangle=-30,
-                          yaxis=dict(showgrid=True, gridcolor='#f1f5f9'))
+                          yaxis=dict(showgrid=True, gridcolor='#ffedd5'))
     st.plotly_chart(fig_cat, use_container_width=True)
 
     col_c, col_d = st.columns(2)
@@ -795,7 +884,7 @@ if menu == "🏠 Overview":
         fig_mon.update_traces(line=dict(width=3))
         fig_mon.update_layout(height=300, plot_bgcolor='rgba(0,0,0,0)',
                               paper_bgcolor='rgba(0,0,0,0)',
-                              yaxis=dict(showgrid=True, gridcolor='#f1f5f9'))
+                              yaxis=dict(showgrid=True, gridcolor='#ffedd5'))
         st.plotly_chart(fig_mon, use_container_width=True)
 
     with col_d:
@@ -813,11 +902,17 @@ if menu == "🏠 Overview":
 # ==========================================
 elif menu == "📊 EDA & Business Questions":
     st.subheader("🔍 6 Business Questions SMART")
-    tabs = st.tabs(["Q1 Money Leak","Q2 Weekend Pattern","Q3 Monthly Anomaly",
-                    "Q4 Silent Drain","Q5 Payment Spearman","Q6 Impulsive Profile"])
+    tabs = st.tabs([
+        "💰  Q1 · Money Leak",
+        "📅  Q2 · Weekend Pattern",
+        "📈  Q3 · Monthly Anomaly",
+        "🚰  Q4 · Silent Drain",
+        "💳  Q5 · Payment Spearman",
+        "⚡  Q6 · Impulsive Profile",
+    ])
 
     with tabs[0]:
-        st.markdown("#### 💰 Q1: Kategori mana yang menyumbang ≥30% total pengeluaran?")
+        st.markdown("#### Q1: Kategori mana yang menyumbang ≥30% total pengeluaran?")
         st.markdown('<div class="insight-box">📌 Tujuan: Identifikasi kategori utama penyumbang spending untuk fitur <b>Money Leak Warning</b> BUDU.</div>', unsafe_allow_html=True)
         cat_spend = df_f.groupby('category')['amount'].sum().sort_values(ascending=False).reset_index()
         cat_spend['pct']            = cat_spend['amount'] / cat_spend['amount'].sum() * 100
@@ -832,7 +927,7 @@ elif menu == "📊 EDA & Business Questions":
             fig_q1.add_trace(go.Scatter(x=top_cats['category'], y=top_cats['cumulative_pct'],
                                         name='Kumulatif %', line=dict(color='#ef4444', width=2.5), mode='lines+markers'), secondary_y=True)
             fig_q1.update_layout(height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
-                                 xaxis_tickangle=-25, yaxis=dict(title='Proporsi (%)', showgrid=True, gridcolor='#f1f5f9'),
+                                 xaxis_tickangle=-25, yaxis=dict(title='Proporsi (%)', showgrid=True, gridcolor='#ffedd5'),
                                  yaxis2=dict(title='Kumulatif (%)'))
             st.plotly_chart(fig_q1, use_container_width=True)
         with col2:
@@ -846,7 +941,7 @@ elif menu == "📊 EDA & Business Questions":
             st.markdown(f'<div class="warn-box">⚠️ 2 kategori teratas menyumbang <b>{top2_pct:.1f}%</b> total spending.</div>', unsafe_allow_html=True)
 
     with tabs[1]:
-        st.markdown("#### 📅 Q2: Apakah rata-rata transaksi weekend ≥20% lebih tinggi dari weekday?")
+        st.markdown("#### Q2: Apakah rata-rata transaksi weekend ≥20% lebih tinggi dari weekday?")
         wknd = df_f.groupby('is_weekend')['amount'].agg(['mean','median','count','sum']).reset_index()
         wknd['label'] = wknd['is_weekend'].map({0:'Weekday', 1:'Weekend'})
         avg_wknd = wknd.loc[wknd['is_weekend']==1,'mean'].values[0]
@@ -855,7 +950,7 @@ elif menu == "📊 EDA & Business Questions":
         col1, col2 = st.columns(2)
         with col1:
             fig_wk = px.bar(wknd, x='label', y='mean', color='label',
-                            color_discrete_map={'Weekday':'#94a3b8','Weekend':PRIMARY},
+                            color_discrete_map={'Weekday':'#fed7aa','Weekend':PRIMARY},
                             text=wknd['mean'].apply(lambda x: f'Rp {x:,.0f}'),
                             labels={'mean':'Rata-rata (IDR)','label':''})
             fig_wk.update_traces(textposition='outside')
@@ -865,7 +960,7 @@ elif menu == "📊 EDA & Business Questions":
             sample_q2 = df_f.sample(min(5000, len(df_f)), random_state=42).copy()
             sample_q2['Tipe Hari'] = sample_q2['is_weekend'].map({0:'Weekday',1:'Weekend'})
             fig_box = px.violin(sample_q2, x='Tipe Hari', y='amount', color='Tipe Hari',
-                                color_discrete_map={'Weekday':'#94a3b8','Weekend':PRIMARY},
+                                color_discrete_map={'Weekday':'#fed7aa','Weekend':PRIMARY},
                                 box=True, labels={'Tipe Hari':'','amount':'Amount (IDR)'})
             fig_box.update_layout(showlegend=False, height=320, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_box, use_container_width=True)
@@ -877,7 +972,7 @@ elif menu == "📊 EDA & Business Questions":
             st.markdown(f'<div class="warn-box">⚠️ Weekend <b>{diff_pct:.1f}%</b> lebih tinggi. BUDU aktifkan notifikasi Jumat malam.</div>', unsafe_allow_html=True)
 
     with tabs[2]:
-        st.markdown("#### 📈 Q3: Bulan apa total pengeluaran melebihi mean + 1.5×SD?")
+        st.markdown("#### Q3: Bulan apa total pengeluaran melebihi mean + 1.5×SD?")
         monthly = df_f.groupby('month')['amount'].agg(total='sum', count='count', avg='mean').reset_index()
         thr      = monthly['total'].mean() + ANOMALY_STD_FACTOR * monthly['total'].std()
         monthly['anomaly'] = monthly['total'] > thr
@@ -895,7 +990,7 @@ elif menu == "📊 EDA & Business Questions":
                                    yaxis_title='Juta IDR', plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_line, use_container_width=True)
         with col2:
-            monthly['color'] = monthly['anomaly'].map({True: WARN, False: '#93C5FD'})
+            monthly['color'] = monthly['anomaly'].map({True: WARN, False: '#FB923C'})
             fig_bar = px.bar(monthly, x='month', y='count', color='color', color_discrete_map='identity', text='count')
             fig_bar.update_layout(height=360, showlegend=False,
                                   xaxis=dict(tickmode='array', tickvals=list(range(1,13)), ticktext=M_LBL),
@@ -906,7 +1001,7 @@ elif menu == "📊 EDA & Business Questions":
             st.markdown(f'<div class="warn-box">⚠️ Bulan anomali: <b>{", ".join(anom_names)}</b> | Threshold: Rp {thr/1e6:.1f} juta/bulan</div>', unsafe_allow_html=True)
 
     with tabs[3]:
-        st.markdown("#### 🚰 Q4: Kategori mana yang bocor diam-diam (transaksi kecil, frekuensi tinggi)?")
+        st.markdown("#### Q4: Kategori mana yang bocor diam-diam (transaksi kecil, frekuensi tinggi)?")
         median_amt = df_f['amount'].median()
         small_lim  = median_amt * SMALL_TXN_MULTIPLIER
         df_small   = df_f[df_f['amount'] <= small_lim]
@@ -919,7 +1014,7 @@ elif menu == "📊 EDA & Business Questions":
         col1, col2 = st.columns(2)
         with col1:
             fig_leak1 = px.bar(display_leak.head(10), x='total_idr', y='category', orientation='h',
-                               color='total_idr', color_continuous_scale='YlOrRd',
+                               color='total_idr', color_continuous_scale='Oranges',
                                text=display_leak.head(10)['total_idr'].apply(lambda x: f'Rp {x/1e6:.1f}M'),
                                labels={'total_idr':'Akumulasi (IDR)','category':''})
             fig_leak1.update_traces(textposition='outside')
@@ -935,7 +1030,7 @@ elif menu == "📊 EDA & Business Questions":
         st.markdown(f'<div class="warn-box">⚠️ Batas transaksi "kecil": ≤ Rp {small_lim:,.0f} | Total bocor: <b>Rp {df_small["amount"].sum()/1e9:.2f}M IDR</b></div>', unsafe_allow_html=True)
 
     with tabs[4]:
-        st.markdown("#### 💳 Q5: Apakah metode pembayaran berkorelasi dengan nilai transaksi? (Spearman ρ ≥ 0.3)")
+        st.markdown("#### Q5: Apakah metode pembayaran berkorelasi dengan nilai transaksi? (Spearman ρ ≥ 0.3)")
         pay = (df_f.groupby('payment_method')['amount']
                .agg(total='sum', count='count', avg='mean')
                .sort_values('total', ascending=False).reset_index())
@@ -964,7 +1059,7 @@ elif menu == "📊 EDA & Business Questions":
             st.markdown(f'<div class="warn-box">ℹ️ Korelasi lemah (ρ = {rho:.2f} < 0.3).</div>', unsafe_allow_html=True)
 
     with tabs[5]:
-        st.markdown(f"#### ⚡ Q6: Berapa proporsi user dengan impulse_score ≥ {IMPULSE_THRESHOLD}?")
+        st.markdown(f"#### Q6: Berapa proporsi user dengan impulse_score ≥ {IMPULSE_THRESHOLD}?")
         n_imp  = (uf_f['impulse_score'] >= IMPULSE_THRESHOLD).sum()
         n_tot  = len(uf_f)
         st.markdown(f'<div class="warn-box">📌 Q6 Answer: <b>{n_imp}/{n_tot} pengguna = {n_imp/n_tot*100:.1f}%</b> Impulsive Spender</div>', unsafe_allow_html=True)
@@ -993,48 +1088,24 @@ elif menu == "📊 EDA & Business Questions":
             st.warning("Kolom segmen/segmen_label tidak tersedia untuk plot Q6.")
         else:
             category_order_q6 = ['E','D','C','B','A'] if seg_col_q6 == 'segmen' else None
-
             fig_imp = px.box(
-                uf_f,
-                x=seg_col_q6,
-                y='impulse_score',
-                color='spending_persona',
+                uf_f, x=seg_col_q6, y='impulse_score', color='spending_persona',
                 color_discrete_map=PERSONA_COLORS,
-                labels={
-                    seg_col_q6: 'Segmen',
-                    'impulse_score': 'Impulse Score'
-                },
-                category_orders={
-                    seg_col_q6: category_order_q6
-                } if category_order_q6 is not None else None,
+                labels={seg_col_q6: 'Segmen', 'impulse_score': 'Impulse Score'},
+                category_orders={seg_col_q6: category_order_q6} if category_order_q6 is not None else None,
             )
-
-            fig_imp.add_hline(
-                y=IMPULSE_THRESHOLD,
-                line_dash='dash',
-                line_color=WARN,
-                annotation_text=f'Threshold Impulsive ({IMPULSE_THRESHOLD})'
-            )
-
-            fig_imp.add_hline(
-                y=0.30,
-                line_dash='dot',
-                line_color='#f59e0b',
-                annotation_text='Threshold Emotional (0.30)'
-            )
-
-            fig_imp.update_layout(
-                height=380,
-                plot_bgcolor='rgba(0,0,0,0)',
-                paper_bgcolor='rgba(0,0,0,0)'
-            )
-
+            fig_imp.add_hline(y=IMPULSE_THRESHOLD, line_dash='dash', line_color=WARN,
+                              annotation_text=f'Threshold Impulsive ({IMPULSE_THRESHOLD})')
+            fig_imp.add_hline(y=0.30, line_dash='dot', line_color='#f59e0b',
+                              annotation_text='Threshold Emotional (0.30)')
+            fig_imp.update_layout(height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_imp, use_container_width=True)
+
 # ==========================================
 # ██  A/B TESTING  ██
 # ==========================================
 elif menu == "🧪 A/B Testing":
-    st.subheader("🧪 A/B Test: Weekend vs Weekday Spending")
+    st.subheader("A/B Test: Weekend vs Weekday Spending")
     st.markdown("Menggunakan **Mann-Whitney U Test** (non-parametric). H0: tidak ada perbedaan. H1: pengeluaran weekend ≥20% lebih tinggi.")
 
     grp_w = df_f[df_f['is_weekend'] == 1]['amount']
@@ -1062,7 +1133,7 @@ elif menu == "🧪 A/B Testing":
         sample_ab = df_f.sample(min(8000, len(df_f)), random_state=42).copy()
         sample_ab['Tipe Hari'] = sample_ab['is_weekend'].map({0:'Weekday', 1:'Weekend'})
         fig_vln = px.violin(sample_ab, x='Tipe Hari', y='amount', color='Tipe Hari',
-                            color_discrete_map={'Weekday':'#94a3b8','Weekend':PRIMARY},
+                            color_discrete_map={'Weekday':'#fed7aa','Weekend':PRIMARY},
                             box=True, labels={'amount':'Amount (IDR)','Tipe Hari':''})
         fig_vln.update_layout(showlegend=False, height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
         st.plotly_chart(fig_vln, use_container_width=True)
@@ -1072,19 +1143,19 @@ elif menu == "🧪 A/B Testing":
         daily['day']        = daily['day_of_week'].map(dict(enumerate(day_names)))
         daily['is_weekend'] = daily['day_of_week'].isin([5, 6])
         fig_daily = px.bar(daily, x='day', y='amount', color='is_weekend',
-                           color_discrete_map={False:'#94a3b8', True:PRIMARY},
+                           color_discrete_map={False:'#fed7aa', True:PRIMARY},
                            text=daily['amount'].apply(lambda x: f'Rp {x/1000:.0f}K'),
                            labels={'amount':'Avg Amount (IDR)','day':'Hari'})
         fig_daily.update_traces(textposition='outside')
         fig_daily.update_layout(showlegend=False, height=380, plot_bgcolor='rgba(0,0,0,0)',
-                                paper_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f1f5f9'))
+                                paper_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#ffedd5'))
         st.plotly_chart(fig_daily, use_container_width=True)
 
     if 'segmen' in df_f.columns:
         seg_ab = df_f.groupby(['segmen','is_weekend'])['amount'].mean().reset_index()
         seg_ab['Tipe Hari'] = seg_ab['is_weekend'].map({0:'Weekday',1:'Weekend'})
         fig_sab = px.bar(seg_ab, x='segmen', y='amount', color='Tipe Hari', barmode='group',
-                         color_discrete_map={'Weekday':'#94a3b8','Weekend':PRIMARY},
+                         color_discrete_map={'Weekday':'#fed7aa','Weekend':PRIMARY},
                          labels={'amount':'Avg Amount (IDR)','segmen':'Segmen'},
                          category_orders={'segmen':['E','D','C','B','A']},
                          text=seg_ab['amount'].apply(lambda x: f'Rp {x/1000:.0f}K'))
@@ -1097,7 +1168,7 @@ elif menu == "🧪 A/B Testing":
 # ██  CLUSTERING & PERSONA  ██
 # ==========================================
 elif menu == "👥 Clustering & Persona":
-    st.subheader("👥 Spending Persona — K-Means Clustering")
+    st.subheader("Spending Persona — K-Means Clustering")
     st.markdown("Replikasi Cell 22–23 notebook: Elbow Method + Silhouette + PCA Visualization. K final = 3.")
 
     persona_desc = {
@@ -1116,11 +1187,11 @@ elif menu == "👥 Clustering & Persona":
             st.markdown(f"""
             <div class="persona-card" style="background:{clr}15;border-left:5px solid {clr}">
                 <div style="font-size:1.8rem">{PERSONA_ICONS[name]}</div>
-                <div style="font-size:1rem;font-weight:700;color:{clr}">{name}</div>
-                <div style="font-size:2rem;font-weight:800;color:#0f172a">{cnt}</div>
-                <div style="color:#64748b;font-size:0.85rem">{pct:.1f}% dari {total_uf} user</div>
+                <div style="font-size:1rem;font-weight:700;color:{clr};font-family:'Syne',sans-serif">{name}</div>
+                <div style="font-size:2rem;font-weight:800;color:#0f172a;font-family:'Syne',sans-serif">{cnt}</div>
+                <div style="color:#92400e;font-size:0.85rem">{pct:.1f}% dari {total_uf} user</div>
                 <hr style="border-color:{clr}30;margin:8px 0"/>
-                <div style="font-size:0.82rem;color:#475569">{persona_desc[name]}</div>
+                <div style="font-size:0.82rem;color:#78350f">{persona_desc[name]}</div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -1148,7 +1219,6 @@ elif menu == "👥 Clustering & Persona":
     pca_df['Persona'] = user_features['spending_persona']
     pca_df['Impulse'] = user_features['impulse_score']
     if 'segmen' in user_features.columns:
-        # compat: user_features bisa punya kolom segmen atau segmen_label
         seg_col = 'segmen' if 'segmen' in user_features.columns else ('segmen_label' if 'segmen_label' in user_features.columns else None)
         if seg_col is not None:
             pca_df['Segmen'] = user_features[seg_col]
@@ -1196,20 +1266,17 @@ elif menu == "👥 Clustering & Persona":
 
 
 # ==========================================
-# ██  USER DEEP DIVE  ██ (BARU)
+# ██  USER DEEP DIVE  ██
 # ==========================================
 elif menu == "🔎 User Deep Dive":
-    st.subheader("🔎 User Deep Dive — Analisis Per Pengguna")
+    st.subheader("User Deep Dive — Analisis Per Pengguna")
     st.markdown("Pilih satu pengguna untuk melihat profil lengkap: demografi, pola spending, kategori favorit, tren waktu, dan persona spending mereka.")
 
-    # ── FILTER USER ───────────────────────────────────────────
     col_filter1, col_filter2, col_filter3 = st.columns([2, 2, 1])
 
     with col_filter1:
-        # Cari berdasarkan nama atau user_id
         has_nama = 'nama' in df_users.columns
         if has_nama:
-            # Buat label gabungan untuk dropdown
             df_users_sorted = df_users.sort_values('user_id').copy()
             df_users_sorted['label'] = df_users_sorted['user_id'] + ' — ' + df_users_sorted['nama']
             user_label_map  = dict(zip(df_users_sorted['label'], df_users_sorted['user_id']))
@@ -1231,7 +1298,6 @@ elif menu == "🔎 User Deep Dive":
             selected_uid = st.selectbox("Pilih User ID", options=all_uids)
 
     with col_filter2:
-        # Filter rentang tanggal
         date_min = df_tx['date'].min().date()
         date_max = df_tx['date'].max().date()
         date_range_sel = st.date_input(
@@ -1249,7 +1315,6 @@ elif menu == "🔎 User Deep Dive":
         st.markdown("####")
         show_raw = st.toggle("Tampilkan tabel transaksi", value=False)
 
-    # ── DATA USER TERPILIH ────────────────────────────────────
     u_tx = df_tx[
         (df_tx['user_id'] == selected_uid) &
         (df_tx['date'].dt.date >= d_start) &
@@ -1299,7 +1364,6 @@ elif menu == "🔎 User Deep Dive":
     p_color = PERSONA_COLORS.get(persona, '#94a3b8')
     p_icon  = PERSONA_ICONS.get(persona, '⚪')
 
-    # ── KARTU PROFIL PENGGUNA ─────────────────────────────────
     st.markdown("---")
     col_card, col_stats = st.columns([1, 2])
 
@@ -1317,8 +1381,8 @@ elif menu == "🔎 User Deep Dive":
         st.markdown(f"""
         <div class="user-profile-card">
             <div style="font-size:2.5rem;margin-bottom:8px">{gender_icon}</div>
-            <div style="font-size:1.3rem;font-weight:800;color:#1e3a8a">{nama_val}</div>
-            <div style="color:#64748b;font-size:0.88rem;margin-bottom:12px">{selected_uid}</div>
+            <div style="font-size:1.3rem;font-weight:800;color:#9a3412;font-family:'Syne',sans-serif">{nama_val}</div>
+            <div style="color:#92400e;font-size:0.88rem;margin-bottom:12px">{selected_uid}</div>
             <div style="margin-bottom:8px">
                 <span class="user-stat-badge">🎂 {usia_val} tahun</span>
                 <span class="user-stat-badge">⚥ {gender_val}</span>
@@ -1335,10 +1399,10 @@ elif menu == "🔎 User Deep Dive":
             </div>
             <div style="background:{p_color}18;border-radius:10px;padding:10px;text-align:center;border:1.5px solid {p_color}40">
                 <div style="font-size:1.5rem">{p_icon}</div>
-                <div style="font-weight:700;color:{p_color};font-size:0.95rem">{persona}</div>
-                <div style="color:#64748b;font-size:0.8rem">Impulse Score: {impulse:.4f}</div>
+                <div style="font-weight:700;color:{p_color};font-size:0.95rem;font-family:'Syne',sans-serif">{persona}</div>
+                <div style="color:#92400e;font-size:0.8rem">Impulse Score: {impulse:.4f}</div>
             </div>
-            <div style="margin-top:12px;color:#475569;font-size:0.85rem">
+            <div style="margin-top:12px;color:#78350f;font-size:0.85rem">
                 💰 Pendapatan: <b>Rp {income_val:,.0f}/bln</b>
             </div>
         </div>
@@ -1365,7 +1429,6 @@ elif menu == "🔎 User Deep Dive":
         r2c2.metric("📅 Transaksi Weekend", f"{weekend_pct:.1f}%",            "Sabtu & Minggu")
         r2c3.metric("📈 Spending Ratio",   f"{spend_ratio:.1f}%",            "dari pendapatan (24 bln)")
 
-        # BUDU Smart Warning Recommendation
         if persona == 'Impulsive Spender':
             st.markdown(f'<div class="danger-box">🔴 <b>Smart Warning: AKTIF</b> — Pengguna ini Impulsive Spender. BUDU kirim notifikasi Jumat malam & weekend spending cap.</div>', unsafe_allow_html=True)
         elif persona == 'Emotional Spender':
@@ -1373,20 +1436,17 @@ elif menu == "🔎 User Deep Dive":
         else:
             st.markdown(f'<div class="success-box">🟢 <b>Smart Warning: RENDAH</b> — Pengguna ini Rational Spender. BUDU kirim insight dan tips investasi bulanan.</div>', unsafe_allow_html=True)
 
-    # ── TABS ANALISIS ─────────────────────────────────────────
     st.markdown("---")
     tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "📊 Kategori & Spending",
-        "📅 Pola Waktu",
-        "💳 Metode Pembayaran",
-        "📈 Tren Bulanan",
-        "🆚 Perbandingan Segmen",
+        "📊  Kategori & Spending",
+        "📅  Pola Waktu",
+        "💳  Metode Pembayaran",
+        "📈  Tren Bulanan",
+        "🆚  Perbandingan Segmen",
     ])
 
-    # ── TAB 1: Kategori & Spending ─────────────────────────
     with tab1:
         col1, col2 = st.columns(2)
-
         with col1:
             st.markdown("#### 🏷️ Distribusi Pengeluaran per Kategori")
             cat_user = u_tx.groupby('category')['amount'].agg(total='sum', count='count', avg='mean').reset_index()
@@ -1398,11 +1458,10 @@ elif menu == "🔎 User Deep Dive":
             fig_cu.update_traces(textposition='outside', textinfo='percent+label')
             fig_cu.update_layout(height=380, margin=dict(t=40,b=10))
             st.plotly_chart(fig_cu, use_container_width=True)
-
         with col2:
             st.markdown("#### 💸 Total & Rata-rata per Kategori (IDR)")
             fig_cb = px.bar(cat_user, x='total', y='category', orientation='h',
-                            color='total', color_continuous_scale='Blues',
+                            color='total', color_continuous_scale='Oranges',
                             text=cat_user['total'].apply(lambda x: f'Rp {x/1e3:.0f}K'),
                             labels={'total':'Total (IDR)','category':'Kategori'})
             fig_cb.update_traces(textposition='outside')
@@ -1411,20 +1470,6 @@ elif menu == "🔎 User Deep Dive":
                                  yaxis={'categoryorder': 'total ascending'})
             st.plotly_chart(fig_cb, use_container_width=True)
 
-        # Sub-kategori detail
-        if 'sub_category' in u_tx.columns:
-            st.markdown("#### 🛍️ Top Sub-Kategori / Merchant")
-            sub_cat = u_tx.groupby('sub_category')['amount'].agg(total='sum', count='count').sort_values('total', ascending=False).head(15).reset_index()
-            fig_sub = px.bar(sub_cat, x='sub_category', y='total',
-                             color='total', color_continuous_scale='Purples',
-                             text=sub_cat['total'].apply(lambda x: f'Rp {x/1e3:.0f}K'),
-                             labels={'total':'Total (IDR)','sub_category':'Merchant'})
-            fig_sub.update_traces(textposition='outside')
-            fig_sub.update_layout(coloraxis_showscale=False, height=350, xaxis_tickangle=-30,
-                                  plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
-            st.plotly_chart(fig_sub, use_container_width=True)
-
-        # Distribusi nilai transaksi
         st.markdown("#### 📊 Distribusi Nilai Transaksi")
         col_d1, col_d2 = st.columns(2)
         with col_d1:
@@ -1438,16 +1483,11 @@ elif menu == "🔎 User Deep Dive":
             fig_hist.update_layout(height=300, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_hist, use_container_width=True)
         with col_d2:
-            if 'amount_idr_bucket' in u_tx.columns:
-                bucket_order = ['<50k','50k-200k','200k-500k','500k-1jt','>1jt']
-                bucket_count = u_tx['amount_idr_bucket'].value_counts().reindex(bucket_order, fill_value=0).reset_index()
-                bucket_count.columns = ['Bucket','Count']
-            else:
-                bins_idr = [0, 50_000, 200_000, 500_000, 1_000_000, float('inf')]
-                lbl_idr  = ['<50k','50k-200k','200k-500k','500k-1jt','>1jt']
-                u_tx['_bucket'] = pd.cut(u_tx['amount'], bins=bins_idr, labels=lbl_idr)
-                bucket_count = u_tx['_bucket'].value_counts().reindex(lbl_idr, fill_value=0).reset_index()
-                bucket_count.columns = ['Bucket','Count']
+            bins_idr = [0, 50_000, 200_000, 500_000, 1_000_000, float('inf')]
+            lbl_idr  = ['<50k','50k-200k','200k-500k','500k-1jt','>1jt']
+            u_tx['_bucket'] = pd.cut(u_tx['amount'], bins=bins_idr, labels=lbl_idr)
+            bucket_count = u_tx['_bucket'].value_counts().reindex(lbl_idr, fill_value=0).reset_index()
+            bucket_count.columns = ['Bucket','Count']
             fig_bk = px.bar(bucket_count, x='Bucket', y='Count',
                             color='Bucket', color_discrete_sequence=PALETTE, text='Count')
             fig_bk.update_traces(textposition='outside')
@@ -1455,16 +1495,14 @@ elif menu == "🔎 User Deep Dive":
                                  plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_bk, use_container_width=True)
 
-    # ── TAB 2: Pola Waktu ─────────────────────────────────────
     with tab2:
         col1, col2 = st.columns(2)
-
         with col1:
             st.markdown("#### 🕐 Pola Spending per Jam")
             hourly_user = u_tx.groupby('hour')['amount'].agg(total='sum', count='count', avg='mean').reset_index()
             fig_hr = go.Figure()
             fig_hr.add_trace(go.Bar(x=hourly_user['hour'], y=hourly_user['count'],
-                                    name='Frekuensi', marker_color='#93C5FD', yaxis='y'))
+                                    name='Frekuensi', marker_color='#FB923C', yaxis='y'))
             fig_hr.add_trace(go.Scatter(x=hourly_user['hour'], y=hourly_user['avg']/1e3,
                                         name='Avg Amount (ribu IDR)', line=dict(color=WARN, width=2.5),
                                         mode='lines+markers', yaxis='y2'))
@@ -1472,12 +1510,11 @@ elif menu == "🔎 User Deep Dive":
                              annotation_text="Malam", annotation_position="top left")
             fig_hr.update_layout(
                 height=350, xaxis=dict(title='Jam', tickmode='linear', dtick=2),
-                yaxis=dict(title='Jumlah Transaksi', showgrid=True, gridcolor='#f1f5f9'),
+                yaxis=dict(title='Jumlah Transaksi', showgrid=True, gridcolor='#ffedd5'),
                 yaxis2=dict(title='Avg Amount (ribu IDR)', overlaying='y', side='right'),
                 legend=dict(orientation='h', y=-0.2),
                 plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_hr, use_container_width=True)
-
         with col2:
             st.markdown("#### 📅 Pola Spending per Hari")
             day_names = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu']
@@ -1486,7 +1523,7 @@ elif menu == "🔎 User Deep Dive":
             daily_user['is_wknd']  = daily_user['day_of_week'].isin([5, 6])
             fig_dw = px.bar(daily_user, x='day_name', y='avg',
                             color='is_wknd',
-                            color_discrete_map={False:'#93C5FD', True:WARN},
+                            color_discrete_map={False:'#FB923C', True:WARN},
                             text=daily_user['avg'].apply(lambda x: f'Rp {x/1e3:.0f}K'),
                             labels={'avg':'Avg Amount (IDR)','day_name':'Hari'},
                             category_orders={'day_name': day_names})
@@ -1495,18 +1532,15 @@ elif menu == "🔎 User Deep Dive":
                                  plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_dw, use_container_width=True)
 
-        # Heatmap jam × kategori
         st.markdown("#### 🗺️ Heatmap: Jam × Kategori")
         top_cats_u = u_tx.groupby('category')['amount'].sum().nlargest(6).index
         hm_data = u_tx[u_tx['category'].isin(top_cats_u)].groupby(['hour','category'])['amount'].sum().unstack(fill_value=0)
         if not hm_data.empty:
-            fig_hm = px.imshow(hm_data.T / 1e3, color_continuous_scale='Blues',
-                               labels=dict(x='Jam', y='Kategori', color='Ribu IDR'),
-                               aspect='auto')
+            fig_hm = px.imshow(hm_data.T / 1e3, color_continuous_scale='Oranges',
+                               labels=dict(x='Jam', y='Kategori', color='Ribu IDR'), aspect='auto')
             fig_hm.update_layout(height=320, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_hm, use_container_width=True)
 
-        # Weekend vs Weekday perbandingan user ini
         st.markdown("#### 🏖️ Weekend vs Weekday — User Ini")
         col_w1, col_w2, col_w3 = st.columns(3)
         wknd_u = u_tx[u_tx['is_weekend'] == 1]['amount']
@@ -1518,20 +1552,16 @@ elif menu == "🔎 User Deep Dive":
             col_w3.metric("Selisih", f"{diff_u:.1f}%",
                           "⬆️ Impulsif di weekend" if diff_u > 20 else "Normal")
 
-    # ── TAB 3: Metode Pembayaran ──────────────────────────────
     with tab3:
         col1, col2 = st.columns(2)
-
         with col1:
             st.markdown("#### 💳 Frekuensi per Metode Pembayaran")
             pay_user = u_tx.groupby('payment_method')['amount'].agg(total='sum', count='count', avg='mean').sort_values('total', ascending=False).reset_index()
             fig_pay_u = px.pie(pay_user, names='payment_method', values='count',
-                               color_discrete_sequence=PALETTE, hole=0.4,
-                               title='Frekuensi per Metode')
+                               color_discrete_sequence=PALETTE, hole=0.4, title='Frekuensi per Metode')
             fig_pay_u.update_traces(textposition='outside', textinfo='percent+label')
             fig_pay_u.update_layout(height=360, margin=dict(t=40,b=10))
             st.plotly_chart(fig_pay_u, use_container_width=True)
-
         with col2:
             st.markdown("#### 💰 Total Spending per Metode Pembayaran")
             fig_pay_b = px.bar(pay_user, x='payment_method', y='total',
@@ -1543,54 +1573,46 @@ elif menu == "🔎 User Deep Dive":
                                     plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_pay_b, use_container_width=True)
 
-        # Avg per metode
         st.markdown("#### 📊 Rata-rata Nilai Transaksi per Metode")
         pay_sorted = pay_user.sort_values('avg', ascending=True)
         fig_pay_avg = px.bar(pay_sorted, x='avg', y='payment_method', orientation='h',
-                             color='avg', color_continuous_scale='Greens',
+                             color='avg', color_continuous_scale='Oranges',
                              text=pay_sorted['avg'].apply(lambda x: f'Rp {x:,.0f}'),
                              labels={'avg':'Rata-rata (IDR)','payment_method':'Metode'})
         fig_pay_avg.update_traces(textposition='outside')
         fig_pay_avg.update_layout(coloraxis_showscale=False, height=300,
                                   plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
         st.plotly_chart(fig_pay_avg, use_container_width=True)
-
         dom_pay = pay_user.sort_values('total', ascending=False)['payment_method'].values[0]
         st.markdown(f'<div class="insight-box">💳 Metode pembayaran dominan <b>{nama_val}</b>: <b>{dom_pay}</b> (berdasarkan total spending)</div>', unsafe_allow_html=True)
 
-    # ── TAB 4: Tren Bulanan ───────────────────────────────────
     with tab4:
         col1, col2 = st.columns(2)
-
         with col1:
             st.markdown("#### 📈 Tren Spending Bulanan")
             monthly_u = u_tx.groupby('month')['amount'].agg(total='sum', count='count', avg='mean').reset_index().sort_values('month')
             monthly_u['month_name'] = monthly_u['month'].apply(lambda m: M_LBL[m-1])
-
-            # Anomali user
             if len(monthly_u) > 2:
                 thr_u = monthly_u['total'].mean() + ANOMALY_STD_FACTOR * monthly_u['total'].std()
                 monthly_u['anomaly'] = monthly_u['total'] > thr_u
             else:
                 monthly_u['anomaly'] = False
                 thr_u = monthly_u['total'].max()
-
             fig_mu = go.Figure()
             fig_mu.add_trace(go.Bar(x=monthly_u['month_name'], y=monthly_u['total']/1e3,
                                     name='Total (ribu IDR)',
-                                    marker_color=[WARN if a else '#93C5FD' for a in monthly_u['anomaly']]))
+                                    marker_color=[WARN if a else '#FB923C' for a in monthly_u['anomaly']]))
             fig_mu.add_trace(go.Scatter(x=monthly_u['month_name'], y=monthly_u['avg']/1e3,
                                         name='Avg/Transaksi', line=dict(color=PRIMARY, width=2.5, dash='dot'),
                                         mode='lines+markers', yaxis='y2'))
             fig_mu.add_hline(y=thr_u/1e3, line_dash='dash', line_color=WARN, opacity=0.5,
                              annotation_text='Threshold anomali')
             fig_mu.update_layout(
-                height=380, yaxis=dict(title='Total (ribu IDR)', showgrid=True, gridcolor='#f1f5f9'),
+                height=380, yaxis=dict(title='Total (ribu IDR)', showgrid=True, gridcolor='#ffedd5'),
                 yaxis2=dict(title='Avg/Txn (ribu IDR)', overlaying='y', side='right'),
                 legend=dict(orientation='h', y=-0.2),
                 plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_mu, use_container_width=True)
-
         with col2:
             st.markdown("#### 🏷️ Spending per Kategori per Bulan")
             if len(u_tx) > 0:
@@ -1601,46 +1623,36 @@ elif menu == "🔎 User Deep Dive":
                                  color_discrete_sequence=PALETTE, markers=True,
                                  labels={'amount':'Total (IDR)','month_name':'Bulan','category':'Kategori'})
                 fig_cm.update_layout(height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
-                                     yaxis=dict(showgrid=True, gridcolor='#f1f5f9'))
+                                     yaxis=dict(showgrid=True, gridcolor='#ffedd5'))
                 st.plotly_chart(fig_cm, use_container_width=True)
 
-        # Rolling spending (7 transaksi terakhir)
         st.markdown("#### 📉 Timeline Transaksi & Rolling 7 Txn")
         u_tx_sorted = u_tx.sort_values('date').copy()
         u_tx_sorted['rolling_7'] = u_tx_sorted['amount'].rolling(7, min_periods=1).mean()
         u_tx_sorted['spike_flag'] = u_tx_sorted['amount'] > u_tx_sorted['rolling_7'] * 2
-
         fig_tl = go.Figure()
         fig_tl.add_trace(go.Scatter(x=u_tx_sorted['date'], y=u_tx_sorted['amount']/1e3,
                                     mode='markers', name='Transaksi',
-                                    marker=dict(size=6, color=[WARN if s else '#93C5FD' for s in u_tx_sorted['spike_flag']],
-                                                opacity=0.7)))
+                                    marker=dict(size=6, color=[WARN if s else '#FB923C' for s in u_tx_sorted['spike_flag']], opacity=0.7)))
         fig_tl.add_trace(go.Scatter(x=u_tx_sorted['date'], y=u_tx_sorted['rolling_7']/1e3,
                                     mode='lines', name='Rolling Mean 7 Txn',
                                     line=dict(color=PRIMARY, width=2.5)))
         fig_tl.update_layout(height=320, xaxis_title='Tanggal', yaxis_title='Amount (ribu IDR)',
                              plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
-                             yaxis=dict(showgrid=True, gridcolor='#f1f5f9'),
+                             yaxis=dict(showgrid=True, gridcolor='#ffedd5'),
                              legend=dict(orientation='h', y=-0.2))
         st.plotly_chart(fig_tl, use_container_width=True)
-
         n_spikes = u_tx_sorted['spike_flag'].sum()
         if n_spikes > 0:
             st.markdown(f'<div class="warn-box">⚠️ Terdeteksi <b>{n_spikes} spike transaksi</b> (lebih dari 2× rolling mean 7 txn). Ditandai merah di grafik.</div>', unsafe_allow_html=True)
 
-    # ── TAB 5: Perbandingan dengan Segmen ─────────────────────
     with tab5:
         st.markdown("#### 🆚 Perbandingan Profil User vs Rata-rata Segmennya")
-
         segmen_user = u_demo['segmen'].values[0] if (len(u_demo) > 0 and 'segmen' in u_demo.columns) else None
-
         if segmen_user and segmen_user in seg_filter:
             seg_peers = df_tx[df_tx['segmen'] == segmen_user]
-            # compat: user_features bisa punya kolom segmen atau segmen_label
             seg_col_uf = 'segmen' if 'segmen' in user_features.columns else ('segmen_label' if 'segmen_label' in user_features.columns else None)
             seg_uf = user_features[user_features[seg_col_uf] == segmen_user] if seg_col_uf is not None else user_features.head(0)
-
-            # Tabel perbandingan metrik utama
             metrics_compare = {
                 'Total Spending (IDR)': (u_tx['amount'].sum(), seg_peers['amount'].sum() / seg_uf['user_id'].nunique()),
                 'Avg Transaksi (IDR)':  (u_tx['amount'].mean(), seg_peers['amount'].mean()),
@@ -1663,23 +1675,17 @@ elif menu == "🔎 User Deep Dive":
             df_cmp = pd.DataFrame(cmp_rows)
             st.dataframe(df_cmp, use_container_width=True, hide_index=True)
 
-            # Radar chart perbandingan
             st.markdown("#### 🕸️ Radar: User vs Rata-rata Segmen")
             radar_feats_cmp = ['weekend_ratio','night_ratio','above_avg_ratio','spike_ratio','spending_cov','active_months']
             radar_feats_cmp = [f for f in radar_feats_cmp if f in user_features.columns]
-
             u_vals    = [float(u_profile[f].values[0]) if len(u_profile) > 0 else 0 for f in radar_feats_cmp]
             seg_means = seg_uf[radar_feats_cmp].mean().tolist()
-
-            # Normalisasi 0-1 untuk radar
-            all_vals = [max(u + s, 1e-9) for u, s in zip(u_vals, seg_means)]
-            u_norm   = [v / m if m > 0 else 0 for v, m in zip(u_vals, all_vals)]
-            s_norm   = [v / m if m > 0 else 0 for v, m in zip(seg_means, all_vals)]
-
+            all_vals  = [max(u + s, 1e-9) for u, s in zip(u_vals, seg_means)]
+            u_norm    = [v / m if m > 0 else 0 for v, m in zip(u_vals, all_vals)]
+            s_norm    = [v / m if m > 0 else 0 for v, m in zip(seg_means, all_vals)]
             categories_r = radar_feats_cmp + [radar_feats_cmp[0]]
             u_norm_r     = u_norm + [u_norm[0]]
             s_norm_r     = s_norm + [s_norm[0]]
-
             fig_radar = go.Figure()
             fig_radar.add_trace(go.Scatterpolar(r=u_norm_r, theta=categories_r, fill='toself',
                                                 name=nama_val, line=dict(color=p_color, width=2.5), fillcolor=p_color, opacity=0.25))
@@ -1687,29 +1693,24 @@ elif menu == "🔎 User Deep Dive":
                                                 name=f'Avg {segmen_val}', line=dict(color='#94a3b8', width=2, dash='dot'),
                                                 fillcolor='#94a3b8', opacity=0.15))
             fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 1.1])),
-                                    height=420, showlegend=True,
-                                    legend=dict(orientation='h', y=-0.1))
+                                    height=420, showlegend=True, legend=dict(orientation='h', y=-0.1))
             st.plotly_chart(fig_radar, use_container_width=True)
 
-            # Distribusi impulse score vs segmen
             st.markdown("#### 📊 Posisi Impulse Score dalam Segmen")
             fig_pos = px.histogram(seg_uf, x='impulse_score', nbins=30,
-                                   color_discrete_sequence=['#93C5FD'],
+                                   color_discrete_sequence=['#FB923C'],
                                    labels={'impulse_score':'Impulse Score','count':'Jumlah User'})
             fig_pos.add_vline(x=impulse, line_dash='solid', line_color=p_color, line_width=3,
-                              annotation_text=f'{nama_val}: {impulse:.4f}',
-                              annotation_position='top right')
-            fig_pos.add_vline(x=seg_uf['impulse_score'].mean(), line_dash='dash', line_color='#64748b',
+                              annotation_text=f'{nama_val}: {impulse:.4f}', annotation_position='top right')
+            fig_pos.add_vline(x=seg_uf['impulse_score'].mean(), line_dash='dash', line_color='#78350f',
                               annotation_text=f'Avg segmen: {seg_uf["impulse_score"].mean():.4f}')
             pct_rank = (seg_uf['impulse_score'] <= impulse).mean() * 100
             fig_pos.update_layout(height=300, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_pos, use_container_width=True)
             st.markdown(f'<div class="insight-box">📌 <b>{nama_val}</b> berada di persentil ke-<b>{pct_rank:.0f}</b> dalam segmen <b>{segmen_val}</b> berdasarkan impulse score ({impulse:.4f}).</div>', unsafe_allow_html=True)
-
         else:
             st.info("Data segmen tidak tersedia atau segmen user tidak termasuk dalam filter aktif.")
 
-    # ── TABEL RAW TRANSAKSI ────────────────────────────────────
     if show_raw:
         st.markdown("---")
         st.markdown("#### 📋 Riwayat Transaksi Lengkap")
@@ -1731,15 +1732,15 @@ elif menu == "🔎 User Deep Dive":
 # ██  DATA DICTIONARY  ██
 # ==========================================
 elif menu == "📖 Data Dictionary":
-    st.subheader("📖 Data Dictionary — BUDU Dataset")
+    st.subheader("Data Dictionary — BUDU Dataset")
 
     tab_d = st.tabs([
-        "Segmen Sosio-Ekonomi",
-        "Kolom Transaksi",
-        "Fitur Temporal",
-        "User Profile Features",
-        "Spending Persona",
-        "File Output",
+        "📊  Segmen Sosio-Ekonomi",
+        "📋  Kolom Transaksi",
+        "🕐  Fitur Temporal",
+        "👤  User Profile Features",
+        "🎯  Spending Persona",
+        "📁  File Output",
     ])
 
     with tab_d[0]:

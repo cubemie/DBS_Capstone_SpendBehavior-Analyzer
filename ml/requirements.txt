@@ -1,0 +1,12 @@
+# Machine Learning & Data Processing
+tensorflow>=2.15.0
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+joblib>=1.3.0
+tensorboard>=2.0
+
+# API & Web Server
+fastapi>=0.110.0
+uvicorn>=0.29.0
+pydantic>=2.6.0
