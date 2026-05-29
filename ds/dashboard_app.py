@@ -743,14 +743,43 @@ def build_user_features(_df_tx, _df_users, _df_profiles=None):
 
 @st.cache_data(show_spinner="🤖 Menjalankan K-Means clustering...")
 def run_clustering(_uf):
+    # ── FEATURE COLS v3: 20 fitur bersih ──────────────────────────────────────
+    # Lihat IMPLEMENTASI_FITUR_V3.md untuk alasan pemilihan fitur
+    # Transformasi cat_* ke rasio proporsi jika belum ada
+    uf_work = _uf.copy()
+    if 'total_spending_idr' in uf_work.columns:
+        cat_src = [
+            'cat_makanan_&_minum', 'cat_transportasi', 'cat_kesehatan_&_kec',
+            'cat_sembako_&_kebut', 'cat_kesehatan', 'cat_pendidikan',
+            'cat_belanja_online', 'cat_pulsa_&_data', 'cat_hiburan', 'cat_fashion_&_pakai'
+        ]
+        for col in cat_src:
+            ratio_col = col + '_ratio'
+            if ratio_col not in uf_work.columns and col in uf_work.columns:
+                uf_work[ratio_col] = (uf_work[col] / uf_work['total_spending_idr']).fillna(0)
+            elif ratio_col not in uf_work.columns:
+                uf_work[ratio_col] = 0.0
+
+    # Pastikan pendapatan_bulan tersedia
+    if 'pendapatan_bulan' not in uf_work.columns:
+        uf_work['pendapatan_bulan'] = 0
+
     FEATURE_COLS = [
-        'total_spending_idr', 'avg_txn_idr', 'median_txn_idr',
-        'txn_count', 'std_amount_idr', 'weekend_ratio', 'night_ratio',
-        'unique_categories', 'impulse_score', 'spending_cov',
-        'above_avg_ratio', 'spike_ratio', 'active_months', 'avg_dist_merchant',
+        # Behavioral Core (9)
+        'avg_txn_idr', 'txn_count', 'weekend_ratio', 'night_ratio',
+        'above_avg_ratio', 'spike_ratio', 'impulse_score',
+        'unique_categories', 'spending_cov',
+        # ✨ BARU v3 — Variabel Pendapatan (1)
+        'pendapatan_bulan',
+        # Category Ratios (10)
+        'cat_makanan_&_minum_ratio', 'cat_transportasi_ratio',
+        'cat_kesehatan_&_kec_ratio', 'cat_sembako_&_kebut_ratio',
+        'cat_kesehatan_ratio', 'cat_pendidikan_ratio',
+        'cat_belanja_online_ratio', 'cat_pulsa_&_data_ratio',
+        'cat_hiburan_ratio', 'cat_fashion_&_pakai_ratio',
     ]
-    FEATURE_COLS = [c for c in FEATURE_COLS if c in _uf.columns]
-    X        = _uf[FEATURE_COLS].fillna(0).values
+    FEATURE_COLS = [c for c in FEATURE_COLS if c in uf_work.columns]
+    X        = uf_work[FEATURE_COLS].fillna(0).values
     scaler   = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
@@ -962,6 +991,7 @@ with st.sidebar:
 
     st.markdown("---")
     st.caption(f"Dataset: {len(df_users):,} user · {len(df_tx):,} transaksi")
+    st.caption("⚙️ Feature v3 — 20 fitur (+ pendapatan_bulan)")
     st.caption(f"Periode: {df_tx['date'].min().strftime('%b %Y')} – {df_tx['date'].max().strftime('%b %Y')}")
 
     import os
@@ -1451,16 +1481,41 @@ elif menu == "👥 Clustering & Persona":
                                    plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
         st.plotly_chart(fig_imp_dist, use_container_width=True)
 
-    cluster_stats = uf_f.groupby('spending_persona').agg(
-        Jumlah_User    = ('user_id', 'count'),
-        Avg_Impulse    = ('impulse_score', 'mean'),
-        Avg_TotalSpend = ('total_spending_idr', 'mean'),
-        Avg_TxnCount   = ('txn_count', 'mean'),
-        Avg_WeekendR   = ('weekend_ratio', 'mean'),
-        Avg_NightR     = ('night_ratio', 'mean'),
-        Avg_SpikeR     = ('spike_ratio', 'mean'),
-    ).round(3)
+    agg_dict = {
+        'Jumlah_User'   : ('user_id', 'count'),
+        'Avg_Impulse'   : ('impulse_score', 'mean'),
+        'Avg_TxnCount'  : ('txn_count', 'mean'),
+        'Avg_WeekendR'  : ('weekend_ratio', 'mean'),
+        'Avg_NightR'    : ('night_ratio', 'mean'),
+        'Avg_SpikeR'    : ('spike_ratio', 'mean'),
+    }
+    if 'pendapatan_bulan' in uf_f.columns and uf_f['pendapatan_bulan'].sum() > 0:
+        agg_dict['Avg_Pendapatan_IDR'] = ('pendapatan_bulan', 'mean')
+    if 'total_spending_idr' in uf_f.columns:
+        agg_dict['Avg_TotalSpend'] = ('total_spending_idr', 'mean')
+
+    cluster_stats = uf_f.groupby('spending_persona').agg(**agg_dict).round(3)
     st.dataframe(cluster_stats, use_container_width=True)
+
+    # Insight: distribusi pendapatan per persona
+    if 'pendapatan_bulan' in uf_f.columns and uf_f['pendapatan_bulan'].sum() > 0:
+        st.markdown("---")
+        st.markdown('<p class="section-title">💰 Distribusi Pendapatan per Persona</p>', unsafe_allow_html=True)
+        st.markdown('<div class="insight-box">📌 <b>Pendapatan bulanan</b> kini digunakan sebagai salah satu dari 20 fitur training AI (Feature v3). Grafik di bawah menunjukkan bagaimana konteks finansial berbeda antar persona.</div>', unsafe_allow_html=True)
+        fig_inc = px.box(
+            uf_f[uf_f['pendapatan_bulan'] > 0],
+            x='spending_persona', y='pendapatan_bulan',
+            color='spending_persona',
+            color_discrete_map=PERSONA_COLORS,
+            labels={'pendapatan_bulan': 'Pendapatan Bulanan (IDR)', 'spending_persona': 'Persona'},
+        )
+        fig_inc.update_layout(
+            title='Distribusi Pendapatan Bulanan per Spending Persona',
+            height=360, showlegend=False,
+            plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
+            yaxis=dict(showgrid=True, gridcolor='#ffedd5'),
+        )
+        st.plotly_chart(fig_inc, use_container_width=True)
 
 
 # ==========================================
@@ -1981,6 +2036,7 @@ elif menu == "📖 Data Dictionary":
             {'Fitur':'fraud_ratio',       'Satuan':'0-1',    'Deskripsi':'Proporsi transaksi fraud'},
             {'Fitur':'avg_dist_merchant', 'Satuan':'derajat','Deskripsi':'Rata-rata jarak user ke merchant'},
             {'Fitur':'spending_ratio',    'Satuan':'0-1',    'Deskripsi':'Rasio pengeluaran vs pendapatan (24 bulan)'},
+            {'Fitur':'pendapatan_bulan', 'Satuan':'IDR',    'Deskripsi':'✨ Pendapatan bulanan (IDR) — BARU v3: fitur training AI untuk konteks kemampuan finansial user'},
         ])
         st.dataframe(prof_dict, use_container_width=True, hide_index=True)
 
