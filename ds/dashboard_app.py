@@ -31,285 +31,87 @@ st.set_page_config(
 # ==========================================
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
-    /* ── Base typography ── */
-    html, body, [class*="css"] {
-        font-family: 'DM Sans', sans-serif;
-    }
-    
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'Sora', sans-serif !important;
-    }
-    
-    /* ── Page background ── */
-    .main {
-        background-color: #FFF6DE;
-    }
-    
-    .block-container {
-        padding: 1.5rem 2rem;
-    }
-    
-    /* ── Sidebar ── */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    html, body, [class*="css"] { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .main { background-color: #f0f4ff; }
+    .block-container { padding: 1.5rem 2rem; }
     [data-testid="stSidebar"] {
-        background: #F48F68;
+        background: linear-gradient(180deg, #0f172a 0%, #1e3a8a 100%);
     }
-    
-    [data-testid="stSidebar"] .stRadio label {
-        color: #FFF6DE !important;
-        font-weight: 500;
-        font-family: 'DM Sans', sans-serif;
-    }
-    
-    [data-testid="stSidebar"] h1,
-    [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3,
-    [data-testid="stSidebar"] p {
-        color: white !important;
-        text-align: center;
-    }
-    
-    [data-testid="stSidebar"] .stMarkdown {
-        color:  #FFF6DE;
-        text-align: center;
-    }
-    
-    /* ── Sidebar BUDU Brand ── */
-    [data-testid="stSidebar"] .stMarkdown h2 {
-        font-family: 'Sora', sans-serif !important;
-        font-size: 1.8rem !important;
-        font-weight: 800 !important;
-        letter-spacing: -0.5px;
-        color: white !important;
-        text-align: center;
-    }
-    
-    /* ── Metric Cards ── */
+    [data-testid="stSidebar"] .stRadio label { color: #cbd5e1 !important; font-weight: 500; }
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3, [data-testid="stSidebar"] p { color: #e2e8f0 !important; }
+    [data-testid="stSidebar"] .stMarkdown { color: #94a3b8; }
     [data-testid="metric-container"] {
-        background: white;
-        border-radius: 16px;
-        padding: 18px 22px;
-        border: 1px solid #FFE394;
-        box-shadow: 0 1px 10px rgba(244,143,104,0.10);
-        transition: all 0.2s ease;
+        background: white; border-radius: 14px; padding: 16px 20px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 8px rgba(37,99,235,0.07);
+        transition: box-shadow 0.2s;
     }
-    
-    [data-testid="metric-container"]:hover {
-        box-shadow: 0 4px 20px rgba(244,143,104,0.18);
-        transform: translateY(-2px);
-    }
-    
-    [data-testid="stMetricValue"] {
-        font-weight: 700;
-        color: #8C5A44;
-        font-family: 'Inter', sans-serif;
-        font-size: 1.9rem;
-        line-height: 1.1;
-        letter-spacing: -1px;
-        white-space: nowrap;
-    }
-    
-    [data-testid="stMetricLabel"] {
-        color: #A56A4F;
-        font-weight: 600;
-        font-size: 0.82rem;
-    }
-    
-    /* ── Section Title ── */
+    [data-testid="metric-container"]:hover { box-shadow: 0 4px 20px rgba(37,99,235,0.13); }
+    [data-testid="stMetricValue"] { font-weight: 800; color: #1e3a8a; }
+    [data-testid="stMetricLabel"] { color: #64748b; font-weight: 600; font-size: 0.82rem; }
     .section-title {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: #8C5A44;
-        font-family: 'Sora', sans-serif;
-        margin-bottom: 0.5rem;
-        padding-left: 10px;
-        border-left: 4px solid #F48F68;
+        font-size: 1.15rem; font-weight: 700; color: #1e3a8a;
+        margin-bottom: 0.5rem; padding-left: 10px;
+        border-left: 4px solid #2563eb;
     }
-    
-    /* ── Persona Card ── */
     .persona-card {
-        border-radius: 14px;
-        padding: 18px 16px;
-        margin-bottom: 8px;
+        border-radius: 14px; padding: 18px 16px; margin-bottom: 8px;
         transition: transform 0.15s;
-        background: white;
     }
-    
-    .persona-card:hover {
-        transform: translateY(-2px);
-    }
-    
-    /* ── Insight Box ── */
+    .persona-card:hover { transform: translateY(-2px); }
     .insight-box {
-        background: linear-gradient(
-            135deg,
-            #FFF8EE,
-            #FFE8D9
-        );
-        border-left: 4px solid #F48F68;
-        border-radius: 12px;
-        padding: 14px 18px;
-        margin: 10px 0;
-        color: #8C5A44;
-        font-weight: 500;
+        background: linear-gradient(135deg, #eff6ff, #dbeafe);
+        border-left: 4px solid #2563eb; border-radius: 10px;
+        padding: 14px 18px; margin: 10px 0;
+        color: #1e40af; font-weight: 500;
     }
-    
-    /* ── Warning Box ── */
     .warn-box {
-        background: linear-gradient(
-            135deg,
-            #FFF6DE,
-            #FFE9B8
-        );
-        border-left: 4px solid #FFE394;
-        border-radius: 12px;
-        padding: 14px 18px;
-        margin: 10px 0;
-        color: #8C5A44;
-        font-weight: 500;
+        background: linear-gradient(135deg, #fff7ed, #ffedd5);
+        border-left: 4px solid #f59e0b; border-radius: 10px;
+        padding: 14px 18px; margin: 10px 0;
+        color: #92400e; font-weight: 500;
     }
-    
-    /* ── Success Box ── */
     .success-box {
-        background: linear-gradient(
-            135deg,
-            #E8FAF9,
-            #D4F4F2
-        );
-        border-left: 4px solid #8BDFDD;
-        border-radius: 12px;
-        padding: 14px 18px;
-        margin: 10px 0;
-        color: #4E6E6D;
-        font-weight: 500;
+        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        border-left: 4px solid #10b981; border-radius: 10px;
+        padding: 14px 18px; margin: 10px 0;
+        color: #065f46; font-weight: 500;
     }
-    
-    /* ── Danger Box ── */
     .danger-box {
-        background: linear-gradient(
-            135deg,
-            #FFF0EC,
-            #FFD8CC
-        );
-        border-left: 4px solid #F48F68;
-        border-radius: 12px;
-        padding: 14px 18px;
-        margin: 10px 0;
-        color: #8C5A44;
-        font-weight: 500;
+        background: linear-gradient(135deg, #fef2f2, #fee2e2);
+        border-left: 4px solid #ef4444; border-radius: 10px;
+        padding: 14px 18px; margin: 10px 0;
+        color: #991b1b; font-weight: 500;
     }
-    
-    /* ── User Profile Card ── */
     .user-profile-card {
-        background: white;
-        border-radius: 20px;
-        padding: 24px;
-        border: 1px solid #FFE394;
-        box-shadow: 0 4px 24px rgba(244,143,104,0.12);
+        background: white; border-radius: 18px; padding: 24px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 24px rgba(37,99,235,0.08);
         margin-bottom: 16px;
     }
-    
-    /* ── User Name ── */
-    .user-profile-name {
-        font-family: 'Poppins', sans-serif !important;
-        font-size: 2rem;
-        font-weight: 700;
-        color: #8C5A44;
-        line-height: 1.1;
-        letter-spacing: -0.5px;
-    }
-    
-    /* ── User Badge ── */
     .user-stat-badge {
-        display: inline-block;
-        background: #FFF6DE;
-        color: #F48F68;
-        border-radius: 10px;
-        padding: 5px 12px;
-        font-size: 0.82rem;
-        font-weight: 600;
-        margin: 3px 3px;
+        display: inline-block; background: #eff6ff; color: #2563eb;
+        border-radius: 8px; padding: 4px 12px; font-size: 0.82rem;
+        font-weight: 600; margin: 3px 3px;
     }
-    
-    /* ── Tabs ── */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 6px;
-        background: #FFF6DE;
-        border-radius: 12px;
-        padding: 6px;
-    }
-    
+    .stTabs [data-baseweb="tab-list"] { gap: 4px; }
     .stTabs [data-baseweb="tab"] {
-        border-radius: 8px;
-        font-weight: 600;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 0.88rem;
-        letter-spacing: 0.01em;
-        color: #8C5A44;
-        padding: 8px 14px;
-        white-space: nowrap;
-        background: transparent;
-        border: none;
+        border-radius: 8px 8px 0 0; font-weight: 600; color: #64748b;
     }
-    
-    .stTabs [aria-selected="true"] {
-        color: white !important;
-        background: #F48F68 !important;
-        border-radius: 8px;
-    }
-    
-    /* ── Expander ── */
-    .streamlit-expanderHeader {
-        font-weight: 600;
-        color: #8C5A44;
-        font-family: 'Sora', sans-serif;
-    }
-    
-    /* ── Divider ── */
-    hr {
-        border-color: #FFE394;
-        margin: 1.2rem 0;
-    }
-    
-    /* ── Header Banner ── */
+    .stTabs [aria-selected="true"] { color: #2563eb !important; }
+    .streamlit-expanderHeader { font-weight: 600; color: #1e3a8a; }
+    hr { border-color: #e2e8f0; margin: 1.2rem 0; }
     .header-banner {
-        background: #F48F68;
-        border-radius: 20px;
-        padding: 30px 36px;
-        margin-bottom: 24px;
-        color: white;
+        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #0ea5e9 100%);
+        border-radius: 18px; padding: 28px 36px; margin-bottom: 24px; color: white;
     }
-    
-    .header-banner h1 {
-        color: white;
-        font-size: 2.2rem;
-        font-weight: 800;
-        margin-bottom: 6px;
-        font-family: 'Sora', sans-serif;
-        line-height: 1.15;
-        letter-spacing: -1px;
-    }
-    
-    .header-banner p {
-        color: #FFF6DE;
-        font-size: 0.95rem;
-        margin: 0;
-    }
-    
-    /* ── Gauge Label ── */
-    .gauge-label {
-        font-size: 0.78rem;
-        color: #8C5A44;
-        text-align: center;
-        margin-top: 4px;
-    }
-    
-    </style>
-    """, unsafe_allow_html=True)
+    .header-banner h1 { color: white; font-size: 2rem; font-weight: 800; margin-bottom: 4px; }
+    .header-banner p { color: #bfdbfe; font-size: 0.95rem; margin: 0; }
+    .gauge-label { font-size: 0.78rem; color: #64748b; text-align: center; margin-top: 4px; }
+</style>
+""", unsafe_allow_html=True)
 
 # ==========================================
 # CONSTANTS
@@ -1572,16 +1374,38 @@ elif menu == "🔎 User Deep Dive":
     if u_tx.empty:
         st.warning(f"Tidak ada transaksi untuk {selected_uid} di rentang tanggal yang dipilih.")
         st.stop()
-
+    # ==========================================
+    # TABEL TRANSAKSI USER
+    # ==========================================
     if show_raw:
+    
         st.markdown("### 📋 Tabel Transaksi Pengguna")
+    
         u_tx_display = u_tx.copy()
+    
         if 'date' in u_tx_display.columns:
             u_tx_display['date'] = u_tx_display['date'].dt.strftime('%Y-%m-%d %H:%M')
-        cols_show = [c for c in ['txn_id','date','category','amount','payment_method'] if c in u_tx_display.columns]
-        st.dataframe(u_tx_display[cols_show].sort_values(by='date', ascending=False),
-                     use_container_width=True, height=350)
-
+    
+        cols_show = [
+            'txn_id',
+            'date',
+            'category',
+            'amount',
+            'payment_method'
+        ]
+    
+        cols_show = [c for c in cols_show if c in u_tx_display.columns]
+    
+        st.dataframe(
+            u_tx_display[cols_show].sort_values(
+                by='date',
+                ascending=False
+            ),
+            use_container_width=True,
+            height=350
+        )
+    
+    # Profile dari user_features (sudah computed)
     u_profile = user_features[user_features['user_id'] == selected_uid]
     u_demo    = df_users[df_users['user_id'] == selected_uid]
 
