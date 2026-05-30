@@ -33,6 +33,37 @@
   ],
   "n_features": 15,
   "feature_version": "v3",
+  "new_in_v3": {
+    "added": [
+      "pendapatan_bulan"
+    ],
+    "reason": "Pendapatan bulanan (IDR) — sinyal konteks finansial user yang sebelumnya hanya ada sebagai metadata. Menambahkan dimensi kemampuan ekonomi ke dalam model untuk membedakan impulsivitas berbasis kemampuan vs keterpaksaan."
+  },
+  "removed_features": {
+    "irrelevant": [
+      "fraud_ratio",
+      "avg_dist_merchant",
+      "active_months",
+      "month_start_ratio",
+      "month_end_ratio"
+    ],
+    "redundant": [
+      "total_spending_idr",
+      "median_txn_idr",
+      "max_txn_idr",
+      "std_amount_idr",
+      "unique_merchants"
+    ],
+    "low_signal_cat": [
+      "cat_kecantikan_&_pe",
+      "cat_investasi_&_asu",
+      "cat_properti_&_reno",
+      "cat_travel_&_hotel",
+      "cat_restoran_&_kafe",
+      "cat_elektronik",
+      "cat_olahraga_&_gym"
+    ]
+  },
   "n_classes": 3,
   "class_labels": [
     "Emotional Spender",
