@@ -689,11 +689,15 @@ def build_user_features(_df_tx, _df_users, _df_profiles=None):
         uf['spike_ratio']     * 0.15
     ).clip(0, 1).round(4)
 
-    def label_persona(s):
-        if s >= IMPULSE_THRESHOLD:  return 'Impulsive Spender'
-        elif s >= 0.30:             return 'Emotional Spender'
-        else:                       return 'Rational Spender'
-    uf['spending_persona'] = uf['impulse_score'].apply(label_persona)
+    # Persona sudah disediakan di budu_user_profiles_idr.csv (lebih konsisten dengan notebook DS).
+    # Jika tidak ada, baru gunakan fallback rule-based.
+    if 'spending_persona' not in uf.columns:
+        def label_persona(s):
+            if s >= IMPULSE_THRESHOLD:  return 'Impulsive Spender'
+            elif s >= 0.30:             return 'Emotional Spender'
+            else:                       return 'Rational Spender'
+        uf['spending_persona'] = uf['impulse_score'].apply(label_persona)
+
 
     user_demo_cols = ['user_id', 'segmen', 'segmen_label', 'usia', 'gender',
                       'kota', 'tier_kota', 'pendapatan_bulan']
