@@ -15,12 +15,12 @@ export default function Register() {
     <AuthLayout
       image={quokkaImg}
       title="Mulai perjalanan finansial yang lebih tenang"
-      subtitle="Buat akun SpendQ dan biarkan Quokka membantu mencatat, membaca, dan memberi saran pengeluaran."
+      subtitle="Buat akun BUDU dan biarkan Quokka membantu mencatat, membaca, dan memberi saran pengeluaran."
       mode="register"
     >
       <div>
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--color-teal-ink)]">
-          Daftar SpendQ
+          Daftar BUDU
         </p>
         <h2 className="mt-2 text-2xl font-black text-[var(--color-text-primary)]">Buat akun baru</h2>
         <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
@@ -69,7 +69,7 @@ export default function Register() {
           </span>
           <span className="text-sm leading-6 text-[var(--color-text-secondary)]">
             Saya setuju dengan <strong className="text-[var(--color-salmon-dark)]">Syarat</strong> dan{" "}
-            <strong className="text-[var(--color-salmon-dark)]">Ketentuan</strong> SpendQ.
+            <strong className="text-[var(--color-salmon-dark)]">Ketentuan</strong> BUDU.
           </span>
         </button>
 

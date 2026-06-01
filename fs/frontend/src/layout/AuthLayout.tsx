@@ -24,8 +24,8 @@ function AuthLayout({
             <Sparkles className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-3xl font-black tracking-tight text-[var(--color-brand)]">SpendQ</p>
-            <p className="text-sm font-semibold text-[var(--color-text-muted)]">SpendBehavior Analyzer</p>
+            <p className="text-3xl font-black tracking-tight text-[var(--color-brand)]">BUDU</p>
+            <p className="text-sm font-semibold text-[var(--color-text-muted)]">Butuh Duit</p>
           </div>
         </div>
 

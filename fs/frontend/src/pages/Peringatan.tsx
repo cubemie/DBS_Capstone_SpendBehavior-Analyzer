@@ -45,7 +45,7 @@ export default function Peringatan() {
         <SectionHeader
           eyebrow="Money Leak Detection"
           title="Deteksi Kebocoran"
-          description="Fitur unggulan SpendQ untuk menemukan biaya kecil yang diam-diam menggerus budget."
+          description="Fitur unggulan BUDU untuk menemukan biaya kecil yang diam-diam menggerus budget."
           action={<ShieldCheck className="hidden h-7 w-7 text-[var(--color-teal-ink)] sm:block" />}
         />
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">

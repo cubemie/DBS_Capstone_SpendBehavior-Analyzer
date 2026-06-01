@@ -25,7 +25,7 @@ export default function Login() {
         </p>
         <h2 className="mt-2 text-2xl font-black text-[var(--color-text-primary)]">Selamat datang kembali</h2>
         <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
-          SpendQ siap bantu Anda membaca pola belanja tanpa terasa menggurui.
+          BUDU siap bantu Anda membaca pola belanja tanpa terasa menggurui.
         </p>
       </div>
 

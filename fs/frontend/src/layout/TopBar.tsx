@@ -12,10 +12,10 @@ function TopBar() {
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 md:h-20 md:px-8 lg:px-10">
         <div className="min-w-0">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--color-text-muted)] md:hidden">
-            SpendQ
+            BUDU
           </p>
           <p className="truncate text-lg font-black text-[var(--color-text-primary)] md:text-xl">
-            {activeItem?.label ?? "SpendQ"}
+            {activeItem?.label ?? "BUDU"}
           </p>
         </div>
 

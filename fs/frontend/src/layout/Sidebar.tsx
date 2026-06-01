@@ -11,7 +11,7 @@ function Sidebar() {
           <Sparkles className="h-6 w-6" />
         </span>
         <div className="hidden xl:block">
-          <p className="text-2xl font-black tracking-tight text-[var(--color-brand)]">SpendQ</p>
+          <p className="text-2xl font-black tracking-tight text-[var(--color-brand)]">BUDU</p>
           <p className="text-xs font-medium text-[var(--color-text-muted)]">Your financial pal</p>
         </div>
       </NavLink>

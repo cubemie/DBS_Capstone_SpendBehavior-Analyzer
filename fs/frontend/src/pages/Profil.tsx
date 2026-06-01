@@ -53,7 +53,7 @@ export default function Profil() {
             <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
               <Badge variant="coral">{currentUser.persona}</Badge>
               <Badge variant="teal" icon={<BadgeCheck className="h-3.5 w-3.5" />}>
-                SpendQ {currentUser.membership}
+                BUDU {currentUser.membership}
               </Badge>
             </div>
           </div>
@@ -182,7 +182,7 @@ export default function Profil() {
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-text-muted)]">
                   Status Saat Ini
                 </p>
-                <p className="mt-2 text-xl font-black text-[var(--color-teal-ink)]">SpendQ Pro</p>
+                <p className="mt-2 text-xl font-black text-[var(--color-teal-ink)]">BUDU Pro</p>
               </div>
               <div className="text-right">
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-text-muted)]">

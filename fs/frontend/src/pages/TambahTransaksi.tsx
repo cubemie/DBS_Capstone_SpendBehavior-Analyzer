@@ -45,7 +45,7 @@ export default function TambahTransaksi() {
       <SectionHeader
         eyebrow="Catat transaksi"
         title="Tambah Transaksi"
-        description="Masukkan transaksi baru sekarang agar analisis SpendQ makin akurat."
+        description="Masukkan transaksi baru sekarang agar analisis BUDU makin akurat."
         action={
           <Button variant="outline" iconLeft={<ArrowLeft className="h-4 w-4" />} onClick={() => navigate(-1)}>
             Kembali
@@ -136,7 +136,7 @@ export default function TambahTransaksi() {
             <div className="rounded-3xl border border-[var(--color-teal)] bg-[var(--color-teal-bg)] p-5">
               <p className="font-black text-[var(--color-teal-ink)]">Catatan Quokka</p>
               <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
-                Detail kecil seperti merchant dan metode bayar membantu SpendQ menemukan kebocoran berulang dengan lebih tepat.
+                Detail kecil seperti merchant dan metode bayar membantu BUDU menemukan kebocoran berulang dengan lebih tepat.
               </p>
             </div>
             <Button fullWidth buttonSize="lg">
