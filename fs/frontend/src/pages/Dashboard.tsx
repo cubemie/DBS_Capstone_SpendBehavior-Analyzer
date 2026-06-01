@@ -1,230 +1,223 @@
-import TopBar from "../components/layout/TopBar";
-import BottomNav from "../components/layout/BottomNav";
-import quokkaImg from "../assets/quokka-dashboard.png";
+import { ArrowRight, MoreHorizontal, Plus, RefreshCw, Trophy } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Cake, Tv, DollarSign, Plus, RefreshCw } from "lucide-react";
-
-const recentActivity = [
-  { Icon: Cake, name: "Sweet Tooth Bakery", time: "Today, 09:41 AM", amount: -12.50, currency: "USD" },
-  { Icon: Tv, name: "StreamFlix Subs", time: "Yesterday", amount: -15.99, currency: "USD" },
-  { Icon: DollarSign, name: "Salary Deposit", time: "July 15", amount: 3240.00, currency: "USD" },
-];
-
-const budgets = [
-  { label: "Food & Dining", used: 450, total: 600, color: "#8BDFDD" },
-  { label: "Shopping", used: 320, total: 300, color: "#F28C6A", over: true },
-  { label: "Transport", used: 80, total: 150, color: "#FFE394" },
-];
-
-const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const weekSpend = [40, 65, 30, 80, 55, 90, 70];
+import quokkaImg from "../assets/quokka-dashboard.png";
+import {
+  budgets,
+  insights,
+  moneyLeaks,
+  monthlySummary,
+  quickActions,
+  spendingRhythm,
+  transactions,
+  warnings,
+} from "../services/mockData";
+import Badge from "../components/Badge";
+import Button from "../components/Button";
+import Card from "../components/Card";
+import InsightCard from "../components/InsightCard";
+import ProgressBar from "../components/ProgressBar";
+import SectionHeader from "../components/SectionHeader";
+import TransactionItem from "../components/TransactionItem";
+import { formatCurrency } from "../utils/formatCurrency";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const maxRhythm = Math.max(...spendingRhythm.map((item) => item.amount));
+  const recentTransactions = transactions.slice(0, 3);
+  const primaryLeak = moneyLeaks[0];
+  const primaryWarning = warnings[0];
 
   return (
-    <div className="app-shell">
-      <TopBar title="SpendQ" />
-      <div className="page-content" style={{ padding: "0 16px 90px" }}>
+    <div className="space-y-6">
+      <SectionHeader
+        eyebrow="Financial oasis"
+        title="Dashboard"
+        description="Selamat datang kembali. Quokka sudah merapikan sinyal penting dari pengeluaran bulan ini."
+        action={
+          <Button iconLeft={<Plus className="h-5 w-5" />} onClick={() => navigate("/tambah")}>
+            Tambah Transaksi
+          </Button>
+        }
+      />
 
-        {/* YOUR VIBE Card */}
-        <div className="card" style={{ marginBottom: 12, overflow: "hidden", position: "relative" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <div style={{ flex: 1 }}>
-              <p style={{ fontSize: 11, fontWeight: 600, color: "var(--color-text-muted)", letterSpacing: 1, textTransform: "uppercase", margin: "0 0 4px" }}>YOUR VIBE</p>
-              <h2 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 8px", lineHeight: 1.2 }}>Rational Spender</h2>
-              <p style={{ fontSize: 13, color: "var(--color-text-secondary)", margin: "0 0 12px", lineHeight: 1.5 }}>
-                You're making solid choices this week. Keep that logical energy flowing!
-              </p>
-              <div style={{
-                display: "inline-flex", alignItems: "center", gap: 6,
-                background: "var(--color-teal-bg)", borderRadius: 100,
-                padding: "4px 12px", fontSize: 12, fontWeight: 600, color: "var(--color-teal-dark)",
-              }}>
-                <span style={{ fontSize: 12 }}>🏆</span> Top 15% Savers
+      <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-[1fr_1fr_320px]">
+        <div className="min-w-0 space-y-5">
+          <Card className="relative min-h-[256px] overflow-hidden">
+            <div className="relative z-10 flex h-full flex-col justify-between gap-8">
+              <div>
+                <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="min-w-0">
+                    <p className="text-xs font-black uppercase tracking-[0.16em] text-[var(--color-text-muted)]">
+                      Your vibe
+                    </p>
+                    <h2 className="mt-2 text-2xl font-black leading-tight text-[var(--color-text-primary)] sm:text-3xl">
+                      Rational Spender
+                    </h2>
+                  </div>
+                  <Badge variant="teal" className="self-start" icon={<Trophy className="h-3.5 w-3.5" />}>
+                    Top 15%
+                  </Badge>
+                </div>
+                <p className="mt-4 max-w-sm text-base leading-7 text-[var(--color-text-secondary)]">
+                  Anda membuat keputusan yang solid minggu ini. Pertahankan energi logis itu, sambil tetap memberi ruang untuk reward kecil.
+                </p>
+              </div>
+              <div className="flex items-end justify-between gap-4">
+                <Button variant="outline" iconRight={<ArrowRight className="h-4 w-4" />} onClick={() => navigate("/profil")}>
+                  Lihat Persona
+                </Button>
+                <img
+                  src={quokkaImg}
+                  alt="Quokka"
+                  className="h-24 w-24 shrink-0 rounded-[2rem] object-cover object-top sm:h-28 sm:w-28"
+                />
               </div>
             </div>
-            <img src={quokkaImg} alt="Quokka" style={{
-              width: 80, height: 80, objectFit: "cover", objectPosition: "top",
-              borderRadius: "50%", marginLeft: 12, flexShrink: 0,
-            }} />
-          </div>
-        </div>
+          </Card>
 
-        {/* Spending Rhythm Chart */}
-        <div className="card" style={{ marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-            <p style={{ fontSize: 11, fontWeight: 600, color: "var(--color-text-muted)", letterSpacing: 1, textTransform: "uppercase", margin: 0 }}>SPENDING RHYTHM</p>
-            <button style={{ background: "none", border: "none", cursor: "pointer" }}>
-              <svg width="18" height="4" fill="none" viewBox="0 0 18 4">
-                <circle cx="2" cy="2" r="2" fill="#9E9B95"/>
-                <circle cx="9" cy="2" r="2" fill="#9E9B95"/>
-                <circle cx="16" cy="2" r="2" fill="#9E9B95"/>
-              </svg>
-            </button>
-          </div>
-          {/* Mini bar chart */}
-          <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 60, padding: "0 4px" }}>
-            {weekDays.map((day, i) => (
-              <div key={day} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                <div style={{
-                  width: "100%", borderRadius: 6,
-                  background: day === "Sat" || day === "Sun" ? "var(--color-salmon)" : "var(--color-teal)",
-                  height: `${(weekSpend[i] / 90) * 52}px`,
-                  opacity: day === "Sat" || day === "Sun" ? 1 : 0.7,
-                }} />
-                <span style={{
-                  fontSize: 10, fontWeight: day === "Sat" || day === "Sun" ? 700 : 400,
-                  color: day === "Sat" || day === "Sun" ? "var(--color-salmon)" : "var(--color-text-muted)",
-                }}>{day}</span>
+          <Card>
+            <div className="mb-5 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)]">Aktivitas Terbaru</h2>
+                <p className="mt-1 text-sm text-[var(--color-text-muted)]">Transaksi yang paling baru masuk.</p>
               </div>
-            ))}
-          </div>
+              <Button variant="ghost" buttonSize="sm" onClick={() => navigate("/riwayat")}>
+                Lihat semua
+              </Button>
+            </div>
+            <div className="space-y-4">
+              {recentTransactions.map((transaction) => (
+                <TransactionItem key={transaction.id} transaction={transaction} compact />
+              ))}
+            </div>
+          </Card>
         </div>
 
-        {/* Recent Activity */}
-        <div className="card" style={{ marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-            <h3 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>Recent Activity</h3>
-            <button onClick={() => navigate("/riwayat")} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 13, color: "var(--color-teal-dark)", fontWeight: 600, fontFamily: "var(--font-main)" }}>
-              View all
-            </button>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {recentActivity.map((tx, i) => {
-              const IconComponent = tx.Icon;
-              return (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{
-                  width: 42, height: 42, borderRadius: 14, background: "var(--color-bg)",
-                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0,
-                }}>
-                  <IconComponent size={20} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <p style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>{tx.name}</p>
-                  <p style={{ margin: 0, fontSize: 12, color: "var(--color-text-muted)" }}>{tx.time}</p>
-                </div>
-                <span style={{
-                  fontSize: 14, fontWeight: 700,
-                  color: tx.amount > 0 ? "var(--color-green)" : "var(--color-text-primary)",
-                }}>
-                  {tx.amount > 0 ? "+" : ""}{tx.amount > 0 ? `$${tx.amount.toFixed(2)}` : `-$${Math.abs(tx.amount).toFixed(2)}`}
-                </span>
+        <div className="min-w-0 space-y-5">
+          <Card className="min-h-[256px]">
+            <div className="mb-5 flex items-center justify-between">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-[var(--color-text-muted)]">
+                  Spending rhythm
+                </p>
+                <h2 className="mt-2 text-2xl font-black text-[var(--color-text-primary)]">Ritme Mingguan</h2>
               </div>
-            );
-            })}
-          </div>
-        </div>
-
-        {/* Monthly Budget */}
-        <div className="card" style={{ marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-            <h3 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>Monthly Budget</h3>
-            <div style={{
-              background: "var(--color-bg)", borderRadius: 100, padding: "4px 12px",
-              fontSize: 13, fontWeight: 600, color: "var(--color-text-secondary)",
-            }}>July</div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {budgets.map((b, i) => (
-              <div key={i}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                  <span style={{ fontSize: 14, fontWeight: 500, display: "flex", alignItems: "center", gap: 6 }}>
-                    {b.label}
-                    {b.over && <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 9V13M12 17H12.01M10.29 3.86L1.82 18C1.64 18.3 1.55 18.65 1.56 19C1.57 19.72 2 20.37 2.66 20.72C2.99 20.9 3.36 21 3.74 21H20.26C20.64 21 21.01 20.9 21.34 20.72C22 20.37 22.43 19.72 22.44 19C22.45 18.65 22.36 18.3 22.18 18L13.71 3.86C13.34 3.24 12.7 2.86 12 2.86C11.3 2.86 10.66 3.24 10.29 3.86Z" stroke="var(--color-salmon)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
-                  </span>
-                  <span style={{
-                    fontSize: 13, fontWeight: 600,
-                    color: b.over ? "var(--color-salmon)" : "var(--color-text-secondary)",
-                  }}>
-                    ${b.used} / ${b.total}
-                  </span>
-                </div>
-                <div style={{ height: 7, background: "#F0EDE8", borderRadius: 100, overflow: "hidden" }}>
-                  <div style={{
-                    height: "100%", borderRadius: 100,
-                    background: b.color,
-                    width: `${Math.min((b.used / b.total) * 100, 100)}%`,
-                    transition: "width 0.5s ease",
-                  }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div style={{ marginBottom: 12 }}>
-          <p style={{ fontSize: 11, fontWeight: 600, color: "var(--color-text-muted)", letterSpacing: 1, textTransform: "uppercase", margin: "0 0 10px" }}>QUICK ACTIONS</p>
-          <div style={{ display: "flex", gap: 12 }}>
-            {[
-              { Icon: Plus, label: "Add Entry" },
-              { Icon: RefreshCw, label: "Transfer" },
-            ].map((action) => {
-              const IconComp = action.Icon;
-              return (
-              <button key={action.label} style={{
-                flex: 1, background: "white", borderRadius: 18, border: "none", cursor: "pointer",
-                padding: "16px 12px", display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
-                fontFamily: "var(--font-main)", boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-              }}>
-                <IconComp size={22} />
-                <span style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text-primary)" }}>{action.label}</span>
+              <button
+                type="button"
+                aria-label="Opsi ritme belanja"
+                className="flex h-9 w-9 items-center justify-center rounded-2xl text-[var(--color-text-muted)] hover:bg-[var(--color-soft)]"
+              >
+                <MoreHorizontal className="h-5 w-5" />
               </button>
-            );
-            })}
-          </div>
+            </div>
+            <div className="grid h-36 grid-cols-7 items-end gap-2">
+              {spendingRhythm.map((item) => {
+                const height = `${Math.max((item.amount / maxRhythm) * 100, 18)}%`;
+                const isWeekend = item.day === "Sab" || item.day === "Min";
+                return (
+                  <div key={item.day} className="flex h-full flex-col items-center justify-end gap-2">
+                    <div
+                      className={isWeekend ? "w-full rounded-t-2xl bg-[var(--color-salmon)]" : "w-full rounded-t-2xl bg-[var(--color-teal)]"}
+                      style={{ height }}
+                    />
+                    <span className={isWeekend ? "text-xs font-black text-[var(--color-salmon-dark)]" : "text-xs font-bold text-[var(--color-text-muted)]"}>
+                      {item.day}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
+
+          <Card>
+            <div className="mb-5 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)]">Budget Bulanan</h2>
+                <p className="mt-1 text-sm text-[var(--color-text-muted)]">Batas aman untuk kategori utama.</p>
+              </div>
+              <Badge variant="neutral">Mei</Badge>
+            </div>
+            <div className="space-y-5">
+              {budgets.map((budget) => {
+                const isOver = budget.used > budget.limit;
+                return (
+                  <div key={budget.id}>
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <p className="text-sm font-bold text-[var(--color-text-primary)]">{budget.category}</p>
+                      <p className={isOver ? "text-sm font-black text-[var(--color-salmon-dark)]" : "text-sm font-bold text-[var(--color-text-secondary)]"}>
+                        {formatCurrency(budget.used, true)} / {formatCurrency(budget.limit, true)}
+                      </p>
+                    </div>
+                    <ProgressBar value={budget.used} max={budget.limit} color={budget.color} />
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
         </div>
 
-        {/* Impulse Alert */}
-        <div style={{
-          background: "#FFF3EE", border: "1.5px solid #FDDDD4", borderRadius: 18, padding: "16px 18px",
-          display: "flex", gap: 12, marginBottom: 12, alignItems: "flex-start",
-        }}>
-          <div style={{
-            width: 38, height: 38, borderRadius: "50%", background: "var(--color-salmon-light)",
-            display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-          }}>
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-              <path d="M12 3C8.13 3 5 6.13 5 10V17H19V10C19 6.13 15.87 3 12 3Z" stroke="var(--color-salmon)" strokeWidth="1.8"/>
-              <path d="M10 17V18C10 19.1 10.9 20 12 20C13.1 20 14 19.1 14 18V17" stroke="var(--color-salmon)" strokeWidth="1.8"/>
-            </svg>
-          </div>
-          <div>
-            <p style={{ fontSize: 14, fontWeight: 700, margin: "0 0 4px" }}>Impulse Alert</p>
-            <p style={{ fontSize: 13, color: "var(--color-text-secondary)", margin: 0, lineHeight: 1.5 }}>
-              You've spent 40% more on 'Coffee' this week compared to last. Consider brewing at home tomorrow?
+        <aside className="min-w-0 space-y-5 xl:col-span-1">
+          <Card>
+            <p className="text-xs font-black uppercase tracking-[0.16em] text-[var(--color-text-muted)]">
+              Quick actions
             </p>
-          </div>
-        </div>
+            <div className="mt-5 grid grid-cols-2 gap-3">
+              {quickActions.map((action) => {
+                const Icon = action.icon;
+                return (
+                  <button
+                    key={action.label}
+                    type="button"
+                    onClick={() => navigate(action.path)}
+                    className="flex min-h-28 flex-col items-center justify-center gap-3 rounded-3xl border border-[var(--color-border)] bg-white px-3 text-sm font-black text-[var(--color-text-primary)] transition hover:border-[var(--color-teal-dark)] hover:bg-[var(--color-teal-bg)]"
+                  >
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-soft)] text-[var(--color-teal-ink)]">
+                      <Icon className="h-6 w-6" />
+                    </span>
+                    {action.label}
+                  </button>
+                );
+              })}
+            </div>
+          </Card>
 
-        {/* Leak Detected Banner */}
-        <div style={{
-          background: "var(--color-teal)", borderRadius: 20, padding: "20px",
-          marginBottom: 12,
-        }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
-            <h3 style={{ fontSize: 20, fontWeight: 800, margin: 0, color: "var(--color-text-primary)" }}>Leak Detected</h3>
-            <span style={{
-              fontSize: 12, fontWeight: 700, background: "rgba(0,0,0,0.1)",
-              borderRadius: 100, padding: "3px 10px", color: "var(--color-text-primary)",
-            }}>~$40/mo</span>
-          </div>
-          <p style={{ fontSize: 13, color: "var(--color-text-secondary)", margin: "0 0 16px" }}>
-            Unused gym subscription identified.
-          </p>
-          <button style={{
-            width: "100%", background: "white", border: "none", borderRadius: 12,
-            padding: "12px", fontSize: 14, fontWeight: 700, cursor: "pointer",
-            color: "var(--color-teal-dark)", fontFamily: "var(--font-main)",
-          }}>
-            Review Subs
-          </button>
-        </div>
+          <Card className="!border-[var(--color-salmon-light)] !bg-[var(--color-salmon-bg)]">
+            <div className="flex gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--color-salmon-light)] text-[var(--color-salmon-dark)]">
+                <RefreshCw className="h-6 w-6" />
+              </span>
+              <div>
+                <h2 className="text-lg font-black text-[var(--color-text-primary)]">{primaryWarning.title}</h2>
+                <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
+                  Pengeluaran kopi naik 40% dari minggu lalu. Coba brewing di rumah besok?
+                </p>
+              </div>
+            </div>
+          </Card>
 
-      </div>
-      <BottomNav />
+          <Card className="!border-[var(--color-teal)] !bg-[var(--color-teal)] !text-white">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.14em] text-white/80">Leak detected</p>
+                <h2 className="mt-2 text-3xl font-black leading-tight">Kebocoran kecil ditemukan</h2>
+              </div>
+              <Badge variant="teal" className="bg-white/25 text-white">
+                ~{formatCurrency(monthlySummary.leakEstimate, true)}/bln
+              </Badge>
+            </div>
+            <p className="mt-5 text-sm leading-6 text-white/85">{primaryLeak.description}</p>
+            <Button variant="outline" fullWidth className="mt-6 border-white bg-white text-[var(--color-teal-ink)]">
+              Review Langganan
+            </Button>
+          </Card>
+        </aside>
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-3">
+        {insights.map((insight) => (
+          <InsightCard key={insight.id} insight={insight} />
+        ))}
+      </section>
     </div>
   );
 }

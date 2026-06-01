@@ -1,122 +1,150 @@
 import { useState } from "react";
+import {
+  ArrowLeft,
+  BookOpen,
+  Calendar,
+  Car,
+  Film,
+  HeartPulse,
+  Plus,
+  ShoppingBag,
+  UtensilsCrossed,
+  Wallet,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import BottomNav from "../components/layout/BottomNav";
-import { UtensilsCrossed, Car, ShoppingBag, Film, Pill, BookOpen, Wallet, Plus } from "lucide-react";
+import Button from "../components/Button";
+import Card from "../components/Card";
+import Input from "../components/Input";
+import SectionHeader from "../components/SectionHeader";
+import { cn } from "../utils/cn";
+import type { LucideIcon } from "lucide-react";
 
-const categories = [
-  { Icon: UtensilsCrossed, label: "Makanan" },
-  { Icon: Car, label: "Transport" },
-  { Icon: ShoppingBag, label: "Belanja" },
-  { Icon: Film, label: "Hiburan" },
-  { Icon: Pill, label: "Kesehatan" },
-  { Icon: BookOpen, label: "Pendidikan" },
-  { Icon: Wallet, label: "Tabungan" },
-  { Icon: Plus, label: "Lainnya" },
+type TransactionFormType = "pengeluaran" | "pemasukan";
+
+const transactionTypes: TransactionFormType[] = ["pengeluaran", "pemasukan"];
+
+const categories: { icon: LucideIcon; label: string }[] = [
+  { icon: UtensilsCrossed, label: "Makanan" },
+  { icon: Car, label: "Transportasi" },
+  { icon: ShoppingBag, label: "Belanja" },
+  { icon: Film, label: "Hiburan" },
+  { icon: HeartPulse, label: "Kesehatan" },
+  { icon: BookOpen, label: "Pendidikan" },
+  { icon: Wallet, label: "Tabungan" },
+  { icon: Plus, label: "Lainnya" },
 ];
 
 export default function TambahTransaksi() {
   const navigate = useNavigate();
-  const [type, setType] = useState<"pengeluaran" | "pemasukan">("pengeluaran");
-  const [selectedCat, setSelectedCat] = useState("");
+  const [type, setType] = useState<TransactionFormType>("pengeluaran");
+  const [selectedCategory, setSelectedCategory] = useState("Makanan");
   const [amount, setAmount] = useState("");
 
   return (
-    <div className="app-shell">
-      {/* Header */}
-      <div style={{ padding: "16px 20px 12px", display: "flex", alignItems: "center", gap: 12 }}>
-        <button onClick={() => navigate(-1)} style={{ background: "none", border: "none", cursor: "pointer" }}>
-          <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
-            <path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="var(--color-text-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-        <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>Tambah Transaksi</h2>
-      </div>
+    <div className="space-y-6">
+      <SectionHeader
+        eyebrow="Catat transaksi"
+        title="Tambah Transaksi"
+        description="Masukkan transaksi baru sekarang agar analisis SpendQ makin akurat."
+        action={
+          <Button variant="outline" iconLeft={<ArrowLeft className="h-4 w-4" />} onClick={() => navigate(-1)}>
+            Kembali
+          </Button>
+        }
+      />
 
-      <div style={{ padding: "0 16px 90px" }}>
-        {/* Type toggle */}
-        <div style={{
-          display: "flex", background: "white", borderRadius: 16, padding: 4,
-          marginBottom: 20, gap: 4,
-        }}>
-          {["pengeluaran", "pemasukan"].map(t => (
-            <button key={t} onClick={() => setType(t as any)} style={{
-              flex: 1, padding: "10px", borderRadius: 12, border: "none",
-              background: type === t ? (t === "pengeluaran" ? "var(--color-salmon)" : "var(--color-teal-dark)") : "transparent",
-              color: type === t ? "white" : "var(--color-text-muted)",
-              fontSize: 14, fontWeight: 600, fontFamily: "var(--font-main)", cursor: "pointer",
-              transition: "all 0.2s", textTransform: "capitalize",
-            }}>{t}</button>
-          ))}
-        </div>
+      <Card className="mx-auto max-w-4xl">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+          <div className="rounded-[1.5rem] bg-[var(--color-soft)] p-5">
+            <p className="text-sm font-black text-[var(--color-text-primary)]">Jenis Transaksi</p>
+            <div className="mt-4 grid grid-cols-2 gap-2 rounded-2xl bg-white p-1">
+              {transactionTypes.map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => setType(item)}
+                  className={cn(
+                    "rounded-xl px-4 py-3 text-sm font-black capitalize transition",
+                    type === item
+                      ? item === "pengeluaran"
+                        ? "bg-[var(--color-salmon)] text-white"
+                        : "bg-[var(--color-teal-dark)] text-white"
+                      : "text-[var(--color-text-muted)] hover:bg-[var(--color-soft)]",
+                  )}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
 
-        {/* Amount input */}
-        <div style={{ textAlign: "center", marginBottom: 28 }}>
-          <p style={{ fontSize: 13, color: "var(--color-text-muted)", margin: "0 0 8px" }}>Jumlah</p>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-            <span style={{ fontSize: 24, fontWeight: 700, color: "var(--color-text-muted)" }}>Rp</span>
-            <input
-              type="number"
-              value={amount}
-              onChange={e => setAmount(e.target.value)}
-              placeholder="0"
-              style={{
-                border: "none", outline: "none", background: "transparent",
-                fontSize: 40, fontWeight: 800, fontFamily: "var(--font-main)",
-                color: type === "pengeluaran" ? "var(--color-salmon)" : "var(--color-teal-dark)",
-                width: "60%", textAlign: "center",
-              }}
+            <div className="mt-8 text-center">
+              <p className="text-sm font-bold text-[var(--color-text-muted)]">Jumlah</p>
+              <div className="mt-3 flex items-center justify-center gap-2">
+                <span className="text-2xl font-black text-[var(--color-text-muted)]">Rp</span>
+                <input
+                  type="number"
+                  value={amount}
+                  onChange={(event) => setAmount(event.target.value)}
+                  placeholder="0"
+                  className={cn(
+                    "min-w-0 flex-1 bg-transparent text-center text-5xl font-black outline-none placeholder:text-[var(--color-track)]",
+                    type === "pengeluaran" ? "text-[var(--color-salmon-dark)]" : "text-[var(--color-teal-ink)]",
+                  )}
+                />
+              </div>
+              <div className="mx-auto mt-3 h-1 max-w-xs rounded-full bg-[var(--color-border)]" />
+            </div>
+
+            <div className="mt-8">
+              <p className="mb-3 text-sm font-black text-[var(--color-text-primary)]">Kategori</p>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2">
+                {categories.map((category) => {
+                  const Icon = category.icon;
+                  const isSelected = selectedCategory === category.label;
+                  return (
+                    <button
+                      key={category.label}
+                      type="button"
+                      onClick={() => setSelectedCategory(category.label)}
+                      className={cn(
+                        "flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border bg-white px-3 text-center text-xs font-black transition",
+                        isSelected
+                          ? "border-[var(--color-salmon)] text-[var(--color-salmon-dark)] shadow-[0_10px_24px_rgba(242,140,106,0.14)]"
+                          : "border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-teal-dark)]",
+                      )}
+                    >
+                      <Icon className="h-6 w-6" />
+                      {category.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-5">
+            <Input name="description" label="Deskripsi" placeholder="Contoh: Makan siang bersama tim" />
+            <Input name="merchant" label="Merchant" placeholder="Contoh: Kopi Kenangan" />
+            <Input name="method" label="Metode Pembayaran" placeholder="Contoh: Kartu Debit / E-Wallet" />
+            <Input
+              name="date"
+              label="Tanggal"
+              type="date"
+              defaultValue={new Date().toISOString().slice(0, 10)}
+              iconLeft={<Calendar className="h-5 w-5" />}
             />
-          </div>
-          <div style={{ height: 2, background: "var(--color-border)", borderRadius: 2, margin: "8px auto 0", width: "80%" }} />
-        </div>
-
-        {/* Description */}
-        <div style={{ marginBottom: 20 }}>
-          <label style={{ display: "block", fontSize: 13, fontWeight: 600, marginBottom: 8 }}>Deskripsi</label>
-          <input className="input-field" placeholder="Contoh: Makan siang bersama tim..." />
-        </div>
-
-        {/* Category */}
-        <div style={{ marginBottom: 24 }}>
-          <label style={{ display: "block", fontSize: 13, fontWeight: 600, marginBottom: 12 }}>Kategori</label>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
-            {categories.map(cat => {
-              const IconComp = cat.Icon;
-              return (
-              <button
-                key={cat.label}
-                onClick={() => setSelectedCat(cat.label)}
-                style={{
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
-                  padding: "12px 8px", borderRadius: 14, border: "1.5px solid",
-                  borderColor: selectedCat === cat.label ? "var(--color-salmon)" : "var(--color-border)",
-                  background: selectedCat === cat.label ? "#FFF3EE" : "white",
-                  cursor: "pointer", fontFamily: "var(--font-main)",
-                }}
-              >
-                <IconComp size={22} />
-                <span style={{
-                  fontSize: 11, fontWeight: selectedCat === cat.label ? 700 : 400,
-                  color: selectedCat === cat.label ? "var(--color-salmon)" : "var(--color-text-secondary)",
-                }}>{cat.label}</span>
-              </button>
-            );
-            })}
+            <div className="rounded-3xl border border-[var(--color-teal)] bg-[var(--color-teal-bg)] p-5">
+              <p className="font-black text-[var(--color-teal-ink)]">Catatan Quokka</p>
+              <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
+                Detail kecil seperti merchant dan metode bayar membantu SpendQ menemukan kebocoran berulang dengan lebih tepat.
+              </p>
+            </div>
+            <Button fullWidth buttonSize="lg">
+              Simpan Transaksi
+            </Button>
           </div>
         </div>
-
-        {/* Date */}
-        <div style={{ marginBottom: 28 }}>
-          <label style={{ display: "block", fontSize: 13, fontWeight: 600, marginBottom: 8 }}>Tanggal</label>
-          <input className="input-field" type="date" defaultValue={new Date().toISOString().slice(0, 10)} />
-        </div>
-
-        {/* Submit */}
-        <button className="btn-primary" style={{ fontSize: 16, padding: "16px" }}>
-          Simpan Transaksi
-        </button>
-      </div>
-      <BottomNav />
+      </Card>
     </div>
   );
 }
