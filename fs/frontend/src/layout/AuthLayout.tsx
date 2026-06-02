@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { ShieldCheck, Sparkles, WalletCards } from "lucide-react";
+﻿import type { ReactNode } from "react";
+import { Sparkles, WalletCards, Bell, BarChart3 } from "lucide-react";
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -9,18 +9,12 @@ interface AuthLayoutProps {
   mode: "login" | "register";
 }
 
-function AuthLayout({
-  children,
-  image,
-  title,
-  subtitle,
-  mode,
-}: AuthLayoutProps) {
+function AuthLayout({ children, image, title, subtitle, mode }: AuthLayoutProps) {
   return (
-    <main className="min-h-dvh bg-[var(--color-bg)] px-4 py-8 sm:px-6 lg:grid lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,0.75fr)] lg:gap-8 lg:px-10 lg:py-10 xl:px-16">
-      <section className="mx-auto flex w-full max-w-xl flex-col items-center justify-center text-center lg:max-w-none lg:items-start lg:text-left">
+    <main className="min-h-dvh bg-[var(--color-bg)] px-4 py-6 sm:px-6 lg:grid lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,0.72fr)] lg:gap-10 lg:px-10 lg:py-10 xl:px-16">
+      <section className="mx-auto mb-6 flex w-full max-w-md flex-col items-center text-center lg:mb-0 lg:max-w-none lg:items-start lg:justify-center lg:text-left">
         <div className="flex items-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--color-yellow)] text-[var(--color-text-primary)]">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-yellow)] text-[var(--color-text-primary)]">
             <Sparkles className="h-6 w-6" />
           </span>
           <div>
@@ -29,30 +23,30 @@ function AuthLayout({
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center gap-6 lg:flex-row lg:items-center">
+        <div className="mt-6 flex flex-col items-center gap-4 lg:mt-10 lg:flex-row lg:items-center">
           <img
             src={image}
-            alt="Quokka financial coach"
-            className="h-32 w-32 rounded-full object-cover object-top shadow-[0_18px_50px_rgba(242,140,106,0.24)] ring-8 ring-white sm:h-40 sm:w-40"
+            alt="Quokka BUDU"
+            className="h-20 w-20 rounded-full object-cover object-top shadow-[0_14px_36px_rgba(242,140,106,0.20)] ring-4 ring-white sm:h-28 sm:w-28 lg:h-36 lg:w-36 lg:ring-8"
           />
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-teal-ink)]">
-              {mode === "login" ? "Welcome back" : "Mulai lebih sadar uang"}
+            <p className="hidden text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-teal-ink)] lg:block">
+              {mode === "login" ? "Masuk" : "Daftar"}
             </p>
-            <h1 className="mt-3 max-w-xl text-4xl font-black leading-tight text-[var(--color-text-primary)] sm:text-5xl">
+            <h1 className="mt-2 max-w-xl text-3xl font-black leading-tight text-[var(--color-text-primary)] sm:text-4xl">
               {title}
             </h1>
-            <p className="mt-4 max-w-lg text-base leading-7 text-[var(--color-text-secondary)]">
+            <p className="mt-3 max-w-md text-sm leading-6 text-[var(--color-text-secondary)] sm:text-base">
               {subtitle}
             </p>
           </div>
         </div>
 
-        <div className="mt-10 grid w-full max-w-2xl gap-3 sm:grid-cols-3">
+        <div className="mt-8 hidden w-full max-w-xl gap-3 lg:grid lg:grid-cols-3">
           {[
-            { icon: WalletCards, title: "Cashflow jelas", text: "Pantau pengeluaran harian tanpa ribet." },
-            { icon: ShieldCheck, title: "Smart warning", text: "Peringatan terasa seperti coach, bukan alarm." },
-            { icon: Sparkles, title: "Persona finansial", text: "Kenali ritme belanja dan kebiasaanmu." },
+            { icon: WalletCards, title: "Catat", text: "Pengeluaran harian." },
+            { icon: BarChart3, title: "Pahami", text: "Pola belanjamu." },
+            { icon: Bell, title: "Waspada", text: "Bocor kecil." },
           ].map((item) => {
             const Icon = item.icon;
             return (
@@ -66,7 +60,7 @@ function AuthLayout({
         </div>
       </section>
 
-      <section className="mx-auto mt-8 flex w-full max-w-md items-center lg:mt-0">
+      <section className="mx-auto flex w-full max-w-md items-center">
         <div className="w-full rounded-[2rem] border border-[var(--color-border)] bg-white p-5 shadow-[0_24px_70px_rgba(77,62,38,0.10)] sm:p-7">
           {children}
         </div>

@@ -1,4 +1,4 @@
-import { HelpCircle, LogOut, Sparkles } from "lucide-react";
+﻿import { LogOut, Sparkles } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { navigationItems } from "../services/mockData";
 import { cn } from "../utils/cn";
@@ -12,7 +12,7 @@ function Sidebar() {
         </span>
         <div className="hidden xl:block">
           <p className="text-2xl font-black tracking-tight text-[var(--color-brand)]">BUDU</p>
-          <p className="text-xs font-medium text-[var(--color-text-muted)]">Your financial pal</p>
+          <p className="text-xs font-medium text-[var(--color-text-muted)]">Butuh Duit</p>
         </div>
       </NavLink>
 
@@ -40,34 +40,13 @@ function Sidebar() {
         })}
       </nav>
 
-      <div className="space-y-3">
-        <div className="hidden rounded-3xl bg-[var(--color-soft)] p-4 xl:block">
-          <p className="text-sm font-black text-[var(--color-text-primary)]">Butuh arahan?</p>
-          <p className="mt-1 text-xs leading-5 text-[var(--color-text-secondary)]">
-            Tanya Quokka untuk membaca kebiasaan belanjamu minggu ini.
-          </p>
-          <NavLink
-            to="/analisis"
-            className="mt-3 inline-flex min-h-10 w-full items-center justify-center rounded-2xl bg-[var(--color-salmon)] px-4 text-sm font-bold text-white"
-          >
-            Tanya Quokka
-          </NavLink>
-        </div>
-        <NavLink
-          to="/profil"
-          className="flex items-center justify-center gap-3 rounded-2xl px-3 py-3 text-sm font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-soft)] xl:justify-start xl:px-4"
-        >
-          <HelpCircle className="h-5 w-5" />
-          <span className="hidden xl:inline">Help Center</span>
-        </NavLink>
-        <NavLink
-          to="/"
-          className="flex items-center justify-center gap-3 rounded-2xl px-3 py-3 text-sm font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-soft)] xl:justify-start xl:px-4"
-        >
-          <LogOut className="h-5 w-5" />
-          <span className="hidden xl:inline">Keluar</span>
-        </NavLink>
-      </div>
+      <NavLink
+        to="/"
+        className="flex items-center justify-center gap-3 rounded-2xl px-3 py-3 text-sm font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-soft)] xl:justify-start xl:px-4"
+      >
+        <LogOut className="h-5 w-5" />
+        <span className="hidden xl:inline">Keluar</span>
+      </NavLink>
     </aside>
   );
 }

@@ -1,4 +1,4 @@
-import Badge from "./Badge";
+﻿import Badge from "./Badge";
 import { cn } from "../utils/cn";
 import { formatCurrency } from "../utils/formatCurrency";
 import { formatDate, formatTime } from "../utils/formatDate";
@@ -38,7 +38,7 @@ function TransactionItem({ transaction, compact = false }: TransactionItemProps)
               {transaction.title}
             </h3>
             <p className="mt-0.5 truncate text-xs text-[var(--color-text-muted)]">
-              {transaction.method} · {formatDate(transaction.date)} {formatTime(transaction.date)}
+              {transaction.method} - {formatDate(transaction.date)} {formatTime(transaction.date)}
             </p>
           </div>
           <p className={cn("shrink-0 text-sm font-black", amountClass)}>
@@ -60,3 +60,4 @@ function TransactionItem({ transaction, compact = false }: TransactionItemProps)
 }
 
 export default TransactionItem;
+

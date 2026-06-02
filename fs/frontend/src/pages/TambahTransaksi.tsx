@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import {
   ArrowLeft,
   BookOpen,
@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import Input from "../components/Input";
-import SectionHeader from "../components/SectionHeader";
+import PageHeader from "../components/PageHeader";
 import { cn } from "../utils/cn";
 import type { LucideIcon } from "lucide-react";
 
@@ -42,19 +42,18 @@ export default function TambahTransaksi() {
 
   return (
     <div className="space-y-6">
-      <SectionHeader
-        eyebrow="Catat transaksi"
+      <PageHeader
         title="Tambah Transaksi"
-        description="Masukkan transaksi baru sekarang agar analisis BUDU makin akurat."
+        description="Tambah transaksi baru."
         action={
-          <Button variant="outline" iconLeft={<ArrowLeft className="h-4 w-4" />} onClick={() => navigate(-1)}>
-            Kembali
+          <Button className="md:hidden" variant="outline" buttonSize="icon" onClick={() => navigate(-1)} aria-label="Kembali">
+            <ArrowLeft className="h-5 w-5" />
           </Button>
         }
       />
 
-      <Card className="mx-auto max-w-4xl">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+      <Card className="mx-auto max-w-5xl">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
           <div className="rounded-[1.5rem] bg-[var(--color-soft)] p-5">
             <p className="text-sm font-black text-[var(--color-text-primary)]">Jenis Transaksi</p>
             <div className="mt-4 grid grid-cols-2 gap-2 rounded-2xl bg-white p-1">
@@ -92,7 +91,6 @@ export default function TambahTransaksi() {
                   )}
                 />
               </div>
-              <div className="mx-auto mt-3 h-1 max-w-xs rounded-full bg-[var(--color-border)]" />
             </div>
 
             <div className="mt-8">
@@ -107,7 +105,7 @@ export default function TambahTransaksi() {
                       type="button"
                       onClick={() => setSelectedCategory(category.label)}
                       className={cn(
-                        "flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border bg-white px-3 text-center text-xs font-black transition",
+                        "flex min-h-20 flex-col items-center justify-center gap-2 rounded-2xl border bg-white px-3 text-center text-xs font-black transition",
                         isSelected
                           ? "border-[var(--color-salmon)] text-[var(--color-salmon-dark)] shadow-[0_10px_24px_rgba(242,140,106,0.14)]"
                           : "border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-teal-dark)]",
@@ -123,9 +121,9 @@ export default function TambahTransaksi() {
           </div>
 
           <div className="space-y-5">
-            <Input name="description" label="Deskripsi" placeholder="Contoh: Makan siang bersama tim" />
+            <Input name="description" label="Deskripsi" placeholder="Contoh: Makan siang" />
             <Input name="merchant" label="Merchant" placeholder="Contoh: Kopi Kenangan" />
-            <Input name="method" label="Metode Pembayaran" placeholder="Contoh: Kartu Debit / E-Wallet" />
+            <Input name="method" label="Metode Pembayaran" placeholder="Debit, e-wallet, atau tunai" />
             <Input
               name="date"
               label="Tanggal"
@@ -133,12 +131,15 @@ export default function TambahTransaksi() {
               defaultValue={new Date().toISOString().slice(0, 10)}
               iconLeft={<Calendar className="h-5 w-5" />}
             />
-            <div className="rounded-3xl border border-[var(--color-teal)] bg-[var(--color-teal-bg)] p-5">
-              <p className="font-black text-[var(--color-teal-ink)]">Catatan Quokka</p>
-              <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
-                Detail kecil seperti merchant dan metode bayar membantu BUDU menemukan kebocoran berulang dengan lebih tepat.
-              </p>
-            </div>
+            <label className="block">
+              <span className="mb-2 block text-sm font-semibold text-[var(--color-text-primary)]">Catatan</span>
+              <textarea
+                name="notes"
+                rows={4}
+                placeholder="Opsional"
+                className="w-full resize-none rounded-2xl border border-[var(--color-border)] bg-[var(--color-soft)] px-4 py-3 text-sm font-medium text-[var(--color-text-primary)] outline-none transition placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-teal-dark)] focus:bg-white focus:ring-4 focus:ring-[var(--color-teal-bg)]"
+              />
+            </label>
             <Button fullWidth buttonSize="lg">
               Simpan Transaksi
             </Button>
