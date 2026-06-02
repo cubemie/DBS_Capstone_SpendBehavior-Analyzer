@@ -1,16 +1,13 @@
-import {
+﻿import {
   AlertTriangle,
   Banknote,
-  Bell,
   CalendarClock,
   Car,
   ChartNoAxesColumnIncreasing,
-  CircleDollarSign,
   Coffee,
   CreditCard,
   Droplets,
   Home,
-  Landmark,
   Lightbulb,
   PlusCircle,
   ReceiptText,
@@ -80,7 +77,7 @@ export const transactions: Transaction[] = [
     id: "tx-3",
     title: "Gaji Bulanan",
     merchant: "PT Nusantara Digital",
-    method: "Transfer Bank",
+    method: "Bank",
     category: "Pendapatan",
     type: "income",
     amount: 15000000,
@@ -131,8 +128,7 @@ export const warnings: Warning[] = [
   {
     id: "warning-1",
     title: "Pengeluaran Kopi Meningkat",
-    description:
-      "Kamu sudah jajan kopi 6 kali minggu ini dengan total Rp 320.000. Coba jadwalkan dua hari kopi rumahan agar budget tetap santai.",
+    description: "Kopi naik minggu ini: 6 kali, total Rp 320.000. Coba batasi dua hari.",
     label: "Impulsif",
     severity: "warning",
     actionLabel: "Lihat Detail",
@@ -141,8 +137,7 @@ export const warnings: Warning[] = [
   {
     id: "warning-2",
     title: "Transaksi Nominal Besar",
-    description:
-      "Ada pengeluaran sebesar Rp 2.500.000 di TechStore. Jika ini valid, kategorikan sekarang agar analisis bulan ini tetap akurat.",
+    description: "Ada transaksi Rp 2.500.000 di TechStore. Cek kategorinya dulu.",
     label: "Tak Biasa",
     severity: "info",
     actionLabel: "Kategorikan",
@@ -154,28 +149,28 @@ export const moneyLeaks: Warning[] = [
   {
     id: "leak-1",
     title: "Langganan Pasif",
-    description: "MovieFlix masih menagih Rp 120.000/bulan, padahal belum dipakai selama 2 bulan.",
+    description: "MovieFlix masih menagih Rp 120.000/bulan dan jarang dipakai.",
     label: "Rp 120rb/bln",
     severity: "danger",
-    actionLabel: "Batalkan Langganan",
+    actionLabel: "Cek Detail",
     icon: CalendarClock,
   },
   {
     id: "leak-2",
     title: "Biaya Admin Kecil",
-    description: "Top-up nominal kecil membuat biaya admin menumpuk sekitar Rp 45.000 bulan ini.",
+    description: "Top-up kecil bikin admin menumpuk Rp 45.000 bulan ini.",
     label: "Rp 45rb",
     severity: "warning",
-    actionLabel: "Lihat Tips Hemat",
+    actionLabel: "Lihat Tips",
     icon: Wallet,
   },
   {
     id: "leak-3",
     title: "Semua Aman",
-    description: "Tidak ada kebocoran lain yang terdeteksi. Budget langganan masih terkendali.",
+    description: "Belum ada kebocoran lain yang terlihat.",
     label: "Aman",
     severity: "success",
-    actionLabel: "Pantau Lagi",
+    actionLabel: "Pantau",
     icon: Droplets,
   },
 ];
@@ -184,14 +179,14 @@ export const insights: Insight[] = [
   {
     id: "insight-1",
     title: "Kurangi Jajan Kopi",
-    description: "Anda menghabiskan Rp 800rb minggu ini untuk kopi. Coba buat sendiri dua kali dalam seminggu.",
+    description: "Kopi lagi tinggi minggu ini. Coba ganti dua kali dengan kopi rumah.",
     tone: "coral",
     icon: Coffee,
   },
   {
     id: "insight-2",
     title: "Peluang Menabung",
-    description: "Sisa budget transportasi Rp 300rb bisa dialihkan ke tabungan darurat.",
+    description: "Sisa budget transportasi bisa masuk tabungan darurat.",
     tone: "teal",
     icon: Target,
   },
@@ -229,9 +224,5 @@ export const monthlySummary = {
   leakEstimate: 45000,
 };
 
-export const quickActions = [
-  { label: "Tambah Catatan", path: "/tambah", icon: PlusCircle },
-  { label: "Transfer", path: "/riwayat", icon: Landmark },
-  { label: "Cek Budget", path: "/analisis", icon: CircleDollarSign },
-  { label: "Peringatan", path: "/peringatan", icon: Bell },
-];
+
+

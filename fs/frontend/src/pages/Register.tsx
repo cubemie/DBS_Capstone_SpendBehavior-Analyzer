@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { ArrowRight, Lock, Mail, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import quokkaImg from "../assets/quokka-register.png";
@@ -14,25 +14,22 @@ export default function Register() {
   return (
     <AuthLayout
       image={quokkaImg}
-      title="Mulai perjalanan finansial yang lebih tenang"
-      subtitle="Buat akun BUDU dan biarkan Quokka membantu mencatat, membaca, dan memberi saran pengeluaran."
+      title="Mulai kenal pola belanjamu"
+      subtitle="Catat transaksi, lihat pola, lalu ambil keputusan lebih tenang."
       mode="register"
     >
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--color-teal-ink)]">
-          Daftar BUDU
-        </p>
-        <h2 className="mt-2 text-2xl font-black text-[var(--color-text-primary)]">Buat akun baru</h2>
+        <h2 className="text-2xl font-black text-[var(--color-text-primary)]">Buat akun baru</h2>
         <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
-          Hanya butuh beberapa detail untuk menyiapkan dashboard pertamamu.
+          Mulai catat pengeluaran dan kenali pola belanjamu.
         </p>
       </div>
 
       <div className="mt-7 space-y-4">
         <Input
-          label="Nama Lengkap"
+          label="Nama"
           name="name"
-          placeholder="Masukkan nama lengkap"
+          placeholder="Nama lengkap"
           iconLeft={<User className="h-5 w-5" />}
         />
         <Input
@@ -68,8 +65,7 @@ export default function Register() {
             ) : null}
           </span>
           <span className="text-sm leading-6 text-[var(--color-text-secondary)]">
-            Saya setuju dengan <strong className="text-[var(--color-salmon-dark)]">Syarat</strong> dan{" "}
-            <strong className="text-[var(--color-salmon-dark)]">Ketentuan</strong> BUDU.
+            Saya setuju dengan Syarat dan Ketentuan BUDU.
           </span>
         </button>
 
@@ -91,7 +87,7 @@ export default function Register() {
             onClick={() => navigate("/")}
             className="font-black text-[var(--color-salmon-dark)]"
           >
-            Masuk di sini
+            Masuk
           </button>
         </p>
       </div>

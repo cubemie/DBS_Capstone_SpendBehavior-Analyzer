@@ -1,5 +1,4 @@
-import { Check, X } from "lucide-react";
-import Badge from "./Badge";
+﻿import Badge from "./Badge";
 import Button from "./Button";
 import Card from "./Card";
 import { cn } from "../utils/cn";
@@ -36,18 +35,9 @@ function WarningCard({ warning }: WarningCardProps) {
           {warning.description}
         </p>
       </div>
-      <div className="flex items-center gap-3">
-        <Button variant={warning.severity === "warning" ? "primary" : "outline"} fullWidth>
-          {warning.actionLabel}
-        </Button>
-        <Button
-          variant={warning.severity === "warning" ? "ghost" : "secondary"}
-          buttonSize="icon"
-          aria-label={warning.severity === "warning" ? "Abaikan peringatan" : "Tandai aman"}
-        >
-          {warning.severity === "warning" ? <X className="h-5 w-5" /> : <Check className="h-5 w-5" />}
-        </Button>
-      </div>
+      <Button variant={warning.severity === "warning" ? "primary" : "outline"} fullWidth>
+        {warning.actionLabel}
+      </Button>
     </Card>
   );
 }
