@@ -1,0 +1,28 @@
+info:
+  name: Create Transaction
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/v1/transactions"
+  body:
+    type: json
+    data: |-
+      {
+        "categoryId": "{{expenseCategoryId}}",
+        "title": "Makan siang",
+        "merchantName": "Warung Nasi",
+        "paymentMethod": "qris",
+        "type": "expense",
+        "amountIdr": 35000,
+        "transactionDate": "2026-06-02T12:00:00+07:00",
+        "notes": "Manual entry"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
