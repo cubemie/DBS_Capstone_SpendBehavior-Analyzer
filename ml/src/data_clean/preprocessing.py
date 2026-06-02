@@ -9,15 +9,28 @@ def load_and_preprocess_data(data_path: str, scaler_save_path: str):
     
     # Fitur numerik utama
     feature_cols = [
-        'total_spending_idr', 'avg_txn_idr', 'median_txn_idr', 'max_txn_idr', 
-        'txn_count', 'std_amount_idr', 'weekend_ratio', 'night_ratio', 
-        'month_start_ratio', 'month_end_ratio', 'above_avg_ratio', 'spike_ratio', 
-        'impulse_score', 'unique_categories', 'unique_merchants', 'active_months', 
-        'spending_cov', 'avg_dist_merchant', 'fraud_ratio'
+        'avg_txn_idr',          # Spending magnitude (single representative)
+        'txn_count',            # Activity volume
+        'weekend_ratio',        # Temporal pattern - weekend vs weekday
+        'night_ratio',          # Temporal pattern - night vs day
+        'above_avg_ratio',      # Overspending tendency
+        'spike_ratio',          # Spending irregularity / lack of planning
+        'impulse_score',        # Direct impulse measurement
+        'unique_categories',    # Spending diversity (strongest predictor)
+        'spending_cov',         # Spending stability / coefficient of variation
     ]
-    
-    # Menambahkan semua fitur kategori belanja (cat_*)
-    cat_cols = [col for col in df.columns if col.startswith('cat_')]
+    cat_cols = [
+        'cat_makanan_minuman_ratio',     # r = -0.53
+        'cat_transportasi_ratio',        # r = -0.44
+        'cat_kesehatan_kecantik_ratio',     # r = -0.37
+        'cat_sembako_kebutuhan__ratio',     # r = -0.27
+        'cat_kesehatan_ratio',           # r = +0.26
+        'cat_pendidikan_ratio',          # r = -0.25
+        'cat_belanja_online_ratio',      # r = -0.24
+        'cat_pulsa_data_ratio',        # r = -0.20
+        'cat_hiburan_ratio',             # r = -0.11
+        'cat_fashion_pakaian_ratio',     # r = -0.07
+    ]
     feature_cols.extend(cat_cols)
     
     X = df[feature_cols].fillna(0)

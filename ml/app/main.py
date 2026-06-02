@@ -4,7 +4,12 @@ from typing import List
 import numpy as np
 import tensorflow as tf
 import joblib
-import pandas as pd  # Tambahkan import pandas untuk membaca data saat tes
+import pandas as pd  
+import json
+
+# 0. KONFIGURASI DINAMIS (Configuration-Driven)
+with open("feature_order.json", "r") as f:
+    FEATURE_NAMES = json.load(f)["feature_order"]
 
 # 1. Inisialisasi Aplikasi API
 app = FastAPI(title="SpendBehavior AI API")
@@ -23,7 +28,7 @@ PERSONA_LABELS = {0: "Emotional Spender", 1: "Impulsive Spender", 2: "Rational S
 class PredictionRequest(BaseModel):
     features: List[float]
 
-# --- FUNGSI RULE-BASED: SMART WARNING SYSTEM ---
+# FUNGSI RULE-BASED: SMART WARNING SYSTEM
 def get_smart_warnings(profile: dict) -> list:
     warnings = []
     if profile.get('weekend_ratio', 0) > 0.4:
@@ -39,18 +44,34 @@ def get_smart_warnings(profile: dict) -> list:
         warnings.append("✅ Pola pengeluaran stabil, tidak ada anomali terdeteksi.")
         
     return warnings
-#1. ENDPOINT PRODUCTION (Untuk digunakan oleh Tim Backend/Web) ---
+
+# 1. ENDPOINT PRODUCTION (AI + Rule Based)
 @app.post("/predict")
 def predict_persona(payload: PredictionRequest):
     if model is None or scaler is None:
         raise HTTPException(status_code=503, detail="Model AI belum siap.")
 
-    input_data = np.array([payload.features])
+    features_list = payload.features
+    
+    # Validasi dinamis mengikuti jumlah di file JSON
+    if len(features_list) != len(FEATURE_NAMES):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Jumlah fitur harus {len(FEATURE_NAMES)}, tapi dapat {len(features_list)}"
+        )
+
+    # --- 1. PROSES PREDIKSI AI ---
+    input_data = np.array([features_list])
     scaled_data = scaler.transform(input_data)
     
     preds = model.predict(scaled_data, verbose=0)[0]
     class_idx = int(np.argmax(preds))
     
+    # --- 2. PROSES RULE-BASED ---
+    profile_dict = dict(zip(FEATURE_NAMES, features_list))
+    warnings = get_smart_warnings(profile_dict)
+    
+    # --- 3. KEMBALIKAN SEMUANYA KE FRONTEND ---
     return {
         "persona": PERSONA_LABELS[class_idx],
         "confidence": float(preds[class_idx]),
@@ -58,36 +79,45 @@ def predict_persona(payload: PredictionRequest):
             "emotional": float(preds[0]),
             "impulsive": float(preds[1]),
             "rational": float(preds[2])
-        }
+        },
+        "smart_warnings_system": warnings 
     }
 
 
-# 2. ENDPOINT KHUSUS TES LANGSUNG DI API (TANPA INPUT MANUAL) ---
+# 2. ENDPOINT MICROSERVICE (Hanya Rule-Based)
+@app.post("/analyze-warnings")
+def analyze_spending_warnings(payload: PredictionRequest):
+    features_list = payload.features
+    
+    if len(features_list) != len(FEATURE_NAMES):
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Format salah. Sistem membutuhkan tepat {len(FEATURE_NAMES)} fitur, tetapi menerima {len(features_list)} fitur."
+        )
+    
+    profile_dict = dict(zip(FEATURE_NAMES, features_list))
+    warnings = get_smart_warnings(profile_dict)
+    
+    return {
+        "status": "success",
+        "message": "Analisis kebocoran dana selesai",
+        "smart_warnings_system": warnings
+    }
+
+# 3. ENDPOINT DEMO & TESTING (Tanpa Input Manual)
 @app.get("/test-random")
 def test_random_user_directly():
     if model is None or scaler is None:
         raise HTTPException(status_code=503, detail="Model AI belum siap.")
     
     try:
-        # Jalur file disesuaikan dengan posisi running uvicorn di root
         df = pd.read_csv("data/budu_user_profiles_idr.csv")
         
         # Ambil 1 data user secara acak
         random_user = df.sample(n=1).iloc[0]
         
-        # Susun fitur dengan urutan yang benar (Sama dengan pipeline)
-        feature_cols = [
-            'total_spending_idr', 'avg_txn_idr', 'median_txn_idr', 'max_txn_idr', 
-            'txn_count', 'std_amount_idr', 'weekend_ratio', 'night_ratio', 
-            'month_start_ratio', 'month_end_ratio', 'above_avg_ratio', 'spike_ratio', 
-            'impulse_score', 'unique_categories', 'unique_merchants', 'active_months', 
-            'spending_cov', 'avg_dist_merchant', 'fraud_ratio'
-        ]
-        cat_cols = [col for col in df.columns if col.startswith('cat_')]
-        feature_cols.extend(cat_cols)
-        
-        # Konversi data menjadi float standar Python agar bisa di-JSON
-        features_array = random_user[feature_cols].fillna(0).astype(float).values.tolist()
+        # Ekstrak data (BUG SUDAH DIPERBAIKI DI SINI)
+        features_array = random_user[FEATURE_NAMES].fillna(0).astype(float).values.tolist()
         
         # Jalankan Prediksi AI
         input_data = np.array([features_array])
@@ -95,14 +125,11 @@ def test_random_user_directly():
         preds = model.predict(scaled_data, verbose=0)[0]
         class_idx = int(np.argmax(preds))
         
-        # Kembalikan response lengkap dengan info pembanding dari CSV asli
-       # Ubah data Pandas Series menjadi Dictionary untuk dibaca oleh fungsi Rules
-        profile_dict = random_user.to_dict()
-        
         # Jalankan deteksi Rule-Based
+        profile_dict = random_user.to_dict()
         warnings = get_smart_warnings(profile_dict)
         
-        # Kembalikan response lengkap (AI + Rule-Based)
+        # Kembalikan response lengkap
         return {
             "status": "success",
             "data_asli_csv": {
@@ -113,7 +140,7 @@ def test_random_user_directly():
                 "persona_ditebak": PERSONA_LABELS[class_idx],
                 "confidence": float(preds[class_idx])
             },
-            "smart_warnings_system": warnings  # INI HASIL RULE-BASED NYA
+            "smart_warnings_system": warnings 
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error saat testing: {str(e)}")

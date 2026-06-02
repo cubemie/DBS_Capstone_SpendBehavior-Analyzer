@@ -1,0 +1,23 @@
+{
+  "feature_order": [
+    "avg_txn_idr",
+    "txn_count",
+    "weekend_ratio",
+    "night_ratio",
+    "above_avg_ratio",
+    "spike_ratio",
+    "impulse_score",
+    "unique_categories",
+    "spending_cov",
+    "cat_makanan_minuman_ratio",
+    "cat_transportasi_ratio",
+    "cat_kesehatan_kecantik_ratio",
+    "cat_sembako_kebutuhan__ratio",
+    "cat_kesehatan_ratio",
+    "cat_pendidikan_ratio",
+    "cat_belanja_online_ratio",
+    "cat_pulsa_data_ratio",
+    "cat_hiburan_ratio",
+    "cat_fashion_pakaian_ratio"
+  ]
+}
