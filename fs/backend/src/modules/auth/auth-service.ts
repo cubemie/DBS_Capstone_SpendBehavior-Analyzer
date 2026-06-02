@@ -1,17 +1,17 @@
-import { AppException } from '../exception.ts'
+import { AppException } from '../../exception.ts'
 import type {
   AuthSessionContext,
   LoginDto,
   RegisterDto,
-} from '../schemas/auth-schema.ts'
-import { createAccessToken } from '../utils/jwt.ts'
-import { verifyPassword } from '../utils/password.ts'
-import { userRepository } from '../repositories/user-repository.ts'
-import { createOpaqueToken, hashToken } from '../utils/token.ts'
-import { refreshTokenRepository } from '../repositories/refresh-token-repository.ts'
-import { env } from '../config.ts'
-import { userService } from './user-service.ts'
-import type { UserResponseDto } from '../schemas/user-schema.ts'
+} from './auth-schema.ts'
+import { env } from '../../config.ts'
+import { createAccessToken } from '../../utils/jwt.ts'
+import { verifyPassword } from '../../utils/password.ts'
+import { createOpaqueToken, hashToken } from '../../utils/token.ts'
+import { userRepository } from '../users/user-repository.ts'
+import { userService } from '../users/user-service.ts'
+import type { UserResponseDto } from '../users/user-schema.ts'
+import { refreshTokenRepository } from './refresh-token-repository.ts'
 
 export type AuthTokens = {
   accessToken: string
@@ -64,10 +64,7 @@ export const authService = {
     }
   },
 
-  async login(
-    dto: LoginDto,
-    context: AuthSessionContext,
-  ): Promise<AuthTokens> {
+  async login(dto: LoginDto, context: AuthSessionContext): Promise<AuthTokens> {
     const user = await userRepository.findByEmail(dto.email)
     if (!user) {
       throw new AppException('Email atau password salah', 401)

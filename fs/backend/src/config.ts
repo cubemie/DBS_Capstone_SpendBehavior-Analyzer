@@ -9,8 +9,16 @@ export const env = z
     APP_URL: z.url().default('http://localhost:3000'),
     DATABASE_URL: z.url().startsWith('postgres://'),
     JWT_SECRET: z.string(),
-    ACCESS_TOKEN_EXPIRES_IN_SECONDS: z.coerce.number().int().positive().default(900),
-    REFRESH_TOKEN_EXPIRES_IN_DAYS: z.coerce.number().int().positive().default(7),
+    ACCESS_TOKEN_EXPIRES_IN_SECONDS: z.coerce
+      .number()
+      .int()
+      .positive()
+      .default(900),
+    REFRESH_TOKEN_EXPIRES_IN_DAYS: z.coerce
+      .number()
+      .int()
+      .positive()
+      .default(7),
     REFRESH_COOKIE_SECURE: z
       .enum(['true', 'false'])
       .default('false')

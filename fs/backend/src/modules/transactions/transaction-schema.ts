@@ -3,8 +3,8 @@ import type {
   TransactionListItem,
   TransactionRecord,
   TransactionSummary,
-} from '../repositories/transaction-repository.ts'
-import { categoryKindSchema } from './category-schema.ts'
+} from './transaction-repository.ts'
+import { categoryKindSchema } from '../categories/category-schema.ts'
 
 export const transactionTypeSchema = categoryKindSchema
 export const transactionSourceSchema = z.enum(['manual'])

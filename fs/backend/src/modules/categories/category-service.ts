@@ -1,14 +1,14 @@
-import { AppException } from '../exception.ts'
+import { AppException } from '../../exception.ts'
 import {
   categoryRepository,
   type CategoryRecord,
-} from '../repositories/category-repository.ts'
-import { transactionRepository } from '../repositories/transaction-repository.ts'
+} from './category-repository.ts'
+import { transactionRepository } from '../transactions/transaction-repository.ts'
 import type {
   CreateCategoryDto,
   ListCategoriesQueryDto,
   UpdateCategoryDto,
-} from '../schemas/category-schema.ts'
+} from './category-schema.ts'
 
 function createSlug(name: string): string {
   return name

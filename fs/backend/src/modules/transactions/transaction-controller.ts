@@ -5,9 +5,9 @@ import {
   transactionParamsSchema,
   transactionSummaryQuerySchema,
   updateTransactionSchema,
-} from '../schemas/transaction-schema.ts'
-import { transactionService } from '../services/transaction-service.ts'
-import { sendData } from '../utils/response.ts'
+} from './transaction-schema.ts'
+import { sendData } from '../../utils/response.ts'
+import { transactionService } from './transaction-service.ts'
 
 export const transactionController = {
   async list(req: Request, res: Response) {

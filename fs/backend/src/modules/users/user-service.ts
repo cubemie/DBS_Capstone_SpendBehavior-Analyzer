@@ -1,11 +1,7 @@
-import type { UserResponseDto } from '../schemas/user-schema.ts'
-import { AppException } from '../exception.ts'
-import type { CreateUserDto } from '../schemas/user-schema.ts'
-import { hashPassword } from '../utils/password.ts'
-import {
-  type UserRecord,
-  userRepository,
-} from '../repositories/user-repository.ts'
+import { AppException } from '../../exception.ts'
+import { hashPassword } from '../../utils/password.ts'
+import type { CreateUserDto, UserResponseDto } from './user-schema.ts'
+import { type UserRecord, userRepository } from './user-repository.ts'
 
 function toUserResponse(user: UserRecord): UserResponseDto {
   return {
