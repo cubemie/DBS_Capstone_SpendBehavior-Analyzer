@@ -1,18 +1,18 @@
 import e from 'express'
+import cookieParser from 'cookie-parser'
 import { authRouter } from './routes/auth-route.ts'
-import { userRouter } from './routes/user-route.ts'
 import { errorHandler } from './middlewares/error-middleware.ts'
 
 const app = e()
 
 app.use(e.json())
+app.use(cookieParser())
 
 app.get('/', (_, res) => {
   res.send('Hello World')
 })
 
-app.use('/authentications', authRouter)
-app.use('/users', userRouter)
+app.use('/api/v1/auth', authRouter)
 
 app.use(errorHandler)
 
