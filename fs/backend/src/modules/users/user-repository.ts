@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm'
-import { db } from '../db/index.ts'
-import { users } from '../db/schemas/users.ts'
+import { db } from '../../db/index.ts'
+import { users } from '../../db/schemas/users.ts'
 
 export type UserRecord = typeof users.$inferSelect
 
@@ -26,10 +26,7 @@ export const userRepository = {
   },
 
   async create(record: CreateUserRecord): Promise<UserRecord> {
-    const [user] = await db
-      .insert(users)
-      .values(record)
-      .returning()
+    const [user] = await db.insert(users).values(record).returning()
 
     return user
   },

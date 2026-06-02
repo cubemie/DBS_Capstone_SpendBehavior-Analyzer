@@ -1,5 +1,5 @@
 import * as z from 'zod'
-import type { CategoryRecord } from '../repositories/category-repository.ts'
+import type { CategoryRecord } from './category-repository.ts'
 
 export const categoryKindSchema = z.enum(['income', 'expense'])
 

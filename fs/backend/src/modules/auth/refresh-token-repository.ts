@@ -1,6 +1,6 @@
 import { and, eq, gt, isNull } from 'drizzle-orm'
-import { db } from '../db/index.ts'
-import { refreshTokens } from '../db/schemas/refresh-tokens.ts'
+import { db } from '../../db/index.ts'
+import { refreshTokens } from '../../db/schemas/refresh-tokens.ts'
 
 export type RefreshTokenRecord = typeof refreshTokens.$inferSelect
 

@@ -11,10 +11,10 @@ import {
   type SQL,
 } from 'drizzle-orm'
 import { getTableColumns } from 'drizzle-orm'
-import { db } from '../db/index.ts'
-import { categories } from '../db/schemas/categories.ts'
-import { transactions } from '../db/schemas/transactions.ts'
-import type { CategoryRecord } from './category-repository.ts'
+import { db } from '../../db/index.ts'
+import { categories } from '../../db/schemas/categories.ts'
+import { transactions } from '../../db/schemas/transactions.ts'
+import type { CategoryRecord } from '../categories/category-repository.ts'
 
 export type TransactionRecord = typeof transactions.$inferSelect
 export type TransactionListItem = TransactionRecord & {

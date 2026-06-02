@@ -1,5 +1,5 @@
 import * as z from 'zod'
-import type { UserRecord } from '../repositories/user-repository.ts'
+import type { UserRecord } from './user-repository.ts'
 
 export type UserResponseDto = Omit<UserRecord, 'passwordHash'>
 

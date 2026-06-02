@@ -1,6 +1,6 @@
 import e from 'express'
-import { requireAuth } from '../middlewares/auth-middleware.ts'
-import { userController } from '../controllers/user-controlller.ts'
+import { requireAuth } from '../../middlewares/auth-middleware.ts'
+import { userController } from './user-controller.ts'
 
 export const userRouter = e.Router()
 

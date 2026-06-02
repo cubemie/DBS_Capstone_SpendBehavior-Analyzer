@@ -1,6 +1,6 @@
 import { and, eq, isNotNull, isNull, or } from 'drizzle-orm'
-import { db } from '../db/index.ts'
-import { categories } from '../db/schemas/categories.ts'
+import { db } from '../../db/index.ts'
+import { categories } from '../../db/schemas/categories.ts'
 
 export type CategoryRecord = typeof categories.$inferSelect
 

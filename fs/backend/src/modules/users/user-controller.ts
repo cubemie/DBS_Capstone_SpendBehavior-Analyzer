@@ -1,11 +1,8 @@
 import type { Request, Response } from 'express'
-import {
-  createUserSchema,
-  getUserParamsSchema,
-} from '../schemas/user-schema.ts'
-import { sendData } from '../utils/response.ts'
-import { AppException } from '../exception.ts'
-import { userService } from '../services/user-service.ts'
+import { createUserSchema, getUserParamsSchema } from './user-schema.ts'
+import { AppException } from '../../exception.ts'
+import { sendData } from '../../utils/response.ts'
+import { userService } from './user-service.ts'
 
 export const userController = {
   async register(req: Request, res: Response) {

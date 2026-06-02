@@ -1,6 +1,6 @@
 import e from 'express'
-import { categoryController } from '../controllers/category-controller.ts'
-import { requireAuth } from '../middlewares/auth-middleware.ts'
+import { requireAuth } from '../../middlewares/auth-middleware.ts'
+import { categoryController } from './category-controller.ts'
 
 export const categoryRouter = e.Router()
 

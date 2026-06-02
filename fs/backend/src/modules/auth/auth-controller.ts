@@ -1,11 +1,8 @@
 import type { CookieOptions, Request, Response } from 'express'
-import {
-  loginSchema,
-  registerSchema,
-} from '../schemas/auth-schema.ts'
-import { sendData } from '../utils/response.ts'
-import { authService } from '../services/auth-service.ts'
-import { env } from '../config.ts'
+import { loginSchema, registerSchema } from './auth-schema.ts'
+import { env } from '../../config.ts'
+import { sendData } from '../../utils/response.ts'
+import { authService } from './auth-service.ts'
 
 const refreshTokenCookieName = 'refresh_token'
 

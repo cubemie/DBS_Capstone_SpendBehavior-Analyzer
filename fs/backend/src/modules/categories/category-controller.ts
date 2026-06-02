@@ -4,9 +4,9 @@ import {
   createCategorySchema,
   listCategoriesQuerySchema,
   updateCategorySchema,
-} from '../schemas/category-schema.ts'
-import { categoryService } from '../services/category-service.ts'
-import { sendData } from '../utils/response.ts'
+} from './category-schema.ts'
+import { sendData } from '../../utils/response.ts'
+import { categoryService } from './category-service.ts'
 
 export const categoryController = {
   async list(req: Request, res: Response) {

@@ -1,5 +1,5 @@
 import * as z from 'zod'
-import type { UserResponseDto } from './user-schema.ts'
+import type { UserResponseDto } from '../users/user-schema.ts'
 
 export type LoginDto = z.infer<typeof loginSchema>
 export type RegisterDto = z.infer<typeof registerSchema>
