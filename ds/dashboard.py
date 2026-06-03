@@ -1,1183 +1,1568 @@
 # ============================================================
-# dashboard.py — BUDU SpendBehavior Analyzer
-# Streamlit Dashboard · Tim CC26-PSU268
-# Jalankan: streamlit run dashboard.py
+# BUDU — SpendBehavior Analyzer Dashboard
+# Coding Camp 2026 · DBS Foundation · Tim CC26-PSU268
 # ============================================================
 
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
-import seaborn as sns
-import warnings
-import json
-import os
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 from scipy.stats import mannwhitneyu, spearmanr
-from sklearn.preprocessing import LabelEncoder, StandardScaler, MinMaxScaler
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
-from sklearn.model_selection import train_test_split
+from datetime import datetime, timedelta
 
-warnings.filterwarnings('ignore')
-
-# ── Page config ─────────────────────────────────────────────
+# ==========================================
+# PAGE CONFIG
+# ==========================================
 st.set_page_config(
-    page_title='BUDU — SpendBehavior Analyzer',
-    page_icon='💸',
-    layout='wide',
-    initial_sidebar_state='expanded',
+    page_title="BUDU — SpendBehavior Analyzer",
+    page_icon="💸",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# ── Global style ─────────────────────────────────────────────
-PALETTE  = ['#60a5fa','#34d399','#fbbf24','#f87171','#a78bfa','#f472b6','#fb923c']
-PRIMARY  = '#60a5fa'
-ACCENT   = '#34d399'
-WARN     = '#f87171'
-PERSONA_COLORS = {
-    'Impulsive Spender': '#f87171',
-    'Emotional Spender': '#fbbf24',
-    'Rational Spender' : '#34d399',
-}
-
-plt.rcParams.update({
-    'figure.facecolor': 'none',
-    'axes.facecolor'  : 'none',
-    'axes.spines.top' : False,
-    'axes.spines.right': False,
-    'font.size'       : 10,
-    'text.color'      : '#c8d8f0',
-    'axes.labelcolor' : '#7b90b8',
-    'xtick.color'     : '#7b90b8',
-    'ytick.color'     : '#7b90b8',
-    'axes.edgecolor'  : '#2a3a55',
-    'axes.spines.left': True,
-    'axes.spines.bottom': True,
-    'grid.color'      : '#1e2d45',
-    'grid.alpha'      : 0.6,
-    'legend.facecolor': '#161c2a',
-    'legend.edgecolor': '#2a3a55',
-    'legend.labelcolor': '#c8d8f0',
-})
-
+# ==========================================
+# CUSTOM CSS  — ORANGE THEME
+# ==========================================
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-html, body, [class*="css"] { font-family: 'Plus Jakarta Sans', sans-serif; }
+    html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif !important; }
 
-/* ── DARK MODE ── */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-main:    #0d1117;
-    --bg-card:    #161c2a;
-    --bg-card2:   #1a2235;
-    --border:     #2a3a55;
-    --text-main:  #e8f0fe;
-    --text-muted: #7b90b8;
-    --text-dim:   #4a6080;
-    --accent1:    #60a5fa;
-    --accent2:    #34d399;
-    --accent3:    #fbbf24;
-    --accent4:    #f87171;
-  }
-}
-/* ── LIGHT MODE ── */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-main:    #f0f4ff;
-    --bg-card:    #ffffff;
-    --bg-card2:   #eef3ff;
-    --border:     #c7d7f5;
-    --text-main:  #0f1e3c;
-    --text-muted: #3b5080;
-    --text-dim:   #6b82a8;
-    --accent1:    #1d4ed8;
-    --accent2:    #059669;
-    --accent3:    #d97706;
-    --accent4:    #dc2626;
-  }
-}
-/* Fallback (Streamlit injected dark) */
-:root {
-  --bg-main:    #0d1117;
-  --bg-card:    #161c2a;
-  --bg-card2:   #1a2235;
-  --border:     #2a3a55;
-  --text-main:  #e8f0fe;
-  --text-muted: #7b90b8;
-  --text-dim:   #4a6080;
-  --accent1:    #60a5fa;
-  --accent2:    #34d399;
-  --accent3:    #fbbf24;
-  --accent4:    #f87171;
-}
+    .main { background-color: #FFF6DE; }
+    .block-container { padding: 1.5rem 2rem; }
 
-.stApp { background: var(--bg-main) !important; color: var(--text-main) !important; }
+    [data-testid="stSidebar"] { background: #F48F68; }
+    [data-testid="stSidebar"] .stRadio label { color: #FFF6DE !important; font-weight: 500; font-family: 'DM Sans', sans-serif; }
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] p { color: white !important; text-align: center; }
+    [data-testid="stSidebar"] .stMarkdown { color: #FFF6DE; text-align: center; }
+    [data-testid="stSidebar"] .stMarkdown h2 {
+        font-family: 'Sora', sans-serif !important; font-size: 1.8rem !important;
+        font-weight: 800 !important; letter-spacing: -0.5px; color: white !important; text-align: center;
+    }
 
-/* Sidebar */
-[data-testid="stSidebar"] {
-    background: var(--bg-card) !important;
-    border-right: 2px solid var(--border) !important;
-}
-[data-testid="stSidebar"] * { color: var(--text-main) !important; }
-[data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 { color: var(--accent1) !important; }
+    [data-testid="metric-container"] {
+        background: white; border-radius: 16px; padding: 18px 22px;
+        border: 1px solid #FFE394; box-shadow: 0 1px 10px rgba(244,143,104,0.10);
+        transition: all 0.2s ease;
+    }
+    [data-testid="metric-container"]:hover { box-shadow: 0 4px 20px rgba(244,143,104,0.18); transform: translateY(-2px); }
+    [data-testid="stMetricValue"] { font-weight: 700; color: #8C5A44; font-size: 1.9rem; line-height: 1.1; letter-spacing: -1px; white-space: nowrap; }
+    [data-testid="stMetricLabel"] { color: #A56A4F; font-weight: 600; font-size: 0.82rem; }
 
-/* Metric cards */
-[data-testid="metric-container"] {
-    background: var(--bg-card) !important;
-    border: 1.5px solid var(--border) !important;
-    border-radius: 14px !important;
-    padding: 18px !important;
-    box-shadow: 0 2px 12px rgba(37,99,235,0.08);
-}
-[data-testid="metric-container"] label { color: var(--text-muted) !important; font-size: 12px !important; font-weight: 600 !important; letter-spacing: 0.05em !important; }
-[data-testid="metric-container"] [data-testid="stMetricValue"] { color: var(--text-main) !important; font-weight: 800 !important; font-size: 1.5rem !important; }
-[data-testid="metric-container"] [data-testid="stMetricDelta"] { font-size: 12px !important; font-weight: 600 !important; }
+    .section-title {
+        font-size: 1.15rem; font-weight: 700; color: #8C5A44;
+        font-family: 'Sora', sans-serif; margin-bottom: 0.5rem;
+        padding-left: 10px; border-left: 4px solid #F48F68;
+    }
+    .persona-card { border-radius: 14px; padding: 18px 16px; margin-bottom: 8px; transition: transform 0.15s; background: white; }
+    .persona-card:hover { transform: translateY(-2px); }
+    .insight-box { background: linear-gradient(135deg,#FFF8EE,#FFE8D9); border-left: 4px solid #F48F68; border-radius: 12px; padding: 14px 18px; margin: 10px 0; color: #8C5A44; font-weight: 500; }
+    .warn-box { background: linear-gradient(135deg,#FFF6DE,#FFE9B8); border-left: 4px solid #FFE394; border-radius: 12px; padding: 14px 18px; margin: 10px 0; color: #8C5A44; font-weight: 500; }
+    .success-box { background: linear-gradient(135deg,#E8FAF9,#D4F4F2); border-left: 4px solid #8BDFDD; border-radius: 12px; padding: 14px 18px; margin: 10px 0; color: #4E6E6D; font-weight: 500; }
+    .danger-box { background: linear-gradient(135deg,#FFF0EC,#FFD8CC); border-left: 4px solid #F48F68; border-radius: 12px; padding: 14px 18px; margin: 10px 0; color: #8C5A44; font-weight: 500; }
 
-/* Section header */
-.section-header {
-    font-size: 11px; font-weight: 800; letter-spacing: 0.15em;
-    color: var(--accent1); text-transform: uppercase;
-    border-bottom: 2px solid var(--border);
-    padding-bottom: 10px; margin-bottom: 18px;
-    display: flex; align-items: center; gap: 8px;
-}
+    .user-profile-card { background: white; border-radius: 20px; padding: 24px; border: 1px solid #FFE394; box-shadow: 0 4px 24px rgba(244,143,104,0.12); margin-bottom: 16px; }
+    .user-stat-badge { display: inline-block; background: #FFF6DE; color: #F48F68; border-radius: 10px; padding: 5px 12px; font-size: 0.82rem; font-weight: 600; margin: 3px 3px; }
 
-/* Persona badges */
-.badge-impulsive {
-    background: linear-gradient(135deg, #ef444422, #dc262622);
-    color: #f87171; border: 1.5px solid #f8717155;
-    padding: 3px 14px; border-radius: 99px; font-size: 12px; font-weight: 700;
-    letter-spacing: 0.03em;
-}
-.badge-emotional {
-    background: linear-gradient(135deg, #f59e0b22, #d9770622);
-    color: #fbbf24; border: 1.5px solid #fbbf2455;
-    padding: 3px 14px; border-radius: 99px; font-size: 12px; font-weight: 700;
-}
-.badge-rational {
-    background: linear-gradient(135deg, #10b98122, #05966922);
-    color: #34d399; border: 1.5px solid #34d39955;
-    padding: 3px 14px; border-radius: 99px; font-size: 12px; font-weight: 700;
-}
+    .stTabs [data-baseweb="tab-list"] { gap: 6px; background: #FFF6DE; border-radius: 12px; padding: 6px; }
+    .stTabs [data-baseweb="tab"] { border-radius: 8px; font-weight: 600; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; letter-spacing: 0.01em; color: #8C5A44; padding: 8px 14px; white-space: nowrap; background: transparent; border: none; }
+    .stTabs [aria-selected="true"] { color: white !important; background: #F48F68 !important; border-radius: 8px; }
 
-/* Colored insight boxes */
-.warn-box {
-    background: linear-gradient(135deg, #ef444418, #dc262610);
-    border-left: 4px solid #f87171;
-    border-radius: 10px; padding: 14px 18px; margin: 10px 0;
-    font-size: 13px; color: var(--text-main);
-    box-shadow: 0 2px 8px rgba(248,113,113,0.12);
-}
-.info-box {
-    background: linear-gradient(135deg, #3b82f618, #2563eb10);
-    border-left: 4px solid var(--accent1);
-    border-radius: 10px; padding: 14px 18px; margin: 10px 0;
-    font-size: 13px; color: var(--text-main);
-    box-shadow: 0 2px 8px rgba(96,165,250,0.12);
-}
-.success-box {
-    background: linear-gradient(135deg, #10b98118, #05966910);
-    border-left: 4px solid var(--accent2);
-    border-radius: 10px; padding: 14px 18px; margin: 10px 0;
-    font-size: 13px; color: var(--text-main);
-    box-shadow: 0 2px 8px rgba(52,211,153,0.12);
-}
+    .streamlit-expanderHeader { font-weight: 600; color: #8C5A44; font-family: 'Sora', sans-serif; }
+    hr { border-color: #FFE394; margin: 1.2rem 0; }
 
-/* Persona card */
-.persona-card {
-    background: var(--bg-card);
-    border: 1.5px solid var(--border);
-    border-radius: 14px; padding: 18px;
-    box-shadow: 0 2px 12px rgba(37,99,235,0.07);
-    transition: box-shadow 0.2s;
-}
-.persona-card:hover { box-shadow: 0 4px 20px rgba(37,99,235,0.18); }
-
-/* General text */
-h1, h2, h3, h4 { color: var(--text-main) !important; }
-p, li, span, label { color: var(--text-main); }
-.stMarkdown { color: var(--text-main); }
-
-/* Tabs */
-.stTabs [data-baseweb="tab-list"] {
-    background: var(--bg-card);
-    border-radius: 12px; padding: 5px;
-    border: 1.5px solid var(--border);
-    gap: 4px;
-}
-.stTabs [data-baseweb="tab"] {
-    color: var(--text-muted) !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    font-size: 13px !important;
-}
-.stTabs [aria-selected="true"] {
-    background: linear-gradient(135deg, #2563eb22, #1d4ed818) !important;
-    color: var(--accent1) !important;
-    border: 1px solid var(--accent1) !important;
-}
-
-/* Dataframe */
-[data-testid="stDataFrame"] { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
-
-/* Divider */
-hr { border-color: var(--border) !important; }
-
-/* Buttons */
-.stButton button {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
-    color: white !important; border: none !important;
-    border-radius: 10px !important; font-weight: 700 !important;
-    box-shadow: 0 2px 10px rgba(37,99,235,0.3) !important;
-    transition: all 0.2s !important;
-}
-.stButton button:hover {
-    box-shadow: 0 4px 20px rgba(37,99,235,0.5) !important;
-    transform: translateY(-1px) !important;
-}
-
-/* Slider */
-[data-testid="stSlider"] [data-baseweb="slider"] [data-testid="stThumbValue"] { color: var(--accent1) !important; }
-
-/* Selectbox */
-[data-baseweb="select"] { background: var(--bg-card2) !important; border-color: var(--border) !important; border-radius: 10px !important; }
-[data-baseweb="select"] * { color: var(--text-main) !important; }
-
-/* Code blocks */
-.stCode { background: var(--bg-card2) !important; border: 1px solid var(--border) !important; border-radius: 10px !important; }
-
-/* Radio */
-[data-testid="stRadio"] label { color: var(--text-main) !important; font-weight: 500 !important; }
-
-/* KPI highlight strip */
-.kpi-strip {
-    display: flex; gap: 12px; margin-bottom: 16px;
-}
-.kpi-item {
-    flex: 1;
-    background: var(--bg-card);
-    border: 1.5px solid var(--border);
-    border-radius: 12px; padding: 14px 18px;
-    text-align: center;
-}
-.kpi-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
-.kpi-value { font-size: 22px; font-weight: 800; color: var(--accent1); margin-top: 4px; }
-
+    .header-banner { background: #F48F68; border-radius: 20px; padding: 30px 36px; margin-bottom: 24px; color: white; }
+    .header-banner h1 { color: white; font-size: 2.2rem; font-weight: 800; margin-bottom: 6px; font-family: 'Sora', sans-serif; line-height: 1.15; letter-spacing: -1px; }
+    .header-banner p { color: #FFF6DE; font-size: 0.95rem; margin: 0; }
 </style>
 """, unsafe_allow_html=True)
 
-# ══════════════════════════════════════════════════════════════
-# CONSTANTS (sama persis dengan notebook)
-# ══════════════════════════════════════════════════════════════
+# ==========================================
+# CONSTANTS — sesuai notebook Cell 0
+# ==========================================
+RANDOM_SEED          = 42
 NIGHT_START          = 20
 ANOMALY_STD_FACTOR   = 1.5
 SMALL_TXN_MULTIPLIER = 0.5
 FREQ_MONTH_THRESH    = 10
 IMPULSE_THRESHOLD    = 0.55
-RANDOM_SEED          = 42
+PRIMARY, ACCENT, WARN = '#E89B7A', '#8BDFDD', '#EF4444'
+PALETTE = ['#F48F68','#8BDFDD','#FFE394','#F7B7A3','#FFD6B8','#A8E6E3','#F6CFC2','#E9C46A']
+
+np.random.seed(RANDOM_SEED)
 
 SEGMENTS = {
-    'E': {'label':'Kelas E (Miskin)',       'pct_pop':0.15,'income_range':(800_000,1_500_000),   'spending_ratio':(0.85,0.98),'txn_per_month':(8,20),   'txn_amount_dist':'low',     'payment_methods':{'Tunai':0.55,'GoPay':0.25,'OVO':0.12,'DANA':0.08},                                                                          'categories':{'Sembako & Kebutuhan Pokok':0.40,'Transportasi':0.20,'Pulsa & Data':0.15,'Makanan & Minuman':0.15,'Kesehatan':0.05,'Pendidikan':0.05},'city_tier':{'Desa':0.45,'Kota Kecil':0.40,'Kota Besar':0.15},'age_range':(18,55),'weekend_boost':1.05,'night_prob':0.08,'impulse_base':0.15,'jobs':['Buruh Tani','Pedagang Kaki Lima','Nelayan','Buruh Pabrik','Asisten Rumah Tangga','Ojek Konvensional']},
-    'D': {'label':'Kelas D (Menengah Bawah)','pct_pop':0.25,'income_range':(1_500_000,3_000_000),'spending_ratio':(0.75,0.92),'txn_per_month':(15,35),  'txn_amount_dist':'low_mid', 'payment_methods':{'Tunai':0.30,'GoPay':0.30,'OVO':0.20,'DANA':0.12,'Transfer Bank':0.08},                                                    'categories':{'Sembako & Kebutuhan Pokok':0.28,'Makanan & Minuman':0.22,'Transportasi':0.18,'Pulsa & Data':0.12,'Fashion & Pakaian':0.08,'Kesehatan':0.06,'Pendidikan':0.04,'Hiburan':0.02},'city_tier':{'Desa':0.20,'Kota Kecil':0.45,'Kota Besar':0.35},'age_range':(18,50),'weekend_boost':1.15,'night_prob':0.15,'impulse_base':0.25,'jobs':['Driver Ojek Online','Karyawan Toko','Guru Honorer','Admin Kantor','Teknisi','Pedagang Warung','SPG/SPB']},
-    'C': {'label':'Kelas C (Menengah)',      'pct_pop':0.35,'income_range':(3_000_000,7_000_000),'spending_ratio':(0.60,0.82),'txn_per_month':(25,60),  'txn_amount_dist':'mid',     'payment_methods':{'GoPay':0.25,'OVO':0.20,'Kartu Debit':0.20,'Transfer Bank':0.15,'DANA':0.12,'Tunai':0.08},                                      'categories':{'Makanan & Minuman':0.25,'Belanja Online':0.18,'Sembako & Kebutuhan Pokok':0.15,'Fashion & Pakaian':0.10,'Transportasi':0.10,'Hiburan':0.08,'Kesehatan & Kecantikan':0.06,'Pulsa & Data':0.05,'Pendidikan':0.03},'city_tier':{'Kota Kecil':0.30,'Kota Besar':0.55,'Metropolitan':0.15},'age_range':(18,45),'weekend_boost':1.30,'night_prob':0.25,'impulse_base':0.40,'jobs':['Pegawai Swasta','PNS Golongan II','Guru Tetap','Staf Administrasi','Wirausaha Kecil','Perawat','Sales']},
-    'B': {'label':'Kelas B (Menengah Atas)', 'pct_pop':0.18,'income_range':(7_000_000,20_000_000),'spending_ratio':(0.45,0.70),'txn_per_month':(40,90), 'txn_amount_dist':'mid_high','payment_methods':{'Kartu Kredit':0.30,'Kartu Debit':0.25,'GoPay':0.18,'Transfer Bank':0.15,'OVO':0.08,'ShopeePay':0.04},                       'categories':{'Makanan & Minuman':0.22,'Belanja Online':0.18,'Fashion & Pakaian':0.12,'Hiburan':0.10,'Transportasi':0.09,'Kecantikan & Perawatan':0.08,'Elektronik':0.07,'Restoran & Kafe':0.07,'Olahraga & Gym':0.04,'Travel & Hotel':0.03},'city_tier':{'Kota Besar':0.45,'Metropolitan':0.55},'age_range':(22,50),'weekend_boost':1.50,'night_prob':0.35,'impulse_base':0.55,'jobs':['Manajer','Pengacara','Dokter','Engineer Senior','Dosen','Wirausaha Menengah','Analis Keuangan','Arsitek']},
-    'A': {'label':'Kelas A (Kaya)',           'pct_pop':0.07,'income_range':(20_000_000,150_000_000),'spending_ratio':(0.25,0.55),'txn_per_month':(50,150),'txn_amount_dist':'high',  'payment_methods':{'Kartu Kredit':0.45,'Transfer Bank':0.30,'Kartu Debit':0.15,'GoPay':0.10},                                                      'categories':{'Restoran & Kafe':0.18,'Travel & Hotel':0.15,'Fashion & Pakaian':0.13,'Elektronik':0.10,'Kecantikan & Perawatan':0.08,'Hiburan':0.08,'Belanja Online':0.08,'Olahraga & Gym':0.07,'Investasi & Asuransi':0.07,'Properti & Renovasi':0.06},'city_tier':{'Metropolitan':0.75,'Kota Besar':0.25},'age_range':(25,60),'weekend_boost':1.70,'night_prob':0.45,'impulse_base':0.65,'jobs':['CEO/Direktur','Pengusaha','Konsultan Senior','Dokter Spesialis','Investor','Artis/Influencer','Notaris','Partner Law Firm']},
-}
-
-SUB_CATEGORIES = {
-    'Sembako & Kebutuhan Pokok':['Indomaret','Alfamart','Pasar Tradisional','Warung Sembako','Giant','Hypermart','Lotte Mart','Superindo'],
-    'Makanan & Minuman':['GoFood/GrabFood','Warteg','Warung Padang','Mie Ayam & Bakso','Geprek/Ayam Goreng','Indomie Rebus','Kopi Jahe/Wedang','Jus Buah'],
-    'Restoran & Kafe':['Kopi Kenangan','Fore Coffee','Starbucks',"McDonald's",'KFC','Pizza Hut','Sushi Tei','Holycow Steak','Rooftop Restaurant'],
-    'Transportasi':['Gojek','Grab','Angkot','Bus Kota','KRL Commuter','MRT Jakarta','BBM Pertamina','Parkir','Toll'],
-    'Belanja Online':['Shopee','Tokopedia','Lazada','Blibli','Tiktok Shop','Zalora','JD.ID','Bukalapak'],
-    'Fashion & Pakaian':['H&M','Zara','Uniqlo','Cotton On','Erigo','Pasar Baju','Brand Lokal IG','Batik Keris','Matahari Dept Store'],
-    'Hiburan':['CGV Cinemas','XXI Cinema','Netflix/Spotify','Karaoke','Game Online','Taman Wisata','Konser Musik','Bioskop Drive-in'],
-    'Kesehatan':['Apotek Kimia Farma','Guardian','Klinik Pratama','Puskesmas','RS Umum','Dokter Praktek','Laboratorium'],
-    'Kesehatan & Kecantikan':['Apotek K-24','Guardian','Watsons','The Body Shop','Klinik Kecantikan','Sociolla','Base (Skincare Lokal)'],
-    'Kecantikan & Perawatan':['Erha Clinic','ZAP Clinic','Sociolla Premium','Salon Premium','Spa & Wellness','Dermatologist Private'],
-    'Pulsa & Data':['Telkomsel','Indosat Ooredoo','XL Axiata','Tri (3)','Smartfren','IndiHome','Myrepublic'],
-    'Pendidikan':['Bimbel Primagama','Ruangguru','Zenius','Coursera','SPP Sekolah','Alat Tulis','Buku Teks','Udemy'],
-    'Elektronik':['iBox Apple','Samsung Store','iQOO','Erafone','JD.ID Electronics','Tokopedia Electronics','Charger/Aksesori'],
-    'Olahraga & Gym':['Fitness First','Celebrity Fitness',"Gold's Gym",'Lapangan Futsal','Kolam Renang','Badminton','Nike/Adidas Store'],
-    'Travel & Hotel':['Traveloka','Tiket.com','Airbnb','Airy Rooms','Hotel Bintang 3','Resort Bali','Penginapan Murah'],
-    'Investasi & Asuransi':['Bibit','Bareksa','Pluang','BPJS Kesehatan','Asuransi Prudential','AIA Financial','Reksa Dana Mandiri'],
-    'Properti & Renovasi':['ACE Hardware','Depo Bangunan','IKEA','Vivere','Kontraktor Renovasi','Cat Dulux','Mebel Custom'],
-}
-
-CITIES = {
-    'Desa':        [('Desa Sukamaju',5_000),('Desa Makmur',3_200),('Desa Sejahtera',4_100),('Desa Cikaret',2_800),('Desa Rawa Indah',6_500),('Desa Panyingkiran',3_700)],
-    'Kota Kecil':  [('Tasikmalaya',700_000),('Cirebon',320_000),('Purwokerto',290_000),('Magelang',130_000),('Tegal',285_000),('Pekalongan',310_000),('Kediri',320_000),('Blitar',150_000),('Jombang',190_000)],
-    'Kota Besar':  [('Bandung',2_500_000),('Surabaya',3_100_000),('Medan',2_400_000),('Semarang',1_800_000),('Makassar',1_500_000),('Palembang',1_700_000),('Denpasar',900_000),('Yogyakarta',420_000)],
-    'Metropolitan':[('Jakarta',10_500_000),('Bekasi',2_700_000),('Depok',2_200_000),('Tangerang',2_100_000),('Bogor',1_100_000),('Tangerang Selatan',1_700_000)],
-}
-CITY_COORDS = {
-    'Jakarta':(-6.2088,106.8456),'Bekasi':(-6.2349,106.9896),'Depok':(-6.4025,106.7942),
-    'Tangerang':(-6.1702,106.6402),'Bogor':(-6.5971,106.8060),'Tangerang Selatan':(-6.2867,106.7104),
-    'Bandung':(-6.9175,107.6191),'Surabaya':(-7.2575,112.7521),'Medan':(3.5952,98.6722),
-    'Semarang':(-6.9932,110.4203),'Makassar':(-5.1477,119.4327),'Palembang':(-2.9761,104.7754),
-    'Denpasar':(-8.6705,115.2126),'Yogyakarta':(-7.7956,110.3695),'Tasikmalaya':(-7.3506,108.2183),
-    'Cirebon':(-6.7320,108.5523),'Purwokerto':(-7.4216,109.2425),'Magelang':(-7.4797,110.2177),
-    'Tegal':(-6.8694,109.1402),'Pekalongan':(-6.8886,109.6753),'Kediri':(-7.8165,112.0112),
-    'Blitar':(-8.0983,112.1686),'Jombang':(-7.5478,112.2289),
+    'E': {
+        'label': 'Kelas E (Miskin)', 'pct_pop': 0.15,
+        'income_range': (800_000, 1_500_000), 'spending_ratio': (0.85, 0.98),
+        'txn_per_month': (8, 20), 'txn_amount_dist': 'low',
+        'payment_methods': {'Tunai': 0.55, 'GoPay': 0.25, 'OVO': 0.12, 'DANA': 0.08},
+        'categories': {
+            'Sembako & Kebutuhan Pokok': 0.40, 'Transportasi': 0.20,
+            'Pulsa & Data': 0.15, 'Makanan & Minuman': 0.15,
+            'Kesehatan': 0.05, 'Pendidikan': 0.05,
+        },
+        'city_tier': {'Desa': 0.45, 'Kota Kecil': 0.40, 'Kota Besar': 0.15},
+        'age_range': (18, 55), 'weekend_boost': 1.05, 'night_prob': 0.08, 'impulse_base': 0.15,
+    },
+    'D': {
+        'label': 'Kelas D (Menengah Bawah)', 'pct_pop': 0.25,
+        'income_range': (1_500_000, 3_000_000), 'spending_ratio': (0.75, 0.92),
+        'txn_per_month': (15, 35), 'txn_amount_dist': 'low_mid',
+        'payment_methods': {'Tunai': 0.30, 'GoPay': 0.30, 'OVO': 0.20, 'DANA': 0.12, 'Transfer Bank': 0.08},
+        'categories': {
+            'Sembako & Kebutuhan Pokok': 0.28, 'Makanan & Minuman': 0.22,
+            'Transportasi': 0.18, 'Pulsa & Data': 0.12, 'Fashion & Pakaian': 0.08,
+            'Kesehatan': 0.06, 'Pendidikan': 0.04, 'Hiburan': 0.02,
+        },
+        'city_tier': {'Desa': 0.20, 'Kota Kecil': 0.45, 'Kota Besar': 0.35},
+        'age_range': (18, 50), 'weekend_boost': 1.15, 'night_prob': 0.15, 'impulse_base': 0.25,
+    },
+    'C': {
+        'label': 'Kelas C (Menengah)', 'pct_pop': 0.35,
+        'income_range': (3_000_000, 7_000_000), 'spending_ratio': (0.60, 0.82),
+        'txn_per_month': (25, 60), 'txn_amount_dist': 'mid',
+        'payment_methods': {'GoPay': 0.25, 'OVO': 0.20, 'Kartu Debit': 0.20, 'Transfer Bank': 0.15, 'DANA': 0.12, 'Tunai': 0.08},
+        'categories': {
+            'Makanan & Minuman': 0.25, 'Belanja Online': 0.18,
+            'Sembako & Kebutuhan Pokok': 0.15, 'Fashion & Pakaian': 0.10,
+            'Transportasi': 0.10, 'Hiburan': 0.08,
+            'Kesehatan & Kecantikan': 0.06, 'Pulsa & Data': 0.05, 'Pendidikan': 0.03,
+        },
+        'city_tier': {'Kota Kecil': 0.30, 'Kota Besar': 0.55, 'Metropolitan': 0.15},
+        'age_range': (18, 45), 'weekend_boost': 1.30, 'night_prob': 0.25, 'impulse_base': 0.40,
+    },
+    'B': {
+        'label': 'Kelas B (Menengah Atas)', 'pct_pop': 0.18,
+        'income_range': (7_000_000, 20_000_000), 'spending_ratio': (0.45, 0.70),
+        'txn_per_month': (40, 90), 'txn_amount_dist': 'mid_high',
+        'payment_methods': {'Kartu Kredit': 0.30, 'Kartu Debit': 0.25, 'GoPay': 0.18, 'Transfer Bank': 0.15, 'OVO': 0.08, 'ShopeePay': 0.04},
+        'categories': {
+            'Makanan & Minuman': 0.22, 'Belanja Online': 0.18, 'Fashion & Pakaian': 0.12,
+            'Hiburan': 0.10, 'Transportasi': 0.09, 'Kecantikan & Perawatan': 0.08,
+            'Elektronik': 0.07, 'Restoran & Kafe': 0.07, 'Olahraga & Gym': 0.04, 'Travel & Hotel': 0.03,
+        },
+        'city_tier': {'Kota Besar': 0.45, 'Metropolitan': 0.55},
+        'age_range': (22, 50), 'weekend_boost': 1.50, 'night_prob': 0.35, 'impulse_base': 0.55,
+    },
+    'A': {
+        'label': 'Kelas A (Kaya)', 'pct_pop': 0.07,
+        'income_range': (20_000_000, 150_000_000), 'spending_ratio': (0.25, 0.55),
+        'txn_per_month': (50, 150), 'txn_amount_dist': 'high',
+        'payment_methods': {'Kartu Kredit': 0.45, 'Transfer Bank': 0.30, 'Kartu Debit': 0.15, 'GoPay': 0.10},
+        'categories': {
+            'Restoran & Kafe': 0.18, 'Travel & Hotel': 0.15, 'Fashion & Pakaian': 0.13,
+            'Elektronik': 0.10, 'Kecantikan & Perawatan': 0.08, 'Hiburan': 0.08,
+            'Belanja Online': 0.08, 'Olahraga & Gym': 0.07,
+            'Investasi & Asuransi': 0.07, 'Properti & Renovasi': 0.06,
+        },
+        'city_tier': {'Metropolitan': 0.75, 'Kota Besar': 0.25},
+        'age_range': (25, 60), 'weekend_boost': 1.70, 'night_prob': 0.45, 'impulse_base': 0.65,
+    },
 }
 
 TXN_AMOUNT_PARAMS = {
-    'low'     :{'mean':25_000,    'std':12_000,  'min':2_000,  'max':100_000},
-    'low_mid' :{'mean':60_000,    'std':35_000,  'min':5_000,  'max':250_000},
-    'mid'     :{'mean':150_000,   'std':100_000, 'min':10_000, 'max':700_000},
-    'mid_high':{'mean':400_000,   'std':300_000, 'min':25_000, 'max':3_000_000},
-    'high'    :{'mean':1_200_000, 'std':900_000, 'min':50_000, 'max':25_000_000},
+    'low':      {'mean':  60_000,   'min':   5_000, 'max':   200_000},
+    'low_mid':  {'mean': 150_000,   'min':  10_000, 'max':   500_000},
+    'mid':      {'mean': 300_000,   'min':  20_000, 'max': 1_500_000},
+    'mid_high': {'mean': 600_000,   'min':  50_000, 'max': 5_000_000},
+    'high':     {'mean': 2_000_000, 'min': 100_000, 'max':50_000_000},
 }
+
 SEASON_BOOST = {1:1.05,2:0.90,3:0.95,4:1.00,5:1.25,6:1.35,7:1.10,8:0.95,9:0.90,10:0.95,11:1.05,12:1.30}
 
-FEATURE_COLS = [
-    'avg_txn_idr','txn_count','weekend_ratio','night_ratio',
-    'above_avg_ratio','spike_ratio','impulse_score',
-    'unique_categories','spending_cov',
-    'pendapatan_bulan',
-    'cat_makanan_&_minum_ratio','cat_transportasi_ratio',
-    'cat_kesehatan_&_kec_ratio','cat_sembako_&_kebut_ratio',
-    'cat_kesehatan_ratio','cat_pendidikan_ratio',
-    'cat_belanja_online_ratio','cat_pulsa_&_data_ratio',
-    'cat_hiburan_ratio','cat_fashion_&_pakai_ratio',
+KOTA_INDONESIA = [
+    {'kota':'Jakarta',      'tier':'Metropolitan','populasi':10_500_000,'lat':-6.2088,'long':106.8456},
+    {'kota':'Surabaya',     'tier':'Metropolitan','populasi':2_900_000, 'lat':-7.2575,'long':112.7521},
+    {'kota':'Bandung',      'tier':'Metropolitan','populasi':2_400_000, 'lat':-6.9175,'long':107.6191},
+    {'kota':'Medan',        'tier':'Metropolitan','populasi':2_200_000, 'lat':3.5952, 'long':98.6722},
+    {'kota':'Semarang',     'tier':'Kota Besar',  'populasi':1_700_000, 'lat':-6.9932,'long':110.4203},
+    {'kota':'Makassar',     'tier':'Kota Besar',  'populasi':1_500_000, 'lat':-5.1477,'long':119.4327},
+    {'kota':'Palembang',    'tier':'Kota Besar',  'populasi':1_600_000, 'lat':-2.9761,'long':104.7754},
+    {'kota':'Tangerang',    'tier':'Kota Besar',  'populasi':2_000_000, 'lat':-6.1784,'long':106.6319},
+    {'kota':'Depok',        'tier':'Kota Besar',  'populasi':2_100_000, 'lat':-6.4025,'long':106.7942},
+    {'kota':'Bekasi',       'tier':'Kota Besar',  'populasi':2_500_000, 'lat':-6.2383,'long':106.9756},
+    {'kota':'Yogyakarta',   'tier':'Kota Besar',  'populasi':420_000,   'lat':-7.7956,'long':110.3695},
+    {'kota':'Solo',         'tier':'Kota Besar',  'populasi':550_000,   'lat':-7.5755,'long':110.8243},
+    {'kota':'Malang',       'tier':'Kota Besar',  'populasi':870_000,   'lat':-7.9666,'long':112.6326},
+    {'kota':'Denpasar',     'tier':'Kota Besar',  'populasi':930_000,   'lat':-8.6705,'long':115.2126},
+    {'kota':'Bogor',        'tier':'Kota Besar',  'populasi':1_100_000, 'lat':-6.5971,'long':106.8060},
+    {'kota':'Pekanbaru',    'tier':'Kota Kecil',  'populasi':1_000_000, 'lat':0.5335, 'long':101.4498},
+    {'kota':'Balikpapan',   'tier':'Kota Kecil',  'populasi':700_000,   'lat':-1.2379,'long':116.8529},
+    {'kota':'Desa Maju',    'tier':'Desa',         'populasi':15_000,    'lat':-7.0,   'long':110.0},
+    {'kota':'Desa Sejahtera','tier':'Desa',        'populasi':8_000,     'lat':-7.5,   'long':109.5},
 ]
 
-# ══════════════════════════════════════════════════════════════
-# DATA GENERATION (sama persis dengan notebook)
-# ══════════════════════════════════════════════════════════════
-NAMA_DEPAN_L = ['Budi','Andi','Deni','Fajar','Hendra','Rizki','Agus','Doni','Eko','Fery','Galih','Hadi','Irwan','Joko','Kevin','Lutfi','Maman','Nanda','Oki','Prio','Rudi','Samsul','Tono','Udin','Vino','Wahyu','Yanto','Zulfi','Ahmad','Bagas','Candra','Dimas','Erwin','Firmansyah','Gilang','Hafizh','Ivan','Januar','Kukuh','Lukman','Mulyadi','Nanang','Oscar','Putra']
-NAMA_DEPAN_P = ['Siti','Ani','Dewi','Rina','Wulan','Maya','Nisa','Putri','Rini','Sari','Tari','Ulfa','Vina','Wati','Yuni','Zara','Ayu','Bella','Clara','Dinda','Ella','Fitri','Gita','Hana','Indri','Julia','Kiki','Lina','Mira','Nadia','Okta','Prita','Rahma','Sinta','Tiara','Uci','Vevi','Widya','Yanti','Afifah','Bunga','Cantika','Dhea','Elisa','Farida','Hasna','Intan']
-NAMA_BELAKANG = ['Santoso','Wijaya','Susanto','Purwanto','Setiawan','Rahayu','Kurniawan','Hidayat','Purnomo','Saputra','Wahyudi','Nugroho','Pratama','Sanjaya','Wibowo','Hartono','Gunawan','Kusuma','Sutrisno','Harahap','Nasution','Siregar','Lubis','Rajasa','Mahendra','Yulianto','Firmansyah','Prasetyo','Budiman','Iskandar']
+CSV_TX       = "budu_transactions_clean_idr.csv"
+CSV_USERS    = "budu_dummy_users.csv"
+CSV_PROFILES = "budu_user_profiles_idr.csv"
 
-def pick_city(tier):
-    opts = CITIES[tier]
-    return opts[np.random.randint(0, len(opts))]
+# ==========================================
+# FEATURE COLS — sesuai notebook Cell 16 v3 (15 fitur)
+# ==========================================
+NOTEBOOK_FEATURE_COLS = [
+    'avg_txn_idr', 'txn_count', 'weekend_ratio', 'night_ratio',
+    'above_avg_ratio', 'spike_ratio', 'impulse_score',
+    'unique_categories', 'spending_cov',
+    'pendapatan_bulan',
+    'cat_makanan_&_minum_ratio', 'cat_transportasi_ratio',
+    'cat_kesehatan_&_kec_ratio', 'cat_sembako_&_kebut_ratio',
+    'cat_kesehatan_ratio', 'cat_pendidikan_ratio',
+    'cat_belanja_online_ratio', 'cat_pulsa_&_data_ratio',
+    'cat_hiburan_ratio', 'cat_fashion_&_pakai_ratio',
+]
 
-def get_coords(city_name, jitter=0.5):
-    base = CITY_COORDS.get(city_name, (-6.2, 106.8))
-    return (round(base[0]+np.random.uniform(-jitter,jitter),4),
-            round(base[1]+np.random.uniform(-jitter,jitter),4))
+# ==========================================
+# CSV LOADER
+# ==========================================
+def _try_load_csv():
+    import os
+    if not (os.path.exists(CSV_TX) and os.path.exists(CSV_USERS)):
+        return None
+    try:
+        df_users = pd.read_csv(CSV_USERS)
+        df_tx    = pd.read_csv(CSV_TX, parse_dates=['date'])
 
-def sample_amount(dist_type, category):
-    p   = TXN_AMOUNT_PARAMS[dist_type]
-    raw = np.random.lognormal(np.log(p['mean']), 0.7, 1)
-    raw = np.clip(raw, p['min'], p['max'])
-    if category in ['Travel & Hotel','Elektronik','Properti & Renovasi','Investasi & Asuransi','Restoran & Kafe']:
-        raw *= np.random.uniform(1.5, 3.5)
-    if category in ['Pulsa & Data','Sembako & Kebutuhan Pokok','Transportasi']:
-        raw *= np.random.uniform(0.3, 0.7)
-    return float(np.clip(raw, p['min'], p['max'])[0])
+        df_profiles = None
+        if os.path.exists(CSV_PROFILES):
+            df_profiles = pd.read_csv(CSV_PROFILES)
 
-hour_probs = np.array([0.5,0.3,0.2,0.2,0.2,0.3,0.8,2.5,2.5,1.5,1.2,1.5,2.8,2.0,1.5,1.5,1.8,2.5,3.0,3.2,2.8,2.0,1.2,0.8])
-hour_probs /= hour_probs.sum()
+        for col, fn in [
+            ('is_weekend',     lambda d: (d['date'].dt.dayofweek >= 5).astype(int)),
+            ('is_night',       lambda d: (d['date'].dt.hour >= NIGHT_START).astype(int)),
+            ('is_fraud',       lambda d: pd.Series(0, index=d.index)),
+            ('month',          lambda d: d['date'].dt.month),
+            ('hour',           lambda d: d['date'].dt.hour),
+            ('day_of_week',    lambda d: d['date'].dt.dayofweek),
+            ('quarter',        lambda d: d['date'].dt.quarter),
+            ('is_month_start', lambda d: (d['date'].dt.day <= 5).astype(int)),
+            ('is_month_end',   lambda d: (d['date'].dt.day >= 25).astype(int)),
+            ('above_avg',      lambda d: (d['amount'] > d['amount'].mean()).astype(int)),
+        ]:
+            if col not in df_tx.columns:
+                df_tx[col] = fn(df_tx)
 
-@st.cache_data(show_spinner=False)
-def generate_data():
-    N_USERS        = 1_000
-    N_TRANSACTIONS = 50_000
-    DATE_START     = '2023-01-01'
+        if 'segmen' not in df_tx.columns:
+            if 'segmen_label' in df_tx.columns:
+                label_to_key = {v['label']: k for k, v in SEGMENTS.items()}
+                df_tx['segmen'] = df_tx['segmen_label'].map(label_to_key)
+            elif 'user_id' in df_users.columns and 'segmen' in df_users.columns:
+                df_tx = df_tx.merge(df_users[['user_id','segmen']], on='user_id', how='left')
+
+        needed_user_cols = ['user_id','usia','pendapatan_bulan','segmen_label','gender','kota','tier_kota']
+        existing = [c for c in needed_user_cols if c in df_users.columns]
+        missing_in_tx = [c for c in existing if c not in df_tx.columns]
+        if missing_in_tx:
+            df_tx = df_tx.merge(df_users[['user_id'] + missing_in_tx], on='user_id', how='left')
+
+        return df_users, df_tx, df_profiles
+    except Exception as e:
+        st.warning(f"Gagal load CSV: {e}. Menggunakan data generator.")
+        return None
+
+
+@st.cache_data(show_spinner="⚙️ Memuat dataset Indonesia realistis...")
+def load_data():
+    csv_result = _try_load_csv()
+    if csv_result is not None:
+        return csv_result
 
     np.random.seed(RANDOM_SEED)
+    N_USERS, N_TRANSACTIONS = 1_000, 50_000
     seg_keys  = list(SEGMENTS.keys())
     seg_probs = [SEGMENTS[s]['pct_pop'] for s in seg_keys]
-    users = []
+    user_list = []
 
-    for uid in range(1, N_USERS+1):
+    for i in range(N_USERS):
         seg_key   = np.random.choice(seg_keys, p=seg_probs)
         seg       = SEGMENTS[seg_key]
-        gender    = np.random.choice(['L','P'], p=[0.52,0.48])
-        nama_d    = np.random.choice(NAMA_DEPAN_L if gender=='L' else NAMA_DEPAN_P)
-        nama_b    = np.random.choice(NAMA_BELAKANG)
-        age       = int(np.random.uniform(*seg['age_range']))
-        income    = int(np.random.uniform(*seg['income_range']))
-        city_tier = np.random.choice(list(seg['city_tier'].keys()), p=list(seg['city_tier'].values()))
-        city_name, city_pop = pick_city(city_tier)
-        lat, long_ = get_coords(city_name)
-        spend_ratio   = np.random.uniform(*seg['spending_ratio'])
-        monthly_spend = round(income * spend_ratio)
-        users.append({'user_id':f'BUDU{uid:05d}','nama':f'{nama_d} {nama_b}','gender':gender,'usia':age,
-                      'segmen':seg_key,'segmen_label':seg['label'],'pekerjaan':np.random.choice(seg['jobs']),
-                      'kota':city_name,'tier_kota':city_tier,'populasi_kota':city_pop,'lat':lat,'long':long_,
-                      'pendapatan_bulan':income,'pengeluaran_bulan':monthly_spend,
-                      'tabungan_bulan':income-monthly_spend,'spending_ratio':round(spend_ratio,3),
-                      'impulse_base':seg['impulse_base']})
-
-    df_users = pd.DataFrame(users)
+        kota_pool = [k for k in KOTA_INDONESIA if k['tier'] in seg['city_tier']]
+        if not kota_pool:
+            kota_pool = KOTA_INDONESIA
+        kota_probs = np.array([seg['city_tier'].get(k['tier'], 0.01) for k in kota_pool], dtype=float)
+        kota_probs /= kota_probs.sum()
+        kota   = kota_pool[np.random.choice(len(kota_pool), p=kota_probs)]
+        income = np.random.randint(*seg['income_range'])
+        user_list.append({
+            'user_id': f'BUDU{i+1:05d}', 'nama': f'User {i+1}',
+            'segmen': seg_key, 'segmen_label': seg['label'],
+            'usia': np.random.randint(*seg['age_range']),
+            'gender': np.random.choice(['L','P']),
+            'kota': kota['kota'], 'tier_kota': kota['tier'],
+            'populasi_kota': kota['populasi'],
+            'lat': round(kota['lat']  + np.random.uniform(-0.15, 0.15), 4),
+            'long': round(kota['long'] + np.random.uniform(-0.15, 0.15), 4),
+            'pendapatan_bulan': income, 'pekerjaan': 'Karyawan',
+        })
+    df_users = pd.DataFrame(user_list)
 
     np.random.seed(RANDOM_SEED)
-    user_txn_counts = {}
-    for _, u in df_users.iterrows():
+    DATE_START = datetime(2023, 1, 1)
+    tx_list, user_txn_target = [], {}
+    for u in user_list:
         seg = SEGMENTS[u['segmen']]
         tmin, tmax = seg['txn_per_month']
-        user_txn_counts[u['user_id']] = int(np.random.uniform(tmin, tmax) * 24)
-    scale = N_TRANSACTIONS / sum(user_txn_counts.values())
-    user_txn_counts = {uid: max(10, int(v*scale)) for uid, v in user_txn_counts.items()}
+        user_txn_target[u['user_id']] = int(np.random.uniform(tmin, tmax) * 24)
+    scale = N_TRANSACTIONS / sum(user_txn_target.values())
+    user_txn_target = {uid: max(5, int(v * scale)) for uid, v in user_txn_target.items()}
 
-    transactions = []
-    txn_id = 1
-    for _, u in df_users.iterrows():
-        uid     = u['user_id']
-        seg_key = u['segmen']
-        seg     = SEGMENTS[seg_key]
-        n_txn   = user_txn_counts[uid]
+    for u in user_list:
+        uid, seg_key = u['user_id'], u['segmen']
+        seg       = SEGMENTS[seg_key]
+        n_txn     = user_txn_target[uid]
         cat_keys  = list(seg['categories'].keys())
-        cat_p     = np.array(list(seg['categories'].values())); cat_p /= cat_p.sum()
+        cat_probs = np.array(list(seg['categories'].values()), dtype=float); cat_probs /= cat_probs.sum()
         pay_keys  = list(seg['payment_methods'].keys())
-        pay_p     = np.array(list(seg['payment_methods'].values())); pay_p /= pay_p.sum()
-        dist_type = seg['txn_amount_dist']
-        fraud_prob = {'E':0.003,'D':0.005,'C':0.008,'B':0.012,'A':0.018}.get(seg_key, 0.005)
+        pay_probs = np.array(list(seg['payment_methods'].values()), dtype=float); pay_probs /= pay_probs.sum()
+        p = TXN_AMOUNT_PARAMS[seg['txn_amount_dist']]
         merch_lat  = round(u['lat']  + np.random.uniform(-0.3, 0.3), 4)
         merch_long = round(u['long'] + np.random.uniform(-0.3, 0.3), 4)
+
         for _ in range(n_txn):
-            day      = pd.Timestamp(DATE_START) + pd.Timedelta(days=np.random.randint(0, 730))
-            hour     = np.random.choice(range(24), p=hour_probs)
-            txn_date = day.replace(hour=hour, minute=np.random.randint(0,60), second=np.random.randint(0,60))
-            category = np.random.choice(cat_keys, p=cat_p)
-            sub_cat  = np.random.choice(SUB_CATEGORIES.get(category, [category]))
-            payment  = np.random.choice(pay_keys, p=pay_p)
-            seasonal = SEASON_BOOST.get(txn_date.month, 1.0)
-            amount   = round(sample_amount(dist_type, category) * seasonal / 100) * 100
-            amount   = max(1_000, int(amount))
-            is_fraud = int(np.random.random() < fraud_prob)
+            day_offset = np.random.randint(0, 730)
+            txn_date   = DATE_START + timedelta(days=day_offset, hours=int(np.random.choice(range(24))), minutes=np.random.randint(0,60))
+            category   = np.random.choice(cat_keys, p=cat_probs)
+            payment    = np.random.choice(pay_keys,  p=pay_probs)
+            raw = np.random.lognormal(np.log(p['mean']), 0.7)
+            raw = np.clip(raw, p['min'], p['max'])
+            if category in ['Travel & Hotel','Elektronik','Properti & Renovasi','Investasi & Asuransi','Restoran & Kafe']:
+                raw *= np.random.uniform(1.5, 3.5)
+            elif category in ['Pulsa & Data','Sembako & Kebutuhan Pokok','Transportasi']:
+                raw *= np.random.uniform(0.3, 0.7)
+            amount   = max(1_000, round(raw * SEASON_BOOST.get(txn_date.month, 1.0) / 100) * 100)
             m_lat    = round(merch_lat  + np.random.uniform(-0.05, 0.05), 4)
             m_long   = round(merch_long + np.random.uniform(-0.05, 0.05), 4)
-            dist     = round(((m_lat-u['lat'])**2 + (m_long-u['long'])**2)**0.5, 4)
-            transactions.append({'txn_id':f'TXN{txn_id:07d}','user_id':uid,
-                'date':txn_date,'amount':amount,'category':category,
-                'sub_category':sub_cat,'payment_method':payment,
-                'gender':u['gender'],'usia':int(u['usia']),
-                'segmen':seg_key,'segmen_label':u['segmen_label'],'pekerjaan':u['pekerjaan'],
-                'kota':u['kota'],'tier_kota':u['tier_kota'],'populasi_kota':int(u['populasi_kota']),
-                'pendapatan_bulan':int(u['pendapatan_bulan']),'spending_ratio':float(u['spending_ratio']),
-                'user_lat':u['lat'],'user_long':u['long'],'merch_lat':m_lat,'merch_long':m_long,
-                'dist_user_merchant':dist,'is_fraud':is_fraud,
-                'is_night':int(txn_date.hour >= NIGHT_START),
-                'is_weekend':int(txn_date.dayofweek >= 5),
-                'month':txn_date.month,'day_of_week':txn_date.dayofweek,'hour':txn_date.hour,
-                'quarter':txn_date.quarter,
-                'is_month_start':int(txn_date.day <= 5),'is_month_end':int(txn_date.day >= 25)})
-            txn_id += 1
+            tx_list.append({
+                'txn_id': f'TXN{len(tx_list)+1:07d}', 'user_id': uid,
+                'date': txn_date, 'amount': int(amount),
+                'category': category, 'payment_method': payment,
+                'segmen': seg_key, 'segmen_label': seg['label'],
+                'gender': u['gender'], 'usia': u['usia'],
+                'kota': u['kota'], 'tier_kota': u['tier_kota'],
+                'pendapatan_bulan': u['pendapatan_bulan'],
+                'user_lat': u['lat'], 'user_long': u['long'],
+                'merch_lat': m_lat, 'merch_long': m_long,
+                'dist_user_merchant': round(((m_lat-u['lat'])**2+(m_long-u['long'])**2)**0.5, 4),
+                'is_weekend': int(txn_date.weekday() >= 5),
+                'is_night':   int(txn_date.hour >= NIGHT_START),
+                'is_fraud':   int(np.random.random() < {'E':0.003,'D':0.005,'C':0.008,'B':0.012,'A':0.018}.get(seg_key,0.005)),
+                'month': txn_date.month, 'hour': txn_date.hour,
+                'day_of_week': txn_date.weekday(),
+                'quarter': (txn_date.month-1)//3+1,
+                'is_month_start': int(txn_date.day <= 5),
+                'is_month_end':   int(txn_date.day >= 25),
+            })
 
-    df = pd.DataFrame(transactions)
-    df['date'] = pd.to_datetime(df['date'])
-    for col in ['category','sub_category','payment_method']:
-        df[col] = df[col].astype(str).str.strip().str.title()
-    df = df[df['amount'] >= 1_000].reset_index(drop=True)
-    df['day_name']   = df['date'].dt.day_name().str[:3]
-    df['week']       = df['date'].dt.isocalendar().week.astype(int)
-    df['above_avg']  = (df['amount'] > df['amount'].mean()).astype(int)
+    df_tx = pd.DataFrame(tx_list)
+    df_tx['date'] = pd.to_datetime(df_tx['date'])
+    df_tx['above_avg'] = (df_tx['amount'] > df_tx['amount'].mean()).astype(int)
+    return df_users, df_tx, None
 
-    df_s = df.sort_values(['user_id','date']).copy()
-    df_s['rolling_7_mean'] = df_s.groupby('user_id')['amount'].transform(lambda x: x.rolling(7, min_periods=1).mean())
-    df_s['is_spike'] = (df_s['amount'] > df_s['rolling_7_mean'] * 2).astype(int)
-    df = df_s.reset_index(drop=True)
 
-    return df, df_users
+# ==========================================
+# BUILD USER FEATURES — sesuai notebook Cell 15 & 16
+# ==========================================
+@st.cache_data(show_spinner="🔬 Menghitung user features & persona...")
+def build_user_features(_df_tx, _df_users, _df_profiles=None):
+    # Jika profiles CSV tersedia, pakai langsung
+    if _df_profiles is not None:
+        uf = _df_profiles.copy()
+        for col, src_col in [('nama','nama'),('pekerjaan','pekerjaan')]:
+            if col not in uf.columns and src_col in _df_users.columns:
+                uf = uf.merge(_df_users[['user_id',src_col]], on='user_id', how='left')
+        missing_demo = [c for c in ['kota','tier_kota','pendapatan_bulan'] if c not in uf.columns and c in _df_users.columns]
+        if missing_demo:
+            uf = uf.merge(_df_users[['user_id']+missing_demo], on='user_id', how='left')
+        if 'spending_persona' not in uf.columns:
+            uf['spending_persona'] = uf['impulse_score'].apply(
+                lambda s: 'Impulsive Spender' if s >= IMPULSE_THRESHOLD else ('Emotional Spender' if s >= 0.30 else 'Rational Spender')
+            )
+        uf[uf.select_dtypes(include='number').columns] = uf.select_dtypes(include='number').fillna(0)
+        return uf
 
-@st.cache_data(show_spinner=False)
-def build_user_features(_df, _df_users):
-    df, df_users = _df, _df_users
+    df = _df_tx.copy()
+    if 'above_avg' not in df.columns:
+        df['above_avg'] = (df['amount'] > df['amount'].mean()).astype(int)
 
-    user_agg = df.groupby('user_id').agg(
-        total_spending_idr = ('amount','sum'), avg_txn_idr=('amount','mean'),
-        txn_count=('amount','count'), std_amount_idr=('amount','std'),
-        weekend_ratio=('is_weekend','mean'), night_ratio=('is_night','mean'),
-        above_avg_ratio=('above_avg','mean'), spike_ratio=('is_spike','mean'),
-        unique_categories=('category','nunique'),
-    ).reset_index()
-    user_agg['std_amount_idr'].fillna(0, inplace=True)
-    user_agg['spending_cov'] = (user_agg['std_amount_idr'] / user_agg['avg_txn_idr'].replace(0,np.nan)).fillna(0)
-    user_agg['impulse_score'] = (user_agg['weekend_ratio']*0.35 + user_agg['night_ratio']*0.30 +
-                                  user_agg['above_avg_ratio']*0.20 + user_agg['spike_ratio']*0.15).round(4)
+    # Aggregasi dasar
+    agg_dict = {
+        'total_spending_idr':  ('amount','sum'),
+        'avg_txn_idr':         ('amount','mean'),
+        'median_txn_idr':      ('amount','median'),
+        'max_txn_idr':         ('amount','max'),
+        'txn_count':           ('amount','count'),
+        'std_amount_idr':      ('amount','std'),
+        'weekend_ratio':       ('is_weekend','mean'),
+        'night_ratio':         ('is_night','mean'),
+        'fraud_ratio':         ('is_fraud','mean'),
+        'unique_categories':   ('category','nunique'),
+        'above_avg_ratio':     ('above_avg','mean'),
+        'active_months':       ('month','nunique'),
+    }
+    if 'is_month_start' in df.columns:
+        agg_dict['month_start_ratio'] = ('is_month_start','mean')
+    if 'is_month_end' in df.columns:
+        agg_dict['month_end_ratio'] = ('is_month_end','mean')
 
-    cat_pivot = df.pivot_table(index='user_id', columns='category', values='amount', aggfunc='sum', fill_value=0)
-    cat_pivot.columns = [f'cat_{str(c).lower().replace(" & ","_").replace(" ","_")[:18]}' for c in cat_pivot.columns]
+    uf = df.groupby('user_id').agg(**agg_dict).reset_index()
 
-    pay_dom = df.groupby('user_id')['payment_method'].agg(lambda x: x.mode().iloc[0] if len(x)>0 else 'Unknown').reset_index().rename(columns={'payment_method':'dominant_payment'})
-    age_agg = df.groupby('user_id')['usia'].mean().reset_index().rename(columns={'usia':'age'})
-    income_agg = df_users[['user_id','pendapatan_bulan','spending_ratio','segmen','segmen_label','kota','tier_kota']]
+    # dist_user_merchant
+    if 'dist_user_merchant' in df.columns:
+        dist_agg = df.groupby('user_id')['dist_user_merchant'].mean().reset_index()
+        dist_agg.rename(columns={'dist_user_merchant':'avg_dist_merchant'}, inplace=True)
+        uf = uf.merge(dist_agg, on='user_id', how='left')
+    else:
+        uf['avg_dist_merchant'] = 0.0
 
-    uf = (user_agg.merge(cat_pivot,on='user_id',how='left').merge(pay_dom,on='user_id',how='left')
-          .merge(age_agg,on='user_id',how='left').merge(income_agg,on='user_id',how='left'))
-    uf.fillna(0, inplace=True)
+    # Spike ratio (rolling 7 txn)
+    spike_list = []
+    for uid, grp in df.sort_values('date').groupby('user_id'):
+        rolling_mean = grp['amount'].rolling(7, min_periods=1).mean().shift(1).fillna(grp['amount'].mean())
+        spikes = int((grp['amount'] > 2 * rolling_mean).sum())
+        spike_list.append({'user_id': uid, 'spike_count': spikes, 'spike_ratio': spikes / max(len(grp),1)})
+    spike_df = pd.DataFrame(spike_list)
+    uf = uf.merge(spike_df, on='user_id', how='left')
 
-    # v3 cleanup
-    cat_cols_src = [c for c in uf.columns if c.startswith('cat_') and not c.endswith('_ratio')]
-    for col in cat_cols_src:
-        uf[col+'_ratio'] = (uf[col] / uf['total_spending_idr'].replace(0, np.nan)).fillna(0)
-    all_cat_raw = [c for c in uf.columns if c.startswith('cat_') and not c.endswith('_ratio')]
-    uf.drop(columns=all_cat_raw, inplace=True)
-    for col in ['total_spending_idr','std_amount_idr']:
-        if col in uf.columns:
-            uf.drop(columns=[col], inplace=True)
+    uf['std_amount_idr'] = uf['std_amount_idr'].fillna(0)
+    uf['spike_ratio']    = uf['spike_ratio'].fillna(0)
+    uf['spike_count']    = uf['spike_count'].fillna(0)
+    uf['spending_cov']   = (uf['std_amount_idr'] / uf['avg_txn_idr'].replace(0, np.nan)).fillna(0)
 
-    if 'pendapatan_bulan' not in uf.columns:
-        uf['pendapatan_bulan'] = 0
+    # Impulse score — sesuai notebook Cell 15
+    uf['impulse_score'] = (
+        uf['weekend_ratio']   * 0.35 +
+        uf['night_ratio']     * 0.30 +
+        uf['above_avg_ratio'] * 0.20 +
+        uf['spike_ratio']     * 0.15
+    ).clip(0, 1).round(4)
 
-    fc = [c for c in FEATURE_COLS if c in uf.columns]
-    X  = uf[fc].fillna(0).values
+    # Spending persona — sesuai notebook Cell 17
+    uf['spending_persona'] = uf['impulse_score'].apply(
+        lambda s: 'Impulsive Spender' if s >= IMPULSE_THRESHOLD else ('Emotional Spender' if s >= 0.30 else 'Rational Spender')
+    )
+
+    # Merge demografi dari df_users
+    user_demo_cols = [c for c in ['user_id','segmen','segmen_label','usia','gender','kota','tier_kota','pendapatan_bulan'] if c in _df_users.columns]
+    uf = uf.merge(_df_users[user_demo_cols], on='user_id', how='left')
+    for col in ['nama','pekerjaan']:
+        if col in _df_users.columns:
+            uf = uf.merge(_df_users[['user_id',col]], on='user_id', how='left')
+
+    # spending_ratio
+    if 'pendapatan_bulan' in uf.columns:
+        uf['spending_ratio'] = (uf['total_spending_idr'] / (uf['pendapatan_bulan'].replace(0,np.nan) * 24)).fillna(0).clip(0,5)
+
+    # age_group
+    if 'usia' in uf.columns:
+        uf['age_group'] = pd.cut(uf['usia'].fillna(25), bins=[0,24,34,44,100], labels=['18-24','25-34','35-44','45+']).astype(str)
+
+    # Dominant payment
+    pay_dom = (df.groupby('user_id')['payment_method']
+               .agg(lambda x: x.mode().iloc[0] if len(x) > 0 else 'Unknown')
+               .reset_index().rename(columns={'payment_method':'dominant_payment'}))
+    uf = uf.merge(pay_dom, on='user_id', how='left')
+
+    # Category ratio columns — sesuai notebook Cell 16
+    cat_pivot = df.pivot_table(index='user_id', columns='category', values='amount', aggfunc='sum', fill_value=0).reset_index()
+    cat_pivot.columns.name = None
+    cat_pivot.columns = [
+        'user_id' if c == 'user_id'
+        else f'cat_{str(c).lower().replace(" & ","_").replace(" ","_")[:18]}'
+        for c in cat_pivot.columns
+    ]
+    # Hapus kolom cat_ raw, simpan sebagai ratio
+    cat_raw_cols = [c for c in cat_pivot.columns if c != 'user_id']
+    uf = uf.merge(cat_pivot, on='user_id', how='left')
+    total_col = 'total_spending_idr'
+    if total_col in uf.columns:
+        for col in cat_raw_cols:
+            ratio_col = col + '_ratio'
+            uf[ratio_col] = (uf[col] / uf[total_col].replace(0, np.nan)).fillna(0)
+        uf.drop(columns=cat_raw_cols, inplace=True)
+
+    uf[uf.select_dtypes(include='number').columns] = uf.select_dtypes(include='number').fillna(0)
+    return uf
+
+
+# ==========================================
+# CLUSTERING — sesuai notebook Cell 16-17 (K=3, fitur v3)
+# ==========================================
+@st.cache_data(show_spinner="🤖 Menjalankan K-Means clustering (v3)...")
+def run_clustering(_uf):
+    # Pilih fitur yang tersedia dari NOTEBOOK_FEATURE_COLS
+    # Fallback ke fitur behavioral jika cat_ratio tidak ada
+    preferred = [c for c in NOTEBOOK_FEATURE_COLS if c in _uf.columns]
+    fallback   = [c for c in [
+        'avg_txn_idr','txn_count','std_amount_idr','weekend_ratio','night_ratio',
+        'unique_categories','impulse_score','spending_cov','above_avg_ratio','spike_ratio',
+        'active_months','avg_dist_merchant','pendapatan_bulan',
+    ] if c in _uf.columns]
+    FEATURE_COLS = preferred if len(preferred) >= 5 else fallback
+    FEATURE_COLS = list(dict.fromkeys(FEATURE_COLS))  # deduplicate
+
+    X        = _uf[FEATURE_COLS].fillna(0).values
     scaler   = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
-    km = KMeans(n_clusters=3, random_state=42, n_init=10)
-    uf['cluster'] = km.fit_predict(X_scaled)
+    inertias, sil_scores = [], []
+    K_range = range(2, 9)
+    for k in K_range:
+        km  = KMeans(n_clusters=k, random_state=42, n_init=10)
+        lbl = km.fit_predict(X_scaled)
+        inertias.append(km.inertia_)
+        sil_scores.append(silhouette_score(X_scaled, lbl))
 
-    stats_c = uf.groupby('cluster')['impulse_score'].mean()
-    rank    = stats_c.rank(method='first').astype(int)
-    pmap    = {rank.idxmax():'Impulsive Spender', rank.idxmin():'Rational Spender'}
-    mid     = [k for k in rank.index if k not in pmap][0]
-    pmap[mid] = 'Emotional Spender'
-    uf['spending_persona'] = uf['cluster'].map(pmap)
+    best_k = list(K_range)[sil_scores.index(max(sil_scores))]
 
-    le = LabelEncoder()
-    uf['persona_encoded'] = le.fit_transform(uf['spending_persona'])
+    # K_FINAL = 3 sesuai notebook Cell 17
+    km_final = KMeans(n_clusters=3, random_state=42, n_init=10)
+    labels   = km_final.fit_predict(X_scaled)
 
-    mm     = MinMaxScaler()
-    X_norm = mm.fit_transform(uf[fc].fillna(0).values)
+    pca   = PCA(n_components=2, random_state=42)
+    X_pca = pca.fit_transform(X_scaled)
 
-    return uf, fc, X_scaled, X_norm, le
+    cluster_results = {
+        'k_vals': list(K_range), 'inertias': inertias,
+        'sil_scores': sil_scores, 'best_k': best_k,
+        'pca_var': float(pca.explained_variance_ratio_.sum()),
+        'feature_cols': FEATURE_COLS,
+        'n_features': len(FEATURE_COLS),
+    }
+    return labels, X_pca, cluster_results, FEATURE_COLS
 
-# ══════════════════════════════════════════════════════════════
+
+# ==========================================
+# LOAD DATA
+# ==========================================
+df_users, df_tx, df_profiles = load_data()
+user_features = build_user_features(df_tx, df_users, df_profiles)
+cluster_labels, pca_coords, cluster_results, feat_cols = run_clustering(user_features)
+user_features['cluster'] = cluster_labels
+
+# Map cluster ke persona berdasarkan avg_impulse — sesuai notebook Cell 17
+stats_clust = user_features.groupby('cluster').agg(avg_impulse=('impulse_score','mean')).round(2)
+sorted_clusters = stats_clust.sort_values('avg_impulse').index.tolist()
+cluster_persona_map = {
+    sorted_clusters[0]: 'Rational Spender',
+    sorted_clusters[1]: 'Emotional Spender',
+    sorted_clusters[2]: 'Impulsive Spender',
+}
+user_features['spending_persona'] = user_features['cluster'].map(cluster_persona_map)
+
+# ==========================================
 # SIDEBAR
-# ══════════════════════════════════════════════════════════════
+# ==========================================
 with st.sidebar:
+    st.markdown("<h2 style='text-align:center;font-family:Sora,sans-serif;font-weight:800;font-size:1.7rem;color:#fff;margin-bottom:2px;'>BUDU</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align:center;color:#fed7aa;font-size:0.9rem;font-weight:500;margin-top:0;'>SpendBehavior Analyzer</p>", unsafe_allow_html=True)
+    st.markdown("---")
+    menu = st.radio("📌 Navigasi", [
+        "🏠 Overview",
+        "📊 EDA & Business Questions",
+        "🧪 A/B Testing",
+        "👥 Clustering & Persona",
+        "🔎 User Deep Dive",
+        "📖 Data Dictionary",
+    ])
+    st.markdown("---")
     st.markdown("""
-    <div style='text-align:center; padding:8px 0 4px'>
-      <div style='font-size:28px; font-weight:900;
-                  background:linear-gradient(90deg,#60a5fa,#34d399,#fbbf24);
-                  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-                  background-clip:text;'>💸 BUDU</div>
-      <div style='color:#7b90b8;font-size:11px;margin-top:2px'>SpendBehavior Analyzer · <span style="color:#fbbf24;font-weight:700">v3</span></div>
-      <div style='color:#4a6080;font-size:10px;margin-top:2px'>Tim CC26-PSU268 · Coding Camp 2026</div>
+    <div style="background:rgba(255,255,255,0.10);padding:24px 20px;border-radius:20px;border:1px solid rgba(255,255,255,0.15);text-align:center;backdrop-filter:blur(6px);">
+    <h3 style="color:white;margin-bottom:6px;font-family:'Sora',sans-serif;font-size:1.7rem;font-weight:700;letter-spacing:-0.5px;">Tim CC26-PSU268</h3>
+    <p style="color:#FFF6DE;font-size:13px;margin-top:0;margin-bottom:20px;font-weight:500;">Coding Camp 2026 · DBS Foundation</p>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.15);margin:18px 0 24px 0;">
+    <p style="color:white;font-size:15px;font-weight:700;margin-bottom:10px;font-family:'Sora',sans-serif;">Data Science</p>
+    <p style="color:#FFF6DE;font-size:14px;margin:4px 0;font-weight:500;">Dwi Cahyawati</p>
+    <p style="color:#FFF6DE;font-size:14px;margin:4px 0;font-weight:500;">Mutia Saniya Rahma</p>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.15);margin:18px 0;">
+    <p style="color:white;font-size:15px;font-weight:700;margin-bottom:10px;font-family:'Sora',sans-serif;">AI Engineer</p>
+    <p style="color:#FFF6DE;font-size:14px;margin:4px 0;font-weight:500;">Aliya Shahira</p>
+    <p style="color:#FFF6DE;font-size:14px;margin:4px 0;font-weight:500;">Khalisha Rana Putri</p>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.15);margin:18px 0;">
+    <p style="color:white;font-size:15px;font-weight:700;margin-bottom:10px;font-family:'Sora',sans-serif;">Full-Stack Web Dev</p>
+    <p style="color:#FFF6DE;font-size:14px;margin:4px 0;font-weight:500;">Hamzah Hudzairah</p>
+    <p style="color:#FFF6DE;font-size:14px;margin:4px 0;font-weight:500;">Berton Adiwidya Wibowo</p>
     </div>
     """, unsafe_allow_html=True)
-    st.divider()
+    st.markdown("---")
+    st.caption(f"Dataset: {len(df_users):,} user · {len(df_tx):,} transaksi")
+    st.caption(f"Periode: {df_tx['date'].min().strftime('%b %Y')} – {df_tx['date'].max().strftime('%b %Y')}")
+    import os
+    if os.path.exists(CSV_TX):
+        st.success("📂 Sumber: CSV notebook")
+    else:
+        st.info("🔧 Sumber: Data generator")
+    available_segs = sorted(df_tx['segmen'].dropna().unique().tolist()) if 'segmen' in df_tx.columns else ['A','B','C','D','E']
+    seg_filter = st.multiselect("Filter Segmen (Global)", options=['A','B','C','D','E'], default=available_segs)
 
-    st.markdown("### Filter Data")
-    seg_all    = ['Semua'] + [SEGMENTS[k]['label'] for k in SEGMENTS]
-    seg_filter = st.selectbox('Segmen Sosio-Ekonomi', seg_all)
+# ── Apply global filter ────────────────────────────────
+df_f  = df_tx[df_tx['segmen'].isin(seg_filter)].copy() if 'segmen' in df_tx.columns else df_tx.copy()
+seg_col_uf = next((c for c in ['segmen','segmen_label'] if c in user_features.columns), None)
+uf_f  = user_features[user_features[seg_col_uf].isin(seg_filter)].copy() if seg_col_uf else user_features.copy()
 
-    persona_all    = ['Semua', 'Impulsive Spender', 'Emotional Spender', 'Rational Spender']
-    persona_filter = st.selectbox('Spending Persona', persona_all)
-
-    st.divider()
-    st.markdown("### Threshold Global")
-    impulse_thr = st.slider('Impulse Threshold', 0.0, 1.0, IMPULSE_THRESHOLD, 0.05)
-    anomaly_std = st.slider('Anomali (× SD)', 0.5, 3.0, ANOMALY_STD_FACTOR, 0.5)
-
-    st.divider()
-    if st.button('🔄 Generate Ulang Data', use_container_width=True):
-        st.cache_data.clear()
-        st.rerun()
-
-# ══════════════════════════════════════════════════════════════
-# LOAD DATA
-# ══════════════════════════════════════════════════════════════
-with st.spinner('Generating dataset BUDU Indonesia...'):
-    df_raw, df_users = generate_data()
-    user_features, feat_cols, X_scaled, X_norm, le = build_user_features(df_raw, df_users)
-
-# Apply filter
-df = df_raw.copy()
-uf = user_features.copy()
-
-if seg_filter != 'Semua':
-    valid_users = df_users[df_users['segmen_label'] == seg_filter]['user_id']
-    df = df[df['user_id'].isin(valid_users)]
-    uf = uf[uf['segmen_label'] == seg_filter]
-
-if persona_filter != 'Semua':
-    uf_p = user_features[user_features['spending_persona'] == persona_filter]
-    df = df[df['user_id'].isin(uf_p['user_id'])]
-    uf = uf[uf['spending_persona'] == persona_filter]
-
-# ══════════════════════════════════════════════════════════════
+# ==========================================
 # HEADER
-# ══════════════════════════════════════════════════════════════
+# ==========================================
 st.markdown("""
-<div style='
-  background: linear-gradient(135deg, #1e3a5f 0%, #1a2a4a 50%, #0f1a35 100%);
-  border: 1.5px solid #2a4a7a;
-  border-radius: 16px;
-  padding: 20px 28px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 24px rgba(37,99,235,0.15);
-'>
-  <div style='display:flex; align-items:center; gap:12px; margin-bottom:6px'>
-    <span style='font-size:32px'>💸</span>
-    <h1 style='font-size:26px;font-weight:800;margin:0;
-               background: linear-gradient(90deg, #60a5fa, #34d399, #fbbf24);
-               -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-               background-clip: text;'>
-      BUDU — SpendBehavior Analyzer
-    </h1>
-  </div>
-  <div style='display:flex; gap:16px; flex-wrap:wrap; margin-top:8px'>
-    <span style='background:#1e3a6022; color:#60a5fa; border:1px solid #3b6cb055; padding:3px 12px; border-radius:99px; font-size:11px; font-weight:700'>🇮🇩 Dataset Dummy Indonesia</span>
-    <span style='background:#05966922; color:#34d399; border:1px solid #34d39955; padding:3px 12px; border-radius:99px; font-size:11px; font-weight:700'>💰 IDR</span>
-    <span style='background:#d9770622; color:#fbbf24; border:1px solid #fbbf2455; padding:3px 12px; border-radius:99px; font-size:11px; font-weight:700'>✨ Feature v3 · 20 fitur</span>
-    <span style='background:#7c3aed22; color:#a78bfa; border:1px solid #a78bfa55; padding:3px 12px; border-radius:99px; font-size:11px; font-weight:700'>👥 Tim CC26-PSU268</span>
-  </div>
+<div class="header-banner">
+    <h1>💸 BUDU — SpendBehavior Analyzer</h1>
+    <p>Coding Camp 2026 · DBS Foundation · Tim CC26-PSU268 &nbsp;|&nbsp; Dataset Dummy Indonesia Realistis (IDR)</p>
 </div>
 """, unsafe_allow_html=True)
 
-# ══════════════════════════════════════════════════════════════
-# TABS
-# ══════════════════════════════════════════════════════════════
-tab_overview, tab_eda, tab_ab, tab_clustering, tab_model, tab_dict = st.tabs([
-    '📊 Overview', '🔍 EDA & Business Questions', '🧪 A/B Testing',
-    '🤖 Clustering & Persona', '🧠 Persiapan Model TF', '📖 Data Dictionary'
-])
+PERSONA_COLORS = {'Rational Spender': ACCENT, 'Emotional Spender': '#f59e0b', 'Impulsive Spender': WARN}
+PERSONA_ICONS  = {'Rational Spender': '🟢', 'Emotional Spender': '🟡', 'Impulsive Spender': '🔴'}
+M_LBL = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des']
 
-# ─────────────────────────────────────────────────────────────
-# TAB 1 — OVERVIEW
-# ─────────────────────────────────────────────────────────────
-with tab_overview:
-    st.markdown('<div class="section-header" style="border-color:#60a5fa;color:#60a5fa">📈 Ringkasan Dataset</div>', unsafe_allow_html=True)
 
+# ==========================================
+# ██  OVERVIEW  ██
+# ==========================================
+if menu == "🏠 Overview":
+    st.markdown('<p class="section-title">📌 Ringkasan Utama</p>', unsafe_allow_html=True)
     c1, c2, c3, c4, c5 = st.columns(5)
-    c1.metric('Total Transaksi',    f'{len(df):,}')
-    c2.metric('Total User',         f'{df["user_id"].nunique():,}')
-    c3.metric('Median Amount',      f'Rp {int(df["amount"].median()):,}')
-    c4.metric('Fraud Rate',         f'{df["is_fraud"].mean()*100:.2f}%')
-    c5.metric('Kategori',           f'{df["category"].nunique()}')
+    c1.metric("Total User",       f"{len(df_users):,}",                    "5 Segmen")
+    c2.metric("Total Transaksi",  f"{len(df_tx):,}",                       "24 Bulan")
+    c3.metric("Total Spending",   f"Rp {df_tx['amount'].sum()/1e9:.1f}M",  "Miliar IDR")
+    c4.metric("Avg Transaksi",    f"Rp {df_tx['amount'].mean():,.0f}",     "per txn")
+    imp_pct = (uf_f['spending_persona'] == 'Impulsive Spender').mean() * 100
+    c5.metric("Impulsive Spender",f"{imp_pct:.1f}%", "≥ score 0.55", delta_color="inverse")
 
-    st.divider()
+    st.markdown("---")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        st.markdown('<p class="section-title">👤 Distribusi Segmen Sosio-Ekonomi</p>', unsafe_allow_html=True)
+        seg_col    = 'segmen' if 'segmen' in df_users.columns else 'segmen_label'
+        df_users_f = df_users[df_users['segmen'].isin(seg_filter)] if 'segmen' in df_users.columns else df_users
+        seg_count  = df_users_f[seg_col].value_counts().reset_index()
+        seg_count.columns = ['Segmen','Jumlah']
+        seg_label_map = {s: SEGMENTS[s]['label'] for s in SEGMENTS}
+        seg_count['Label'] = seg_count['Segmen'].map(seg_label_map).fillna(seg_count['Segmen'])
+        fig_seg = px.pie(seg_count, names='Label', values='Jumlah', color_discrete_sequence=PALETTE, hole=0.4)
+        fig_seg.update_traces(textposition='outside', textinfo='percent+label')
+        fig_seg.update_layout(margin=dict(t=10,b=10,l=10,r=10), showlegend=False, height=320)
+        st.plotly_chart(fig_seg, use_container_width=True)
+    with col_b:
+        st.markdown('<p class="section-title">🏙️ Distribusi Tier Kota</p>', unsafe_allow_html=True)
+        tier_count = df_users_f['tier_kota'].value_counts().reset_index()
+        tier_count.columns = ['Tier','Jumlah']
+        fig_tier = px.bar(tier_count, x='Tier', y='Jumlah', color='Tier', color_discrete_sequence=PALETTE, text_auto=True)
+        fig_tier.update_layout(showlegend=False, height=320, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+        st.plotly_chart(fig_tier, use_container_width=True)
 
-    col_l, col_r = st.columns(2)
+    st.markdown("---")
+    st.markdown('<p class="section-title">🏷️ Top Kategori Pengeluaran (IDR)</p>', unsafe_allow_html=True)
+    cat_spend = df_f.groupby('category')['amount'].sum().sort_values(ascending=False).reset_index()
+    cat_spend['amount_M'] = cat_spend['amount'] / 1e6
+    fig_cat = px.bar(cat_spend, x='category', y='amount_M',
+                     color='amount_M', color_continuous_scale='Oranges',
+                     text=cat_spend['amount_M'].apply(lambda x: f'Rp {x:.1f}M'),
+                     labels={'amount_M':'Total (Juta IDR)','category':'Kategori'})
+    fig_cat.update_traces(textposition='outside')
+    fig_cat.update_layout(coloraxis_showscale=False, showlegend=False, height=380,
+                          plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', xaxis_tickangle=-30)
+    st.plotly_chart(fig_cat, use_container_width=True)
 
-    with col_l:
-        st.markdown("**Distribusi Segmen Sosio-Ekonomi**")
-        seg_dist = df.groupby('segmen_label')['amount'].agg(total='sum', txn='count').reset_index()
-        seg_dist['persen_txn'] = seg_dist['txn'] / seg_dist['txn'].sum() * 100
-        fig, ax = plt.subplots(figsize=(6,3.5))
-        bars = ax.barh(seg_dist['segmen_label'], seg_dist['persen_txn'],
-                       color=[PALETTE[i] for i in range(len(seg_dist))])
-        ax.set_xlabel('% Transaksi'); ax.set_xlim(0, seg_dist['persen_txn'].max()*1.2)
-        for bar, val in zip(bars, seg_dist['persen_txn']):
-            ax.text(bar.get_width()+0.3, bar.get_y()+bar.get_height()/2,
-                    f'{val:.1f}%', va='center', fontsize=9, color='#c8d8f0')
-        ax.set_facecolor('none'); fig.patch.set_facecolor('none')
-        ax.tick_params(colors='#94a3b8'); ax.xaxis.label.set_color('#94a3b8')
-        st.pyplot(fig, use_container_width=True); plt.close()
+    col_c, col_d = st.columns(2)
+    with col_c:
+        st.markdown('<p class="section-title">📅 Tren Spending Bulanan</p>', unsafe_allow_html=True)
+        monthly = df_f.groupby('month')['amount'].sum().reset_index().sort_values('month')
+        monthly['month_name'] = monthly['month'].apply(lambda m: M_LBL[m-1])
+        monthly['amount_M']   = monthly['amount'] / 1e6
+        fig_mon = px.area(monthly, x='month_name', y='amount_M',
+                          color_discrete_sequence=[PRIMARY], labels={'amount_M':'Total (Juta IDR)','month_name':'Bulan'})
+        fig_mon.update_traces(line=dict(width=3))
+        fig_mon.update_layout(height=300, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+        st.plotly_chart(fig_mon, use_container_width=True)
+    with col_d:
+        st.markdown('<p class="section-title">💳 Metode Pembayaran</p>', unsafe_allow_html=True)
+        pay_count = df_f['payment_method'].value_counts().reset_index()
+        pay_count.columns = ['Metode','Frekuensi']
+        fig_pay = px.pie(pay_count.head(8), names='Metode', values='Frekuensi', color_discrete_sequence=PALETTE, hole=0.3)
+        fig_pay.update_layout(height=300, margin=dict(t=10,b=10))
+        st.plotly_chart(fig_pay, use_container_width=True)
 
-    with col_r:
-        st.markdown("**Spending Persona Distribution**")
-        if 'spending_persona' in user_features.columns:
-            persona_cnt = user_features['spending_persona'].value_counts()
-            fig, ax = plt.subplots(figsize=(6,3.5))
-            colors = [PERSONA_COLORS.get(p, PRIMARY) for p in persona_cnt.index]
-            wedges, texts, autotexts = ax.pie(persona_cnt.values, labels=persona_cnt.index,
-                autopct='%1.1f%%', colors=colors, startangle=140,
-                wedgeprops=dict(edgecolor='#0d1117', lw=2))
-            for t in texts:
-                t.set_color('#94a3b8')
-                t.set_fontsize(9)
-            for at in autotexts:
-                at.set_color('white')
-                at.set_fontsize(9)
-                at.set_fontweight('bold')
-            ax.set_facecolor('none'); fig.patch.set_facecolor('none')
-            st.pyplot(fig, use_container_width=True); plt.close()
 
-    st.divider()
-    st.markdown("**Tren Bulanan — Total Pengeluaran IDR**")
-    m_lbl = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des']
-    monthly = df.groupby('month')['amount'].sum().reset_index()
-    thr = monthly['amount'].mean() + anomaly_std * monthly['amount'].std()
-    fig, ax = plt.subplots(figsize=(13,3))
-    ax.plot(monthly['month'], monthly['amount']/1e6, marker='o', color=PRIMARY, lw=2.5, zorder=3)
-    ax.fill_between(monthly['month'], monthly['amount']/1e6, alpha=0.15, color='#60a5fa')
-    ax.axhline(thr/1e6, color=WARN, ls='--', lw=1.5, label=f'Threshold (mean+{anomaly_std}σ)')
-    anom = monthly[monthly['amount'] > thr]
-    ax.scatter(anom['month'], anom['amount']/1e6, color=WARN, s=100, zorder=5, label='Anomali')
-    ax.set_xticks(range(1,13)); ax.set_xticklabels(m_lbl)
-    ax.set_ylabel('Juta IDR'); ax.legend(framealpha=0.1)
-    ax.set_facecolor('none'); fig.patch.set_facecolor('none')
-    ax.tick_params(colors='#94a3b8'); ax.yaxis.label.set_color('#94a3b8')
-    st.pyplot(fig, use_container_width=True); plt.close()
+# ==========================================
+# ██  EDA & BUSINESS QUESTIONS  ██
+# ==========================================
+elif menu == "📊 EDA & Business Questions":
+    st.subheader("🔍 6 Business Questions SMART")
+    tabs = st.tabs(["💰  Q1 · Money Leak","📅  Q2 · Weekend Pattern","📈  Q3 · Monthly Anomaly","🚰  Q4 · Silent Drain","💳  Q5 · Payment Spearman","⚡  Q6 · Impulsive Profile"])
 
-    anom_months = [m_lbl[m-1] for m in anom['month'].tolist()]
-    if anom_months:
-        st.markdown(f'<div class="warn-box">⚠️ <b>Bulan anomali:</b> {", ".join(anom_months)} — pengeluaran melebihi threshold Rp {thr/1e6:.1f}jt/bulan</div>', unsafe_allow_html=True)
+    # ── Q1 ──────────────────────────────────────────────────
+    with tabs[0]:
+        st.markdown("#### Q1: Kategori mana yang menyumbang ≥30% total pengeluaran?")
+        st.markdown('<div class="insight-box">📌 Tujuan: Identifikasi kategori utama penyumbang spending untuk fitur <b>Money Leak Warning</b> BUDU.</div>', unsafe_allow_html=True)
+        cat_spend = df_f.groupby('category')['amount'].sum().sort_values(ascending=False).reset_index()
+        cat_spend['pct']            = cat_spend['amount'] / cat_spend['amount'].sum() * 100
+        cat_spend['cumulative_pct'] = cat_spend['pct'].cumsum()
+        top_cats  = cat_spend[cat_spend['pct'] >= 2].copy()
+        col1, col2 = st.columns([3,1])
+        with col1:
+            fig_q1 = make_subplots(specs=[[{"secondary_y": True}]])
+            fig_q1.add_trace(go.Bar(x=top_cats['category'], y=top_cats['pct'], name='% Spending',
+                                    marker_color=PALETTE[:len(top_cats)],
+                                    text=top_cats['pct'].apply(lambda x: f'{x:.1f}%'), textposition='outside'), secondary_y=False)
+            fig_q1.add_trace(go.Scatter(x=top_cats['category'], y=top_cats['cumulative_pct'],
+                                        name='Kumulatif %', line=dict(color='#ef4444',width=2.5), mode='lines+markers'), secondary_y=True)
+            fig_q1.update_layout(height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', xaxis_tickangle=-25)
+            st.plotly_chart(fig_q1, use_container_width=True)
+        with col2:
+            st.markdown("**Top 5 Kategori:**")
+            for _, row in cat_spend.head(5).iterrows():
+                st.markdown(f"**{row['category']}**")
+                st.progress(int(min(row['pct'], 100)))
+                st.caption(f"Rp {row['amount']/1e6:.1f}M ({row['pct']:.1f}%)")
+        top1 = cat_spend.iloc[0]
+        if top1['pct'] >= 30:
+            st.markdown(f'<div class="warn-box">⚠️ <b>{top1["category"]}</b> menyumbang ≥30% total spending ({top1["pct"]:.1f}%). BUDU aktifkan Money Leak alert.</div>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div class="insight-box">ℹ️ Tidak ada kategori tunggal ≥30%. Terbesar: <b>{top1["category"]}</b> ({top1["pct"]:.1f}% · Rp {top1["amount"]/1e6:.1f}jt). BUDU tampilkan top-3 sebagai <b>Money Leak Priority</b>.</div>', unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────────────────────
-# TAB 2 — EDA & BUSINESS QUESTIONS
-# ─────────────────────────────────────────────────────────────
-with tab_eda:
-    bq = st.radio('Pilih Business Question:', [
-        'Q1 — Distribusi Kategori', 'Q2 — Pola Waktu',
-        'Q3 — Anomali Bulanan', 'Q4 — Money Leak',
-        'Q5 — Metode Pembayaran + Spearman', 'Q6 — Impulsive User',
-        'EDA Segmen'
-    ], horizontal=True)
-
-    # Q1
-    if bq == 'Q1 — Distribusi Kategori':
-        st.markdown('<div class="section-header" style="border-color:#fbbf24;color:#fbbf24">Q1: Kategori mana yang menyumbang ≥30% total pengeluaran?</div>', unsafe_allow_html=True)
-        cat_grp = df.groupby('category')['amount'].agg(total='sum', count='count', avg='mean').sort_values('total', ascending=False)
-        cat_grp['persen'] = (cat_grp['total'] / cat_grp['total'].sum() * 100).round(2)
-
+    # ── Q2 ──────────────────────────────────────────────────
+    with tabs[1]:
+        st.markdown("#### Q2: Apakah rata-rata transaksi weekend ≥20% lebih tinggi dari weekday?")
+        wknd_df = df_f.groupby('is_weekend')['amount'].agg(['mean','median','count','sum']).reset_index()
+        wknd_df['label'] = wknd_df['is_weekend'].map({0:'Weekday',1:'Weekend'})
+        avg_wknd = float(wknd_df.loc[wknd_df['is_weekend']==1,'mean'].values[0]) if 1 in wknd_df['is_weekend'].values else 0
+        avg_wkdy = float(wknd_df.loc[wknd_df['is_weekend']==0,'mean'].values[0]) if 0 in wknd_df['is_weekend'].values else 1
+        diff_pct = (avg_wknd - avg_wkdy) / avg_wkdy * 100 if avg_wkdy else 0
         col1, col2 = st.columns(2)
         with col1:
-            top10 = cat_grp.head(10)
-            fig, ax = plt.subplots(figsize=(6,4.5))
-            clrs = [PALETTE[i % len(PALETTE)] for i in range(len(top10))]
-            ax.barh(top10.index[::-1], top10['total'][::-1]/1e6, color=clrs[::-1])
-            ax.set_xlabel('Juta IDR')
-            ax.set_title('Top 10 Kategori — Total IDR', fontweight='bold', color='#c8d8f0')
-            for i, v in enumerate(top10['total'][::-1]/1e6):
-                ax.text(v*0.02, i, f'Rp {v:.1f}jt', va='center', fontsize=8, color='#c8d8f0')
-            ax.set_facecolor('none'); fig.patch.set_facecolor('none')
-            ax.tick_params(colors='#94a3b8'); ax.xaxis.label.set_color('#94a3b8')
-            st.pyplot(fig, use_container_width=True); plt.close()
+            fig_wk = px.bar(wknd_df, x='label', y='mean', color='label',
+                            color_discrete_map={'Weekday':'#fed7aa','Weekend':PRIMARY},
+                            text=wknd_df['mean'].apply(lambda x: f'Rp {x:,.0f}'),
+                            labels={'mean':'Rata-rata (IDR)','label':''})
+            fig_wk.update_traces(textposition='outside')
+            fig_wk.update_layout(showlegend=False, height=320, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_wk, use_container_width=True)
         with col2:
-            top6 = cat_grp.head(6); other = cat_grp['total'].iloc[6:].sum()
-            pie_v = list(top6['total']) + ([other] if other>0 else [])
-            pie_l = list(top6.index) + (['Others'] if other>0 else [])
-            fig, ax = plt.subplots(figsize=(6,4.5))
-            ax.pie(pie_v, labels=pie_l, autopct='%1.1f%%', colors=PALETTE[:len(pie_v)],
-                   startangle=140, wedgeprops=dict(edgecolor='#0d1117', lw=2))
-            ax.set_title('Porsi per Kategori', fontweight='bold', color='#c8d8f0')
-            fig.patch.set_facecolor('none')
-            st.pyplot(fig, use_container_width=True); plt.close()
-
-        cat_30 = cat_grp[cat_grp['persen'] >= 30]
-        if cat_30.empty:
-            top1 = cat_grp.head(1)
-            st.markdown(f'<div class="info-box">📌 <b>Q1 ANSWER:</b> Tidak ada kategori tunggal ≥ 30%. Terbesar: <b>{top1.index[0]}</b> ({top1["persen"].values[0]:.1f}% · Rp {top1["total"].values[0]/1e6:.1f}jt)<br>➡️ BUDU: tampilkan top-3 sebagai <b>Money Leak Priority</b></div>', unsafe_allow_html=True)
+            sample_q2 = df_f.sample(min(5000,len(df_f)), random_state=42).copy()
+            sample_q2['Tipe Hari'] = sample_q2['is_weekend'].map({0:'Weekday',1:'Weekend'})
+            fig_box = px.violin(sample_q2, x='Tipe Hari', y='amount', color='Tipe Hari',
+                                color_discrete_map={'Weekday':'#fed7aa','Weekend':PRIMARY}, box=True)
+            fig_box.update_layout(showlegend=False, height=320, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_box, use_container_width=True)
+        col_m1, col_m2, col_m3 = st.columns(3)
+        col_m1.metric("Avg Weekday", f"Rp {avg_wkdy:,.0f}")
+        col_m2.metric("Avg Weekend", f"Rp {avg_wknd:,.0f}")
+        col_m3.metric("Perbedaan",   f"{diff_pct:.1f}%")
+        if diff_pct >= 20:
+            st.markdown(f'<div class="warn-box">⚠️ Weekend <b>{diff_pct:.1f}%</b> lebih tinggi. BUDU aktifkan notifikasi Jumat malam.</div>', unsafe_allow_html=True)
         else:
-            for cat, row in cat_30.iterrows():
-                st.markdown(f'<div class="warn-box">⚠️ <b>{cat}</b>: {row["persen"]:.1f}% — Rp {row["total"]/1e6:.1f}jt → Aktifkan Money Leak Alert</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="insight-box">ℹ️ Selisih weekend vs weekday: <b>{diff_pct:+.1f}%</b> (threshold Q2: ≥20%). Tidak ada perbedaan signifikan.</div>', unsafe_allow_html=True)
 
-        st.dataframe(cat_grp.head(10).style.format({'total':'{:,.0f}','avg':'{:,.0f}','persen':'{:.2f}%'}), use_container_width=True)
-
-    # Q2
-    elif bq == 'Q2 — Pola Waktu':
-        st.markdown('<div class="section-header" style="border-color:#f87171;color:#f87171">Q2: Apakah rata-rata transaksi weekend ≥20% lebih tinggi dari weekday?</div>', unsafe_allow_html=True)
-        day_order = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
-        day_avg   = df.groupby('day_name')['amount'].mean().reindex(day_order).fillna(0)
-        col1, col2 = st.columns(2)
-        with col1:
-            fig, ax = plt.subplots(figsize=(6,4))
-            bar_c = ['#EF4444' if d in ['Sat','Sun'] else PRIMARY for d in day_order]
-            ax.bar(day_order, day_avg/1e3, color=bar_c)
-            ax.set_ylabel('Rata-rata (ribu IDR)'); ax.set_title('Avg Pengeluaran per Hari', fontweight='bold', color='#c8d8f0')
-            ax.axvline(4.5, color='gray', ls='--', lw=1)
-            for i, v in enumerate(day_avg/1e3): ax.text(i, v+v*0.03, f'{v:.0f}k', ha='center', fontsize=8, color='#c8d8f0')
-            ax.set_facecolor('none'); fig.patch.set_facecolor('none')
-            ax.tick_params(colors='#94a3b8'); ax.yaxis.label.set_color('#94a3b8')
-            st.pyplot(fig, use_container_width=True); plt.close()
-        with col2:
-            top5 = df.groupby('category')['amount'].sum().nlargest(5).index
-            hm   = df[df['category'].isin(top5)].groupby(['hour','category'])['amount'].sum().unstack(fill_value=0)
-            fig, ax = plt.subplots(figsize=(6,4))
-            sns.heatmap(hm.T/1e6, cmap='YlOrRd', ax=ax, linewidths=0.3, cbar_kws={'label':'Juta IDR'})
-            ax.set_title('Heatmap: Jam × Kategori Top 5', fontweight='bold', color='#c8d8f0')
-            ax.set_facecolor('none'); fig.patch.set_facecolor('none')
-            ax.tick_params(colors='#94a3b8')
-            st.pyplot(fig, use_container_width=True); plt.close()
-        wknd = day_avg[['Sat','Sun']].mean(); wkdy = day_avg[['Mon','Tue','Wed','Thu','Fri']].mean()
-        diff = (wknd-wkdy)/wkdy*100
-        if diff >= 20:
-            st.markdown(f'<div class="warn-box">📌 <b>Weekend lebih tinggi {diff:+.1f}%</b> dari weekday (threshold ≥20%). ➡️ BUDU: aktifkan Smart Warning Jumat malam.</div>', unsafe_allow_html=True)
-        else:
-            st.markdown(f'<div class="info-box">📌 Selisih weekend vs weekday: <b>{diff:+.1f}%</b> (threshold ≥20% belum terpenuhi).</div>', unsafe_allow_html=True)
-
-    # Q3
-    elif bq == 'Q3 — Anomali Bulanan':
-        st.markdown('<div class="section-header" style="border-color:#a78bfa;color:#a78bfa">Q3: Bulan apa total pengeluaran melebihi mean + 1.5×SD?</div>', unsafe_allow_html=True)
-        m_lbl = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des']
-        monthly = df.groupby('month')['amount'].agg(total='sum', count='count').reset_index()
-        thr = monthly['total'].mean() + anomaly_std * monthly['total'].std()
+    # ── Q3 ──────────────────────────────────────────────────
+    with tabs[2]:
+        st.markdown("#### Q3: Bulan apa total pengeluaran melebihi mean + 1.5×SD?")
+        monthly = df_f.groupby('month')['amount'].agg(total='sum', count='count', avg='mean').reset_index()
+        thr      = monthly['total'].mean() + ANOMALY_STD_FACTOR * monthly['total'].std()
         monthly['anomaly'] = monthly['total'] > thr
-        fig, axes = plt.subplots(2, 1, figsize=(13,7))
-        axes[0].plot(monthly['month'], monthly['total']/1e6, marker='o', color=PRIMARY, lw=2.5)
-        axes[0].axhline(thr/1e6, color=WARN, ls='--', lw=1.5, label=f'Threshold (mean+{anomaly_std}σ)')
-        anom = monthly[monthly['anomaly']]
-        axes[0].scatter(anom['month'], anom['total']/1e6, color=WARN, s=120, zorder=5, label='Anomali')
-        axes[0].set_xticks(range(1,13)); axes[0].set_xticklabels(m_lbl)
-        axes[0].set_ylabel('Juta IDR'); axes[0].legend(framealpha=0.1)
-        axes[0].set_title('Tren Bulanan + Deteksi Anomali', fontweight='bold', color='#c8d8f0')
-        axes[1].bar(monthly['month'], monthly['count'],
-                    color=['#EF4444' if a else '#93C5FD' for a in monthly['anomaly']])
-        axes[1].set_xticks(range(1,13)); axes[1].set_xticklabels(m_lbl)
-        axes[1].set_ylabel('Jumlah Transaksi'); axes[1].set_title('Frekuensi Transaksi per Bulan', fontweight='bold', color='#c8d8f0')
-        for ax in axes: ax.set_facecolor('none'); ax.tick_params(colors='#94a3b8')
-        fig.patch.set_facecolor('none'); plt.tight_layout()
-        st.pyplot(fig, use_container_width=True); plt.close()
-        anom_names = [m_lbl[m-1] for m in anom['month'].tolist()]
-        st.markdown(f'<div class="warn-box">📌 <b>Bulan anomali:</b> {anom_names if anom_names else "Tidak ada"}<br>Threshold: Rp {thr/1e6:.1f}jt/bulan → ➡️ BUDU: tandai di Weekly Reflection</div>', unsafe_allow_html=True)
-
-    # Q4
-    elif bq == 'Q4 — Money Leak':
-        st.markdown('<div class="section-header" style="border-color:#fb923c;color:#fb923c">Q4: Kategori mana yang bocor diam-diam (transaksi kecil, frekuensi tinggi)?</div>', unsafe_allow_html=True)
-        median_idr = df['amount'].median(); small_lim = median_idr * SMALL_TXN_MULTIPLIER
-        df_small   = df[df['amount'] <= small_lim]
-        n_months   = max(df['month'].nunique(), 1)
-        leak = (df_small.groupby('category').agg(total_idr=('amount','sum'),freq=('amount','count'),avg_idr=('amount','mean'))
-                .assign(freq_monthly=lambda x: x['freq']/n_months)
-                .query(f'freq_monthly >= {FREQ_MONTH_THRESH}').sort_values('total_idr', ascending=False))
         col1, col2 = st.columns(2)
         with col1:
-            fig, ax = plt.subplots(figsize=(6,4))
-            src = leak if not leak.empty else df_small.groupby('category').agg(total_idr=('amount','sum'),freq=('amount','count')).sort_values('total_idr',ascending=False).head(10)
-            src_sorted = src.sort_values('total_idr')
-            ax.barh(src_sorted.index, src_sorted['total_idr']/1e3, color='#F59E0B')
-            ax.set_title('Akumulasi Money Leak (ribu IDR)', fontweight='bold', color='#c8d8f0')
-            ax.set_facecolor('none'); fig.patch.set_facecolor('none'); ax.tick_params(colors='#94a3b8')
-            st.pyplot(fig, use_container_width=True); plt.close()
+            fig_line = go.Figure()
+            fig_line.add_trace(go.Scatter(x=monthly['month'], y=monthly['total']/1e6, mode='lines+markers', line=dict(color=PRIMARY,width=3), name='Total Spending'))
+            fig_line.add_hline(y=thr/1e6, line_dash='dash', line_color=WARN, annotation_text=f'Threshold (mean+{ANOMALY_STD_FACTOR}σ)')
+            anom = monthly[monthly['anomaly']]
+            fig_line.add_trace(go.Scatter(x=anom['month'], y=anom['total']/1e6, mode='markers', marker=dict(color=WARN,size=12), name='Anomali'))
+            fig_line.update_layout(height=360, xaxis=dict(tickmode='array',tickvals=list(range(1,13)),ticktext=M_LBL),
+                                   yaxis_title='Juta IDR', plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_line, use_container_width=True)
         with col2:
-            fig, ax = plt.subplots(figsize=(6,4))
-            src_freq = src.sort_values('freq')
-            ax.barh(src_freq.index, src_freq['freq'], color=WARN)
-            ax.set_title('Frekuensi Transaksi Kecil', fontweight='bold', color='#c8d8f0')
-            ax.set_facecolor('none'); fig.patch.set_facecolor('none'); ax.tick_params(colors='#94a3b8')
-            st.pyplot(fig, use_container_width=True); plt.close()
-        st.markdown(f'<div class="warn-box">📌 Batas transaksi "kecil": ≤ Rp {small_lim:,.0f} | Total bocor: Rp {df_small["amount"].sum()/1e6:,.1f} juta<br>➡️ BUDU: kartu <b>Silent Money Leak</b></div>', unsafe_allow_html=True)
+            monthly['color'] = monthly['anomaly'].map({True:WARN, False:'#FB923C'})
+            fig_bar = px.bar(monthly, x='month', y='count', color='color', color_discrete_map='identity', text='count')
+            fig_bar.update_layout(height=360, showlegend=False,
+                                  xaxis=dict(tickmode='array',tickvals=list(range(1,13)),ticktext=M_LBL),
+                                  yaxis_title='Jumlah Transaksi', plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_bar, use_container_width=True)
+        anom_names = [M_LBL[m-1] for m in anom['month'].tolist()]
+        if anom_names:
+            st.markdown(f'<div class="warn-box">⚠️ Bulan anomali: <b>{", ".join(anom_names)}</b> | Threshold: Rp {thr/1e6:.1f} juta/bulan → BUDU tandai di Weekly Reflection.</div>', unsafe_allow_html=True)
 
-    # Q5
-    elif bq == 'Q5 — Metode Pembayaran + Spearman':
-        st.markdown('<div class="section-header" style="border-color:#34d399;color:#34d399">Q5: Apakah metode pembayaran berkorelasi dengan nilai transaksi?</div>', unsafe_allow_html=True)
-        pay = df.groupby('payment_method')['amount'].agg(total='sum',count='count',avg='mean').sort_values('total',ascending=False)
-        pay_enc = df['payment_method'].astype('category').cat.codes
-        rho, pval = spearmanr(pay_enc, df['amount'])
-        fig, axes = plt.subplots(1, 3, figsize=(13,4))
-        for i, (col, lbl, div) in enumerate([('total','Total (juta IDR)',1e6),('count','Frekuensi',1),('avg','Rata-rata (ribu IDR)',1e3)]):
-            axes[i].bar(pay.index, pay[col]/div, color=PALETTE[:len(pay)])
-            axes[i].set_title(lbl, fontweight='bold', color='#c8d8f0')
-            axes[i].tick_params(axis='x', rotation=25, colors='#94a3b8'); axes[i].tick_params(axis='y', colors='#94a3b8')
-            axes[i].set_facecolor('none')
-        fig.patch.set_facecolor('none'); plt.tight_layout()
-        st.pyplot(fig, use_container_width=True); plt.close()
-        box_cls = 'success-box' if abs(rho) >= 0.3 else 'info-box'
-        st.markdown(f'<div class="{box_cls}">📌 <b>Spearman ρ = {rho:.4f}</b> | p-value = {pval:.4f}<br>{"✅ Korelasi signifikan ≥ 0.3 — BUDU: sesuaikan konteks peringatan per metode bayar" if abs(rho)>=0.3 else "ℹ️ Korelasi lemah < 0.3"}</div>', unsafe_allow_html=True)
-        st.dataframe(pay.style.format({'total':'{:,.0f}','avg':'{:,.0f}'}), use_container_width=True)
+    # ── Q4 ──────────────────────────────────────────────────
+    with tabs[3]:
+        st.markdown("#### Q4: Kategori mana yang bocor diam-diam (transaksi kecil, frekuensi tinggi)?")
+        median_amt = df_f['amount'].median()
+        small_lim  = median_amt * SMALL_TXN_MULTIPLIER
+        df_small   = df_f[df_f['amount'] <= small_lim]
+        n_months   = max(df_f['month'].nunique(), 1)
+        leak = (df_small.groupby('category')
+                .agg(total_idr=('amount','sum'), freq=('amount','count'), avg_idr=('amount','mean'))
+                .assign(freq_monthly=lambda x: x['freq'] / n_months)
+                .sort_values('total_idr', ascending=False).reset_index())
+        display_leak = leak[leak['freq_monthly'] >= FREQ_MONTH_THRESH] if len(leak[leak['freq_monthly'] >= FREQ_MONTH_THRESH]) > 0 else leak.head(10)
+        col1, col2 = st.columns(2)
+        with col1:
+            fig_l1 = px.bar(display_leak.head(10), x='total_idr', y='category', orientation='h',
+                            color='total_idr', color_continuous_scale='Oranges',
+                            text=display_leak.head(10)['total_idr'].apply(lambda x: f'Rp {x/1e6:.1f}M'))
+            fig_l1.update_traces(textposition='outside')
+            fig_l1.update_layout(coloraxis_showscale=False, height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_l1, use_container_width=True)
+        with col2:
+            fig_l2 = px.scatter(display_leak, x='freq_monthly', y='avg_idr', size='total_idr',
+                                color='category', color_discrete_sequence=PALETTE, text='category')
+            fig_l2.update_traces(textposition='top center', textfont_size=9)
+            fig_l2.update_layout(showlegend=False, height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_l2, use_container_width=True)
+        st.markdown(f'<div class="warn-box">⚠️ Batas transaksi "kecil": ≤ Rp {small_lim:,.0f} | Total bocor: <b>Rp {df_small["amount"].sum()/1e9:.2f} Miliar IDR</b> → BUDU tampilkan kartu <b>Silent Money Leak</b>.</div>', unsafe_allow_html=True)
+        if not leak[leak['freq_monthly'] >= FREQ_MONTH_THRESH].empty:
+            st.markdown("**Kategori Silent Drain:**")
+            for _, row in leak[leak['freq_monthly'] >= FREQ_MONTH_THRESH].head(5).iterrows():
+                st.markdown(f"⚠️ **{row['category']}**: {row['freq_monthly']:.1f}×/bln · akumulasi Rp {row['total_idr']/1e3:,.0f}k")
 
-    # Q6
-    elif bq == 'Q6 — Impulsive User':
-        st.markdown('<div class="section-header" style="border-color:#f87171;color:#f87171">Q6: Berapa proporsi user dengan impulse_score ≥ 0.55?</div>', unsafe_allow_html=True)
-        n_imp = (user_features['impulse_score'] >= impulse_thr).sum()
-        n_tot = len(user_features)
+    # ── Q5 ──────────────────────────────────────────────────
+    with tabs[4]:
+        st.markdown("#### Q5: Apakah metode pembayaran berkorelasi dengan nilai transaksi? (Spearman ρ ≥ 0.3)")
+        pay = (df_f.groupby('payment_method')['amount']
+               .agg(total='sum', count='count', avg='mean')
+               .sort_values('total', ascending=False).reset_index())
+        pay_enc  = df_f['payment_method'].astype('category').cat.codes
+        rho, pval = spearmanr(pay_enc, df_f['amount'])
+        col_m1, col_m2, col_m3 = st.columns(3)
+        col_m1.metric("Spearman ρ", f"{rho:.4f}")
+        col_m2.metric("P-value",    f"{pval:.4f}")
+        col_m3.metric("Kekuatan",   "Signifikan (≥0.3)" if abs(rho) >= 0.3 else "Lemah (<0.3)")
         col1, col2, col3 = st.columns(3)
-        col1.metric('Impulsive Spender', f'{n_imp} user', f'{n_imp/n_tot*100:.1f}%')
-        col2.metric('Non-Impulsive',     f'{n_tot-n_imp} user', f'{(n_tot-n_imp)/n_tot*100:.1f}%')
-        col3.metric('Impulse Threshold', f'{impulse_thr}')
-        fig, axes = plt.subplots(1, 2, figsize=(13,4))
-        axes[0].hist(user_features['impulse_score'], bins=30, color=PRIMARY, alpha=0.8, edgecolor='none')
-        axes[0].axvline(impulse_thr, color=WARN, ls='--', lw=2, label=f'Threshold ({impulse_thr})')
-        axes[0].set_xlabel('Impulse Score'); axes[0].set_ylabel('Jumlah User')
-        axes[0].set_title('Distribusi Impulse Score', fontweight='bold', color='#c8d8f0')
-        axes[0].legend(framealpha=0.1)
-        persona_cnt = user_features['spending_persona'].value_counts()
-        axes[1].bar(persona_cnt.index, persona_cnt.values,
-                    color=[PERSONA_COLORS.get(p, PRIMARY) for p in persona_cnt.index])
-        axes[1].set_title('Distribusi Spending Persona', fontweight='bold', color='#c8d8f0')
-        axes[1].tick_params(axis='x', rotation=15)
-        for ax in axes: ax.set_facecolor('none'); ax.tick_params(colors='#94a3b8')
-        fig.patch.set_facecolor('none'); plt.tight_layout()
-        st.pyplot(fig, use_container_width=True); plt.close()
-        st.markdown(f'<div class="warn-box">📌 <b>{n_imp}/{n_tot} pengguna = {n_imp/n_tot*100:.1f}%</b> adalah Impulsive Spender → segmen prioritas notifikasi BUDU</div>', unsafe_allow_html=True)
+        for ax_col, col_key, lbl, fmt in [
+            (col1,'total','Total (Juta IDR)',    lambda x: f'{x/1e6:.1f}M'),
+            (col2,'count','Frekuensi',           lambda x: f'{x:,}'),
+            (col3,'avg',  'Rata-rata (Ribu IDR)',lambda x: f'{x/1e3:.0f}K'),
+        ]:
+            fig_p = px.bar(pay, x='payment_method', y=col_key, color='payment_method',
+                           color_discrete_sequence=PALETTE, text=pay[col_key].apply(fmt))
+            fig_p.update_traces(textposition='outside')
+            fig_p.update_layout(title=f'Q5: {lbl}', showlegend=False, height=350,
+                                xaxis_title='', yaxis_title=lbl,
+                                plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', xaxis_tickangle=-20)
+            ax_col.plotly_chart(fig_p, use_container_width=True)
+        if abs(rho) >= 0.3:
+            st.markdown(f'<div class="success-box">✅ Korelasi signifikan (ρ = {rho:.2f}) — BUDU sesuaikan konteks warning berdasarkan metode pembayaran.</div>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div class="warn-box">ℹ️ Korelasi lemah (ρ = {rho:.2f} < 0.3) — metode pembayaran tidak cukup untuk memprediksi nilai transaksi.</div>', unsafe_allow_html=True)
 
-    # EDA Segmen
-    elif bq == 'EDA Segmen':
-        st.markdown('<div class="section-header" style="border-color:#60a5fa;color:#60a5fa">EDA per Segmen Sosio-Ekonomi Indonesia</div>', unsafe_allow_html=True)
-        seg_order = ['Kelas E (Miskin)','Kelas D (Menengah Bawah)','Kelas C (Menengah)','Kelas B (Menengah Atas)','Kelas A (Kaya)']
-        seg_avail = [s for s in seg_order if s in df['segmen_label'].unique()]
-        fig, axes = plt.subplots(1, 3, figsize=(16,5))
-        seg_med = df.groupby('segmen_label')['amount'].median().reindex(seg_avail)
-        axes[0].bar(range(len(seg_med)), seg_med.values/1e3, color=PALETTE[:len(seg_med)])
-        axes[0].set_xticks(range(len(seg_med)))
-        axes[0].set_xticklabels([s.split('(')[1].rstrip(')') for s in seg_avail], rotation=20, fontsize=8)
-        axes[0].set_ylabel('Median Amount (ribu IDR)'); axes[0].set_title('Median Transaksi per Segmen', fontweight='bold', color='#c8d8f0')
-        top_cat = df.groupby(['segmen_label','category'])['amount'].sum().reset_index().sort_values('amount',ascending=False).groupby('segmen_label').first().reindex(seg_avail)
-        axes[1].barh(range(len(top_cat)), top_cat['amount'].values/1e6, color=PALETTE[:len(top_cat)])
-        axes[1].set_yticks(range(len(top_cat)))
-        axes[1].set_yticklabels([f'{s.split("(")[1].rstrip(")")}: {c}' for s,c in zip(top_cat.index,top_cat['category'])], fontsize=8)
-        axes[1].set_xlabel('Juta IDR'); axes[1].set_title('Kategori Dominan per Segmen', fontweight='bold', color='#c8d8f0')
-        pay_seg = df.groupby(['segmen_label','payment_method'])['amount'].count().reset_index().sort_values('amount',ascending=False)
-        top_pay = pay_seg.groupby('segmen_label').first().reindex(seg_avail)
-        axes[2].barh(range(len(top_pay)), top_pay['amount'].values, color=PALETTE[:len(top_pay)])
-        axes[2].set_yticks(range(len(top_pay)))
-        axes[2].set_yticklabels([f'{s.split("(")[1].rstrip(")")}: {p}' for s,p in zip(top_pay.index,top_pay['payment_method'])], fontsize=8)
-        axes[2].set_xlabel('Frekuensi'); axes[2].set_title('Metode Bayar Dominan per Segmen', fontweight='bold', color='#c8d8f0')
-        for ax in axes: ax.set_facecolor('none'); ax.tick_params(colors='#94a3b8')
-        fig.patch.set_facecolor('none'); plt.tight_layout()
-        st.pyplot(fig, use_container_width=True); plt.close()
+    # ── Q6 ──────────────────────────────────────────────────
+    with tabs[5]:
+        st.markdown(f"#### Q6: Berapa proporsi user dengan impulse_score ≥ {IMPULSE_THRESHOLD}?")
+        n_imp = (uf_f['impulse_score'] >= IMPULSE_THRESHOLD).sum()
+        n_tot = len(uf_f)
+        st.markdown(f'<div class="warn-box">📌 Q6 Answer: <b>{n_imp}/{n_tot} pengguna = {n_imp/n_tot*100:.1f}%</b> memiliki impulse_score ≥ {IMPULSE_THRESHOLD}</div>', unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────────────────────
-# TAB 3 — A/B TESTING
-# ─────────────────────────────────────────────────────────────
-with tab_ab:
-    st.markdown('<div class="section-header" style="border-color:#f87171;color:#f87171">🧪 A/B Test — Weekend vs Weekday · Mann-Whitney U</div>', unsafe_allow_html=True)
+        persona_dist = uf_f['spending_persona'].value_counts().reset_index()
+        persona_dist.columns = ['Persona','Count']
+        col1, col2 = st.columns(2)
+        with col1:
+            fig_p1 = px.pie(persona_dist, names='Persona', values='Count',
+                            color='Persona', color_discrete_map=PERSONA_COLORS, hole=0.45)
+            fig_p1.update_layout(height=320)
+            st.plotly_chart(fig_p1, use_container_width=True)
+        with col2:
+            # ── FIX: hanya agg kolom yang pasti ada ─────────
+            safe_agg = {'count': ('user_id','count'), 'avg_impulse': ('impulse_score','mean')}
+            for col, agg in [
+                ('avg_spend',    ('total_spending_idr','mean')),
+                ('avg_weekend_r',('weekend_ratio','mean')),
+                ('avg_night_r',  ('night_ratio','mean')),
+            ]:
+                if agg[0] in uf_f.columns:
+                    safe_agg[col] = agg
+            imp_profile = uf_f.groupby('spending_persona').agg(**safe_agg).reset_index()
+            st.dataframe(imp_profile.set_index('spending_persona'), use_container_width=True)
+
+        seg_col_q6 = next((c for c in ['segmen','segmen_label'] if c in uf_f.columns), None)
+        if seg_col_q6:
+            category_order_q6 = ['E','D','C','B','A'] if seg_col_q6 == 'segmen' else None
+            fig_imp = px.box(uf_f, x=seg_col_q6, y='impulse_score', color='spending_persona',
+                             color_discrete_map=PERSONA_COLORS,
+                             labels={seg_col_q6:'Segmen','impulse_score':'Impulse Score'},
+                             category_orders={seg_col_q6: category_order_q6} if category_order_q6 else None)
+            fig_imp.add_hline(y=IMPULSE_THRESHOLD, line_dash='dash', line_color=WARN,
+                              annotation_text=f'Threshold Impulsive ({IMPULSE_THRESHOLD})')
+            fig_imp.add_hline(y=0.30, line_dash='dot', line_color='#f59e0b', annotation_text='Threshold Emotional (0.30)')
+            fig_imp.update_layout(height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_imp, use_container_width=True)
+
+
+# ==========================================
+# ██  A/B TESTING  ██
+# ==========================================
+elif menu == "🧪 A/B Testing":
+    st.subheader("A/B Test — Q2 BUDU: Weekend vs Weekday Spending")
+    st.markdown("Menggunakan **Mann-Whitney U Test** (non-parametrik, Cell 13 notebook). H₀: tidak ada perbedaan. H₁: pengeluaran weekend ≥20% lebih tinggi. α = 0.05")
+
+    grp_w = df_f[df_f['is_weekend']==1]['amount']
+    grp_d = df_f[df_f['is_weekend']==0]['amount']
+    u_stat, p_val = mannwhitneyu(grp_w, grp_d, alternative='greater')
+    pct_diff = (grp_w.mean() - grp_d.mean()) / grp_d.mean() * 100
+    alpha = 0.05
+
+    col1, col2, col3, col4, col5 = st.columns(5)
+    col1.metric("Mann-Whitney U", f"{u_stat:,.0f}")
+    col2.metric("P-value",        f"{p_val:.6f}")
+    col3.metric("Avg Weekend",    f"Rp {grp_w.mean():,.0f}")
+    col4.metric("Avg Weekday",    f"Rp {grp_d.mean():,.0f}")
+    col5.metric("Selisih",        f"{pct_diff:.1f}%")
+
+    if p_val < alpha and pct_diff >= 20:
+        st.markdown(f'<div class="success-box">✅ <b>TOLAK H₀</b> — signifikan (p={p_val:.6f}) DAN selisih {pct_diff:.1f}% ≥ 20%. BUDU aktifkan Smart Warning Jumat malam.</div>', unsafe_allow_html=True)
+    elif p_val < alpha:
+        st.markdown(f'<div class="warn-box">⚠️ Signifikan statistik tapi selisih {pct_diff:.1f}% &lt; 20%.</div>', unsafe_allow_html=True)
+    else:
+        st.markdown(f'<div class="insight-box">ℹ️ Gagal tolak H₀ (p={p_val:.4f} ≥ {alpha}). Tidak ada perbedaan signifikan weekend vs weekday.</div>', unsafe_allow_html=True)
+
+    col_v1, col_v2 = st.columns(2)
+    with col_v1:
+        sample_ab = df_f.sample(min(8000,len(df_f)), random_state=42).copy()
+        sample_ab['Tipe Hari'] = sample_ab['is_weekend'].map({0:'Weekday',1:'Weekend'})
+        fig_vln = px.violin(sample_ab, x='Tipe Hari', y='amount', color='Tipe Hari',
+                            color_discrete_map={'Weekday':'#fed7aa','Weekend':PRIMARY}, box=True,
+                            labels={'amount':'Amount (IDR)','Tipe Hari':''})
+        fig_vln.update_layout(showlegend=False, height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+        st.plotly_chart(fig_vln, use_container_width=True)
+    with col_v2:
+        day_names = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu']
+        daily = df_f.groupby('day_of_week')['amount'].mean().reset_index()
+        daily['day']       = daily['day_of_week'].map(dict(enumerate(day_names)))
+        daily['is_weekend'] = daily['day_of_week'].isin([5,6])
+        fig_daily = px.bar(daily, x='day', y='amount', color='is_weekend',
+                           color_discrete_map={False:'#fed7aa',True:PRIMARY},
+                           text=daily['amount'].apply(lambda x: f'Rp {x/1000:.0f}K'),
+                           labels={'amount':'Avg Amount (IDR)','day':'Hari'})
+        fig_daily.update_traces(textposition='outside')
+        fig_daily.update_layout(showlegend=False, height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+        st.plotly_chart(fig_daily, use_container_width=True)
+
+    if 'segmen' in df_f.columns:
+        seg_ab = df_f.groupby(['segmen','is_weekend'])['amount'].mean().reset_index()
+        seg_ab['Tipe Hari'] = seg_ab['is_weekend'].map({0:'Weekday',1:'Weekend'})
+        fig_sab = px.bar(seg_ab, x='segmen', y='amount', color='Tipe Hari', barmode='group',
+                         color_discrete_map={'Weekday':'#fed7aa','Weekend':PRIMARY},
+                         labels={'amount':'Avg Amount (IDR)','segmen':'Segmen'},
+                         category_orders={'segmen':['E','D','C','B','A']},
+                         text=seg_ab['amount'].apply(lambda x: f'Rp {x/1000:.0f}K'))
+        fig_sab.update_traces(textposition='outside', textfont_size=9)
+        fig_sab.update_layout(height=360, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+        st.plotly_chart(fig_sab, use_container_width=True)
+
+
+# ==========================================
+# ██  CLUSTERING & PERSONA  ██
+# ==========================================
+elif menu == "👥 Clustering & Persona":
+    st.subheader("Spending Persona — K-Means Clustering (v3)")
     st.markdown("""
-    **H₀:** Tidak ada perbedaan rata-rata pengeluaran weekend vs weekday  
-    **H₁:** Pengeluaran weekend ≥ 20% lebih tinggi dari weekday  
-    **Uji:** Mann-Whitney U (non-parametrik) · α = 0.05
+    Replikasi **Cell 16-17 notebook** · Feature Engineering v3 · K_FINAL = 3 · Persona diranking berdasarkan avg impulse_score.
     """)
 
-    grp_w = df[df['is_weekend']==1]['amount']
-    grp_d = df[df['is_weekend']==0]['amount']
-    u_stat, p_val = mannwhitneyu(grp_w, grp_d, alternative='greater')
-    n_total  = len(grp_w) + len(grp_d)
-    from scipy import stats as scipy_stats
-    z_score  = scipy_stats.norm.ppf(1 - p_val) if p_val < 1 else 0
-    effect_r = z_score / np.sqrt(n_total)
-    pct_diff = (grp_w.mean() - grp_d.mean()) / grp_d.mean() * 100
+    persona_desc = {
+        'Rational Spender':  'Konsisten, terkontrol, jarang spike. Impulse score < 0.30.',
+        'Emotional Spender': 'Tidak konsisten, spending_cov tinggi. Impulse score 0.30–0.55.',
+        'Impulsive Spender': 'Weekend & malam tinggi, banyak spike. Impulse score ≥ 0.55.',
+    }
 
-    c1, c2, c3, c4 = st.columns(4)
-    c1.metric('Weekend avg',    f'Rp {grp_w.mean():,.0f}')
-    c2.metric('Weekday avg',    f'Rp {grp_d.mean():,.0f}')
-    c3.metric('Selisih',        f'{pct_diff:+.1f}%', delta='≥20% ✅' if pct_diff >= 20 else '<20% ⚠️')
-    c4.metric('p-value',        f'{p_val:.4f}', delta='Signifikan' if p_val < 0.05 else 'Tidak signifikan')
+    # ── Statistik cluster sesuai notebook Cell 17 ──────────
+    cluster_stats_nb = uf_f.groupby('spending_persona').agg(
+        jumlah_user    = ('user_id','count'),
+        avg_impulse    = ('impulse_score','mean'),
+        avg_txn_idr    = ('avg_txn_idr','mean'),
+    ).round(2)
+    total_uf = len(uf_f)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        fig, ax = plt.subplots(figsize=(6,4))
-        for g, lbl, clr in [(grp_w,'Weekend',WARN),(grp_d,'Weekday',PRIMARY)]:
-            ax.hist(g/1e3, bins=50, alpha=0.6, label=lbl, color=clr, density=True)
-        ax.set_xlabel('Amount (ribu IDR)'); ax.set_ylabel('Density')
-        ax.set_title('Distribusi Weekend vs Weekday', fontweight='bold', color='#c8d8f0')
-        ax.legend(framealpha=0.1); ax.set_facecolor('none'); fig.patch.set_facecolor('none')
-        ax.tick_params(colors='#94a3b8')
-        st.pyplot(fig, use_container_width=True); plt.close()
-    with col2:
-        fig, ax = plt.subplots(figsize=(6,4))
-        bp = ax.boxplot([grp_w/1e3, grp_d/1e3], labels=['Weekend','Weekday'],
-                        patch_artist=True, notch=True,
-                        boxprops=dict(facecolor='#f87171', alpha=0.5),
-                        medianprops=dict(color='black', lw=2))
-        ax.set_ylabel('Amount (ribu IDR)')
-        ax.set_title(f'Boxplot — Selisih: {pct_diff:+.1f}%', fontweight='bold', color='#c8d8f0')
-        ax.set_facecolor('none'); fig.patch.set_facecolor('none'); ax.tick_params(colors='#94a3b8')
-        st.pyplot(fig, use_container_width=True); plt.close()
+    cols = st.columns(3)
+    for i, name in enumerate(['Rational Spender','Emotional Spender','Impulsive Spender']):
+        cnt = int(cluster_stats_nb.loc[name,'jumlah_user']) if name in cluster_stats_nb.index else 0
+        pct = cnt / total_uf * 100 if total_uf > 0 else 0
+        avg_imp = float(cluster_stats_nb.loc[name,'avg_impulse']) if name in cluster_stats_nb.index else 0
+        avg_txn = float(cluster_stats_nb.loc[name,'avg_txn_idr']) if name in cluster_stats_nb.index else 0
+        clr = PERSONA_COLORS[name]
+        with cols[i]:
+            st.markdown(f"""
+            <div class="persona-card" style="background:{clr}15;border-left:5px solid {clr}">
+                <div style="font-size:1.8rem">{PERSONA_ICONS[name]}</div>
+                <div style="font-size:1rem;font-weight:700;color:{clr};font-family:'Sora',sans-serif">{name}</div>
+                <div style="font-size:2rem;font-weight:800;color:#0f172a;font-family:'Sora',sans-serif">{cnt}</div>
+                <div style="color:#92400e;font-size:0.85rem">{pct:.1f}% dari {total_uf} user</div>
+                <div style="color:#78350f;font-size:0.82rem;margin-top:4px">Avg impulse: {avg_imp:.3f} | Avg txn: Rp {avg_txn:,.0f}</div>
+                <hr style="border-color:{clr}30;margin:8px 0"/>
+                <div style="font-size:0.82rem;color:#78350f">{persona_desc[name]}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-    alpha = 0.05
-    if p_val < alpha and pct_diff >= 20:
-        st.markdown(f'<div class="warn-box">✅ <b>TOLAK H₀</b> — Signifikan DAN selisih ≥ 20%<br>📌 <b>BUDU:</b> Aktifkan Smart Warning otomatis setiap Jumat malam<br>U={u_stat:,.0f} | p={p_val:.6f} | Effect size r={effect_r:.4f}</div>', unsafe_allow_html=True)
-    elif p_val < alpha:
-        st.markdown(f'<div class="info-box">⚠️ Signifikan statistik, tapi selisih {pct_diff:.1f}% < 20% | p={p_val:.4f} | r={effect_r:.4f}</div>', unsafe_allow_html=True)
-    else:
-        st.markdown(f'<div class="info-box">ℹ️ Gagal tolak H₀ (p={p_val:.4f} ≥ {alpha}) | Effect size r={effect_r:.4f}</div>', unsafe_allow_html=True)
+    st.markdown("---")
+    # ── Elbow + Silhouette ──────────────────────────────────
+    col_elbow, col_sil = st.columns(2)
+    with col_elbow:
+        fig_elbow = px.line(x=cluster_results['k_vals'], y=cluster_results['inertias'],
+                            markers=True, labels={'x':'K','y':'Inertia'}, color_discrete_sequence=[PRIMARY])
+        fig_elbow.update_traces(line=dict(width=3), marker=dict(size=9))
+        fig_elbow.update_layout(title='Elbow Method', height=300, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+        st.plotly_chart(fig_elbow, use_container_width=True)
+    with col_sil:
+        fig_sil = px.line(x=cluster_results['k_vals'], y=cluster_results['sil_scores'],
+                          markers=True, labels={'x':'K','y':'Silhouette Score'}, color_discrete_sequence=[ACCENT])
+        fig_sil.update_traces(line=dict(width=3), marker=dict(size=9))
+        fig_sil.add_vline(x=3, line_dash='dash', line_color=PRIMARY, annotation_text='K=3 (notebook)')
+        fig_sil.update_layout(title='Silhouette Score', height=300, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+        st.plotly_chart(fig_sil, use_container_width=True)
 
-# ─────────────────────────────────────────────────────────────
-# TAB 4 — CLUSTERING & PERSONA
-# ─────────────────────────────────────────────────────────────
-with tab_clustering:
-    st.markdown('<div class="section-header" style="border-color:#a78bfa;color:#a78bfa">🤖 Spending Personality Clustering (K-Means · Feature v3)</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="success-box">✅ K terbaik (Silhouette): <b>{cluster_results["best_k"]}</b> ({max(cluster_results["sil_scores"]):.4f}) | Dashboard menggunakan <b>K=3</b> sesuai notebook Cell 17 | Fitur aktif: <b>{cluster_results["n_features"]}</b> fitur</div>', unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns(3)
-    for persona, col in zip(['Impulsive Spender','Emotional Spender','Rational Spender'], [col1,col2,col3]):
-        cnt = (user_features['spending_persona'] == persona).sum()
-        avg_imp = user_features[user_features['spending_persona']==persona]['impulse_score'].mean()
-        badge_cls = {'Impulsive Spender':'badge-impulsive','Emotional Spender':'badge-emotional','Rational Spender':'badge-rational'}[persona]
-        accent_map = {'Impulsive Spender':('#f87171','#ef444420','#f8717140'), 'Emotional Spender':('#fbbf24','#f59e0b20','#fbbf2440'), 'Rational Spender':('#34d399','#10b98120','#34d39940')}
-        ac, bg, br = accent_map.get(persona, ('#60a5fa','#2563eb20','#60a5fa40'))
-        col.markdown(f'''<div style="background:linear-gradient(135deg,{bg},{bg}88);border:2px solid {br};border-radius:16px;padding:20px;box-shadow:0 4px 16px {bg}">
-          <span class="{badge_cls}">{persona}</span><br><br>
-          <span style="font-size:36px;font-weight:900;color:{ac}">{cnt}</span>
-          <span style="color:var(--text-muted);font-size:14px;font-weight:600"> user</span><br>
-          <div style="margin-top:8px;background:var(--bg-card2);border-radius:8px;padding:6px 10px;display:inline-block">
-            <span style="color:var(--text-muted);font-size:11px;font-weight:700">AVG IMPULSE </span>
-            <span style="color:{ac};font-size:13px;font-weight:800">{avg_imp:.3f}</span>
-          </div>
-        </div>''', unsafe_allow_html=True)
+    # ── PCA Scatter ─────────────────────────────────────────
+    seg_col_pca = next((c for c in ['segmen','segmen_label'] if c in user_features.columns), None)
+    pca_df = pd.DataFrame(pca_coords, columns=['PC1','PC2'])
+    pca_df['Persona'] = user_features['spending_persona'].values
+    pca_df['Impulse'] = user_features['impulse_score'].values
+    if seg_col_pca:
+        pca_df['Segmen'] = user_features[seg_col_pca].values
+        pca_df = pca_df[pca_df['Segmen'].isin(seg_filter)]
+    pca_df['Impulse'] = pca_df['Impulse'].clip(lower=0.001)
 
-    st.divider()
+    fig_pca = px.scatter(pca_df, x='PC1', y='PC2', color='Persona',
+                         color_discrete_map=PERSONA_COLORS, size='Impulse', opacity=0.75,
+                         title='BUDU — Spending Personality Map (PCA 2D)',
+                         labels={'PC1':f'PC1 ({cluster_results["pca_var"]*100:.1f}% var)','PC2':'PC2'})
+    fig_pca.update_layout(height=450, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+    st.plotly_chart(fig_pca, use_container_width=True)
 
-    col_l, col_r = st.columns(2)
-    with col_l:
-        st.markdown("**PCA 2D — Spending Personality Map**")
-        pca   = PCA(n_components=2, random_state=42)
-        X_pca = pca.fit_transform(X_scaled)
-        fig, ax = plt.subplots(figsize=(6,5))
-        for persona, color in PERSONA_COLORS.items():
-            mask = user_features['spending_persona'] == persona
-            ax.scatter(X_pca[mask,0], X_pca[mask,1], label=persona, color=color, alpha=0.7, s=40, edgecolors='none')
-        ax.set_xlabel(f'PC1 ({pca.explained_variance_ratio_[0]*100:.1f}%)', color='#94a3b8')
-        ax.set_ylabel(f'PC2 ({pca.explained_variance_ratio_[1]*100:.1f}%)', color='#94a3b8')
-        ax.legend(framealpha=0.1); ax.set_facecolor('none'); fig.patch.set_facecolor('none')
-        ax.tick_params(colors='#94a3b8')
-        st.pyplot(fig, use_container_width=True); plt.close()
-    with col_r:
-        st.markdown("**Radar — Profil Fitur per Persona**")
-        radar_feats = [f for f in ['weekend_ratio','night_ratio','above_avg_ratio','spike_ratio','spending_cov','unique_categories'] if f in user_features.columns]
-        persona_means = user_features.groupby('spending_persona')[radar_feats].mean()
-        persona_means_norm = (persona_means - persona_means.min()) / (persona_means.max() - persona_means.min() + 1e-9)
-        angles = np.linspace(0, 2*np.pi, len(radar_feats), endpoint=False).tolist() + [0]
-        fig = plt.figure(figsize=(6,5)); ax = fig.add_subplot(111, polar=True)
-        for persona, color in PERSONA_COLORS.items():
-            if persona in persona_means_norm.index:
-                vals = persona_means_norm.loc[persona].tolist() + [persona_means_norm.loc[persona].tolist()[0]]
-                ax.plot(angles, vals, color=color, lw=2, label=persona)
-                ax.fill(angles, vals, color=color, alpha=0.15)
-        ax.set_xticks(angles[:-1]); ax.set_xticklabels(radar_feats, size=8, color='#94a3b8')
-        ax.legend(loc='upper right', bbox_to_anchor=(1.35,1.1), framealpha=0.1)
-        fig.patch.set_facecolor('none'); ax.set_facecolor('none')
-        st.pyplot(fig, use_container_width=True); plt.close()
+    # ── Distribusi per Segmen + Impulse Histogram ───────────
+    col_r1, col_r2 = st.columns(2)
+    with col_r1:
+        seg_col_cls = next((c for c in ['segmen','segmen_label'] if c in uf_f.columns), None)
+        if seg_col_cls:
+            seg_persona = uf_f.groupby([seg_col_cls,'spending_persona']).size().reset_index(name='count')
+            fig_sp = px.bar(seg_persona, x=seg_col_cls, y='count', color='spending_persona', barmode='stack',
+                            color_discrete_map=PERSONA_COLORS,
+                            category_orders={seg_col_cls:['E','D','C','B','A']} if seg_col_cls=='segmen' else None,
+                            labels={'count':'Jumlah User',seg_col_cls:'Segmen'})
+            fig_sp.update_layout(title='Persona Distribution per Segmen', height=360,
+                                 plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_sp, use_container_width=True)
+    with col_r2:
+        fig_imp_dist = px.histogram(uf_f, x='impulse_score', color='spending_persona',
+                                    nbins=40, color_discrete_map=PERSONA_COLORS, barmode='overlay', opacity=0.75)
+        fig_imp_dist.add_vline(x=IMPULSE_THRESHOLD, line_dash='dash', line_color=WARN,
+                               annotation_text=f'Threshold Impulsive ({IMPULSE_THRESHOLD})')
+        fig_imp_dist.add_vline(x=0.30, line_dash='dot', line_color='#f59e0b', annotation_text='Threshold Emotional (0.30)')
+        fig_imp_dist.update_layout(title='Distribusi Impulse Score per Persona', height=360,
+                                   plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+        st.plotly_chart(fig_imp_dist, use_container_width=True)
 
-    st.divider()
-    st.markdown("**Distribusi pendapatan_bulan per Persona (IDR)**")
-    income_persona = user_features.groupby('spending_persona')['pendapatan_bulan'].agg(['mean','median','std']).round(0)
-    income_persona.columns = ['Mean','Median','Std']
-    st.dataframe(income_persona.style.format('Rp {:,.0f}'), use_container_width=True)
+    # ── Tabel Statistik Cluster ─────────────────────────────
+    st.markdown("#### 📊 Statistik Cluster — sesuai output Cell 17 notebook")
+    stat_cols = {
+        'jumlah_user':   ('user_id','count'),
+        'avg_impulse':   ('impulse_score','mean'),
+        'avg_txn_idr':   ('avg_txn_idr','mean'),
+        'weekend_ratio': ('weekend_ratio','mean'),
+        'night_ratio':   ('night_ratio','mean'),
+        'spike_ratio':   ('spike_ratio','mean'),
+    }
+    safe_stat = {k: v for k, v in stat_cols.items() if v[0] in uf_f.columns}
+    cluster_full = uf_f.groupby('spending_persona').agg(**safe_stat).round(3)
+    st.dataframe(cluster_full, use_container_width=True)
 
-# ─────────────────────────────────────────────────────────────
-# TAB 5 — PERSIAPAN MODEL TF
-# ─────────────────────────────────────────────────────────────
-with tab_model:
-    st.markdown('<div class="section-header" style="border-color:#34d399;color:#34d399">🧠 Persiapan Data Model TensorFlow · Feature v3 (20 fitur)</div>', unsafe_allow_html=True)
+    # ── Info fitur aktif ────────────────────────────────────
+    with st.expander("🔧 Fitur aktif clustering"):
+        st.write(f"**Jumlah fitur:** {cluster_results['n_features']}")
+        for i, f in enumerate(cluster_results['feature_cols'], 1):
+            st.write(f"  {i:2d}. `{f}`")
 
-    y_model = user_features['persona_encoded'].values
-    X_tr, X_tmp, y_tr, y_tmp = train_test_split(X_norm, y_model, test_size=0.30, random_state=42, stratify=y_model)
-    X_val, X_te, y_val, y_te = train_test_split(X_tmp, y_tmp, test_size=0.50, random_state=42, stratify=y_tmp)
 
-    c1, c2, c3, c4 = st.columns(4)
-    c1.metric('Train',    f'{X_tr.shape[0]} user',  f'{X_tr.shape[1]} fitur')
-    c2.metric('Val',      f'{X_val.shape[0]} user',  '')
-    c3.metric('Test',     f'{X_te.shape[0]} user',   '')
-    c4.metric('N Features', f'{X_tr.shape[1]}',      'v3 ✅')
+# ==========================================
+# ██  USER DEEP DIVE  ██
+# ==========================================
+elif menu == "🔎 User Deep Dive":
+    st.subheader("User Deep Dive — Analisis Per Pengguna")
 
-    col_l, col_r = st.columns(2)
-    with col_l:
-        st.markdown("**Distribusi Kelas Train / Val / Test**")
-        fig, axes = plt.subplots(1, 3, figsize=(10,3.5))
-        for ax, y, lbl in [(axes[0],y_tr,'Train'),(axes[1],y_val,'Val'),(axes[2],y_te,'Test')]:
-            uniq, cnt = np.unique(y, return_counts=True)
-            colors = [list(PERSONA_COLORS.values())[i] for i in uniq]
-            ax.bar([le.classes_[i] for i in uniq], cnt/cnt.sum()*100, color=colors)
-            ax.set_title(lbl, fontweight='bold', color='#c8d8f0', fontsize=10)
-            ax.set_ylabel('%'); ax.tick_params(axis='x', rotation=20, colors='#94a3b8')
-            ax.tick_params(axis='y', colors='#94a3b8'); ax.set_facecolor('none')
-        fig.patch.set_facecolor('none'); plt.tight_layout()
-        st.pyplot(fig, use_container_width=True); plt.close()
+    col_filter1, col_filter2, col_filter3 = st.columns([2,2,1])
+    with col_filter1:
+        has_nama = 'nama' in df_users.columns
+        if has_nama:
+            df_users_sorted = df_users.sort_values('user_id').copy()
+            df_users_sorted['label'] = df_users_sorted['user_id'] + ' — ' + df_users_sorted['nama']
+            user_label_map = dict(zip(df_users_sorted['label'], df_users_sorted['user_id']))
+            search_query   = st.text_input("🔍 Cari nama/ID pengguna", placeholder="Contoh: User 1, BUDU00001")
+            matched = df_users_sorted[df_users_sorted['label'].str.contains(search_query, case=False, na=False)] if search_query else df_users_sorted
+            options = matched['label'].tolist()
+            if not options:
+                st.warning("Pengguna tidak ditemukan.")
+                st.stop()
+            selected_label = st.selectbox("Pilih pengguna", options=options)
+            selected_uid   = user_label_map[selected_label]
+        else:
+            all_uids     = sorted(df_users['user_id'].unique().tolist())
+            selected_uid = st.selectbox("Pilih User ID", options=all_uids)
 
-    with col_r:
-        st.markdown("**Encoding Spending Persona**")
-        enc_df = pd.DataFrame([{'Encode':i,'Persona':cls,'Jumlah':(user_features['persona_encoded']==i).sum()} for i,cls in enumerate(le.classes_)])
-        enc_df['%'] = (enc_df['Jumlah']/len(user_features)*100).round(1)
-        st.dataframe(enc_df, use_container_width=True, hide_index=True)
+    with col_filter2:
+        date_min = df_tx['date'].min().date()
+        date_max = df_tx['date'].max().date()
+        date_range_sel = st.date_input("📅 Filter rentang tanggal", value=(date_min,date_max), min_value=date_min, max_value=date_max)
+        d_start, d_end = (date_range_sel[0], date_range_sel[1]) if isinstance(date_range_sel,(list,tuple)) and len(date_range_sel)==2 else (date_min,date_max)
 
-        st.markdown("**Feature v3 — 20 Fitur Training**")
-        n_f = len([c for c in feat_cols if c in user_features.columns])
-        fc_display = [c for c in feat_cols if c in user_features.columns]
-        st.markdown(f'`{n_f} fitur aktif`')
-        for i, f in enumerate(fc_display, 1):
-            icon = '✨' if f == 'pendapatan_bulan' else '·'
-            st.markdown(f"<span style='font-family:JetBrains Mono,monospace;font-size:12px;color:#94a3b8'>{i:2d}. {icon} {f}</span>", unsafe_allow_html=True)
+    with col_filter3:
+        st.markdown("####")
+        show_raw = st.toggle("Tampilkan tabel transaksi", value=False)
 
-    st.divider()
-    st.markdown("**Arsitektur TensorFlow yang Disarankan**")
-    arch_code = f"""import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers
+    u_tx = df_tx[
+        (df_tx['user_id'] == selected_uid) &
+        (df_tx['date'].dt.date >= d_start) &
+        (df_tx['date'].dt.date <= d_end)
+    ].copy().sort_values('date')
 
-N_FEATURES = {len([c for c in feat_cols if c in user_features.columns])}  # Feature v3
+    if u_tx.empty:
+        st.warning(f"Tidak ada transaksi untuk {selected_uid} di rentang tanggal yang dipilih.")
+        st.stop()
 
-class BehaviorNormLayer(keras.layers.Layer):
-    def build(self, input_shape):
-        self.scale = self.add_weight(shape=(input_shape[-1],), initializer="ones", trainable=True)
-        self.bias  = self.add_weight(shape=(input_shape[-1],), initializer="zeros", trainable=True)
-    def call(self, x):
-        return tf.nn.tanh(x * self.scale + self.bias)
+    u_profile = user_features[user_features['user_id'] == selected_uid]
+    u_demo    = df_users[df_users['user_id'] == selected_uid]
+    persona   = u_profile['spending_persona'].values[0] if len(u_profile) > 0 else 'Unknown'
+    impulse   = float(u_profile['impulse_score'].values[0]) if len(u_profile) > 0 else 0.0
+    p_color   = PERSONA_COLORS.get(persona, '#94a3b8')
+    p_icon    = PERSONA_ICONS.get(persona, '⚪')
 
-class FocalLoss(keras.losses.Loss):
-    def __init__(self, gamma=2.0, **kw): super().__init__(**kw); self.gamma = gamma
-    def call(self, y_true, y_pred):
-        y_oh = tf.one_hot(tf.cast(y_true, tf.int32), 3)
-        ce   = -tf.reduce_sum(y_oh * tf.math.log(y_pred + 1e-7), axis=-1)
-        p_t  = tf.reduce_sum(y_oh * y_pred, axis=-1)
-        return tf.reduce_mean((1 - p_t) ** self.gamma * ce)
+    st.markdown("---")
+    col_card, col_stats = st.columns([1,2])
+    with col_card:
+        nama_val   = u_demo['nama'].values[0]           if (len(u_demo)>0 and 'nama'           in u_demo.columns) else selected_uid
+        gender_val = u_demo['gender'].values[0]         if (len(u_demo)>0 and 'gender'         in u_demo.columns) else '-'
+        usia_val   = u_demo['usia'].values[0]           if (len(u_demo)>0 and 'usia'           in u_demo.columns) else '-'
+        kota_val   = u_demo['kota'].values[0]           if (len(u_demo)>0 and 'kota'           in u_demo.columns) else '-'
+        tier_val   = u_demo['tier_kota'].values[0]      if (len(u_demo)>0 and 'tier_kota'      in u_demo.columns) else '-'
+        pekrj_val  = u_demo['pekerjaan'].values[0]      if (len(u_demo)>0 and 'pekerjaan'      in u_demo.columns) else '-'
+        segmen_val = u_demo['segmen_label'].values[0]   if (len(u_demo)>0 and 'segmen_label'   in u_demo.columns) else '-'
+        income_val = int(u_demo['pendapatan_bulan'].values[0]) if (len(u_demo)>0 and 'pendapatan_bulan' in u_demo.columns) else 0
+        gender_icon = '👩' if str(gender_val)=='P' else '👨'
+        st.markdown(f"""
+        <div class="user-profile-card">
+            <div style="font-size:2.5rem;margin-bottom:8px">{gender_icon}</div>
+            <div style="font-size:1.3rem;font-weight:800;color:#9a3412;font-family:'Sora',sans-serif">{nama_val}</div>
+            <div style="color:#92400e;font-size:0.88rem;margin-bottom:12px">{selected_uid}</div>
+            <div style="margin-bottom:8px"><span class="user-stat-badge">🎂 {usia_val} tahun</span><span class="user-stat-badge">⚥ {gender_val}</span></div>
+            <div style="margin-bottom:8px"><span class="user-stat-badge">📍 {kota_val}</span><span class="user-stat-badge">🏙️ {tier_val}</span></div>
+            <div style="margin-bottom:8px"><span class="user-stat-badge">💼 {pekrj_val}</span></div>
+            <div style="margin-bottom:12px"><span class="user-stat-badge">📊 {segmen_val}</span></div>
+            <div style="background:{p_color}18;border-radius:10px;padding:10px;text-align:center;border:1.5px solid {p_color}40">
+                <div style="font-size:1.5rem">{p_icon}</div>
+                <div style="font-weight:700;color:{p_color};font-size:0.95rem;font-family:'Sora',sans-serif">{persona}</div>
+                <div style="color:#92400e;font-size:0.8rem">Impulse Score: {impulse:.4f}</div>
+            </div>
+            <div style="margin-top:12px;color:#78350f;font-size:0.85rem">💰 Pendapatan: <b>Rp {income_val:,.0f}/bln</b></div>
+        </div>
+        """, unsafe_allow_html=True)
 
-inputs = keras.Input(shape=(N_FEATURES,), name="spending_features")
-x = BehaviorNormLayer(name="behavior_norm")(inputs)
-x = layers.Dense(128, activation="relu")(x)
-x = layers.BatchNormalization()(x)
-x = layers.Dropout(0.30)(x)
-x = layers.Dense(64, activation="relu")(x)
-x = layers.BatchNormalization()(x)
-x = layers.Dropout(0.20)(x)
-x = layers.Dense(32, activation="relu")(x)
-out = layers.Dense(3, activation="softmax", name="persona")(x)
-model = keras.Model(inputs, out, name="BUDU_SpendingPersona")
-model.compile(optimizer=keras.optimizers.Adam(1e-3),
-              loss=FocalLoss(gamma=2.0), metrics=["accuracy"])"""
-    st.code(arch_code, language='python')
+    with col_stats:
+        total_spend = u_tx['amount'].sum()
+        avg_txn     = u_tx['amount'].mean()
+        n_txn       = len(u_tx)
+        n_cat       = u_tx['category'].nunique()
+        fraud_n     = u_tx['is_fraud'].sum()    if 'is_fraud'    in u_tx.columns else 0
+        night_pct   = u_tx['is_night'].mean()   * 100 if 'is_night'   in u_tx.columns else 0
+        weekend_pct = u_tx['is_weekend'].mean() * 100 if 'is_weekend' in u_tx.columns else 0
+        max_txn     = u_tx['amount'].max()
+        spend_ratio = (total_spend / (income_val * 24) * 100) if income_val > 0 else 0
+        r1c1,r1c2,r1c3 = st.columns(3)
+        r1c1.metric("💸 Total Spending",       f"Rp {total_spend/1e6:.2f}M",  f"{n_txn} transaksi")
+        r1c2.metric("📊 Rata-rata/Transaksi",  f"Rp {avg_txn:,.0f}",          f"Max Rp {max_txn:,.0f}")
+        r1c3.metric("🏷️ Kategori Digunakan",  f"{n_cat} kategori",           f"Fraud: {fraud_n} txn")
+        r2c1,r2c2,r2c3 = st.columns(3)
+        r2c1.metric("🌙 Transaksi Malam",      f"{night_pct:.1f}%",           "Jam ≥20:00")
+        r2c2.metric("📅 Transaksi Weekend",    f"{weekend_pct:.1f}%",         "Sabtu & Minggu")
+        r2c3.metric("📈 Spending Ratio",       f"{spend_ratio:.1f}%",         "dari pendapatan (24 bln)")
+        if persona == 'Impulsive Spender':
+            st.markdown(f'<div class="danger-box">🔴 <b>Smart Warning: AKTIF</b> — Impulsive Spender. BUDU kirim notifikasi Jumat malam & weekend spending cap.</div>', unsafe_allow_html=True)
+        elif persona == 'Emotional Spender':
+            st.markdown(f'<div class="warn-box">🟡 <b>Smart Warning: SEDANG</b> — Emotional Spender. BUDU kirim Weekly Reflection setiap Minggu malam.</div>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div class="success-box">🟢 <b>Smart Warning: RENDAH</b> — Rational Spender. BUDU kirim insight dan tips investasi bulanan.</div>', unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────────────────────
-# TAB 6 — DATA DICTIONARY
-# ─────────────────────────────────────────────────────────────
-with tab_dict:
-    st.markdown('<div class="section-header" style="border-color:#fbbf24;color:#fbbf24">📖 Data Dictionary · BUDU v3</div>', unsafe_allow_html=True)
+    st.markdown("---")
+    tab1,tab2,tab3,tab4,tab5 = st.tabs(["📊  Kategori & Spending","📅  Pola Waktu","💳  Metode Pembayaran","📈  Tren Bulanan","🆚  Perbandingan Segmen"])
 
-    st.markdown("#### 📦 Sumber Dataset")
-    st.markdown("> Dataset dummy Indonesia — di-generate secara programatik dari Cell 1–3. **Tidak menggunakan dataset eksternal.**")
+    with tab1:
+        col1,col2 = st.columns(2)
+        with col1:
+            cat_user = u_tx.groupby('category')['amount'].agg(total='sum',count='count',avg='mean').reset_index()
+            cat_user['pct'] = cat_user['total'] / cat_user['total'].sum() * 100
+            cat_user = cat_user.sort_values('total', ascending=False)
+            fig_cu = px.pie(cat_user, names='category', values='total', color_discrete_sequence=PALETTE, hole=0.35, title=f'Distribusi Spending — {nama_val}')
+            fig_cu.update_layout(height=380, margin=dict(t=40,b=10))
+            st.plotly_chart(fig_cu, use_container_width=True)
+        with col2:
+            fig_cb = px.bar(cat_user, x='total', y='category', orientation='h',
+                            color='total', color_continuous_scale='Oranges',
+                            text=cat_user['total'].apply(lambda x: f'Rp {x/1e3:.0f}K'))
+            fig_cb.update_traces(textposition='outside')
+            fig_cb.update_layout(coloraxis_showscale=False, height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', yaxis={'categoryorder':'total ascending'})
+            st.plotly_chart(fig_cb, use_container_width=True)
+        col_d1,col_d2 = st.columns(2)
+        with col_d1:
+            fig_hist = px.histogram(u_tx, x='amount', nbins=30, color_discrete_sequence=[PRIMARY])
+            fig_hist.add_vline(x=u_tx['amount'].mean(), line_dash='dash', line_color=WARN, annotation_text=f"Mean: Rp {u_tx['amount'].mean():,.0f}")
+            fig_hist.add_vline(x=u_tx['amount'].median(), line_dash='dot', line_color=ACCENT, annotation_text=f"Median: Rp {u_tx['amount'].median():,.0f}")
+            fig_hist.update_layout(height=300, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_hist, use_container_width=True)
+        with col_d2:
+            bins_idr = [0,50_000,200_000,500_000,1_000_000,float('inf')]
+            lbl_idr  = ['<50k','50k-200k','200k-500k','500k-1jt','>1jt']
+            u_tx['_bucket'] = pd.cut(u_tx['amount'], bins=bins_idr, labels=lbl_idr)
+            bk = u_tx['_bucket'].value_counts().reindex(lbl_idr, fill_value=0).reset_index()
+            bk.columns = ['Bucket','Count']
+            fig_bk = px.bar(bk, x='Bucket', y='Count', color='Bucket', color_discrete_sequence=PALETTE, text='Count')
+            fig_bk.update_traces(textposition='outside')
+            fig_bk.update_layout(showlegend=False, height=300, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_bk, use_container_width=True)
 
-    st.markdown("#### 🏙️ Segmen Sosio-Ekonomi")
-    seg_data = [{'Kode':k,'Label':v['label'],'% Pop':f"{v['pct_pop']*100:.0f}%",
-                 'Income/Bulan':f"Rp {v['income_range'][0]:,} – Rp {v['income_range'][1]:,}"} for k,v in SEGMENTS.items()]
-    st.dataframe(pd.DataFrame(seg_data), use_container_width=True, hide_index=True)
+    with tab2:
+        col1,col2 = st.columns(2)
+        with col1:
+            hourly_user = u_tx.groupby('hour')['amount'].agg(total='sum',count='count',avg='mean').reset_index()
+            fig_hr = go.Figure()
+            fig_hr.add_trace(go.Bar(x=hourly_user['hour'], y=hourly_user['count'], name='Frekuensi', marker_color='#FB923C', yaxis='y'))
+            fig_hr.add_trace(go.Scatter(x=hourly_user['hour'], y=hourly_user['avg']/1e3, name='Avg Amount (ribu IDR)', line=dict(color=WARN,width=2.5), mode='lines+markers', yaxis='y2'))
+            fig_hr.add_vrect(x0=20, x1=23, fillcolor=WARN, opacity=0.08, annotation_text="Malam")
+            fig_hr.update_layout(height=350, xaxis=dict(title='Jam',tickmode='linear',dtick=2),
+                                 yaxis=dict(title='Jumlah Transaksi'),
+                                 yaxis2=dict(title='Avg Amount (ribu IDR)',overlaying='y',side='right'),
+                                 legend=dict(orientation='h',y=-0.2),
+                                 plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_hr, use_container_width=True)
+        with col2:
+            day_names = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu']
+            daily_user = u_tx.groupby('day_of_week')['amount'].agg(total='sum',count='count',avg='mean').reset_index()
+            daily_user['day_name'] = daily_user['day_of_week'].map(dict(enumerate(day_names)))
+            daily_user['is_wknd']  = daily_user['day_of_week'].isin([5,6])
+            fig_dw = px.bar(daily_user, x='day_name', y='avg', color='is_wknd',
+                            color_discrete_map={False:'#FB923C',True:WARN},
+                            text=daily_user['avg'].apply(lambda x: f'Rp {x/1e3:.0f}K'),
+                            category_orders={'day_name':day_names})
+            fig_dw.update_traces(textposition='outside')
+            fig_dw.update_layout(showlegend=False, height=350, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_dw, use_container_width=True)
+        top_cats_u = u_tx.groupby('category')['amount'].sum().nlargest(6).index
+        hm_data = u_tx[u_tx['category'].isin(top_cats_u)].groupby(['hour','category'])['amount'].sum().unstack(fill_value=0)
+        if not hm_data.empty:
+            fig_hm = px.imshow(hm_data.T/1e3, color_continuous_scale='Oranges', labels=dict(x='Jam',y='Kategori',color='Ribu IDR'), aspect='auto')
+            fig_hm.update_layout(height=320, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_hm, use_container_width=True)
+        col_w1,col_w2,col_w3 = st.columns(3)
+        wknd_u = u_tx[u_tx['is_weekend']==1]['amount']
+        wkdy_u = u_tx[u_tx['is_weekend']==0]['amount']
+        if len(wknd_u)>0 and len(wkdy_u)>0:
+            diff_u = (wknd_u.mean()-wkdy_u.mean())/wkdy_u.mean()*100
+            col_w1.metric("Avg Weekday", f"Rp {wkdy_u.mean():,.0f}", f"{len(wkdy_u)} txn")
+            col_w2.metric("Avg Weekend", f"Rp {wknd_u.mean():,.0f}", f"{len(wknd_u)} txn")
+            col_w3.metric("Selisih", f"{diff_u:.1f}%", "⬆️ Impulsif di weekend" if diff_u>20 else "Normal")
 
-    st.markdown("#### ⭐ User Profile Features — Input Model TF (20 fitur v3)")
-    feat_dict = [
-        {'Fitur':'avg_txn_idr','Satuan':'IDR','Deskripsi':'Rata-rata nilai transaksi','Grup':'Behavioral'},
-        {'Fitur':'txn_count','Satuan':'count','Deskripsi':'Jumlah total transaksi','Grup':'Behavioral'},
-        {'Fitur':'weekend_ratio','Satuan':'0–1','Deskripsi':'Proporsi transaksi weekend','Grup':'Behavioral'},
-        {'Fitur':'night_ratio','Satuan':'0–1','Deskripsi':'Proporsi transaksi malam ≥20:00','Grup':'Behavioral'},
-        {'Fitur':'above_avg_ratio','Satuan':'0–1','Deskripsi':'Proporsi transaksi di atas rata-rata global','Grup':'Behavioral'},
-        {'Fitur':'spike_ratio','Satuan':'0–1','Deskripsi':'Proporsi spike (>2× rolling mean 7 txn)','Grup':'Behavioral'},
-        {'Fitur':'impulse_score','Satuan':'0–1','Deskripsi':'Skor impulsivitas gabungan','Grup':'Behavioral'},
-        {'Fitur':'unique_categories','Satuan':'count','Deskripsi':'Diversifikasi belanja','Grup':'Behavioral'},
-        {'Fitur':'spending_cov','Satuan':'ratio','Deskripsi':'Koefisien variasi (std/mean)','Grup':'Behavioral'},
-        {'Fitur':'pendapatan_bulan ✨','Satuan':'IDR','Deskripsi':'Pendapatan bulanan — BARU v3','Grup':'Konteks'},
-        {'Fitur':'cat_makanan_&_minum_ratio','Satuan':'0–1','Deskripsi':'% spending ke Makanan & Minuman','Grup':'Kategori'},
-        {'Fitur':'cat_transportasi_ratio','Satuan':'0–1','Deskripsi':'% spending ke Transportasi','Grup':'Kategori'},
-        {'Fitur':'cat_kesehatan_&_kec_ratio','Satuan':'0–1','Deskripsi':'% spending ke Kesehatan & Kecantikan','Grup':'Kategori'},
-        {'Fitur':'cat_sembako_&_kebut_ratio','Satuan':'0–1','Deskripsi':'% spending ke Sembako','Grup':'Kategori'},
-        {'Fitur':'cat_kesehatan_ratio','Satuan':'0–1','Deskripsi':'% spending ke Kesehatan','Grup':'Kategori'},
-        {'Fitur':'cat_pendidikan_ratio','Satuan':'0–1','Deskripsi':'% spending ke Pendidikan','Grup':'Kategori'},
-        {'Fitur':'cat_belanja_online_ratio','Satuan':'0–1','Deskripsi':'% spending ke Belanja Online','Grup':'Kategori'},
-        {'Fitur':'cat_pulsa_&_data_ratio','Satuan':'0–1','Deskripsi':'% spending ke Pulsa & Data','Grup':'Kategori'},
-        {'Fitur':'cat_hiburan_ratio','Satuan':'0–1','Deskripsi':'% spending ke Hiburan','Grup':'Kategori'},
-        {'Fitur':'cat_fashion_&_pakai_ratio','Satuan':'0–1','Deskripsi':'% spending ke Fashion & Pakaian','Grup':'Kategori'},
-    ]
-    st.dataframe(pd.DataFrame(feat_dict), use_container_width=True, hide_index=True)
+    with tab3:
+        col1,col2 = st.columns(2)
+        with col1:
+            pay_user = u_tx.groupby('payment_method')['amount'].agg(total='sum',count='count',avg='mean').sort_values('total',ascending=False).reset_index()
+            fig_pay_u = px.pie(pay_user, names='payment_method', values='count', color_discrete_sequence=PALETTE, hole=0.4, title='Frekuensi per Metode')
+            fig_pay_u.update_layout(height=360, margin=dict(t=40,b=10))
+            st.plotly_chart(fig_pay_u, use_container_width=True)
+        with col2:
+            fig_pay_b = px.bar(pay_user, x='payment_method', y='total', color='payment_method',
+                               color_discrete_sequence=PALETTE, text=pay_user['total'].apply(lambda x: f'Rp {x/1e3:.0f}K'))
+            fig_pay_b.update_traces(textposition='outside')
+            fig_pay_b.update_layout(showlegend=False, height=360, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_pay_b, use_container_width=True)
+        pay_sorted = pay_user.sort_values('avg', ascending=True)
+        fig_pay_avg = px.bar(pay_sorted, x='avg', y='payment_method', orientation='h',
+                             color='avg', color_continuous_scale='Oranges',
+                             text=pay_sorted['avg'].apply(lambda x: f'Rp {x:,.0f}'))
+        fig_pay_avg.update_traces(textposition='outside')
+        fig_pay_avg.update_layout(coloraxis_showscale=False, height=300, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+        st.plotly_chart(fig_pay_avg, use_container_width=True)
+        dom_pay = pay_user.sort_values('total',ascending=False)['payment_method'].values[0]
+        st.markdown(f'<div class="insight-box">💳 Metode pembayaran dominan <b>{nama_val}</b>: <b>{dom_pay}</b></div>', unsafe_allow_html=True)
 
-    st.markdown("#### 🎯 Output Model — Spending Persona")
-    persona_dict = [
-        {'Label':'Rational Spender','Encode':0,'Impulse Score':'< 0.30','Karakteristik':'Konsisten, terkontrol, jarang spike','BUDU Warning':'🔵 Rendah — insight informatif'},
-        {'Label':'Emotional Spender','Encode':1,'Impulse Score':'0.30 – 0.55','Karakteristik':'Tidak konsisten, spending_cov tinggi','BUDU Warning':'🟡 Sedang — Weekly Reflection'},
-        {'Label':'Impulsive Spender','Encode':2,'Impulse Score':'≥ 0.55','Karakteristik':'Weekend & malam tinggi, banyak spike','BUDU Warning':'🔴 Tinggi — notifikasi Jumat malam'},
-    ]
-    st.dataframe(pd.DataFrame(persona_dict), use_container_width=True, hide_index=True)
+    with tab4:
+        col1,col2 = st.columns(2)
+        with col1:
+            monthly_u = u_tx.groupby('month')['amount'].agg(total='sum',count='count',avg='mean').reset_index().sort_values('month')
+            monthly_u['month_name'] = monthly_u['month'].apply(lambda m: M_LBL[m-1])
+            thr_u = monthly_u['total'].mean() + ANOMALY_STD_FACTOR * monthly_u['total'].std() if len(monthly_u) > 2 else monthly_u['total'].max()
+            monthly_u['anomaly'] = monthly_u['total'] > thr_u
+            fig_mu = go.Figure()
+            fig_mu.add_trace(go.Bar(x=monthly_u['month_name'], y=monthly_u['total']/1e3, name='Total (ribu IDR)',
+                                    marker_color=[WARN if a else '#FB923C' for a in monthly_u['anomaly']]))
+            fig_mu.add_trace(go.Scatter(x=monthly_u['month_name'], y=monthly_u['avg']/1e3, name='Avg/Transaksi',
+                                        line=dict(color=PRIMARY,width=2.5,dash='dot'), mode='lines+markers', yaxis='y2'))
+            fig_mu.add_hline(y=thr_u/1e3, line_dash='dash', line_color=WARN, opacity=0.5, annotation_text='Threshold anomali')
+            fig_mu.update_layout(height=380, yaxis=dict(title='Total (ribu IDR)'),
+                                 yaxis2=dict(title='Avg/Txn',overlaying='y',side='right'),
+                                 legend=dict(orientation='h',y=-0.2),
+                                 plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_mu, use_container_width=True)
+        with col2:
+            top_cats_u3 = u_tx.groupby('category')['amount'].sum().nlargest(5).index
+            cat_month_u = u_tx[u_tx['category'].isin(top_cats_u3)].groupby(['month','category'])['amount'].sum().reset_index()
+            cat_month_u['month_name'] = cat_month_u['month'].apply(lambda m: M_LBL[m-1])
+            fig_cm = px.line(cat_month_u, x='month_name', y='amount', color='category', color_discrete_sequence=PALETTE, markers=True)
+            fig_cm.update_layout(height=380, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_cm, use_container_width=True)
+        u_tx_sorted = u_tx.sort_values('date').copy()
+        u_tx_sorted['rolling_7']  = u_tx_sorted['amount'].rolling(7, min_periods=1).mean()
+        u_tx_sorted['spike_flag'] = u_tx_sorted['amount'] > u_tx_sorted['rolling_7'] * 2
+        fig_tl = go.Figure()
+        fig_tl.add_trace(go.Scatter(x=u_tx_sorted['date'], y=u_tx_sorted['amount']/1e3, mode='markers', name='Transaksi',
+                                    marker=dict(size=6, color=[WARN if s else '#FB923C' for s in u_tx_sorted['spike_flag']], opacity=0.7)))
+        fig_tl.add_trace(go.Scatter(x=u_tx_sorted['date'], y=u_tx_sorted['rolling_7']/1e3, mode='lines', name='Rolling Mean 7 Txn', line=dict(color=PRIMARY,width=2.5)))
+        fig_tl.update_layout(height=320, xaxis_title='Tanggal', yaxis_title='Amount (ribu IDR)',
+                             plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
+                             legend=dict(orientation='h',y=-0.2))
+        st.plotly_chart(fig_tl, use_container_width=True)
+        n_spikes = u_tx_sorted['spike_flag'].sum()
+        if n_spikes > 0:
+            st.markdown(f'<div class="warn-box">⚠️ Terdeteksi <b>{n_spikes} spike transaksi</b> (>2× rolling mean 7 txn).</div>', unsafe_allow_html=True)
 
-    st.markdown("#### 📐 Formula Impulse Score")
-    st.code("impulse_score = (weekend_ratio × 0.35) + (night_ratio × 0.30) + (above_avg_ratio × 0.20) + (spike_ratio × 0.15)", language='text')
+    with tab5:
+        segmen_user = u_demo['segmen'].values[0] if (len(u_demo)>0 and 'segmen' in u_demo.columns) else None
+        seg_col_uf_local = next((c for c in ['segmen','segmen_label'] if c in user_features.columns), None)
+        if segmen_user and segmen_user in seg_filter and seg_col_uf_local:
+            seg_peers = df_tx[df_tx['segmen']==segmen_user]
+            seg_uf    = user_features[user_features[seg_col_uf_local]==segmen_user]
+            n_seg_users = seg_uf['user_id'].nunique()
 
-    st.markdown("#### 🗂️ File Output")
-    files_dict = [
-        {'File':'budu_transactions_clean_idr.csv','Konten':'Semua transaksi bersih (IDR)','Digunakan oleh':'Dashboard, REST API'},
-        {'File':'budu_user_profiles_idr.csv','Konten':'Profil + persona per user','Digunakan oleh':'REST API, Dashboard'},
-        {'File':'budu_dummy_users.csv','Konten':'Data demografis user','Digunakan oleh':'Analisis segmen'},
-        {'File':'X/y_train/val/test.npy','Konten':'Array input/output model TF','Digunakan oleh':'AI Engineer'},
-        {'File':'budu_model_metadata.json','Konten':'Metadata + saran arsitektur (v3)','Digunakan oleh':'AI Engineer'},
-    ]
-    st.dataframe(pd.DataFrame(files_dict), use_container_width=True, hide_index=True)
+            metrics_compare = {'Avg Transaksi (IDR)': (u_tx['amount'].mean(), seg_peers['amount'].mean()),
+                               'Frekuensi Transaksi': (len(u_tx), seg_peers.groupby('user_id').size().mean()),
+                               'Weekend Ratio':       (u_tx['is_weekend'].mean(), seg_peers['is_weekend'].mean()),
+                               'Night Ratio':         (u_tx['is_night'].mean(), seg_peers['is_night'].mean()),
+                               'Impulse Score':       (impulse, seg_uf['impulse_score'].mean())}
+            if 'total_spending_idr' in seg_uf.columns:
+                metrics_compare['Total Spending (IDR)'] = (u_tx['amount'].sum(), seg_uf['total_spending_idr'].mean())
 
-    st.markdown("#### 🔄 Perubahan Feature v3")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("**Ditambahkan**")
-        st.markdown("- ✨ `pendapatan_bulan` — sinyal konteks finansial user")
-        st.markdown("**Dihapus — Tidak Relevan**")
-        for f in ['fraud_ratio','avg_dist_merchant','active_months','month_start_ratio','month_end_ratio']:
-            st.markdown(f"- ~~`{f}`~~")
-    with col2:
-        st.markdown("**Dihapus — Redundan**")
-        for f in ['total_spending_idr','median_txn_idr','max_txn_idr','std_amount_idr','unique_merchants']:
-            st.markdown(f"- ~~`{f}`~~")
-        st.markdown("**Transformasi**")
-        st.markdown("- 10 kolom `cat_*` IDR → rasio proporsi (`_ratio`)")
+            cmp_rows = []
+            for metric,(user_val,seg_val) in metrics_compare.items():
+                diff_pct_cmp = ((user_val-seg_val)/seg_val*100) if seg_val else 0
+                status = '⬆️' if diff_pct_cmp>10 else ('⬇️' if diff_pct_cmp<-10 else '➡️')
+                cmp_rows.append({
+                    'Metrik': metric,
+                    f'{nama_val}': f'{user_val:,.2f}' if isinstance(user_val,float) else f'{user_val:,.0f}',
+                    f'Avg {segmen_val}': f'{seg_val:,.2f}' if isinstance(seg_val,float) else f'{seg_val:,.0f}',
+                    'Selisih %': f'{diff_pct_cmp:+.1f}%', 'Status': status,
+                })
+            st.dataframe(pd.DataFrame(cmp_rows), use_container_width=True, hide_index=True)
+
+            radar_feats_cmp = [f for f in ['weekend_ratio','night_ratio','above_avg_ratio','spike_ratio','spending_cov','active_months'] if f in user_features.columns]
+            if radar_feats_cmp:
+                u_vals    = [float(u_profile[f].values[0]) if len(u_profile)>0 else 0 for f in radar_feats_cmp]
+                seg_means = seg_uf[radar_feats_cmp].mean().tolist()
+                all_vals  = [max(u+s,1e-9) for u,s in zip(u_vals,seg_means)]
+                u_norm    = [v/m if m>0 else 0 for v,m in zip(u_vals,all_vals)]
+                s_norm    = [v/m if m>0 else 0 for v,m in zip(seg_means,all_vals)]
+                categories_r = radar_feats_cmp + [radar_feats_cmp[0]]
+                fig_radar = go.Figure()
+                fig_radar.add_trace(go.Scatterpolar(r=u_norm+[u_norm[0]], theta=categories_r, fill='toself', name=nama_val, line=dict(color=p_color,width=2.5), fillcolor=p_color, opacity=0.25))
+                fig_radar.add_trace(go.Scatterpolar(r=s_norm+[s_norm[0]], theta=categories_r, fill='toself', name=f'Avg {segmen_val}', line=dict(color='#94a3b8',width=2,dash='dot'), fillcolor='#94a3b8', opacity=0.15))
+                fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True,range=[0,1.1])), height=420, showlegend=True, legend=dict(orientation='h',y=-0.1))
+                st.plotly_chart(fig_radar, use_container_width=True)
+
+            fig_pos = px.histogram(seg_uf, x='impulse_score', nbins=30, color_discrete_sequence=['#FB923C'])
+            fig_pos.add_vline(x=impulse, line_dash='solid', line_color=p_color, line_width=3, annotation_text=f'{nama_val}: {impulse:.4f}')
+            fig_pos.add_vline(x=seg_uf['impulse_score'].mean(), line_dash='dash', line_color='#78350f', annotation_text=f'Avg segmen: {seg_uf["impulse_score"].mean():.4f}')
+            pct_rank = (seg_uf['impulse_score'] <= impulse).mean() * 100
+            fig_pos.update_layout(height=300, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig_pos, use_container_width=True)
+            st.markdown(f'<div class="insight-box">📌 <b>{nama_val}</b> berada di persentil ke-<b>{pct_rank:.0f}</b> dalam segmen <b>{segmen_val}</b> (impulse score {impulse:.4f}).</div>', unsafe_allow_html=True)
+        else:
+            st.info("Data segmen tidak tersedia atau segmen user tidak termasuk dalam filter aktif.")
+
+    if show_raw:
+        st.markdown("---")
+        st.markdown("#### 📋 Riwayat Transaksi Lengkap")
+        show_cols = [c for c in ['txn_id','date','amount','category','sub_category','payment_method','is_weekend','is_night','is_fraud'] if c in u_tx.columns]
+        st.dataframe(u_tx[show_cols].sort_values('date',ascending=False).reset_index(drop=True), use_container_width=True, height=400)
+        csv_dl = u_tx[show_cols].to_csv(index=False).encode('utf-8')
+        st.download_button(label=f"⬇️ Download transaksi {selected_uid} (.csv)", data=csv_dl, file_name=f"budu_{selected_uid}_transactions.csv", mime="text/csv")
+
+
+# ==========================================
+# ██  DATA DICTIONARY  ██
+# ==========================================
+elif menu == "📖 Data Dictionary":
+    st.subheader("📖 Data Dictionary — BUDU Dataset")
+    tab_d = st.tabs(["📊  Segmen","📋  Transaksi","🕐  Temporal","👤  User Profile","🎯  Model TF v3","🎭  Spending Persona","📁  File Output"])
+
+    with tab_d[0]:
+        st.markdown("#### Segmen Sosio-Ekonomi Indonesia")
+        st.dataframe(pd.DataFrame([
+            {'Segmen':'E','Label':'Kelas E (Miskin)',         '% Pop':'15%','Income/Bulan':'Rp 800rb–1,5jt',   'Metode Bayar Dominan':'Tunai 55%',        'Kota Dominan':'Desa / Kota Kecil'},
+            {'Segmen':'D','Label':'Kelas D (Menengah Bawah)', '% Pop':'25%','Income/Bulan':'Rp 1,5–3jt',       'Metode Bayar Dominan':'GoPay 30%',        'Kota Dominan':'Kota Kecil / Besar'},
+            {'Segmen':'C','Label':'Kelas C (Menengah)',       '% Pop':'35%','Income/Bulan':'Rp 3–7jt',         'Metode Bayar Dominan':'GoPay/OVO/Kartu',  'Kota Dominan':'Kota Besar'},
+            {'Segmen':'B','Label':'Kelas B (Menengah Atas)',  '% Pop':'18%','Income/Bulan':'Rp 7–20jt',        'Metode Bayar Dominan':'Kartu Kredit 30%', 'Kota Dominan':'Kota Besar/Metropolitan'},
+            {'Segmen':'A','Label':'Kelas A (Kaya)',           '% Pop':'7%', 'Income/Bulan':'Rp 20–150jt',      'Metode Bayar Dominan':'Kartu Kredit 45%', 'Kota Dominan':'Metropolitan'},
+        ]), use_container_width=True, hide_index=True)
+
+    with tab_d[1]:
+        st.markdown("#### Kolom Transaksi (`budu_transactions_clean_idr.csv`)")
+        st.dataframe(pd.DataFrame([
+            {'Kolom':'txn_id',            'Tipe':'string',   'Satuan':'-',       'Deskripsi':'ID unik transaksi (TXN0000001)'},
+            {'Kolom':'user_id',           'Tipe':'string',   'Satuan':'-',       'Deskripsi':'ID unik pengguna BUDU (BUDU00001)'},
+            {'Kolom':'date',              'Tipe':'datetime', 'Satuan':'-',       'Deskripsi':'Tanggal & jam transaksi'},
+            {'Kolom':'amount',            'Tipe':'int',      'Satuan':'IDR',     'Deskripsi':'Nilai transaksi dalam Rupiah'},
+            {'Kolom':'category',          'Tipe':'string',   'Satuan':'-',       'Deskripsi':'Kategori utama pengeluaran (17 kategori)'},
+            {'Kolom':'sub_category',      'Tipe':'string',   'Satuan':'-',       'Deskripsi':'Sub-kategori / nama merchant'},
+            {'Kolom':'payment_method',    'Tipe':'string',   'Satuan':'-',       'Deskripsi':'Metode pembayaran (8 metode)'},
+            {'Kolom':'gender',            'Tipe':'string',   'Satuan':'-',       'Deskripsi':'Jenis kelamin (L/P)'},
+            {'Kolom':'usia',              'Tipe':'int',      'Satuan':'tahun',   'Deskripsi':'Usia pengguna'},
+            {'Kolom':'segmen',            'Tipe':'string',   'Satuan':'-',       'Deskripsi':'Kode segmen (E/D/C/B/A)'},
+            {'Kolom':'segmen_label',      'Tipe':'string',   'Satuan':'-',       'Deskripsi':'Label segmen lengkap'},
+            {'Kolom':'pendapatan_bulan',  'Tipe':'int',      'Satuan':'IDR',     'Deskripsi':'Pendapatan bulanan user'},
+            {'Kolom':'spending_ratio',    'Tipe':'float',    'Satuan':'0–1',     'Deskripsi':'Rasio pengeluaran/pendapatan'},
+            {'Kolom':'populasi_kota',     'Tipe':'int',      'Satuan':'jiwa',    'Deskripsi':'Populasi kota domisili'},
+            {'Kolom':'dist_user_merchant','Tipe':'float',    'Satuan':'derajat', 'Deskripsi':'Jarak Euclidean user ke merchant'},
+            {'Kolom':'is_fraud',          'Tipe':'int',      'Satuan':'0/1',     'Deskripsi':'Label fraud simulasi (1=fraud)'},
+        ]), use_container_width=True, hide_index=True)
+
+    with tab_d[2]:
+        st.markdown("#### Fitur Temporal")
+        st.dataframe(pd.DataFrame([
+            {'Fitur':'month',         'Tipe':'int', 'Deskripsi':'Bulan 1-12',           'Dipakai':'EDA, Model'},
+            {'Fitur':'day_of_week',   'Tipe':'int', 'Deskripsi':'0=Senin … 6=Minggu',   'Dipakai':'EDA, Model'},
+            {'Fitur':'hour',          'Tipe':'int', 'Deskripsi':'Jam transaksi 0-23',    'Dipakai':'EDA, Model'},
+            {'Fitur':'is_weekend',    'Tipe':'0/1', 'Deskripsi':'1 jika Sabtu/Minggu',   'Dipakai':'Model, A/B Test'},
+            {'Fitur':'is_night',      'Tipe':'0/1', 'Deskripsi':'1 jika jam ≥20',        'Dipakai':'Model, Warning'},
+            {'Fitur':'is_month_start','Tipe':'0/1', 'Deskripsi':'1 jika tgl 1-5',        'Dipakai':'EDA'},
+            {'Fitur':'is_month_end',  'Tipe':'0/1', 'Deskripsi':'1 jika tgl 25-31',      'Dipakai':'EDA'},
+            {'Fitur':'quarter',       'Tipe':'int', 'Deskripsi':'Kuartal 1-4',            'Dipakai':'EDA'},
+            {'Fitur':'day_name',      'Tipe':'str', 'Deskripsi':'Nama hari disingkat (Mon…Sun)', 'Dipakai':'EDA'},
+            {'Fitur':'week',          'Tipe':'int', 'Deskripsi':'Nomor minggu ISO (1–53)', 'Dipakai':'EDA'},
+        ]), use_container_width=True, hide_index=True)
+
+    with tab_d[3]:
+        st.markdown("#### User Profile Features (`budu_user_profiles_idr.csv`) — Level Transaksi (Cell 14)")
+        st.dataframe(pd.DataFrame([
+            {'Fitur':'amount_idr_bucket', 'Satuan':'kategori', 'Deskripsi':'Bucket nilai transaksi: <50k / 50k-200k / 200k-500k / 500k-1jt / >1jt'},
+            {'Fitur':'above_avg',         'Satuan':'0/1',      'Deskripsi':'1 jika amount > rata-rata global'},
+            {'Fitur':'category_freq_enc', 'Satuan':'0–1',      'Deskripsi':'Frekuensi relatif kategori (target encoding)'},
+            {'Fitur':'age_group',         'Satuan':'kategori', 'Deskripsi':'Kelompok usia: 18-24 / 25-34 / 35-44 / 45+'},
+            {'Fitur':'amount_lag1',       'Satuan':'IDR',      'Deskripsi':'Nilai transaksi sebelumnya per user'},
+            {'Fitur':'amount_diff',       'Satuan':'IDR',      'Deskripsi':'Selisih amount vs transaksi sebelumnya'},
+            {'Fitur':'rolling_7txn',      'Satuan':'IDR',      'Deskripsi':'Rolling sum 7 transaksi terakhir'},
+            {'Fitur':'rolling_30txn',     'Satuan':'IDR',      'Deskripsi':'Rolling sum 30 transaksi terakhir'},
+            {'Fitur':'rolling_7_mean',    'Satuan':'IDR',      'Deskripsi':'Rolling mean 7 transaksi terakhir'},
+            {'Fitur':'is_spike',          'Satuan':'0/1',      'Deskripsi':'1 jika amount > 2× rolling_7_mean'},
+        ]), use_container_width=True, hide_index=True)
+
+    with tab_d[4]:
+        st.markdown("""
+        #### Fitur Input Model TensorFlow — Feature Engineering v3 (Cell 16 Notebook)
+        **15 fitur aktif** · MinMaxScaler 0–1 · Split 70/15/15
+        """)
+        feat_dict_data = [
+            # Behavioral Core (9)
+            {'No':'1', 'Fitur':'avg_txn_idr',           'Grup':'Behavioral', 'Satuan':'IDR',  'Range Notebook':'11,092 – 3,859,568', 'Deskripsi':'Rata-rata nilai transaksi per user'},
+            {'No':'2', 'Fitur':'txn_count',             'Grup':'Behavioral', 'Satuan':'count','Range Notebook':'10 – 179',           'Deskripsi':'Total jumlah transaksi'},
+            {'No':'3', 'Fitur':'weekend_ratio',         'Grup':'Behavioral', 'Satuan':'0–1',  'Range Notebook':'0.00 – 0.60',        'Deskripsi':'Proporsi transaksi di weekend'},
+            {'No':'4', 'Fitur':'night_ratio',           'Grup':'Behavioral', 'Satuan':'0–1',  'Range Notebook':'0.00 – 0.48',        'Deskripsi':'Proporsi transaksi malam (jam ≥20)'},
+            {'No':'5', 'Fitur':'above_avg_ratio',       'Grup':'Behavioral', 'Satuan':'0–1',  'Range Notebook':'0.00 – 0.97',        'Deskripsi':'Proporsi transaksi di atas rata-rata global'},
+            {'No':'6', 'Fitur':'spike_ratio',           'Grup':'Behavioral', 'Satuan':'0–1',  'Range Notebook':'0.00 – 0.25',        'Deskripsi':'Proporsi spike (amount >2× rolling mean 7 txn)'},
+            {'No':'7', 'Fitur':'impulse_score',         'Grup':'Behavioral', 'Satuan':'0–1',  'Range Notebook':'0.05 – 0.39',        'Deskripsi':'Skor impulsivitas gabungan (formula Cell 15)'},
+            {'No':'8', 'Fitur':'unique_categories',     'Grup':'Behavioral', 'Satuan':'count','Range Notebook':'3 – 10',             'Deskripsi':'Jumlah kategori berbeda yang digunakan'},
+            {'No':'9', 'Fitur':'spending_cov',          'Grup':'Behavioral', 'Satuan':'ratio','Range Notebook':'0.39 – 1.33',        'Deskripsi':'Koefisien variasi spending (std/mean)'},
+            # Konteks (1) — BARU v3
+            {'No':'10','Fitur':'pendapatan_bulan',       'Grup':'Konteks ✨v3','Satuan':'IDR', 'Range Notebook':'800,650 – 143,899,340','Deskripsi':'Pendapatan bulanan (baru di v3) — sinyal kemampuan ekonomi'},
+            # Category Ratios (5 tersedia dari 10)
+            {'No':'11','Fitur':'cat_makanan_&_minum_ratio','Grup':'Kategori','Satuan':'0–1',  'Range Notebook':'0.00 – 1.00',        'Deskripsi':'% spending ke Makanan & Minuman'},
+            {'No':'12','Fitur':'cat_transportasi_ratio',  'Grup':'Kategori','Satuan':'0–1',  'Range Notebook':'0.00 – 0.57',        'Deskripsi':'% spending ke Transportasi'},
+            {'No':'13','Fitur':'cat_kesehatan_&_kec_ratio','Grup':'Kategori','Satuan':'0–1', 'Range Notebook':'0.00 – 1.00',        'Deskripsi':'% spending ke Kesehatan & Kecantikan'},
+            {'No':'14','Fitur':'cat_sembako_&_kebut_ratio','Grup':'Kategori','Satuan':'0–1', 'Range Notebook':'0.00 – 1.00',        'Deskripsi':'% spending ke Sembako & Kebutuhan Pokok'},
+            {'No':'15','Fitur':'cat_kesehatan_ratio',     'Grup':'Kategori','Satuan':'0–1',  'Range Notebook':'0.00 – 0.36',        'Deskripsi':'% spending ke Kesehatan'},
+            {'No':'16','Fitur':'cat_pendidikan_ratio',    'Grup':'Kategori','Satuan':'0–1',  'Range Notebook':'0.00 – 0.39',        'Deskripsi':'% spending ke Pendidikan'},
+            {'No':'17','Fitur':'cat_belanja_online_ratio','Grup':'Kategori','Satuan':'0–1',  'Range Notebook':'0.00 – 0.46',        'Deskripsi':'% spending ke Belanja Online'},
+            {'No':'18','Fitur':'cat_pulsa_&_data_ratio',  'Grup':'Kategori','Satuan':'0–1',  'Range Notebook':'0.00 – 1.00',        'Deskripsi':'% spending ke Pulsa & Data'},
+            {'No':'19','Fitur':'cat_hiburan_ratio',       'Grup':'Kategori','Satuan':'0–1',  'Range Notebook':'0.00 – 0.32',        'Deskripsi':'% spending ke Hiburan'},
+            {'No':'20','Fitur':'cat_fashion_&_pakai_ratio','Grup':'Kategori','Satuan':'0–1', 'Range Notebook':'0.00 – 1.00',        'Deskripsi':'% spending ke Fashion & Pakaian'},
+        ]
+        st.dataframe(pd.DataFrame(feat_dict_data), use_container_width=True, hide_index=True)
+
+        st.markdown("---")
+        st.markdown("#### Fitur yang Dihapus di v3")
+        col_r1, col_r2 = st.columns(2)
+        with col_r1:
+            st.markdown("**Tidak relevan (dihapus):**")
+            for f in ['fraud_ratio','avg_dist_merchant','active_months','month_start_ratio','month_end_ratio']:
+                st.markdown(f"- `{f}`")
+        with col_r2:
+            st.markdown("**Redundan (dihapus):**")
+            for f in ['total_spending_idr (→ dipakai untuk hitung ratio, lalu drop)','median_txn_idr','max_txn_idr','std_amount_idr','unique_merchants']:
+                st.markdown(f"- `{f}`")
+        st.markdown("**Kategori sinyal rendah (dihapus):** `cat_kecantikan_&_pe`, `cat_investasi_&_asu`, `cat_properti_&_reno`, `cat_travel_&_hotel`, `cat_restoran_&_kafe`, `cat_elektronik`, `cat_olahraga_&_gym`")
+
+        st.markdown("---")
+        st.markdown("#### Split Data (Cell 18 Notebook)")
+        st.dataframe(pd.DataFrame([
+            {'Split':'X_train / y_train','Jumlah':'700 sampel (70%)','Stratified':'Ya'},
+            {'Split':'X_val / y_val',    'Jumlah':'150 sampel (15%)','Stratified':'Ya'},
+            {'Split':'X_test / y_test',  'Jumlah':'150 sampel (15%)','Stratified':'Ya'},
+        ]), use_container_width=True, hide_index=True)
+
+    with tab_d[5]:
+        st.markdown("""
+        #### Spending Persona — Output Model (Cell 17 Notebook)
+
+        | Label | Encode | Impulse Score | Karakteristik | Smart Warning BUDU |
+        |---|---|---|---|---|
+        | `Rational Spender` | 0 | < 0.30 | Konsisten, terkontrol, jarang spike | 🔵 Rendah — insight informatif |
+        | `Emotional Spender` | 1 | 0.30–0.55 | Tidak konsisten, spending_cov tinggi | 🟡 Sedang — Weekly Reflection |
+        | `Impulsive Spender` | 2 | ≥ 0.55 | Weekend & malam tinggi, banyak spike | 🔴 Tinggi — notifikasi Jumat malam |
+
+        **Formula Impulse Score (Cell 15 notebook):**
+        ```
+        impulse_score = (weekend_ratio × 0.35) + (night_ratio × 0.30) + (above_avg_ratio × 0.20) + (spike_ratio × 0.15)
+        ```
+
+        **Distribusi hasil clustering notebook (Cell 17):**
+        - Emotional Spender : 559 user (55.9%) · avg txn Rp 310,146
+        - Rational Spender  : 377 user (37.7%) · avg txn Rp 42,240
+        - Impulsive Spender :  64 user (6.4%)  · avg txn Rp 2,980,858
+
+        **Arsitektur TensorFlow (Cell 19):** Functional API · BehaviorNormLayer (custom) · Dense 128→64→32→3 · FocalLoss(gamma=2.0) · Adam(lr=1e-3)
+        """)
+
+        st.markdown("#### Tools yang Direkomendasikan (Cell 19 notebook)")
+        tools = [
+            {'Tool':'TensorFlow ≥ 2.13','Peran':'Training model Functional API'},
+            {'Tool':'Custom Layer: BehaviorNormLayer','Peran':'Normalisasi behavior-aware (tanh)'},
+            {'Tool':'Custom Loss: FocalLoss(γ=2.0)','Peran':'Atasi class imbalance (Impulsive 6.4%)'},
+            {'Tool':'Custom Callback: EarlyStopOnAccuracy','Peran':'Stop saat val_accuracy ≥ 85%'},
+            {'Tool':'imbalanced-learn (SMOTE)','Peran':'Oversample kelas minoritas Impulsive'},
+            {'Tool':'TensorBoard (./logs/budu)','Peran':'Monitoring training'},
+            {'Tool':'SHAP','Peran':'Explainability feature importance'},
+            {'Tool':'Optuna','Peran':'Hyperparameter tuning otomatis'},
+        ]
+        st.dataframe(pd.DataFrame(tools), use_container_width=True, hide_index=True)
+
+    with tab_d[6]:
+        st.markdown("#### File Output (Cell 20 Notebook)")
+        st.dataframe(pd.DataFrame([
+            {'File':'budu_transactions_clean_idr.csv', 'Baris/Ukuran':'49,503 baris × 33 kolom','Konten':'Semua transaksi bersih (IDR)',      'Digunakan oleh':'Dashboard, REST API'},
+            {'File':'budu_user_profiles_idr.csv',      'Baris/Ukuran':'1,000 baris × 40 kolom', 'Konten':'Profil + persona per user',          'Digunakan oleh':'REST API, Dashboard'},
+            {'File':'budu_dummy_users.csv',             'Baris/Ukuran':'1,000 baris',            'Konten':'Data demografis user (dummy)',        'Digunakan oleh':'Analisis segmen'},
+            {'File':'X_train.npy / y_train.npy',       'Baris/Ukuran':'700 sampel',             'Konten':'Array input/output TF — train set',   'Digunakan oleh':'AI Engineer'},
+            {'File':'X_val.npy / y_val.npy',           'Baris/Ukuran':'150 sampel',             'Konten':'Array input/output TF — val set',     'Digunakan oleh':'AI Engineer'},
+            {'File':'X_test.npy / y_test.npy',         'Baris/Ukuran':'150 sampel',             'Konten':'Array input/output TF — test set',    'Digunakan oleh':'AI Engineer'},
+            {'File':'budu_model_metadata.json',        'Baris/Ukuran':'1 file JSON',            'Konten':'Metadata + saran arsitektur TF',      'Digunakan oleh':'AI Engineer'},
+        ]), use_container_width=True, hide_index=True)
+
+    st.markdown("---")
+    st.markdown("#### 🔎 Preview Dataset Transaksi (50 baris pertama)")
+    preview_tx_cols = [c for c in ['txn_id','user_id','date','amount','category','payment_method','segmen','segmen_label','gender','usia','kota','is_weekend','is_night','is_fraud','month','hour'] if c in df_f.columns]
+    st.dataframe(df_f[preview_tx_cols].head(50), use_container_width=True)
+
+    st.markdown("#### 👤 Preview User Profile & Features (50 baris pertama)")
+    preview_uf_cols = [c for c in ['user_id','segmen','segmen_label','usia','gender','kota','tier_kota','pendapatan_bulan','txn_count','avg_txn_idr','impulse_score','spending_persona','weekend_ratio','night_ratio','above_avg_ratio','spike_ratio'] if c in uf_f.columns]
+    st.dataframe(uf_f[preview_uf_cols].head(50), use_container_width=True)
