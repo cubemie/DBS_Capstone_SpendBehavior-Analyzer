@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from 'express'
 import { AppException } from '../exception.ts'
 import { ZodError } from 'zod'
+import { logError } from '../utils/logger.ts'
 
 export function errorHandler(
   err: Error,
@@ -26,7 +27,7 @@ export function errorHandler(
     })
   }
 
-  console.error('[Unhandled Error]:', err)
+  logError(err, `${_req.method} ${_req.originalUrl}`)
   return res.status(500).json({
     message: 'Terjadi kesalahan pada server',
   })

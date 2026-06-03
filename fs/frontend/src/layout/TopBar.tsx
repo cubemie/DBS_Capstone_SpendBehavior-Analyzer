@@ -1,7 +1,13 @@
-﻿import { Bell, Search } from "lucide-react";
-import { currentUser } from "../services/mockData";
+import { Bell, Search } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import defaultAvatar from "../assets/avatar-user.png";
 
 function TopBar() {
+  const { user } = useAuth();
+
+  const displayName = user?.name ? user.name.split(" ")[0] : "Pengguna";
+  const avatarUrl = user?.avatarUrl || defaultAvatar;
+
   return (
     <header className="sticky top-0 z-20 border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 md:h-20 md:px-8 lg:px-10">
@@ -23,12 +29,14 @@ function TopBar() {
           </button>
           <div className="flex items-center gap-3 sm:border-l sm:border-[var(--color-border)] sm:pl-4">
             <div className="hidden text-right sm:block">
-              <p className="text-sm font-black text-[var(--color-text-primary)]">{currentUser.name.split(" ")[0]}</p>
-              <p className="text-xs font-medium text-[var(--color-text-secondary)]">Rational spender</p>
+              <p className="text-sm font-black text-[var(--color-text-primary)]">{displayName}</p>
+              <p className="text-xs font-medium text-[var(--color-text-secondary)]">
+                {user?.persona || "Rational Spender"}
+              </p>
             </div>
             <img
-              src={currentUser.avatarUrl}
-              alt={currentUser.name}
+              src={avatarUrl}
+              alt={user?.name || "User Avatar"}
               className="h-10 w-10 rounded-full object-cover ring-2 ring-white"
             />
           </div>

@@ -1,22 +1,77 @@
-﻿import { ArrowDown, ArrowRight, ArrowUp, Bell, Trophy, Wallet } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUp, Bell, Trophy, Wallet } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import quokkaImg from "../assets/quokka-dashboard.png";
-import { budgets, currentUser, monthlySummary, transactions, warnings } from "../services/mockData";
 import Badge from "../components/Badge";
 import Button from "../components/Button";
 import Card from "../components/Card";
+import ErrorState from "../components/ErrorState";
 import PageHeader from "../components/PageHeader";
 import ProgressBar from "../components/ProgressBar";
 import TransactionItem from "../components/TransactionItem";
 import { formatCurrency } from "../utils/formatCurrency";
+import { useApi } from "../hooks/useApi";
+import { analyticsService } from "../services/analyticsService";
+import { useAuth } from "../contexts/AuthContext";
+import type { ApiTransaction } from "../types/models";
+import { ShoppingBag, UtensilsCrossed, Car, Banknote, CreditCard } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+// Map category name → lucide icon (best-effort, fallback ke Wallet)
+function categoryIcon(name: string): LucideIcon {
+  const lower = name.toLowerCase();
+  if (lower.includes("makan") || lower.includes("food")) return UtensilsCrossed;
+  if (lower.includes("transport") || lower.includes("kend")) return Car;
+  if (lower.includes("belanja") || lower.includes("shop")) return ShoppingBag;
+  if (lower.includes("gaji") || lower.includes("income") || lower.includes("pendapatan")) return Banknote;
+  if (lower.includes("hiburan") || lower.includes("entertain")) return CreditCard;
+  return Wallet;
+}
+
+// Adapter: ApiTransaction → shape expected by existing TransactionItem component
+function toTransactionItem(tx: ApiTransaction) {
+  const Icon = categoryIcon(tx.category.name);
+  return {
+    id: tx.id,
+    title: tx.note ?? tx.category.name,
+    merchant: tx.category.name,
+    method: "",
+    category: tx.category.name,
+    type: tx.type as "income" | "expense",
+    amount: Math.abs(tx.amount),
+    date: tx.date,
+    icon: Icon,
+    accent: (tx.type === "income" ? "teal" : "coral") as "teal" | "coral",
+  };
+}
+
+// Skeleton placeholders
+function DashboardSkeleton() {
+  return (
+    <div className="space-y-5 animate-pulse">
+      <div className="h-48 rounded-3xl bg-[var(--color-soft)]" />
+      <div className="h-40 rounded-3xl bg-[var(--color-soft)]" />
+      <div className="h-40 rounded-3xl bg-[var(--color-soft)]" />
+    </div>
+  );
+}
+
+const CATEGORY_COLORS = ["#8BDFDD", "#F28C6A", "#FFE394", "#B7D6A5", "#C4B5FD"];
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const recentTransactions = transactions.slice(0, 3);
-  const primaryWarning = warnings[0];
-  const totalBudgetUsed = budgets.reduce((total, budget) => total + budget.used, 0);
-  const totalBudgetLimit = budgets.reduce((total, budget) => total + budget.limit, 0);
-  const budgetPercent = Math.round((totalBudgetUsed / totalBudgetLimit) * 100);
+  const { user } = useAuth();
+  const { data, isLoading, error } = useApi(() => analyticsService.getDashboard());
+
+  if (isLoading) return <div className="space-y-6"><PageHeader title="Dashboard" description="Pantau pengeluaranmu bulan ini." /><DashboardSkeleton /></div>;
+  if (error) return <div className="space-y-6"><PageHeader title="Dashboard" description="Pantau pengeluaranmu bulan ini." /><ErrorState message={error} /></div>;
+
+  const { summary, topCategories, recentTransactions, warnings, moneyLeaks } = data!;
+  const recentMapped = recentTransactions.slice(0, 3).map(toTransactionItem);
+
+  const displayWarning =
+    warnings && warnings.length > 0
+      ? { title: warnings[0].message, description: warnings[0].message }
+      : { title: "Belum ada peringatan.", description: "Terus pantau pengeluaran harianmu." };
 
   return (
     <div className="space-y-6">
@@ -29,10 +84,10 @@ export default function Dashboard() {
               <div className="min-w-0">
                 <p className="text-sm font-black text-[var(--color-text-secondary)]">Kondisi bulan ini</p>
                 <h2 className="mt-2 text-3xl font-black tracking-tight text-[var(--color-text-primary)] sm:text-4xl">
-                  {formatCurrency(monthlySummary.balance)}
+                  {formatCurrency(summary.netBalance)}
                 </h2>
                 <p className="mt-2 max-w-xl text-sm leading-6 text-[var(--color-text-secondary)]">
-                  Pengeluaran masih terkendali. Kamu lebih hemat {monthlySummary.savingRate}% dari rata-rata.
+                  Selisih pemasukan dan pengeluaran bulan ini.
                 </p>
               </div>
               <img
@@ -49,7 +104,7 @@ export default function Dashboard() {
                   <span className="text-xs font-black uppercase tracking-[0.12em]">Masuk</span>
                 </div>
                 <p className="mt-2 text-lg font-black text-[var(--color-text-primary)]">
-                  {formatCurrency(monthlySummary.income, true)}
+                  {formatCurrency(summary.totalIncome, true)}
                 </p>
               </div>
               <div className="rounded-2xl bg-white/80 p-4">
@@ -58,42 +113,45 @@ export default function Dashboard() {
                   <span className="text-xs font-black uppercase tracking-[0.12em]">Keluar</span>
                 </div>
                 <p className="mt-2 text-lg font-black text-[var(--color-text-primary)]">
-                  {formatCurrency(monthlySummary.expense, true)}
+                  {formatCurrency(summary.totalExpense, true)}
                 </p>
               </div>
               <div className="rounded-2xl bg-white/80 p-4">
                 <div className="flex items-center gap-2 text-[var(--color-yellow-ink)]">
                   <Wallet className="h-4 w-4" />
-                  <span className="text-xs font-black uppercase tracking-[0.12em]">Budget</span>
+                  <span className="text-xs font-black uppercase tracking-[0.12em]">Kategori</span>
                 </div>
-                <p className="mt-2 text-lg font-black text-[var(--color-text-primary)]">{budgetPercent}% terpakai</p>
+                <p className="mt-2 text-lg font-black text-[var(--color-text-primary)]">
+                  {topCategories.length} aktif
+                </p>
               </div>
             </div>
           </Card>
 
+          {/* Top Categories — replaces Budget Bulanan */}
           <Card>
             <div className="mb-5 flex items-center justify-between gap-4">
               <div>
-                <h2 className="text-xl font-black text-[var(--color-text-primary)]">Budget Bulanan</h2>
-                <p className="mt-1 text-sm text-[var(--color-text-muted)]">Kategori utama saja.</p>
+                <h2 className="text-xl font-black text-[var(--color-text-primary)]">Top Kategori</h2>
+                <p className="mt-1 text-sm text-[var(--color-text-muted)]">Pengeluaran terbesar bulan ini.</p>
               </div>
-              <Badge variant="neutral">Mei</Badge>
+              <Badge variant="neutral">Bulan Ini</Badge>
             </div>
             <div className="space-y-5">
-              {budgets.map((budget) => {
-                const isOver = budget.used > budget.limit;
-                return (
-                  <div key={budget.id}>
-                    <div className="mb-2 flex items-center justify-between gap-3">
-                      <p className="text-sm font-bold text-[var(--color-text-primary)]">{budget.category}</p>
-                      <p className={isOver ? "text-sm font-black text-[var(--color-salmon-dark)]" : "text-sm font-bold text-[var(--color-text-secondary)]"}>
-                        {formatCurrency(budget.used, true)} / {formatCurrency(budget.limit, true)}
-                      </p>
-                    </div>
-                    <ProgressBar value={budget.used} max={budget.limit} color={budget.color} />
+              {topCategories.slice(0, 3).map((cat, i) => (
+                <div key={cat.categoryId}>
+                  <div className="mb-2 flex items-center justify-between gap-3">
+                    <p className="text-sm font-bold text-[var(--color-text-primary)]">{cat.categoryName}</p>
+                    <p className="text-sm font-bold text-[var(--color-text-secondary)]">
+                      {formatCurrency(cat.total, true)} · {cat.percentage}%
+                    </p>
                   </div>
-                );
-              })}
+                  <ProgressBar value={cat.percentage} max={100} color={CATEGORY_COLORS[i % CATEGORY_COLORS.length]} />
+                </div>
+              ))}
+              {topCategories.length === 0 && (
+                <p className="text-sm text-[var(--color-text-muted)]">Belum ada data kategori.</p>
+              )}
             </div>
           </Card>
 
@@ -108,9 +166,11 @@ export default function Dashboard() {
               </Button>
             </div>
             <div className="space-y-4">
-              {recentTransactions.map((transaction) => (
-                <TransactionItem key={transaction.id} transaction={transaction} compact />
-              ))}
+              {recentMapped.length === 0
+                ? <p className="text-sm text-[var(--color-text-muted)]">Belum ada transaksi.</p>
+                : recentMapped.map((transaction) => (
+                  <TransactionItem key={transaction.id} transaction={transaction} compact />
+                ))}
             </div>
           </Card>
         </div>
@@ -121,7 +181,7 @@ export default function Dashboard() {
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.14em] text-[var(--color-text-muted)]">Vibe kamu</p>
                 <h2 className="mt-2 text-2xl font-black leading-tight text-[var(--color-text-primary)]">
-                  {currentUser.persona}
+                  {user?.name?.split(" ")[0] ?? "BUDU User"}
                 </h2>
               </div>
               <Badge variant="teal" icon={<Trophy className="h-3.5 w-3.5" />}>
@@ -129,7 +189,9 @@ export default function Dashboard() {
               </Badge>
             </div>
             <p className="mt-4 text-sm leading-6 text-[var(--color-text-secondary)]">
-              Pilihanmu cukup rapi minggu ini. Tetap beri batas untuk jajan impulsif.
+              {moneyLeaks && moneyLeaks.length > 0
+                ? `Terdeteksi ${moneyLeaks.length} potensi kebocoran. Cek halaman peringatan.`
+                : "Pilihanmu cukup rapi. Tetap beri batas untuk jajan impulsif."}
             </p>
             <Button variant="outline" fullWidth className="mt-5" onClick={() => navigate("/profil")}>Lihat Profil</Button>
           </Card>
@@ -141,11 +203,13 @@ export default function Dashboard() {
               </span>
               <div className="min-w-0">
                 <p className="text-xs font-black uppercase tracking-[0.14em] text-[var(--color-salmon-dark)]">Perlu dicek</p>
-                <h2 className="mt-2 text-xl font-black leading-tight text-[var(--color-text-primary)]">{primaryWarning.title}</h2>
+                <h2 className="mt-2 text-xl font-black leading-tight text-[var(--color-text-primary)]">
+                  {displayWarning.title}
+                </h2>
               </div>
             </div>
             <p className="mt-4 text-sm leading-6 text-[var(--color-text-secondary)]">
-              Kopi naik minggu ini. Cek detailnya biar budget tetap santai.
+              {displayWarning.description}
             </p>
             <Button fullWidth className="mt-5" onClick={() => navigate("/peringatan")}>Lihat Peringatan</Button>
           </Card>
@@ -154,3 +218,4 @@ export default function Dashboard() {
     </div>
   );
 }
+

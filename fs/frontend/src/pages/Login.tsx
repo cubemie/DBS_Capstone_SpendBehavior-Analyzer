@@ -1,16 +1,49 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import quokkaImg from "../assets/quokka-login.png";
 import AuthLayout from "../layout/AuthLayout";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { useAuth } from "../contexts/AuthContext";
+import { ApiError } from "../services/ApiError";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    if (!email.trim()) {
+      setError("Email wajib diisi.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Format email tidak valid.");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Kata sandi minimal 8 karakter.");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await login(email, password);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Login gagal. Coba lagi.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <AuthLayout
@@ -26,7 +59,7 @@ export default function Login() {
         </p>
       </div>
 
-      <div className="mt-7 space-y-4">
+      <form onSubmit={handleSubmit} className="mt-7 space-y-4">
         <Input
           label="Email"
           type="email"
@@ -60,8 +93,20 @@ export default function Login() {
           </div>
         </div>
 
-        <Button fullWidth buttonSize="lg" iconRight={<ArrowRight className="h-5 w-5" />} onClick={() => navigate("/dashboard")}>
-          Masuk
+        {error && (
+          <p className="rounded-xl bg-[var(--color-salmon-bg)] px-4 py-3 text-sm font-semibold text-[var(--color-salmon-dark)]">
+            {error}
+          </p>
+        )}
+
+        <Button
+          type="submit"
+          fullWidth
+          buttonSize="lg"
+          iconRight={isLoading ? undefined : <ArrowRight className="h-5 w-5" />}
+          disabled={isLoading}
+        >
+          {isLoading ? "Masuk..." : "Masuk"}
         </Button>
 
         <p className="text-center text-sm text-[var(--color-text-secondary)]">
@@ -74,7 +119,8 @@ export default function Login() {
             Daftar
           </button>
         </p>
-      </div>
+      </form>
     </AuthLayout>
   );
 }
+

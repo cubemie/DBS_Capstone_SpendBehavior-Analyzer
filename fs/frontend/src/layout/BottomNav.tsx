@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { navigationItems } from "../services/mockData";
+import { navigationItems } from "../utils/navigation";
 import { cn } from "../utils/cn";
 
 function BottomNav() {

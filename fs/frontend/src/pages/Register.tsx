@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { ArrowRight, Lock, Mail, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import quokkaImg from "../assets/quokka-register.png";
@@ -6,10 +6,51 @@ import AuthLayout from "../layout/AuthLayout";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { cn } from "../utils/cn";
+import { useAuth } from "../contexts/AuthContext";
+import { ApiError } from "../services/ApiError";
 
 export default function Register() {
   const navigate = useNavigate();
+  const { register } = useAuth();
   const [agree, setAgree] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!agree) return;
+    setError(null);
+
+    if (!fullName.trim()) {
+      setError("Nama wajib diisi.");
+      return;
+    }
+    if (!email.trim()) {
+      setError("Email wajib diisi.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Format email tidak valid.");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Kata sandi minimal 8 karakter.");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await register(fullName, email, password);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Registrasi gagal. Coba lagi.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <AuthLayout
@@ -25,11 +66,13 @@ export default function Register() {
         </p>
       </div>
 
-      <div className="mt-7 space-y-4">
+      <form onSubmit={handleSubmit} className="mt-7 space-y-4">
         <Input
           label="Nama"
-          name="name"
+          name="fullName"
           placeholder="Nama lengkap"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
           iconLeft={<User className="h-5 w-5" />}
         />
         <Input
@@ -37,6 +80,8 @@ export default function Register() {
           name="email"
           type="email"
           placeholder="contoh@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           iconLeft={<Mail className="h-5 w-5" />}
         />
         <Input
@@ -44,6 +89,8 @@ export default function Register() {
           name="password"
           type="password"
           placeholder="Minimal 8 karakter"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           iconLeft={<Lock className="h-5 w-5" />}
         />
 
@@ -69,15 +116,21 @@ export default function Register() {
           </span>
         </button>
 
+        {error && (
+          <p className="rounded-xl bg-[var(--color-salmon-bg)] px-4 py-3 text-sm font-semibold text-[var(--color-salmon-dark)]">
+            {error}
+          </p>
+        )}
+
         <Button
+          type="submit"
           fullWidth
           variant="secondary"
           buttonSize="lg"
-          iconRight={<ArrowRight className="h-5 w-5" />}
-          disabled={!agree}
-          onClick={() => navigate("/dashboard")}
+          iconRight={isLoading ? undefined : <ArrowRight className="h-5 w-5" />}
+          disabled={!agree || isLoading}
         >
-          Buat Akun
+          {isLoading ? "Membuat akun..." : "Buat Akun"}
         </Button>
 
         <p className="text-center text-sm text-[var(--color-text-secondary)]">
@@ -90,7 +143,8 @@ export default function Register() {
             Masuk
           </button>
         </p>
-      </div>
+      </form>
     </AuthLayout>
   );
 }
+

@@ -1,57 +1,147 @@
-﻿import { useMemo, useState } from "react";
-import { ArrowDown, ArrowUp, Search, Wallet } from "lucide-react";
+import { useMemo, useState, useEffect } from "react";
+import { ArrowDown, ArrowUp, Search, Wallet, Trash2 } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import Badge from "../components/Badge";
+import Button from "../components/Button";
 import Card from "../components/Card";
+import ErrorState from "../components/ErrorState";
 import Input from "../components/Input";
 import PageHeader from "../components/PageHeader";
 import StatCard from "../components/StatCard";
-import TransactionItem from "../components/TransactionItem";
-import { monthlySummary, transactions } from "../services/mockData";
+import { useApi } from "../hooks/useApi";
+import { transactionService } from "../services/transactionService";
 import { cn } from "../utils/cn";
 import { formatCurrency } from "../utils/formatCurrency";
 import { formatDate, formatTime } from "../utils/formatDate";
+import type { CategoryKind, TransactionFilters } from "../types/models";
+import { ShoppingBag, UtensilsCrossed, Car, Banknote, CreditCard } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+function categoryIcon(name: string): LucideIcon {
+  const lower = name.toLowerCase();
+  if (lower.includes("makan") || lower.includes("food")) return UtensilsCrossed;
+  if (lower.includes("transport")) return Car;
+  if (lower.includes("belanja") || lower.includes("shop")) return ShoppingBag;
+  if (lower.includes("gaji") || lower.includes("pendapatan")) return Banknote;
+  if (lower.includes("hiburan")) return CreditCard;
+  return Wallet;
+}
+
+// Skeleton for transaction list
+function TransactionListSkeleton() {
+  return (
+    <div className="space-y-3 animate-pulse">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <div key={i} className="h-16 rounded-2xl bg-[var(--color-soft)]" />
+      ))}
+    </div>
+  );
+}
 
 export default function RiwayatTransaksi() {
-  const [activeFilter, setActiveFilter] = useState("Semua");
+  const [filters, setFilters] = useState<TransactionFilters>({ page: 1, limit: 10 });
   const [search, setSearch] = useState("");
+  const [activeTypeFilter, setActiveTypeFilter] = useState<"all" | CategoryKind>("all");
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const categories = useMemo(
-    () => ["Semua", ...Array.from(new Set(transactions.map((transaction) => transaction.category)))],
-    [],
+  const location = useLocation();
+  const [toastMessage, setToastMessage] = useState<string | null>(
+    location.state?.toast || null
   );
 
-  const filteredTransactions = transactions.filter((transaction) => {
-    const matchesCategory = activeFilter === "Semua" || transaction.category === activeFilter;
-    const query = search.toLowerCase();
-    const matchesSearch =
-      transaction.title.toLowerCase().includes(query) ||
-      transaction.merchant.toLowerCase().includes(query) ||
-      transaction.category.toLowerCase().includes(query);
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => setToastMessage(null), 5000);
+      window.history.replaceState({}, document.title);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
 
-    return matchesCategory && matchesSearch;
-  });
+  const { data: txData, isLoading: txLoading, error: txError, refetch } = useApi(
+    () => transactionService.getTransactions(filters),
+    [filters]
+  );
+  const { data: summary } = useApi(() => transactionService.getSummary());
+
+  const handleTypeFilter = (newType: "all" | CategoryKind) => {
+    setActiveTypeFilter(newType);
+    setFilters((prev) => ({
+      ...prev,
+      type: newType === "all" ? undefined : newType,
+      page: 1,
+    }));
+  };
+
+  // Client-side search filter on the current page results
+  const filteredTransactions = useMemo(() => {
+    if (!txData?.data) return [];
+    const q = search.toLowerCase();
+    if (!q) return txData.data;
+    return txData.data.filter(
+      (tx) =>
+        tx.category.name.toLowerCase().includes(q) ||
+        (tx.note ?? "").toLowerCase().includes(q),
+    );
+  }, [txData, search]);
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
+    try {
+      await transactionService.deleteTransaction(deleteId);
+      setToastMessage("Transaksi berhasil dihapus.");
+      refetch();
+    } catch (err) {
+      setToastMessage("Gagal menghapus transaksi.");
+    } finally {
+      setIsDeleting(false);
+      setDeleteId(null);
+    }
+  };
 
   return (
     <div className="space-y-6">
+      {deleteId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
+          <Card className="max-w-sm w-full">
+            <h2 className="text-lg font-black text-[var(--color-text-primary)]">Hapus Transaksi?</h2>
+            <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
+              Aksi ini tidak bisa dibatalkan.
+            </p>
+            <div className="mt-5 flex gap-3">
+              <Button variant="outline" fullWidth onClick={() => setDeleteId(null)} disabled={isDeleting}>Batal</Button>
+              <Button variant="danger" fullWidth onClick={confirmDelete} disabled={isDeleting}>
+                {isDeleting ? "Menghapus..." : "Hapus"}
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {toastMessage && (
+        <div className="rounded-xl bg-[#e6f7f6] px-4 py-3 text-sm font-bold text-[#147a75]">
+          {toastMessage}
+        </div>
+      )}
       <PageHeader title="Riwayat Transaksi" description="Lihat arus uang bulan ini." />
 
       <section className="grid gap-4 md:grid-cols-3">
         <StatCard
-          label="Total Saldo"
-          value={formatCurrency(monthlySummary.balance)}
-          helper="Mei 2026"
+          label="Saldo"
+          value={summary ? formatCurrency(summary.netBalance) : "—"}
           tone="neutral"
           icon={<Wallet className="h-5 w-5" />}
         />
         <StatCard
           label="Pemasukan"
-          value={formatCurrency(monthlySummary.income)}
+          value={summary ? formatCurrency(summary.totalIncome) : "—"}
           tone="teal"
           icon={<ArrowDown className="h-5 w-5" />}
         />
         <StatCard
           label="Pengeluaran"
-          value={formatCurrency(monthlySummary.expense)}
+          value={summary ? formatCurrency(summary.totalExpense) : "—"}
           tone="coral"
           icon={<ArrowUp className="h-5 w-5" />}
         />
@@ -68,76 +158,150 @@ export default function RiwayatTransaksi() {
             className="rounded-full bg-white"
           />
           <div className="flex gap-2 overflow-x-auto pb-1">
-            {categories.map((category) => (
+            {(["all", "expense", "income"] as const).map((f) => (
               <button
-                key={category}
+                key={f}
                 type="button"
-                onClick={() => setActiveFilter(category)}
+                onClick={() => handleTypeFilter(f)}
                 className={cn(
                   "shrink-0 rounded-full border px-4 py-2 text-sm font-bold transition",
-                  activeFilter === category
+                  activeTypeFilter === f
                     ? "border-[var(--color-teal-dark)] bg-[var(--color-teal)] text-[var(--color-teal-ink)]"
                     : "border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] hover:border-[var(--color-teal-dark)]",
                 )}
               >
-                {category}
+                {f === "all" ? "Semua" : f === "expense" ? "Pengeluaran" : "Pemasukan"}
               </button>
             ))}
           </div>
         </div>
       </Card>
 
-      <section className="space-y-3 lg:hidden">
-        {filteredTransactions.map((transaction) => (
-          <TransactionItem key={transaction.id} transaction={transaction} />
-        ))}
-      </section>
+      {txLoading && <TransactionListSkeleton />}
+      {txError && <ErrorState message={txError} onRetry={refetch} />}
 
-      <Card className="hidden overflow-hidden lg:block" padded={false}>
-        <div className="grid grid-cols-[120px_minmax(260px,1fr)_160px_160px] border-b border-[var(--color-border)] bg-white px-5 py-4 text-sm font-black text-[var(--color-text-secondary)]">
-          <span>Tanggal</span>
-          <span>Deskripsi</span>
-          <span>Kategori</span>
-          <span className="text-right">Jumlah</span>
-        </div>
+      {!txLoading && !txError && (
+        <>
+          {/* Mobile list */}
+          <section className="space-y-3 lg:hidden">
+            {filteredTransactions.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-[var(--color-border)] p-10 text-center">
+                <p className="text-sm text-[var(--color-text-muted)]">Belum ada transaksi.</p>
+              </div>
+            ) : (
+              filteredTransactions.map((tx) => {
+                const isIncome = tx.type === "income";
+                return (
+                  <div
+                    key={tx.id}
+                    className="flex items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-white p-3"
+                  >
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-soft)] text-[var(--color-text-secondary)]">
+                      {(() => { const Icon = categoryIcon(tx.category.name); return <Icon className="h-5 w-5" />; })()}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-bold text-[var(--color-text-primary)]">
+                        {tx.note ?? tx.category.name}
+                      </p>
+                      <p className="text-xs text-[var(--color-text-muted)]">{formatDate(tx.date)}</p>
+                    </div>
+                    <div className="flex shrink-0 flex-col items-end gap-1">
+                      <p className={cn("text-sm font-black", isIncome ? "text-[var(--color-green)]" : "text-[var(--color-red)]")}>
+                        {isIncome ? "+" : "-"}{formatCurrency(tx.amount)}
+                      </p>
+                      <button type="button" onClick={() => setDeleteId(tx.id)} className="text-[var(--color-text-muted)] hover:text-[var(--color-salmon-dark)]">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </section>
 
-        {filteredTransactions.map((transaction) => {
-          const Icon = transaction.icon;
-          const isIncome = transaction.type === "income";
-          return (
-            <div
-              key={transaction.id}
-              className="grid grid-cols-[120px_minmax(260px,1fr)_160px_160px] items-center border-b border-[var(--color-border)] px-5 py-5 last:border-0"
-            >
-              <div>
-                <p className="font-bold text-[var(--color-text-primary)]">{formatDate(transaction.date)}</p>
-                <p className="text-sm text-[var(--color-text-muted)]">{formatTime(transaction.date)}</p>
-              </div>
-              <div className="flex min-w-0 items-center gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-soft)] text-[var(--color-text-secondary)]">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <div className="min-w-0">
-                  <p className="truncate font-black text-[var(--color-text-primary)]">{transaction.title}</p>
-                  <p className="truncate text-sm text-[var(--color-text-muted)]">{transaction.method} - {transaction.merchant}</p>
-                </div>
-              </div>
-              <Badge variant={isIncome ? "teal" : "neutral"} className="w-fit">
-                {transaction.category}
-              </Badge>
-              <p className={cn("text-right font-black", isIncome ? "text-[var(--color-green)]" : "text-[var(--color-red)]")}>
-                {isIncome ? "+" : "-"} {formatCurrency(transaction.amount)}
-              </p>
+          {/* Desktop table */}
+          <Card className="hidden overflow-hidden lg:block" padded={false}>
+            <div className="grid grid-cols-[120px_minmax(260px,1fr)_160px_160px_40px] border-b border-[var(--color-border)] bg-white px-5 py-4 text-sm font-black text-[var(--color-text-secondary)]">
+              <span>Tanggal</span>
+              <span>Catatan</span>
+              <span>Kategori</span>
+              <span className="text-right">Jumlah</span>
+              <span></span>
             </div>
-          );
-        })}
 
-        <div className="bg-white px-5 py-4">
-          <p className="text-sm font-medium text-[var(--color-text-secondary)]">
-            Menampilkan {filteredTransactions.length} transaksi
-          </p>
-        </div>
-      </Card>
+            {filteredTransactions.length === 0 ? (
+              <div className="px-5 py-10 text-center">
+                <p className="text-sm text-[var(--color-text-muted)]">Belum ada transaksi.</p>
+              </div>
+            ) : (
+              filteredTransactions.map((tx) => {
+                const Icon = categoryIcon(tx.category.name);
+                const isIncome = tx.type === "income";
+                return (
+                  <div
+                    key={tx.id}
+                    className="grid grid-cols-[120px_minmax(260px,1fr)_160px_160px_40px] items-center border-b border-[var(--color-border)] px-5 py-5 last:border-0"
+                  >
+                    <div>
+                      <p className="font-bold text-[var(--color-text-primary)]">{formatDate(tx.date)}</p>
+                      <p className="text-sm text-[var(--color-text-muted)]">{formatTime(tx.date)}</p>
+                    </div>
+                    <div className="flex min-w-0 items-center gap-4">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-soft)] text-[var(--color-text-secondary)]">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <p className="truncate font-black text-[var(--color-text-primary)]">
+                        {tx.note ?? tx.category.name}
+                      </p>
+                    </div>
+                    <Badge variant={isIncome ? "teal" : "neutral"} className="w-fit">
+                      {tx.category.name}
+                    </Badge>
+                    <p className={cn("text-right font-black", isIncome ? "text-[var(--color-green)]" : "text-[var(--color-red)]")}>
+                      {isIncome ? "+" : "-"} {formatCurrency(tx.amount)}
+                    </p>
+                    <div className="flex justify-end">
+                      <button type="button" onClick={() => setDeleteId(tx.id)} className="text-[var(--color-text-muted)] hover:text-[var(--color-salmon-dark)]">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+
+            <div className="bg-white px-5 py-4 flex items-center justify-between">
+              <p className="text-sm font-medium text-[var(--color-text-secondary)]">
+                {filteredTransactions.length} dari {txData?.total ?? 0} transaksi
+              </p>
+              {txData && txData.totalPages > 1 && (
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    disabled={filters.page === 1}
+                    onClick={() => setFilters((p) => ({ ...p, page: (p.page ?? 1) - 1 }))}
+                    className="rounded-xl border border-[var(--color-border)] px-3 py-1.5 text-sm font-bold disabled:opacity-40"
+                  >
+                    ← Prev
+                  </button>
+                  <span className="px-3 py-1.5 text-sm font-bold text-[var(--color-text-secondary)]">
+                    {filters.page} / {txData.totalPages}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={filters.page === txData.totalPages}
+                    onClick={() => setFilters((p) => ({ ...p, page: (p.page ?? 1) + 1 }))}
+                    className="rounded-xl border border-[var(--color-border)] px-3 py-1.5 text-sm font-bold disabled:opacity-40"
+                  >
+                    Next →
+                  </button>
+                </div>
+              )}
+            </div>
+          </Card>
+        </>
+      )}
     </div>
   );
 }
+

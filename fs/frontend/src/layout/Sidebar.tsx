@@ -1,12 +1,12 @@
-﻿import { LogOut, Sparkles } from "lucide-react";
-import { NavLink } from "react-router-dom";
-import { navigationItems } from "../services/mockData";
+import { LogOut, Sparkles } from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
+import { navigationItems } from "../utils/navigation";
 import { cn } from "../utils/cn";
 
 function Sidebar() {
   return (
     <aside className="sticky top-0 hidden h-dvh border-r border-[var(--color-border)] bg-white/70 px-3 py-6 backdrop-blur md:flex md:flex-col xl:px-5">
-      <NavLink to="/dashboard" className="flex items-center justify-center gap-3 px-2 xl:justify-start">
+      <Link to="/dashboard" className="flex items-center justify-center gap-3 px-2 xl:justify-start">
         <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-yellow)] text-[var(--color-text-primary)]">
           <Sparkles className="h-6 w-6" />
         </span>
@@ -14,7 +14,7 @@ function Sidebar() {
           <p className="text-2xl font-black tracking-tight text-[var(--color-brand)]">BUDU</p>
           <p className="text-xs font-medium text-[var(--color-text-muted)]">Butuh Duit</p>
         </div>
-      </NavLink>
+      </Link>
 
       <nav className="mt-9 flex flex-1 flex-col gap-2">
         {navigationItems.map((item) => {

@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BadgeCheck,
   Bell,
@@ -15,8 +15,11 @@ import Card from "../components/Card";
 import Input from "../components/Input";
 import PageHeader from "../components/PageHeader";
 import SettingsRow from "../components/SettingsRow";
-import { currentUser } from "../services/mockData";
 import { cn } from "../utils/cn";
+import { useAuth } from "../contexts/AuthContext";
+import { predictionService } from "../services/predictionService";
+import type { ApiPrediction } from "../types/models";
+import defaultAvatar from "../assets/avatar-user.png";
 
 interface ToggleProps {
   checked: boolean;
@@ -45,8 +48,40 @@ function Toggle({ checked, onClick }: ToggleProps) {
 }
 
 export default function Profil() {
+  const { user } = useAuth();
+  const [prediction, setPrediction] = useState<ApiPrediction | null>(null);
+  const [isLoadingPred, setIsLoadingPred] = useState(true);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [notifPush, setNotifPush] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    predictionService
+      .getLatestPrediction()
+      .then((res) => {
+        setPrediction(res);
+      })
+      .finally(() => {
+        setIsLoadingPred(false);
+      });
+  }, []);
+
+  const handleGeneratePrediction = async () => {
+    setIsGenerating(true);
+    try {
+      const res = await predictionService.createPersonaPrediction({ force: true });
+      setPrediction(res);
+    } catch (err) {
+      console.error("Gagal membuat prediksi persona", err);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const displayName = user?.name || "Pengguna";
+  const userEmail = user?.email || "";
+  const userPhone = user?.phone || "";
+  const avatarUrl = user?.avatarUrl || defaultAvatar;
 
   return (
     <div className="space-y-6">
@@ -55,17 +90,19 @@ export default function Profil() {
       <Card>
         <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:text-left">
           <img
-            src={currentUser.avatarUrl}
-            alt={currentUser.name}
+            src={avatarUrl}
+            alt={displayName}
             className="h-24 w-24 rounded-full object-cover ring-8 ring-[var(--color-soft)]"
           />
           <div className="min-w-0 flex-1">
-            <h2 className="text-2xl font-black text-[var(--color-text-primary)]">{currentUser.name}</h2>
-            <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{currentUser.email}</p>
+            <h2 className="text-2xl font-black text-[var(--color-text-primary)]">{displayName}</h2>
+            <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{userEmail}</p>
             <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
-              <Badge variant="coral">{currentUser.persona}</Badge>
+              <Badge variant="coral">
+                {prediction?.persona || "Belum ada Persona"}
+              </Badge>
               <Badge variant="teal" icon={<BadgeCheck className="h-3.5 w-3.5" />}>
-                BUDU {currentUser.membership}
+                BUDU Member
               </Badge>
             </div>
           </div>
@@ -78,12 +115,14 @@ export default function Profil() {
             <UserRoundCog className="h-6 w-6 text-[var(--color-teal-ink)]" />
             <h2 className="text-xl font-black text-[var(--color-text-primary)]">Pengaturan Akun</h2>
           </div>
-          <div className="space-y-4">
-            <Input label="Nama" name="name" defaultValue={currentUser.name} />
-            <Input label="Email" name="email" type="email" defaultValue={currentUser.email} />
-            <Input label="No. Telepon" name="phone" defaultValue={currentUser.phone} />
-          </div>
-          <Button className="mt-5 w-full sm:w-auto">Simpan</Button>
+          <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+            <Input label="Nama" name="name" defaultValue={displayName} readOnly />
+            <Input label="Email" name="email" type="email" defaultValue={userEmail} readOnly />
+            <Input label="No. Telepon" name="phone" defaultValue={userPhone} readOnly />
+          </form>
+          <p className="mt-3 text-xs text-[var(--color-text-muted)] italic">
+            Perubahan profil dinonaktifkan di server.
+          </p>
         </Card>
 
         <div className="space-y-5">
@@ -119,17 +158,68 @@ export default function Profil() {
           </Card>
 
           <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
-            <div className="flex items-start gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-yellow-ink)]">
-                <ShieldCheck className="h-5 w-5" />
-              </span>
-              <div>
-                <h2 className="text-xl font-black text-[var(--color-text-primary)]">Persona Keuangan</h2>
-                <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
-                  Kamu cenderung mikir dulu sebelum belanja. Pertahankan ritme ini, sambil tetap kasih batas jajan mingguan.
-                </p>
+            {isLoadingPred ? (
+              <div className="text-center py-4 text-sm text-[var(--color-text-secondary)] animate-pulse">
+                Memuat persona keuangan...
               </div>
-            </div>
+            ) : prediction ? (
+              <div className="flex items-start gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-yellow-ink)]">
+                  <ShieldCheck className="h-5 w-5" />
+                </span>
+                <div className="space-y-2">
+                  <h2 className="text-xl font-black text-[var(--color-text-primary)]">
+                    Persona: {prediction.persona}
+                  </h2>
+                  <p className="text-sm leading-6 text-[var(--color-text-secondary)]">
+                    {prediction.description}
+                  </p>
+                  {prediction.tips && prediction.tips.length > 0 && (
+                    <div className="mt-4 pt-4 border-t border-[rgba(0,0,0,0.05)]">
+                      <p className="text-xs font-black uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
+                        Tips Keuangan
+                      </p>
+                      <ul className="list-disc pl-5 text-xs text-[var(--color-text-secondary)] space-y-1">
+                        {prediction.tips.map((tip, idx) => (
+                          <li key={idx}>{tip}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <Button
+                    onClick={handleGeneratePrediction}
+                    isLoading={isGenerating}
+                    variant="outline"
+                    className="mt-4 w-full"
+                  >
+                    Perbarui Analisis
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                <div className="flex items-start gap-3">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-yellow-ink)]">
+                    <ShieldCheck className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h2 className="text-xl font-black text-[var(--color-text-primary)]">
+                      Persona Keuangan
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
+                      BUDU belum menganalisis pola belanjamu. Silakan klik tombol di bawah untuk mengetahui persona keuanganmu serta tips khusus.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  onClick={handleGeneratePrediction}
+                  isLoading={isGenerating}
+                  className="w-full"
+                >
+                  Analisis Persona Sekarang
+                </Button>
+              </div>
+            )}
           </Card>
 
           <Card>
@@ -139,7 +229,7 @@ export default function Profil() {
             </div>
             <SettingsRow
               icon={<CreditCard className="h-5 w-5" />}
-              title={`BUDU ${currentUser.membership}`}
+              title="BUDU Member"
               description="Status akun saat ini"
               trailing={<Badge variant="teal">Aktif</Badge>}
             />
@@ -149,3 +239,4 @@ export default function Profil() {
     </div>
   );
 }
+

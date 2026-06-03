@@ -6,16 +6,44 @@ import { categoryRouter } from './modules/categories/category-route.ts'
 import { errorHandler } from './middlewares/error-middleware.ts'
 import { predictionRouter } from './modules/predictions/prediction-route.ts'
 import { transactionRouter } from './modules/transactions/transaction-route.ts'
+import cors from 'cors'
+import helmet from 'helmet'
+import { env } from './config.ts'
+import { requestLogger } from './middlewares/request-logger.ts'
 
 const app = e()
+
+app.use(helmet())
+app.use(cors({
+  origin: env.FRONTEND_URL,
+  credentials: true,
+}))
+app.use(requestLogger)
 
 app.use(e.json())
 app.use(cookieParser())
 
 app.get('/', (_, res) => {
-  res.send('Hello World')
+  res.json({
+    status: 'ok',
+    name: 'SpendBehavior Analyzer API',
+    version: '1.0.0',
+    uptime: Math.floor(process.uptime()),
+    endpoints: {
+      auth:         '/api/v1/auth',
+      categories:   '/api/v1/categories',
+      transactions: '/api/v1/transactions',
+      predictions:  '/api/v1/predictions',
+      analytics:    '/api/v1/analytics',
+    },
+  })
 })
 
+app.get('/health', (_, res) => {
+  res.json({ status: 'ok', uptime: process.uptime() })
+})
+
+// Konfigurasi route-route
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/categories', categoryRouter)
 app.use('/api/v1/transactions', transactionRouter)

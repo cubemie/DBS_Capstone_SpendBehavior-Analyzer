@@ -68,3 +68,129 @@ export interface NavigationItem {
   desktopOnly?: boolean;
   isAction?: boolean;
 }
+
+// ─── Auth ────────────────────────────────────────────────────────────────────
+export interface ApiUser {
+  id: string;
+  name: string;
+  email: string;
+  avatarUrl?: string;
+  phone?: string;
+  persona?: string;
+  createdAt: string;
+}
+
+export interface AuthTokens {
+  accessToken: string;
+  user: ApiUser;
+}
+
+// ─── Categories ──────────────────────────────────────────────────────────────
+export type CategoryKind = "income" | "expense";
+
+export interface ApiCategory {
+  id: string;
+  name: string;
+  kind: CategoryKind;
+  icon?: string;
+}
+
+// ─── Transactions ─────────────────────────────────────────────────────────────
+/** Shape returned by the backend for individual transactions */
+export interface ApiTransaction {
+  id: string;
+  /** Amount in IDR (always positive) */
+  amount: number;
+  note?: string;
+  /** ISO 8601 date string */
+  date: string;
+  type: CategoryKind;
+  category: ApiCategory;
+  userId: string;
+}
+
+export interface TransactionFilters {
+  type?: CategoryKind;
+  categoryId?: string;
+  startDate?: string;
+  endDate?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface PaginatedTransactions {
+  data: ApiTransaction[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface ApiTransactionSummary {
+  totalIncome: number;
+  totalExpense: number;
+  netBalance: number;
+  period?: { start: string; end: string };
+}
+
+// ─── Analytics ───────────────────────────────────────────────────────────────
+export interface TopCategory {
+  categoryId: string;
+  categoryName: string;
+  total: number;
+  percentage: number;
+}
+
+export interface WeekdayWeekendSplit {
+  weekday: number;
+  weekend: number;
+}
+
+export interface DashboardInsight {
+  type: "tip" | "alert" | "info";
+  message: string;
+}
+
+export interface DashboardWarning {
+  id: string;
+  severity: "low" | "medium" | "high" | "info" | "warning" | "danger" | "success";
+  message: string;
+  category?: string;
+}
+
+export interface MoneyLeak {
+  categoryName: string;
+  amount: number;
+  frequency: number;
+}
+
+export interface ApiDashboard {
+  summary: ApiTransactionSummary;
+  topCategories: TopCategory[];
+  recentTransactions: ApiTransaction[];
+  weekdayWeekend: WeekdayWeekendSplit;
+  insights: DashboardInsight[];
+  warnings: DashboardWarning[];
+  moneyLeaks: MoneyLeak[];
+}
+
+// ─── Predictions ─────────────────────────────────────────────────────────────
+export interface PersonaInput {
+  monthlyIncome: number;
+  monthlyExpense: number;
+  topCategories: string[];
+}
+
+export interface ApiPrediction {
+  id: string;
+  persona: string;
+  description: string;
+  tips: string[];
+  createdAt: string;
+}
+
+// ─── Error ───────────────────────────────────────────────────────────────────
+export interface ApiErrorBody {
+  message: string;
+  details?: Record<string, string[]>;
+}
