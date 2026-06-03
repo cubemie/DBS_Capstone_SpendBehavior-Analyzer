@@ -18,9 +18,7 @@ export type AuthTokens = {
   refreshToken: string
 }
 
-export type RegisterResponse = AuthTokens & {
-  user: UserResponseDto
-}
+
 
 function createRefreshTokenExpiresAt(): Date {
   const expiresAt = new Date()
@@ -53,15 +51,8 @@ async function createSession(
 export const authService = {
   async register(
     dto: RegisterDto,
-    context: AuthSessionContext,
-  ): Promise<RegisterResponse> {
-    const user = await userService.create(dto)
-    const tokens = await createSession(user.id, context)
-
-    return {
-      ...tokens,
-      user,
-    }
+  ): Promise<UserResponseDto> {
+    return await userService.create(dto)
   },
 
   async login(dto: LoginDto, context: AuthSessionContext): Promise<AuthTokens> {

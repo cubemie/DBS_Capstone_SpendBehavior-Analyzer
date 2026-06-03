@@ -44,7 +44,7 @@ export default function Register() {
     setIsLoading(true);
     try {
       await register(fullName, email, password);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Registrasi gagal. Coba lagi.");
     } finally {

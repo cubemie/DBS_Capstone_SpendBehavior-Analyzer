@@ -50,21 +50,9 @@ function getSessionContext(req: Request) {
 export const authController = {
   async register(req: Request, res: Response) {
     const payload = registerSchema.parse(req.body)
-    const authResponse = await authService.register(
-      payload,
-      getSessionContext(req),
-    )
+    const user = await authService.register(payload)
 
-    setRefreshTokenCookie(res, authResponse.refreshToken)
-
-    sendData(
-      res,
-      {
-        accessToken: authResponse.accessToken,
-        user: authResponse.user,
-      },
-      201,
-    )
+    sendData(res, { user }, 201)
   },
 
   async login(req: Request, res: Response) {

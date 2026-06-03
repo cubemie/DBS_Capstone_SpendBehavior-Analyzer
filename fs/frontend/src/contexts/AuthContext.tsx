@@ -52,14 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const register = useCallback(
     async (fullName: string, email: string, password: string) => {
-      const result = await authService.register({ fullName, email, password });
-      tokenStore.set(result.accessToken);
-      if (result.user) {
-        setUser(result.user);
-      } else {
-        const userProfile = await authService.getMe();
-        setUser(userProfile);
-      }
+      await authService.register({ fullName, email, password });
     },
     [],
   );
