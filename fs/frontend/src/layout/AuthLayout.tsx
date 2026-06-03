@@ -1,5 +1,5 @@
-﻿import type { ReactNode } from "react";
-import { Sparkles, WalletCards, Bell, BarChart3 } from "lucide-react";
+import type { ReactNode } from "react";
+import { WalletCards, Bell, BarChart3 } from "lucide-react";
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -14,10 +14,8 @@ function AuthLayout({ children, image, title, subtitle, mode }: AuthLayoutProps)
     <main className="min-h-dvh bg-[var(--color-bg)] px-4 py-6 sm:px-6 lg:grid lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,0.72fr)] lg:gap-10 lg:px-10 lg:py-10 xl:px-16">
       <section className="mx-auto mb-6 flex w-full max-w-md flex-col items-center text-center lg:mb-0 lg:max-w-none lg:items-start lg:justify-center lg:text-left">
         <div className="flex items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-yellow)] text-[var(--color-text-primary)]">
-            <Sparkles className="h-6 w-6" />
-          </span>
-          <div>
+          <img src={image} alt="BUDU Logo" className="h-16 w-16 object-contain" />
+          <div className="text-left">
             <p className="text-3xl font-black tracking-tight text-[var(--color-brand)]">BUDU</p>
             <p className="text-sm font-semibold text-[var(--color-text-muted)]">Butuh Duit</p>
           </div>
@@ -27,7 +25,7 @@ function AuthLayout({ children, image, title, subtitle, mode }: AuthLayoutProps)
           <img
             src={image}
             alt="Quokka BUDU"
-            className="h-20 w-20 rounded-full object-cover object-top shadow-[0_14px_36px_rgba(242,140,106,0.20)] ring-4 ring-white sm:h-28 sm:w-28 lg:h-36 lg:w-36 lg:ring-8"
+            className="h-20 w-20 rounded-full object-cover object-center shadow-[0_14px_36px_rgba(242,140,106,0.20)] ring-4 ring-white sm:h-28 sm:w-28 lg:h-36 lg:w-36 lg:ring-8"
           />
           <div>
             <p className="hidden text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-teal-ink)] lg:block">

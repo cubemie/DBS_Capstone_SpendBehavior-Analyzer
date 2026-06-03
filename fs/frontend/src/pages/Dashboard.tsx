@@ -93,7 +93,7 @@ export default function Dashboard() {
               <img
                 src={quokkaImg}
                 alt="Mascot BUDU"
-                className="hidden h-24 w-24 rounded-[2rem] object-cover object-top sm:block"
+                className="hidden h-24 w-24 rounded-[2rem] object-cover object-center sm:block"
               />
             </div>
 

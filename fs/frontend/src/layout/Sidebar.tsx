@@ -1,15 +1,16 @@
-import { LogOut, Sparkles } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { navigationItems } from "../utils/navigation";
 import { cn } from "../utils/cn";
 
+import buduLogo from "../assets/budu-logo.png";
+
+// ... inside the component
 function Sidebar() {
   return (
     <aside className="sticky top-0 hidden h-dvh border-r border-[var(--color-border)] bg-white/70 px-3 py-6 backdrop-blur md:flex md:flex-col xl:px-5">
       <Link to="/dashboard" className="flex items-center justify-center gap-3 px-2 xl:justify-start">
-        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-yellow)] text-[var(--color-text-primary)]">
-          <Sparkles className="h-6 w-6" />
-        </span>
+        <img src={buduLogo} alt="BUDU Logo" className="h-12 w-12 object-contain" />
         <div className="hidden xl:block">
           <p className="text-2xl font-black tracking-tight text-[var(--color-brand)]">BUDU</p>
           <p className="text-xs font-medium text-[var(--color-text-muted)]">Butuh Duit</p>

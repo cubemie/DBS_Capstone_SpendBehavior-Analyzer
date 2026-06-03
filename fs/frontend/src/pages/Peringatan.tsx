@@ -121,7 +121,7 @@ export default function Peringatan() {
           <img
             src={quokkaImg}
             alt="Mascot BUDU"
-            className="h-24 w-24 rounded-full object-cover object-top shadow-[0_16px_40px_rgba(242,140,106,0.18)] ring-4 ring-white"
+            className="h-24 w-24 rounded-full object-cover object-center shadow-[0_16px_40px_rgba(242,140,106,0.18)] ring-4 ring-white"
           />
           <div>
             <h2 className="text-2xl font-black text-[var(--color-brand)]">Tenang, ini cuma sinyal.</h2>
