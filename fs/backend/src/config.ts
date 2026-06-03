@@ -8,6 +8,8 @@ export const env = z
     PORT: z.coerce.number().default(3000),
     APP_URL: z.url().default('http://localhost:3000'),
     DATABASE_URL: z.url().startsWith('postgres://'),
+    ML_SERVICE_URL: z.url().default('http://localhost:8000'),
+    ML_REQUEST_TIMEOUT_MS: z.coerce.number().int().positive().default(5000),
     JWT_SECRET: z.string(),
     ACCESS_TOKEN_EXPIRES_IN_SECONDS: z.coerce
       .number()
