@@ -21,7 +21,10 @@ type PeriodInput = {
 const DAY_MS = 24 * 60 * 60 * 1000
 const WEEK_MS = 7 * DAY_MS
 
-function getZonedParts(date: Date, timezone: string): {
+function getZonedParts(
+  date: Date,
+  timezone: string,
+): {
   year: number
   month: number
   day: number
@@ -92,7 +95,9 @@ export function normalizeDashboardPeriod(
   now: Date = new Date(),
 ): DashboardPeriod {
   const toDate = input.to ? new Date(input.to) : now
-  const fromDate = input.from ? new Date(input.from) : getMonthStart(toDate, input.timezone)
+  const fromDate = input.from
+    ? new Date(input.from)
+    : getMonthStart(toDate, input.timezone)
 
   return {
     from: fromDate.toISOString(),
@@ -101,7 +106,9 @@ export function normalizeDashboardPeriod(
   }
 }
 
-export function calculateSavingRatePercent(summary: TransactionSummary): number {
+export function calculateSavingRatePercent(
+  summary: TransactionSummary,
+): number {
   if (summary.incomeTotalIdr <= 0) {
     return 0
   }
@@ -192,7 +199,8 @@ export function mapMoneyLeaks(
   candidates: readonly MoneyLeakCandidateRecord[],
 ): DashboardMoneyLeak[] {
   return candidates.map((candidate, index) => {
-    const severity = candidate.totalAmountIdr >= 1_000_000 ? 'danger' : 'warning'
+    const severity =
+      candidate.totalAmountIdr >= 1_000_000 ? 'danger' : 'warning'
 
     return {
       id: `money-leak-${index + 1}`,
@@ -231,7 +239,9 @@ export function buildWeeklyTrend(
       buckets.length - 1,
       Math.max(
         0,
-        Math.floor((transaction.transactionDate.getTime() - fromTime) / WEEK_MS),
+        Math.floor(
+          (transaction.transactionDate.getTime() - fromTime) / WEEK_MS,
+        ),
       ),
     )
     buckets[index]!.expenseTotalIdr += transaction.amountIdr
@@ -348,7 +358,8 @@ export function buildInsights(input: {
     insights.push({
       id: 'insight-money-leak',
       title: 'Kurangi Transaksi Kecil Berulang',
-      description: 'Ada transaksi kecil yang berulang dan totalnya mulai terasa.',
+      description:
+        'Ada transaksi kecil yang berulang dan totalnya mulai terasa.',
       tone: 'yellow',
     })
   }
@@ -369,7 +380,8 @@ export function buildInsights(input: {
     insights.push({
       id: 'insight-stable',
       title: 'Ritme Stabil',
-      description: 'Belum ada sinyal pengeluaran berisiko dari prediksi terakhir.',
+      description:
+        'Belum ada sinyal pengeluaran berisiko dari prediksi terakhir.',
       tone: 'neutral',
     })
   }

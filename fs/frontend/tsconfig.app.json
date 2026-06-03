@@ -13,13 +13,18 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "composite": true,
     "jsx": "react-jsx",
 
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* JS support (project uses .jsx files) */
+    "allowJs": true,
+    "checkJs": false
   },
   "include": ["src"]
 }

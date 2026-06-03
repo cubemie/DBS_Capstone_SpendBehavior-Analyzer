@@ -128,7 +128,10 @@ export const predictionService = {
     userId: string,
     period: PredictionPeriodInput,
   ): Promise<DashboardPredictionSelection | null> {
-    const periodPrediction = await this.getLatestForPeriodOptional(userId, period)
+    const periodPrediction = await this.getLatestForPeriodOptional(
+      userId,
+      period,
+    )
     if (periodPrediction) {
       return {
         prediction: periodPrediction,

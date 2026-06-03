@@ -1,13 +1,4 @@
-import {
-  and,
-  desc,
-  eq,
-  gte,
-  lt,
-  lte,
-  sql,
-  type SQL,
-} from 'drizzle-orm'
+import { and, desc, eq, gte, lt, lte, sql, type SQL } from 'drizzle-orm'
 import { db } from '../../db/index.ts'
 import { categories } from '../../db/schemas/categories.ts'
 import { transactions } from '../../db/schemas/transactions.ts'
@@ -107,8 +98,7 @@ export const analyticsRepository = {
       paymentMethod: row.paymentMethod,
       type: row.type,
       amountIdr: row.amountIdr,
-      signedAmountIdr:
-        row.type === 'expense' ? -row.amountIdr : row.amountIdr,
+      signedAmountIdr: row.type === 'expense' ? -row.amountIdr : row.amountIdr,
       transactionDate: row.transactionDate,
       category: {
         id: row.categoryId,
@@ -125,9 +115,8 @@ export const analyticsRepository = {
     limit: number,
   ): Promise<TopCategoryRecord[]> {
     const conditions = getExpensePeriodFilters(filters)
-    const totalAmountExpression = sql<number>`sum(${transactions.amountIdr})`.mapWith(
-      Number,
-    )
+    const totalAmountExpression =
+      sql<number>`sum(${transactions.amountIdr})`.mapWith(Number)
     const transactionCountExpression = sql<number>`count(*)`.mapWith(Number)
 
     const rows = await db
@@ -158,7 +147,9 @@ export const analyticsRepository = {
     return rows.map((row) => ({
       ...row,
       percentage:
-        totalExpense === 0 ? 0 : Math.round((row.amountIdr / totalExpense) * 100),
+        totalExpense === 0
+          ? 0
+          : Math.round((row.amountIdr / totalExpense) * 100),
     }))
   },
 
@@ -185,9 +176,8 @@ export const analyticsRepository = {
       ...getExpensePeriodFilters(filters),
       lt(transactions.amountIdr, 100_000),
     ]
-    const totalAmountExpression = sql<number>`sum(${transactions.amountIdr})`.mapWith(
-      Number,
-    )
+    const totalAmountExpression =
+      sql<number>`sum(${transactions.amountIdr})`.mapWith(Number)
     const transactionCountExpression = sql<number>`count(*)`.mapWith(Number)
 
     return await db
@@ -201,9 +191,7 @@ export const analyticsRepository = {
       .innerJoin(categories, eq(transactions.categoryId, categories.id))
       .where(and(...conditions))
       .groupBy(categories.id, categories.name)
-      .having(
-        sql`count(*) >= 10 and sum(${transactions.amountIdr}) > 500000`,
-      )
+      .having(sql`count(*) >= 10 and sum(${transactions.amountIdr}) > 500000`)
       .orderBy(desc(totalAmountExpression))
   },
 }

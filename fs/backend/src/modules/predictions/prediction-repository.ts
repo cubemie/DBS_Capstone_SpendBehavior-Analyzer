@@ -1,13 +1,4 @@
-import {
-  and,
-  desc,
-  eq,
-  gte,
-  isNull,
-  lte,
-  sql,
-  type SQL,
-} from 'drizzle-orm'
+import { and, desc, eq, gte, isNull, lte, sql, type SQL } from 'drizzle-orm'
 import { db } from '../../db/index.ts'
 import {
   predictionResults,

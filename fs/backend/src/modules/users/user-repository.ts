@@ -12,6 +12,16 @@ export type CreateUserRecord = {
   phone?: string | null
 }
 
+export type UpdateUserRecord = Partial<{
+  fullName: string
+  avatarUrl: string | null
+  phone: string | null
+  locale: string
+  timezone: string
+  passwordHash: string
+  updatedAt: Date
+}>
+
 export const userRepository = {
   async findByEmail(email: string): Promise<UserRecord | undefined> {
     const [user] = await db.select().from(users).where(eq(users.email, email))
@@ -29,5 +39,22 @@ export const userRepository = {
     const [user] = await db.insert(users).values(record).returning()
 
     return user
+  },
+
+  async update(
+    id: string,
+    record: UpdateUserRecord,
+  ): Promise<UserRecord | undefined> {
+    const [user] = await db
+      .update(users)
+      .set({ ...record, updatedAt: new Date() })
+      .where(eq(users.id, id))
+      .returning()
+
+    return user
+  },
+
+  async delete(id: string): Promise<void> {
+    await db.delete(users).where(eq(users.id, id))
   },
 }

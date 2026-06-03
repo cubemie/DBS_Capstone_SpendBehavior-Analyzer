@@ -21,11 +21,7 @@ async function parseErrorBody(response: Response): Promise<string | undefined> {
 }
 
 function zodMlErrorBody(value: unknown): MlErrorBody | undefined {
-  if (
-    typeof value === 'object' &&
-    value !== null &&
-    'detail' in value
-  ) {
+  if (typeof value === 'object' && value !== null && 'detail' in value) {
     return value
   }
 
