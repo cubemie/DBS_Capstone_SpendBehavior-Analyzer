@@ -1,6 +1,6 @@
 import { Bell, Search } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
-import defaultAvatar from "../assets/avatar-user.png";
+import defaultAvatar from "../assets/budu-logo.png";
 
 function TopBar() {
   const { user } = useAuth();

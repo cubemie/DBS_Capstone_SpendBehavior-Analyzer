@@ -19,7 +19,7 @@ import { cn } from "../utils/cn";
 import { useAuth } from "../contexts/AuthContext";
 import { predictionService } from "../services/predictionService";
 import type { ApiPrediction } from "../types/models";
-import defaultAvatar from "../assets/avatar-user.png";
+import defaultAvatar from "../assets/budu-logo.png";
 
 interface ToggleProps {
   checked: boolean;

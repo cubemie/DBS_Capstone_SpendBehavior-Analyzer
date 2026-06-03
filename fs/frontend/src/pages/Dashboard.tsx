@@ -1,6 +1,6 @@
 import { ArrowDown, ArrowRight, ArrowUp, Bell, Trophy, Wallet } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import quokkaImg from "../assets/quokka-dashboard.png";
+import quokkaImg from "../assets/budu-logo.png";
 import Badge from "../components/Badge";
 import Button from "../components/Button";
 import Card from "../components/Card";

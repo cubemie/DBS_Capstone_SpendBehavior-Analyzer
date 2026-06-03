@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, Lock, Mail, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import quokkaImg from "../assets/quokka-register.png";
+import quokkaImg from "../assets/budu-logo.png";
 import AuthLayout from "../layout/AuthLayout";
 import Button from "../components/Button";
 import Input from "../components/Input";

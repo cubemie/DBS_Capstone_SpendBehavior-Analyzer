@@ -1,5 +1,5 @@
 import { ShieldCheck, TrendingUp, AlertTriangle, ShieldAlert, Info, CalendarClock, Droplets } from "lucide-react";
-import quokkaImg from "../assets/quokka-alert.png";
+import quokkaImg from "../assets/budu-logo.png";
 import Card from "../components/Card";
 import MoneyLeakCard from "../components/MoneyLeakCard";
 import PageHeader from "../components/PageHeader";
