@@ -1,5 +1,6 @@
 import e from 'express'
 import cookieParser from 'cookie-parser'
+import { analyticsRouter } from './modules/analytics/analytics-route.ts'
 import { authRouter } from './modules/auth/auth-route.ts'
 import { categoryRouter } from './modules/categories/category-route.ts'
 import { errorHandler } from './middlewares/error-middleware.ts'
@@ -19,6 +20,7 @@ app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/categories', categoryRouter)
 app.use('/api/v1/transactions', transactionRouter)
 app.use('/api/v1/predictions', predictionRouter)
+app.use('/api/v1/analytics', analyticsRouter)
 
 app.use(errorHandler)
 
