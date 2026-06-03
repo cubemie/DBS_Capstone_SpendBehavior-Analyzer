@@ -20,18 +20,20 @@ export const analyticsService = {
       to: period.to,
     })
     const [
-      latestPrediction,
+      predictionSelection,
       recentTransactions,
       topCategories,
       expenseTransactions,
       moneyLeakCandidates,
     ] = await Promise.all([
-      predictionService.getLatestOptional(userId),
+      predictionService.getDashboardPredictionOptional(userId, period),
       analyticsRepository.findRecentTransactions({ userId, ...period }, 3),
       analyticsRepository.findTopCategories({ userId, ...period }, 5),
       analyticsRepository.findExpenseTransactions({ userId, ...period }),
       analyticsRepository.findMoneyLeakCandidates({ userId, ...period }),
     ])
+    const latestPrediction = predictionSelection?.prediction ?? null
+    const predictionSource = predictionSelection?.source ?? null
     const savingRatePercent = calculateSavingRatePercent(summary)
     const warnings = latestPrediction
       ? mapPredictionWarnings(latestPrediction.warnings)
@@ -52,8 +54,10 @@ export const analyticsService = {
             probabilities: latestPrediction.probabilities,
             transactionCount: latestPrediction.transactionCount,
             createdAt: latestPrediction.createdAt,
+            predictionSource,
           }
         : null,
+      predictionSource,
       recentTransactions,
       topCategories,
       trends: {

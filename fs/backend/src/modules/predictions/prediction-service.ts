@@ -24,6 +24,17 @@ type FeatureHashInput = {
   timezone: string
 }
 
+type PredictionPeriodInput = {
+  from?: string
+  to?: string
+  timezone: string
+}
+
+export type DashboardPredictionSelection = {
+  prediction: PredictionRecord
+  source: 'period' | 'latest'
+}
+
 function createFeatureVectorHash(input: FeatureHashInput): string {
   return createHash('sha256').update(JSON.stringify(input)).digest('hex')
 }
@@ -97,6 +108,43 @@ export const predictionService = {
 
   async getLatestOptional(userId: string): Promise<PredictionRecord | null> {
     return (await predictionRepository.findLatest(userId)) ?? null
+  },
+
+  async getLatestForPeriodOptional(
+    userId: string,
+    period: PredictionPeriodInput,
+  ): Promise<PredictionRecord | null> {
+    return (
+      (await predictionRepository.findLatestForPeriod({
+        userId,
+        from: period.from,
+        to: period.to,
+        timezone: period.timezone,
+      })) ?? null
+    )
+  },
+
+  async getDashboardPredictionOptional(
+    userId: string,
+    period: PredictionPeriodInput,
+  ): Promise<DashboardPredictionSelection | null> {
+    const periodPrediction = await this.getLatestForPeriodOptional(userId, period)
+    if (periodPrediction) {
+      return {
+        prediction: periodPrediction,
+        source: 'period',
+      }
+    }
+
+    const latestPrediction = await this.getLatestOptional(userId)
+    if (!latestPrediction) {
+      return null
+    }
+
+    return {
+      prediction: latestPrediction,
+      source: 'latest',
+    }
   },
 
   async listHistory(
