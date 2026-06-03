@@ -95,6 +95,10 @@ export const predictionService = {
     return prediction
   },
 
+  async getLatestOptional(userId: string): Promise<PredictionRecord | null> {
+    return (await predictionRepository.findLatest(userId)) ?? null
+  },
+
   async listHistory(
     userId: string,
     query: PredictionHistoryQueryDto,
