@@ -1,4 +1,13 @@
-import { and, desc, eq, gte, lte, sql, type SQL } from 'drizzle-orm'
+import {
+  and,
+  desc,
+  eq,
+  gte,
+  isNull,
+  lte,
+  sql,
+  type SQL,
+} from 'drizzle-orm'
 import { db } from '../../db/index.ts'
 import {
   predictionResults,
@@ -33,6 +42,13 @@ export type PredictionHistoryFilters = {
   to?: string
 }
 
+export type PredictionPeriodFilters = {
+  userId: string
+  from?: string
+  to?: string
+  timezone: string
+}
+
 function getBaseFilters(userId: string): SQL[] {
   return [eq(predictionResults.userId, userId)]
 }
@@ -62,6 +78,30 @@ export const predictionRepository = {
       .select()
       .from(predictionResults)
       .where(eq(predictionResults.userId, userId))
+      .orderBy(desc(predictionResults.createdAt))
+      .limit(1)
+
+    return prediction
+  },
+
+  async findLatestForPeriod(
+    filters: PredictionPeriodFilters,
+  ): Promise<PredictionRecord | undefined> {
+    const conditions = [
+      eq(predictionResults.userId, filters.userId),
+      eq(predictionResults.timezone, filters.timezone),
+      filters.from
+        ? eq(predictionResults.periodFrom, new Date(filters.from))
+        : isNull(predictionResults.periodFrom),
+      filters.to
+        ? eq(predictionResults.periodTo, new Date(filters.to))
+        : isNull(predictionResults.periodTo),
+    ]
+
+    const [prediction] = await db
+      .select()
+      .from(predictionResults)
+      .where(and(...conditions))
       .orderBy(desc(predictionResults.createdAt))
       .limit(1)
 

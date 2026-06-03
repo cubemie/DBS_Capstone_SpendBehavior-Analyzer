@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs'
+import * as z from 'zod'
+
 export const FEATURE_ORDER = [
   'avg_txn_idr',
   'txn_count',
@@ -24,6 +27,10 @@ export type FeatureName = (typeof FEATURE_ORDER)[number]
 export type FeatureValues = Record<FeatureName, number>
 export type FeatureVector = number[]
 
+const mlFeatureOrderSchema = z.object({
+  feature_order: z.array(z.string()),
+})
+
 export function isFeatureName(value: string): value is FeatureName {
   return FEATURE_ORDER.some((featureName) => featureName === value)
 }
@@ -44,4 +51,21 @@ export function assertFeatureOrderMatches(
   if (!matches) {
     throw new Error('Backend feature order does not match ML feature order')
   }
+}
+
+export function readMlFeatureOrder(): string[] {
+  const featureOrderPath = new URL(
+    '../../../../../ml/feature_order.json',
+    import.meta.url,
+  )
+  const rawFeatureOrder = readFileSync(featureOrderPath, 'utf8')
+  const parsedFeatureOrder = mlFeatureOrderSchema.parse(
+    JSON.parse(rawFeatureOrder),
+  )
+
+  return parsedFeatureOrder.feature_order
+}
+
+export function assertBackendFeatureOrderMatchesMlContract(): void {
+  assertFeatureOrderMatches(readMlFeatureOrder())
 }

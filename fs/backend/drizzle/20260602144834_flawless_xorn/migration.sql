@@ -17,13 +17,13 @@ VALUES
 	('Makanan & Minuman', 'makanan-and-minuman', 'expense', 'cat_makanan_minuman_ratio', '#EF4444', 'utensils', true),
 	('Transportasi', 'transportasi', 'expense', 'cat_transportasi_ratio', '#3B82F6', 'car', true),
 	('Belanja Online', 'belanja-online', 'expense', 'cat_belanja_online_ratio', '#A855F7', 'shopping-bag', true),
-	('Fashion & Pakaian', 'fashion-and-pakaian', 'expense', null, '#EC4899', 'shirt', true),
+	('Fashion & Pakaian', 'fashion-and-pakaian', 'expense', 'cat_fashion_pakaian_ratio', '#EC4899', 'shirt', true),
 	('Hiburan', 'hiburan', 'expense', 'cat_hiburan_ratio', '#F97316', 'film', true),
-	('Kesehatan', 'kesehatan', 'expense', null, '#10B981', 'heart-pulse', true),
-	('Kesehatan & Kecantikan', 'kesehatan-and-kecantikan', 'expense', null, '#14B8A6', 'sparkles', true),
-	('Pendidikan', 'pendidikan', 'expense', null, '#6366F1', 'graduation-cap', true),
+	('Kesehatan', 'kesehatan', 'expense', 'cat_kesehatan_ratio', '#10B981', 'heart-pulse', true),
+	('Kesehatan & Kecantikan', 'kesehatan-and-kecantikan', 'expense', 'cat_kesehatan_kecantik_ratio', '#14B8A6', 'sparkles', true),
+	('Pendidikan', 'pendidikan', 'expense', 'cat_pendidikan_ratio', '#6366F1', 'graduation-cap', true),
 	('Pulsa & Data', 'pulsa-and-data', 'expense', 'cat_pulsa_data_ratio', '#06B6D4', 'smartphone', true),
-	('Sembako & Kebutuhan Pokok', 'sembako-and-kebutuhan-pokok', 'expense', 'cat_sembako_kebutuhan_pokok_ratio', '#84CC16', 'shopping-cart', true),
+	('Sembako & Kebutuhan Pokok', 'sembako-and-kebutuhan-pokok', 'expense', 'cat_sembako_kebutuhan__ratio', '#84CC16', 'shopping-cart', true),
 	('Lainnya', 'lainnya', 'expense', null, '#64748B', 'circle-help', true),
 	('Pemasukan', 'pemasukan', 'income', null, '#22C55E', 'wallet', true);
 --> statement-breakpoint
