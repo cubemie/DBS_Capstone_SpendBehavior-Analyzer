@@ -153,9 +153,6 @@ test('dashboard prediction status is empty when current period has no expense tr
   featureEngineeringService.buildForUser = (async () =>
     createFeatureResult({
       featureVector: [0],
-      featuresByName: {
-        avg_txn_idr: 0,
-      },
       transactionCount: 0,
     })) satisfies typeof featureEngineeringService.buildForUser
   predictionRepository.findLatestForPeriod = (async () =>

@@ -12,10 +12,14 @@ const imageExtensions = {
   'image/jpeg': '.jpg',
   'image/png': '.png',
   'image/webp': '.webp',
-} satisfies Record<string, string>
+} as const
 
 function getAvatarExtension(mimetype: string): string | undefined {
-  return imageExtensions[mimetype]
+  if (mimetype in imageExtensions) {
+    return imageExtensions[mimetype as keyof typeof imageExtensions]
+  }
+
+  return undefined
 }
 
 const storage = multer.diskStorage({
