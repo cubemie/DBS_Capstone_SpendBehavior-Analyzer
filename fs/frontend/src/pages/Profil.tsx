@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   BadgeCheck,
   Bell,
+  Camera,
   ShieldCheck,
   SlidersHorizontal,
   UserRoundCog,
@@ -44,8 +45,17 @@ function Toggle({ checked, onClick }: ToggleProps) {
   );
 }
 
+function getErrorMessage(error: unknown, fallback: string): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return fallback;
+}
+
 export default function Profil() {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, uploadAvatar } = useAuth();
+  const avatarInputRef = useRef<HTMLInputElement | null>(null);
   const [prediction, setPrediction] = useState<ApiPrediction | null>(null);
   const [isLoadingPred, setIsLoadingPred] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -55,6 +65,7 @@ export default function Profil() {
   const [name, setName] = useState(user?.name || "");
   const [phone, setPhone] = useState(user?.phone || "");
   const [isSavingProfile, setIsSavingProfile] = useState(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [profileMessage, setProfileMessage] = useState("");
 
   const [oldPassword, setOldPassword] = useState("");
@@ -80,9 +91,9 @@ export default function Profil() {
     try {
       const res = await predictionService.createPersonaPrediction({ force: true });
       setPrediction(res);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Gagal membuat prediksi persona", err);
-      setPredError(err?.message || "Gagal melakukan analisis. Pastikan kamu memiliki cukup transaksi.");
+      setPredError(getErrorMessage(err, "Gagal melakukan analisis. Pastikan kamu memiliki cukup transaksi."));
     } finally {
       setIsGenerating(false);
     }
@@ -102,6 +113,24 @@ export default function Profil() {
     }
   };
 
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingAvatar(true);
+    setProfileMessage("");
+
+    try {
+      await uploadAvatar(file);
+      setProfileMessage("Foto profil berhasil diperbarui!");
+    } catch (err: unknown) {
+      setProfileMessage(getErrorMessage(err, "Gagal mengunggah foto profil."));
+    } finally {
+      setIsUploadingAvatar(false);
+      e.target.value = "";
+    }
+  };
+
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
@@ -114,8 +143,8 @@ export default function Profil() {
       setPasswordMessage("Kata sandi berhasil diperbarui!");
       setOldPassword("");
       setNewPassword("");
-    } catch (err: any) {
-      setPasswordError(err?.message || "Gagal memperbarui kata sandi.");
+    } catch (err: unknown) {
+      setPasswordError(getErrorMessage(err, "Gagal memperbarui kata sandi."));
     } finally {
       setIsChangingPassword(false);
     }
@@ -146,6 +175,25 @@ export default function Profil() {
               <Badge variant="teal" icon={<BadgeCheck className="h-3.5 w-3.5" />}>
                 BUDU Member
               </Badge>
+            </div>
+            <div className="mt-4 flex justify-center sm:justify-start">
+              <input
+                ref={avatarInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                className="hidden"
+                onChange={handleAvatarChange}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                buttonSize="sm"
+                iconLeft={<Camera className="h-4 w-4" />}
+                isLoading={isUploadingAvatar}
+                onClick={() => avatarInputRef.current?.click()}
+              >
+                Ganti Foto
+              </Button>
             </div>
           </div>
         </div>

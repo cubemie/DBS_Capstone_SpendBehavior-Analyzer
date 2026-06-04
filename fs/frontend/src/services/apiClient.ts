@@ -49,11 +49,15 @@ export async function apiRequest<T>(
   options: RequestOptions = {},
 ): Promise<T> {
   const { skipAuth = false, ...fetchOptions } = options;
+  const isFormData = fetchOptions.body instanceof FormData;
 
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
     ...(fetchOptions.headers as Record<string, string>),
   };
+
+  if (!isFormData) {
+    headers["Content-Type"] = "application/json";
+  }
 
   if (!skipAuth && _accessToken) {
     headers["Authorization"] = `Bearer ${_accessToken}`;

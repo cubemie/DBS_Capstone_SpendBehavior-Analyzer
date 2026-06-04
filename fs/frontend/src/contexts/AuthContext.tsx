@@ -16,6 +16,7 @@ interface AuthContextValue {
   login: (email: string, password: string) => Promise<void>;
   register: (fullName: string, email: string, password: string) => Promise<void>;
   updateUser: (payload: { fullName?: string; phone?: string }) => Promise<void>;
+  uploadAvatar: (file: File) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -67,6 +68,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [user],
   );
 
+  const uploadAvatar = useCallback(
+    async (file: File) => {
+      if (!user) return;
+      const updatedUser = await authService.uploadAvatar(file);
+      setUser(updatedUser);
+    },
+    [user],
+  );
+
   const logout = useCallback(async () => {
     await authService.logout().catch(() => {}); // tetap logout meski request gagal
     tokenStore.clear();
@@ -82,6 +92,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         login,
         register,
         updateUser,
+        uploadAvatar,
         logout,
       }}
     >

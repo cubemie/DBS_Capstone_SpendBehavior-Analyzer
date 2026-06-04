@@ -12,6 +12,28 @@ interface RegisterPayload {
   password: string;
 }
 
+interface BackendUserResponse {
+  id: string;
+  fullName: string;
+  email: string;
+  avatarUrl?: string | null;
+  phone?: string | null;
+  persona?: string | null;
+  createdAt: string;
+}
+
+function mapBackendUser(res: BackendUserResponse): ApiUser {
+  return {
+    id: res.id,
+    name: res.fullName,
+    email: res.email,
+    avatarUrl: res.avatarUrl || undefined,
+    phone: res.phone || undefined,
+    persona: res.persona || undefined,
+    createdAt: res.createdAt,
+  };
+}
+
 export const authService = {
   async login(payload: LoginPayload): Promise<AuthTokens> {
     return apiRequest<AuthTokens>("/auth/login", {
@@ -27,7 +49,7 @@ export const authService = {
       email: payload.email,
       password: payload.password,
     };
-    await apiRequest<any>("/auth/register", {
+    await apiRequest<void>("/auth/register", {
       method: "POST",
       body: JSON.stringify(backendPayload),
       skipAuth: true,
@@ -41,36 +63,32 @@ export const authService = {
   },
 
   async getMe(): Promise<ApiUser> {
-    const res = await apiRequest<any>("/auth/me");
-    return {
-      id: res.id,
-      name: res.fullName,
-      email: res.email,
-      avatarUrl: res.avatarUrl || undefined,
-      phone: res.phone || undefined,
-      persona: res.persona || undefined,
-      createdAt: res.createdAt,
-    };
+    const res = await apiRequest<BackendUserResponse>("/auth/me");
+    return mapBackendUser(res);
   },
 
   async updateUser(payload: { fullName?: string; phone?: string }): Promise<ApiUser> {
-    const res = await apiRequest<any>("/users/me", {
+    const res = await apiRequest<BackendUserResponse>("/users/me", {
       method: "PATCH",
       body: JSON.stringify(payload),
     });
-    return {
-      id: res.id,
-      name: res.fullName,
-      email: res.email,
-      avatarUrl: res.avatarUrl || undefined,
-      phone: res.phone || undefined,
-      persona: res.persona || undefined,
-      createdAt: res.createdAt,
-    };
+    return mapBackendUser(res);
+  },
+
+  async uploadAvatar(file: File): Promise<ApiUser> {
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    const res = await apiRequest<BackendUserResponse>("/users/me/avatar", {
+      method: "PATCH",
+      body: formData,
+    });
+
+    return mapBackendUser(res);
   },
 
   async changePassword(payload: { oldPassword: string; newPassword: string }): Promise<void> {
-    await apiRequest<any>("/users/me/password", {
+    await apiRequest<void>("/users/me/password", {
       method: "PATCH",
       body: JSON.stringify(payload),
     });
