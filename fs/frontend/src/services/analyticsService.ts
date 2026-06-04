@@ -1,5 +1,5 @@
 import { apiRequest } from "./apiClient";
-import type { ApiDashboard } from "../types/models";
+import type { ApiDashboard, DashboardPeriod } from "../types/models";
 
 const DASHBOARD_TIMEZONE = "Asia/Jakarta";
 const JAKARTA_OFFSET = "+07:00";
@@ -84,13 +84,21 @@ interface RawDashboardPersona {
   confidence: number;
   transactionCount: number;
   createdAt: string;
-  predictionSource: "period" | "latest" | null;
+  predictionSource: "period" | null;
+}
+
+interface RawPredictionStatus {
+  state: "empty" | "missing" | "stale" | "fresh";
+  transactionCount: number;
+  lastPredictedAt?: string;
+  predictionSource: "period" | null;
 }
 
 interface RawDashboard {
-  period: { from: string; to: string; timezone: string };
+  period: DashboardPeriod;
   summary: RawSummary;
   persona: RawDashboardPersona | null;
+  predictionStatus: RawPredictionStatus;
   recentTransactions: RawRecentTransaction[];
   topCategories: RawTopCategory[];
   trends: {
@@ -111,6 +119,7 @@ function mapInsightTone(tone: RawInsight["tone"]): "tip" | "alert" | "info" {
 
 function mapDashboard(raw: RawDashboard): ApiDashboard {
   return {
+    period: raw.period,
     summary: {
       totalIncome: raw.summary.incomeTotalIdr,
       totalExpense: raw.summary.expenseTotalIdr,
@@ -126,6 +135,7 @@ function mapDashboard(raw: RawDashboard): ApiDashboard {
           predictionSource: raw.persona.predictionSource,
         }
       : null,
+    predictionStatus: raw.predictionStatus,
     topCategories: raw.topCategories.map((cat) => ({
       categoryId: cat.categoryId,
       categoryName: cat.name,
@@ -220,34 +230,47 @@ function addMonths(year: number, month: number, delta: number): { year: number; 
   };
 }
 
-function buildPeriodParams(period: DashboardPeriodOption): URLSearchParams {
+export function buildDashboardPeriod(period: DashboardPeriodOption = "current_month"): DashboardPeriod {
   const now = getZonedDateParts(new Date());
-  const params = new URLSearchParams({ timezone: DASHBOARD_TIMEZONE });
 
   if (period === "last_month") {
     const target = addMonths(now.year, now.month, -1);
-    params.set("from", formatJakartaDateTime(target.year, target.month, 1, "00:00:00.000"));
-    params.set(
-      "to",
-      formatJakartaDateTime(
+    return {
+      from: formatJakartaDateTime(target.year, target.month, 1, "00:00:00.000"),
+      to: formatJakartaDateTime(
         target.year,
         target.month,
         getLastDayOfMonth(target.year, target.month),
         "23:59:59.999",
       ),
-    );
-    return params;
+      timezone: DASHBOARD_TIMEZONE,
+    };
   }
 
   if (period === "3_months") {
     const start = addMonths(now.year, now.month, -2);
-    params.set("from", formatJakartaDateTime(start.year, start.month, 1, "00:00:00.000"));
-    params.set("to", formatJakartaDateTime(now.year, now.month, now.day, "23:59:59.999"));
-    return params;
+    return {
+      from: formatJakartaDateTime(start.year, start.month, 1, "00:00:00.000"),
+      to: formatJakartaDateTime(now.year, now.month, now.day, "23:59:59.999"),
+      timezone: DASHBOARD_TIMEZONE,
+    };
   }
 
-  params.set("from", formatJakartaDateTime(now.year, now.month, 1, "00:00:00.000"));
-  params.set("to", formatJakartaDateTime(now.year, now.month, now.day, "23:59:59.999"));
+  return {
+    from: formatJakartaDateTime(now.year, now.month, 1, "00:00:00.000"),
+    to: formatJakartaDateTime(now.year, now.month, now.day, "23:59:59.999"),
+    timezone: DASHBOARD_TIMEZONE,
+  };
+}
+
+function buildPeriodParams(period: DashboardPeriodOption): URLSearchParams {
+  const dashboardPeriod = buildDashboardPeriod(period);
+  const params = new URLSearchParams({
+    timezone: dashboardPeriod.timezone,
+    from: dashboardPeriod.from,
+    to: dashboardPeriod.to,
+  });
+
   return params;
 }
 

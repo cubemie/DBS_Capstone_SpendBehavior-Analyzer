@@ -12,11 +12,14 @@ import Button from "../components/Button";
 import Card from "../components/Card";
 import Input from "../components/Input";
 import PageHeader from "../components/PageHeader";
+import PredictionStatusCard from "../components/PredictionStatusCard";
 import SettingsRow from "../components/SettingsRow";
 import { cn } from "../utils/cn";
 import { useAuth } from "../contexts/AuthContext";
-import { predictionService } from "../services/predictionService";
-import type { ApiPrediction } from "../types/models";
+import { getPersonaDescription } from "../services/predictionService";
+import { analyticsService } from "../services/analyticsService";
+import { useApi } from "../hooks/useApi";
+import { usePredictionRefresh } from "../hooks/usePredictionRefresh";
 import defaultAvatar from "../assets/budu-logo.png";
 
 interface ToggleProps {
@@ -56,11 +59,19 @@ function getErrorMessage(error: unknown, fallback: string): string {
 export default function Profil() {
   const { user, updateUser, uploadAvatar, setPredictionPersona } = useAuth();
   const avatarInputRef = useRef<HTMLInputElement | null>(null);
-  const [prediction, setPrediction] = useState<ApiPrediction | null>(null);
-  const [isLoadingPred, setIsLoadingPred] = useState(true);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [predError, setPredError] = useState("");
   const [notifPush, setNotifPush] = useState(true);
+  const {
+    data: dashboard,
+    isLoading: isLoadingDashboard,
+    error: dashboardError,
+    refetch,
+  } = useApi(() => analyticsService.getDashboard());
+  const {
+    refreshAnalysis,
+    goToAddTransaction,
+    isRefreshing,
+    refreshError,
+  } = usePredictionRefresh(refetch);
 
   const [name, setName] = useState(user?.name || "");
   const [phone, setPhone] = useState(user?.phone || "");
@@ -75,36 +86,8 @@ export default function Profil() {
   const [passwordError, setPasswordError] = useState("");
 
   useEffect(() => {
-    predictionService
-      .getLatestPrediction()
-      .then((res) => {
-        setPrediction(res);
-        setPredictionPersona(res?.persona ?? null);
-      })
-      .catch((err: unknown) => {
-        setPrediction(null);
-        setPredictionPersona(null);
-        setPredError(getErrorMessage(err, "Gagal memuat prediksi terbaru."));
-      })
-      .finally(() => {
-        setIsLoadingPred(false);
-      });
-  }, [setPredictionPersona]);
-
-  const handleGeneratePrediction = async () => {
-    setIsGenerating(true);
-    setPredError("");
-    try {
-      const res = await predictionService.createPersonaPrediction({ force: true });
-      setPrediction(res);
-      setPredictionPersona(res.persona);
-    } catch (err: unknown) {
-      console.error("Gagal membuat prediksi persona", err);
-      setPredError(getErrorMessage(err, "Gagal melakukan analisis. Pastikan kamu memiliki cukup transaksi."));
-    } finally {
-      setIsGenerating(false);
-    }
-  };
+    setPredictionPersona(dashboard?.persona?.persona ?? null);
+  }, [dashboard, setPredictionPersona]);
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -160,6 +143,8 @@ export default function Profil() {
   const displayName = user?.name || "Pengguna";
   const userEmail = user?.email || "";
   const avatarUrl = user?.avatarUrl || defaultAvatar;
+  const persona = dashboard?.persona ?? null;
+  const predictionStatus = dashboard?.predictionStatus;
 
   return (
     <div className="space-y-6">
@@ -177,7 +162,7 @@ export default function Profil() {
             <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{userEmail}</p>
             <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
               <Badge variant="coral">
-                {prediction?.persona || "Belum ada persona"}
+                {persona?.persona || "Belum ada persona"}
               </Badge>
               <Badge variant="teal" icon={<BadgeCheck className="h-3.5 w-3.5" />}>
                 BUDU Member
@@ -208,72 +193,59 @@ export default function Profil() {
 
       <section className="grid gap-5 lg:grid-cols-2">
         <div className="space-y-5">
-          <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
-            {isLoadingPred ? (
+          {isLoadingDashboard ? (
+            <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
               <div className="text-center py-4 text-sm text-[var(--color-text-secondary)] animate-pulse">
-                Memuat persona keuangan...
+                Memuat analisis periode ini...
               </div>
-            ) : prediction ? (
-              <div className="flex items-start gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-yellow-ink)]">
-                  <ShieldCheck className="h-5 w-5" />
-                </span>
-                <div className="space-y-2">
-                  <h2 className="text-xl font-black text-[var(--color-text-primary)]">
-                    Persona: {prediction.persona}
-                  </h2>
-                  <p className="text-sm leading-6 text-[var(--color-text-secondary)]">
-                    {prediction.description}
-                  </p>
-                  {prediction.tips && prediction.tips.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-[rgba(0,0,0,0.05)]">
-                      <p className="text-xs font-black uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
-                        Tips Keuangan
+            </Card>
+          ) : dashboardError ? (
+            <Card className="!border-[var(--color-salmon-light)] !bg-[var(--color-salmon-bg)]">
+              <p className="text-sm font-semibold text-[var(--color-salmon-dark)]">
+                {dashboardError}
+              </p>
+            </Card>
+          ) : predictionStatus ? (
+            <>
+              <PredictionStatusCard
+                status={predictionStatus}
+                persona={persona}
+                onRefresh={refreshAnalysis}
+                onAddTransaction={goToAddTransaction}
+                isRefreshing={isRefreshing}
+                error={refreshError}
+              />
+              {persona && (
+                <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-yellow-ink)]">
+                      <ShieldCheck className="h-5 w-5" />
+                    </span>
+                    <div className="space-y-2">
+                      <h2 className="text-xl font-black text-[var(--color-text-primary)]">
+                        Persona: {persona.persona}
+                      </h2>
+                      <p className="text-sm leading-6 text-[var(--color-text-secondary)]">
+                        {getPersonaDescription(persona.persona)}
                       </p>
-                      <ul className="list-disc pl-5 text-xs text-[var(--color-text-secondary)] space-y-1">
-                        {prediction.tips.map((tip, idx) => (
-                          <li key={idx}>{tip}</li>
-                        ))}
-                      </ul>
+                      {dashboard?.warnings && dashboard.warnings.length > 0 && (
+                        <div className="mt-4 pt-4 border-t border-[rgba(0,0,0,0.05)]">
+                          <p className="text-xs font-black uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
+                            Tips Keuangan
+                          </p>
+                          <ul className="list-disc pl-5 text-xs text-[var(--color-text-secondary)] space-y-1">
+                            {dashboard.warnings.map((warning) => (
+                              <li key={warning.id}>{warning.description}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
-                  )}
-                  <Button
-                    onClick={handleGeneratePrediction}
-                    isLoading={isGenerating}
-                    variant="outline"
-                    className="mt-4 w-full"
-                  >
-                    Perbarui Analisis
-                  </Button>
-                  {predError && <p className="text-xs text-[var(--color-salmon-dark)]">{predError}</p>}
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-4">
-                <div className="flex items-start gap-3">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-yellow-ink)]">
-                    <ShieldCheck className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <h2 className="text-xl font-black text-[var(--color-text-primary)]">
-                      Persona Keuangan
-                    </h2>
-                    <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
-                      BUDU belum menganalisis pola belanjamu. Silakan klik tombol di bawah untuk mengetahui persona keuanganmu serta tips khusus.
-                    </p>
                   </div>
-                </div>
-                <Button
-                  onClick={handleGeneratePrediction}
-                  isLoading={isGenerating}
-                  className="w-full"
-                >
-                  Analisis Persona Sekarang
-                </Button>
-                {predError && <p className="text-sm text-[var(--color-salmon-dark)] text-center">{predError}</p>}
-              </div>
-            )}
-          </Card>
+                </Card>
+              )}
+            </>
+          ) : null}
 
           <Card>
             <div className="mb-6 flex items-center gap-3">

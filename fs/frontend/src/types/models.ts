@@ -176,8 +176,10 @@ export interface MoneyLeak {
 }
 
 export interface ApiDashboard {
+  period: DashboardPeriod;
   summary: ApiTransactionSummary;
   persona: DashboardPersona | null;
+  predictionStatus: DashboardPredictionStatus;
   topCategories: TopCategory[];
   recentTransactions: ApiTransaction[];
   weekdayWeekend: WeekdayWeekendSplit;
@@ -192,7 +194,20 @@ export interface DashboardPersona {
   confidence: number;
   transactionCount: number;
   createdAt: string;
-  predictionSource: "period" | "latest" | null;
+  predictionSource: "period" | null;
+}
+
+export interface DashboardPeriod {
+  from: string;
+  to: string;
+  timezone: string;
+}
+
+export interface DashboardPredictionStatus {
+  state: "empty" | "missing" | "stale" | "fresh";
+  transactionCount: number;
+  lastPredictedAt?: string;
+  predictionSource: "period" | null;
 }
 
 // ─── Predictions ─────────────────────────────────────────────────────────────

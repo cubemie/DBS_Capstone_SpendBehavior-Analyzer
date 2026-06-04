@@ -3,9 +3,11 @@ import quokkaImg from "../assets/budu-logo.png";
 import Card from "../components/Card";
 import MoneyLeakCard from "../components/MoneyLeakCard";
 import PageHeader from "../components/PageHeader";
+import PredictionStatusCard from "../components/PredictionStatusCard";
 import WarningCard from "../components/WarningCard";
 import ErrorState from "../components/ErrorState";
 import { useApi } from "../hooks/useApi";
+import { usePredictionRefresh } from "../hooks/usePredictionRefresh";
 import { analyticsService } from "../services/analyticsService";
 import type { DashboardWarning, MoneyLeak, Warning } from "../types/models";
 
@@ -56,7 +58,13 @@ function PeringatanSkeleton() {
 }
 
 export default function Peringatan() {
-  const { data, isLoading, error } = useApi(() => analyticsService.getDashboard());
+  const { data, isLoading, error, refetch } = useApi(() => analyticsService.getDashboard());
+  const {
+    refreshAnalysis,
+    goToAddTransaction,
+    isRefreshing,
+    refreshError,
+  } = usePredictionRefresh(refetch);
 
   if (isLoading) {
     return (
@@ -76,7 +84,10 @@ export default function Peringatan() {
     );
   }
 
-  const { warnings = [], moneyLeaks = [] } = data || {};
+  const warnings = data?.warnings ?? [];
+  const moneyLeaks = data?.moneyLeaks ?? [];
+  const persona = data?.persona ?? null;
+  const predictionStatus = data?.predictionStatus;
 
   const mappedWarnings = warnings.map(toWarning);
   const mappedLeaks = moneyLeaks.map(toLeakWarning);
@@ -113,6 +124,17 @@ export default function Peringatan() {
         </div>
       </Card>
 
+      {predictionStatus && (
+        <PredictionStatusCard
+          status={predictionStatus}
+          persona={persona}
+          onRefresh={refreshAnalysis}
+          onAddTransaction={goToAddTransaction}
+          isRefreshing={isRefreshing}
+          error={refreshError}
+        />
+      )}
+
       <section className="space-y-4">
         <div className="flex items-center gap-3">
           <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-salmon-bg)] text-[var(--color-salmon-dark)]">
@@ -147,4 +169,3 @@ export default function Peringatan() {
     </div>
   );
 }
-

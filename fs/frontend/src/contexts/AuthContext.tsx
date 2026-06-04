@@ -6,7 +6,6 @@ import React, {
   useState,
 } from "react";
 import { authService } from "../services/authService";
-import { predictionService } from "../services/predictionService";
 import { tokenStore } from "../services/apiClient";
 import type { ApiUser } from "../types/models";
 
@@ -30,15 +29,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [predictionPersona, setPredictionPersona] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true); // true saat restore session
 
-  const loadLatestPredictionPersona = useCallback(async () => {
-    try {
-      const latestPrediction = await predictionService.getLatestPrediction();
-      setPredictionPersona(latestPrediction?.persona ?? null);
-    } catch {
-      setPredictionPersona(null);
-    }
-  }, []);
-
   // ── Restore session saat app mount ──────────────────────────────────────────
   useEffect(() => {
     authService
@@ -49,7 +39,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           try {
             const userProfile = await authService.getMe();
             setUser(userProfile);
-            await loadLatestPredictionPersona();
           } catch {
             tokenStore.clear();
             setUser(null);
@@ -58,15 +47,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       })
       .finally(() => setIsLoading(false));
-  }, [loadLatestPredictionPersona]);
+  }, []);
 
   const login = useCallback(async (email: string, password: string) => {
     const result = await authService.login({ email, password });
     tokenStore.set(result.accessToken);
     const userProfile = await authService.getMe();
     setUser(userProfile);
-    await loadLatestPredictionPersona();
-  }, [loadLatestPredictionPersona]);
+    setPredictionPersona(null);
+  }, []);
 
   const register = useCallback(
     async (fullName: string, email: string, password: string) => {

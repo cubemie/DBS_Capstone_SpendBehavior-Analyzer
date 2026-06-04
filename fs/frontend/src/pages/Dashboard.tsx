@@ -7,12 +7,14 @@ import Button from "../components/Button";
 import Card from "../components/Card";
 import ErrorState from "../components/ErrorState";
 import PageHeader from "../components/PageHeader";
+import PredictionStatusCard from "../components/PredictionStatusCard";
 import ProgressBar from "../components/ProgressBar";
 import TransactionItem from "../components/TransactionItem";
 import { formatCurrency } from "../utils/formatCurrency";
 import { useApi } from "../hooks/useApi";
 import { analyticsService } from "../services/analyticsService";
 import { useAuth } from "../contexts/AuthContext";
+import { usePredictionRefresh } from "../hooks/usePredictionRefresh";
 import type { ApiTransaction } from "../types/models";
 import { ShoppingBag, UtensilsCrossed, Car, Banknote, CreditCard } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -61,7 +63,13 @@ const CATEGORY_COLORS = ["#8BDFDD", "#F28C6A", "#FFE394", "#B7D6A5", "#C4B5FD"];
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user, setPredictionPersona } = useAuth();
-  const { data, isLoading, error } = useApi(() => analyticsService.getDashboard());
+  const { data, isLoading, error, refetch } = useApi(() => analyticsService.getDashboard());
+  const {
+    refreshAnalysis,
+    goToAddTransaction,
+    isRefreshing,
+    refreshError,
+  } = usePredictionRefresh(refetch);
 
   useEffect(() => {
     if (!data) return;
@@ -71,7 +79,7 @@ export default function Dashboard() {
   if (isLoading) return <div className="space-y-6"><PageHeader title="Dashboard" description="Pantau pengeluaranmu bulan ini." /><DashboardSkeleton /></div>;
   if (error) return <div className="space-y-6"><PageHeader title="Dashboard" description="Pantau pengeluaranmu bulan ini." /><ErrorState message={error} /></div>;
 
-  const { summary, persona, topCategories, recentTransactions, warnings } = data!;
+  const { summary, persona, predictionStatus, topCategories, recentTransactions, warnings } = data!;
   const recentMapped = recentTransactions.slice(0, 3).map(toTransactionItem);
 
   const displayWarning =
@@ -222,6 +230,15 @@ export default function Dashboard() {
             </p>
             <Button variant="outline" fullWidth className="mt-5" onClick={() => navigate("/profil")}>Lihat Profil</Button>
           </Card>
+
+          <PredictionStatusCard
+            status={predictionStatus}
+            persona={persona}
+            onRefresh={refreshAnalysis}
+            onAddTransaction={goToAddTransaction}
+            isRefreshing={isRefreshing}
+            error={refreshError}
+          />
 
         </aside>
       </section>

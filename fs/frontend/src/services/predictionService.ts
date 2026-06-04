@@ -30,7 +30,7 @@ const PERSONA_DESCRIPTIONS: Record<string, string> = {
     "Emosi sering memengaruhi keputusan belanjamu. Coba terapkan jeda sebelum membeli sesuatu.",
 };
 
-function getPersonaDescription(persona: string): string {
+export function getPersonaDescription(persona: string): string {
   const key = persona.toLowerCase();
   return (
     PERSONA_DESCRIPTIONS[key] ??
