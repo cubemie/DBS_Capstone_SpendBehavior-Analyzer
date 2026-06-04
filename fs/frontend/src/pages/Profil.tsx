@@ -1,10 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import {
-  BadgeCheck,
-  Bell,
   Camera,
   ShieldCheck,
-  SlidersHorizontal,
   UserRoundCog,
 } from "lucide-react";
 import Badge from "../components/Badge";
@@ -13,40 +10,12 @@ import Card from "../components/Card";
 import Input from "../components/Input";
 import PageHeader from "../components/PageHeader";
 import PredictionStatusCard from "../components/PredictionStatusCard";
-import SettingsRow from "../components/SettingsRow";
-import { cn } from "../utils/cn";
 import { useAuth } from "../contexts/AuthContext";
 import { getPersonaDescription } from "../services/predictionService";
 import { analyticsService } from "../services/analyticsService";
 import { useApi } from "../hooks/useApi";
 import { usePredictionRefresh } from "../hooks/usePredictionRefresh";
 import defaultAvatar from "../assets/budu-logo.png";
-
-interface ToggleProps {
-  checked: boolean;
-  onClick: () => void;
-}
-
-function Toggle({ checked, onClick }: ToggleProps) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "relative h-8 w-14 shrink-0 rounded-full transition",
-        checked ? "bg-[var(--color-teal-dark)]" : "bg-[var(--color-track)]",
-      )}
-      aria-pressed={checked}
-    >
-      <span
-        className={cn(
-          "absolute top-1 h-6 w-6 rounded-full bg-white shadow transition",
-          checked ? "left-7" : "left-1",
-        )}
-      />
-    </button>
-  );
-}
 
 function getErrorMessage(error: unknown, fallback: string): string {
   if (error instanceof Error) {
@@ -59,7 +28,6 @@ function getErrorMessage(error: unknown, fallback: string): string {
 export default function Profil() {
   const { user, updateUser, uploadAvatar, setPredictionPersona } = useAuth();
   const avatarInputRef = useRef<HTMLInputElement | null>(null);
-  const [notifPush, setNotifPush] = useState(true);
   const {
     data: dashboard,
     isLoading: isLoadingDashboard,
@@ -164,9 +132,6 @@ export default function Profil() {
               <Badge variant="coral">
                 {persona?.persona || "Belum ada persona"}
               </Badge>
-              <Badge variant="teal" icon={<BadgeCheck className="h-3.5 w-3.5" />}>
-                BUDU Member
-              </Badge>
             </div>
             <div className="mt-4 flex justify-center sm:justify-start">
               <input
@@ -191,7 +156,7 @@ export default function Profil() {
         </div>
       </Card>
 
-      <section className="grid gap-5 lg:grid-cols-2">
+      <section className="max-w-3xl">
         <div className="space-y-5">
           {isLoadingDashboard ? (
             <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
@@ -278,27 +243,6 @@ export default function Profil() {
               </Button>
             </form>
           </Card>
-        </div>
-
-        <div className="space-y-5">
-          <Card>
-            <div className="mb-5 flex items-center gap-3">
-              <SlidersHorizontal className="h-6 w-6 text-[var(--color-teal-ink)]" />
-              <h2 className="text-xl font-black text-[var(--color-text-primary)]">Preferensi Aplikasi</h2>
-            </div>
-            <div className="space-y-3">
-              <SettingsRow
-                icon={<Bell className="h-5 w-5" />}
-                title="Notifikasi"
-                description="Peringatan penting saja"
-                trailing={<Toggle checked={notifPush} onClick={() => setNotifPush((value) => !value)} />}
-              />
-            </div>
-          </Card>
-
-
-
-
         </div>
       </section>
     </div>

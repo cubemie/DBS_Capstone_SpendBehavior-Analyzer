@@ -81,11 +81,15 @@ export default function Dashboard() {
 
   const { summary, persona, predictionStatus, topCategories, recentTransactions, warnings } = data!;
   const recentMapped = recentTransactions.slice(0, 3).map(toTransactionItem);
+  const hasWarnings = warnings && warnings.length > 0;
 
   const displayWarning =
-    warnings && warnings.length > 0
+    hasWarnings
       ? { title: warnings[0].title, description: warnings[0].description }
-      : { title: "Belum ada peringatan.", description: "Terus pantau pengeluaran harianmu." };
+      : {
+          title: "Tidak ada peringatan aktif.",
+          description: "Belum ada sinyal pengeluaran yang perlu ditindaklanjuti untuk periode ini.",
+        };
 
   return (
     <div className="space-y-6">
@@ -142,13 +146,15 @@ export default function Dashboard() {
             </div>
           </Card>
 
-          <Card className="!border-[var(--color-salmon-light)] !bg-[var(--color-salmon-bg)]">
+          <Card className={hasWarnings ? "!border-[var(--color-salmon-light)] !bg-[var(--color-salmon-bg)]" : ""}>
             <div className="flex items-start gap-4">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-salmon-dark)]">
+              <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white ${hasWarnings ? "text-[var(--color-salmon-dark)]" : "text-[var(--color-teal-ink)]"}`}>
                 <Bell className="h-6 w-6" />
               </span>
               <div className="min-w-0">
-                <p className="text-xs font-black uppercase tracking-[0.14em] text-[var(--color-salmon-dark)]">Perlu dicek</p>
+                <p className={`text-xs font-black uppercase tracking-[0.14em] ${hasWarnings ? "text-[var(--color-salmon-dark)]" : "text-[var(--color-text-muted)]"}`}>
+                  {hasWarnings ? "Perlu dicek" : "Status peringatan"}
+                </p>
                 <h2 className="mt-2 text-xl font-black leading-tight text-[var(--color-text-primary)]">
                   {displayWarning.title}
                 </h2>

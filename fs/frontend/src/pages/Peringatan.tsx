@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ShieldCheck, TrendingUp, AlertTriangle, ShieldAlert, Info, CalendarClock, Droplets, X } from "lucide-react";
+import { ShieldCheck, TrendingUp, AlertTriangle, ShieldAlert, Info, CalendarClock, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import quokkaImg from "../assets/budu-logo.png";
 import Badge from "../components/Badge";
@@ -107,18 +107,6 @@ export default function Peringatan() {
 
   const mappedWarnings = warnings.map(toWarning);
   const mappedLeaks = moneyLeaks.map(toLeakWarning);
-
-  if (mappedLeaks.length === 0) {
-    mappedLeaks.push({
-      id: "leak-clear",
-      title: "Semua Aman",
-      description: "Belum ada kebocoran atau pengeluaran tidak biasa yang terdeteksi.",
-      label: "Aman",
-      severity: "success",
-      actionLabel: "Pantau",
-      icon: Droplets,
-    });
-  }
 
   const goToPeriodExpenses = () => {
     if (!data) return;
@@ -277,15 +265,26 @@ export default function Peringatan() {
           </span>
           <h2 className="text-xl font-black text-[var(--color-text-primary)]">Deteksi Kebocoran</h2>
         </div>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {mappedLeaks.map((leak, index) => (
-            <MoneyLeakCard
-              key={leak.id}
-              leak={leak}
-              onAction={moneyLeaks[index] ? () => goToLeakTransactions(moneyLeaks[index]!) : undefined}
-            />
-          ))}
-        </div>
+        {mappedLeaks.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-[var(--color-border)] bg-white p-6">
+            <p className="text-sm font-semibold text-[var(--color-text-primary)]">
+              Belum ada deteksi kebocoran dari data periode ini.
+            </p>
+            <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
+              Tambahkan transaksi terbaru lalu jalankan analisis lagi jika kamu ingin memperbarui hasil.
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {mappedLeaks.map((leak, index) => (
+              <MoneyLeakCard
+                key={leak.id}
+                leak={leak}
+                onAction={() => goToLeakTransactions(moneyLeaks[index]!)}
+              />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );
