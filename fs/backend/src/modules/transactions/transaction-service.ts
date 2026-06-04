@@ -1,4 +1,5 @@
 import { AppException } from '../../exception.ts'
+import { toCategoryResponse } from '../categories/category-service.ts'
 import { categoryRepository } from '../categories/category-repository.ts'
 import {
   transactionRepository,
@@ -11,16 +12,19 @@ import type {
   UpdateTransactionDto,
 } from './transaction-schema.ts'
 
+export type TransactionResponse = Omit<TransactionListItem, 'category'> & {
+  category: ReturnType<typeof toCategoryResponse>
+}
+
 function createDate(value: string): Date {
   return new Date(value)
 }
 
 async function assertCategoryCanBeUsed(
-  userId: string,
   categoryId: string,
   type: string,
 ): Promise<void> {
-  const category = await categoryRepository.findVisibleById(categoryId, userId)
+  const category = await categoryRepository.findSystemById(categoryId)
 
   if (!category) {
     throw new AppException('Kategori tidak ditemukan', 404)
@@ -31,12 +35,21 @@ async function assertCategoryCanBeUsed(
   }
 }
 
+function toTransactionResponse(
+  transaction: TransactionListItem,
+): TransactionResponse {
+  return {
+    ...transaction,
+    category: toCategoryResponse(transaction.category),
+  }
+}
+
 export const transactionService = {
   async list(
     userId: string,
     query: ListTransactionsQueryDto,
   ): Promise<{
-    items: TransactionListItem[]
+    items: TransactionResponse[]
     page: number
     limit: number
     total: number
@@ -54,26 +67,27 @@ export const transactionService = {
     })
 
     return {
-      ...result,
+      items: result.items.map(toTransactionResponse),
+      total: result.total,
       page: query.page,
       limit: query.limit,
     }
   },
 
-  async getById(userId: string, id: string): Promise<TransactionListItem> {
+  async getById(userId: string, id: string): Promise<TransactionResponse> {
     const transaction = await transactionRepository.findByIdForUser(id, userId)
     if (!transaction) {
       throw new AppException('Transaksi tidak ditemukan', 404)
     }
 
-    return transaction
+    return toTransactionResponse(transaction)
   },
 
   async create(
     userId: string,
     dto: CreateTransactionDto,
-  ): Promise<TransactionListItem> {
-    await assertCategoryCanBeUsed(userId, dto.categoryId, dto.type)
+  ): Promise<TransactionResponse> {
+    await assertCategoryCanBeUsed(dto.categoryId, dto.type)
 
     const transaction = await transactionRepository.create({
       userId,
@@ -95,7 +109,7 @@ export const transactionService = {
     userId: string,
     id: string,
     dto: UpdateTransactionDto,
-  ): Promise<TransactionListItem> {
+  ): Promise<TransactionResponse> {
     const existing = await transactionRepository.findByIdForUser(id, userId)
     if (!existing) {
       throw new AppException('Transaksi tidak ditemukan', 404)
@@ -103,7 +117,7 @@ export const transactionService = {
 
     const nextCategoryId = dto.categoryId ?? existing.categoryId
     const nextType = dto.type ?? existing.type
-    await assertCategoryCanBeUsed(userId, nextCategoryId, nextType)
+    await assertCategoryCanBeUsed(nextCategoryId, nextType)
 
     await transactionRepository.update(id, userId, {
       categoryId: dto.categoryId,

@@ -183,25 +183,6 @@ export const transactionRepository = {
       .where(and(eq(transactions.id, id), eq(transactions.userId, userId)))
   },
 
-  async existsForCategory(
-    categoryId: string,
-    userId: string,
-  ): Promise<boolean> {
-    const [countRow] = await db
-      .select({
-        total: sql<number>`count(*)`.mapWith(Number),
-      })
-      .from(transactions)
-      .where(
-        and(
-          eq(transactions.categoryId, categoryId),
-          eq(transactions.userId, userId),
-        ),
-      )
-
-    return (countRow?.total ?? 0) > 0
-  },
-
   async summarize(
     filters: TransactionSummaryFilters,
   ): Promise<TransactionSummary> {

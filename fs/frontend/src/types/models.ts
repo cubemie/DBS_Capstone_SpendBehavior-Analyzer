@@ -90,8 +90,11 @@ export type CategoryKind = "income" | "expense";
 export interface ApiCategory {
   id: string;
   name: string;
+  slug: string;
   kind: CategoryKind;
-  icon?: string;
+  color: string | null;
+  icon: string | null;
+  isSystem: boolean;
 }
 
 // ─── Transactions ─────────────────────────────────────────────────────────────

@@ -154,8 +154,11 @@ function mapDashboard(raw: RawDashboard): ApiDashboard {
       category: {
         id: tx.category.id,
         name: tx.category.name,
+        slug: tx.category.slug,
         kind: tx.type,
-        icon: tx.category.icon ?? undefined,
+        color: tx.category.color,
+        icon: tx.category.icon,
+        isSystem: true,
       },
       userId: "",
     })),

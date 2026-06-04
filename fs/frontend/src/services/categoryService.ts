@@ -9,11 +9,4 @@ export const categoryService = {
 
     return apiRequest<ApiCategory[]>(query ? `/categories?${query}` : "/categories");
   },
-
-  async createCategory(payload: Omit<ApiCategory, "id">): Promise<ApiCategory> {
-    return apiRequest<ApiCategory>("/categories", {
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
-  },
 };

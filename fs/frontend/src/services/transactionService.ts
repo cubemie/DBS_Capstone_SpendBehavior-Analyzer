@@ -28,6 +28,7 @@ interface RawTransactionItem {
     kind: "income" | "expense";
     color: string | null;
     icon: string | null;
+    isSystem: boolean;
   };
 }
 
@@ -72,8 +73,11 @@ function toApiTransaction(raw: RawTransactionItem): ApiTransaction {
     category: {
       id: raw.category.id,
       name: raw.category.name,
-      kind: raw.category.kind ?? raw.type,
-      icon: raw.category.icon ?? undefined,
+      slug: raw.category.slug,
+      kind: raw.category.kind,
+      color: raw.category.color,
+      icon: raw.category.icon,
+      isSystem: raw.category.isSystem,
     },
     userId: raw.userId,
   };
