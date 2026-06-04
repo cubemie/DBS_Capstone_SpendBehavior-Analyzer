@@ -30,10 +30,6 @@ export const buildFeaturesOptionsSchema = dateRangeSchema.extend({
 
 export type BuildFeaturesOptionsDto = z.input<typeof buildFeaturesOptionsSchema>
 
-export type NormalizedBuildFeaturesOptions = z.output<
-  typeof buildFeaturesOptionsSchema
->
-
 export type FeatureEngineeringResult = {
   featureOrder: readonly FeatureName[]
   featuresByName: FeatureValues

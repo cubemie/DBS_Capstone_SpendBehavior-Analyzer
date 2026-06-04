@@ -1,32 +1,13 @@
 import * as z from 'zod'
-import type {
-  TransactionListItem,
-  TransactionRecord,
-  TransactionSummary,
-} from './transaction-repository.ts'
 import { categoryKindSchema } from '../categories/category-schema.ts'
 
 export const transactionTypeSchema = categoryKindSchema
-export const transactionSourceSchema = z.enum(['manual'])
 
-export type TransactionType = z.infer<typeof transactionTypeSchema>
-export type TransactionSource = z.infer<typeof transactionSourceSchema>
 export type CreateTransactionDto = z.infer<typeof createTransactionSchema>
 export type UpdateTransactionDto = z.infer<typeof updateTransactionSchema>
 export type ListTransactionsQueryDto = z.infer<
   typeof listTransactionsQuerySchema
 >
-export type TransactionParamsDto = z.infer<typeof transactionParamsSchema>
-export type TransactionResponseDto = TransactionRecord & {
-  category: TransactionListItem['category']
-}
-export type TransactionListResponseDto = {
-  items: TransactionListItem[]
-  page: number
-  limit: number
-  total: number
-}
-export type TransactionSummaryResponseDto = TransactionSummary
 
 const textFieldSchema = z
   .string('Harus merupakan string yang valid')

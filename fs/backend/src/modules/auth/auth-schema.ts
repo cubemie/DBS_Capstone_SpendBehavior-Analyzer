@@ -1,13 +1,7 @@
 import * as z from 'zod'
-import type { UserResponseDto } from '../users/user-schema.ts'
 
 export type LoginDto = z.infer<typeof loginSchema>
 export type RegisterDto = z.infer<typeof registerSchema>
-
-export type AuthResponseDto = {
-  accessToken: string
-  user?: UserResponseDto
-}
 
 export type JwtPayload = {
   sub: string

@@ -7,7 +7,7 @@ import {
 } from './feature-contract.ts'
 import type { FeatureEngineeringResult } from './feature-schema.ts'
 
-export type FeatureCalculatorTransaction = {
+type FeatureCalculatorTransaction = {
   id: string
   amountIdr: number
   transactionDate: Date

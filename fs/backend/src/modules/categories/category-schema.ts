@@ -1,10 +1,8 @@
 import * as z from 'zod'
-import type { CategoryRecord } from './category-repository.ts'
 
 export const categoryKindSchema = z.enum(['income', 'expense'])
 
 export type CategoryKind = z.infer<typeof categoryKindSchema>
-export type CategoryResponseDto = CategoryRecord
 export type CreateCategoryDto = z.infer<typeof createCategorySchema>
 export type UpdateCategoryDto = z.infer<typeof updateCategorySchema>
 export type ListCategoriesQueryDto = z.infer<typeof listCategoriesQuerySchema>

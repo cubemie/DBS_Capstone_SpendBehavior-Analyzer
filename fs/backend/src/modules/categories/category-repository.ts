@@ -60,18 +60,6 @@ export const categoryRepository = {
     return category
   },
 
-  async findOwnedById(
-    id: string,
-    userId: string,
-  ): Promise<CategoryRecord | undefined> {
-    const [category] = await db
-      .select()
-      .from(categories)
-      .where(and(eq(categories.id, id), eq(categories.userId, userId)))
-
-    return category
-  },
-
   async findUserDuplicate(
     userId: string,
     kind: string,
