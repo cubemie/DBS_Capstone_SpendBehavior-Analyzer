@@ -4,7 +4,6 @@ import { userController } from './user-controller.ts'
 
 export const userRouter = e.Router()
 
-userRouter.post('/', userController.register)
-userRouter.get('/:id', requireAuth, userController.getDetails)
-userRouter.patch('/:id', requireAuth, userController.update)
-userRouter.patch('/:id/password', requireAuth, userController.changePassword)
+userRouter.use(requireAuth)
+userRouter.patch('/me', userController.updateMe)
+userRouter.patch('/me/password', userController.changeMyPassword)

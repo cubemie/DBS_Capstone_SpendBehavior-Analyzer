@@ -6,6 +6,7 @@ import { categoryRouter } from './modules/categories/category-route.ts'
 import { errorHandler } from './middlewares/error-middleware.ts'
 import { predictionRouter } from './modules/predictions/prediction-route.ts'
 import { transactionRouter } from './modules/transactions/transaction-route.ts'
+import { userRouter } from './modules/users/user-route.ts'
 import cors from 'cors'
 import helmet from 'helmet'
 import { env } from './config.ts'
@@ -14,10 +15,12 @@ import { requestLogger } from './middlewares/request-logger.ts'
 const app = e()
 
 app.use(helmet())
-app.use(cors({
-  origin: env.FRONTEND_URL,
-  credentials: true,
-}))
+app.use(
+  cors({
+    origin: env.FRONTEND_URL,
+    credentials: true,
+  }),
+)
 app.use(requestLogger)
 
 app.use(e.json())
@@ -30,11 +33,12 @@ app.get('/', (_, res) => {
     version: '1.0.0',
     uptime: Math.floor(process.uptime()),
     endpoints: {
-      auth:         '/api/v1/auth',
-      categories:   '/api/v1/categories',
+      auth: '/api/v1/auth',
+      users: '/api/v1/users',
+      categories: '/api/v1/categories',
       transactions: '/api/v1/transactions',
-      predictions:  '/api/v1/predictions',
-      analytics:    '/api/v1/analytics',
+      predictions: '/api/v1/predictions',
+      analytics: '/api/v1/analytics',
     },
   })
 })
@@ -45,6 +49,7 @@ app.get('/health', (_, res) => {
 
 // Konfigurasi route-route
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/users', userRouter)
 app.use('/api/v1/categories', categoryRouter)
 app.use('/api/v1/transactions', transactionRouter)
 app.use('/api/v1/predictions', predictionRouter)

@@ -24,7 +24,3 @@ export const changePasswordSchema = z.object({
   newPassword: z.string().min(8),
 })
 export type ChangePasswordDto = z.infer<typeof changePasswordSchema>
-
-export const getUserParamsSchema = z.object({
-  id: z.uuid('Harus merupakan format UUID yang valid'),
-})

@@ -1,52 +1,22 @@
 import type { Request, Response } from 'express'
-import { createUserSchema, getUserParamsSchema, updateUserSchema, changePasswordSchema } from './user-schema.ts'
-import { AppException } from '../../exception.ts'
+import { changePasswordSchema, updateUserSchema } from './user-schema.ts'
 import { sendData } from '../../utils/response.ts'
 import { userService } from './user-service.ts'
 
 export const userController = {
-  async register(req: Request, res: Response) {
-    const payload = createUserSchema.parse(req.body)
-
-    const createdId = await userService.create(payload)
-
-    sendData(res, { id: createdId }, 201)
-  },
-
-  async getDetails(req: Request, res: Response) {
-    const { id } = getUserParamsSchema.parse(req.params)
-    const jwtPayload = req.payload!
-
-    if (id !== jwtPayload.sub) {
-      throw new AppException('Aksi dilarang', 403)
-    }
-
-    const user = await userService.getDetails(id)
-
-    sendData(res, user)
-  },
-
-  async update(req: Request, res: Response) {
-    const { id } = getUserParamsSchema.parse(req.params)
-    const jwtPayload = req.payload!
-    if (id !== jwtPayload.sub) {
-      throw new AppException('Aksi dilarang', 403)
-    }
-
+  async updateMe(req: Request, res: Response) {
+    const userId = req.payload!.sub
     const payload = updateUserSchema.parse(req.body)
-    const user = await userService.update(id, payload)
+    const user = await userService.update(userId, payload)
+
     sendData(res, user)
   },
 
-  async changePassword(req: Request, res: Response) {
-    const { id } = getUserParamsSchema.parse(req.params)
-    const jwtPayload = req.payload!
-    if (id !== jwtPayload.sub) {
-      throw new AppException('Aksi dilarang', 403)
-    }
-
+  async changeMyPassword(req: Request, res: Response) {
+    const userId = req.payload!.sub
     const payload = changePasswordSchema.parse(req.body)
-    await userService.changePassword(id, payload)
+    await userService.changePassword(userId, payload)
+
     sendData(res, { success: true })
   },
 }
