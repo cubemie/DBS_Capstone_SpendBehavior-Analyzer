@@ -5,6 +5,7 @@ import {
   type PredictionFeatures,
   type PredictionMlResponse,
   type PredictionProbabilities,
+  type PredictionWarning,
 } from '../../db/schemas/prediction-results.ts'
 
 export type PredictionRecord = typeof predictionResults.$inferSelect
@@ -17,7 +18,7 @@ export type CreatePredictionRecord = {
   persona: string
   confidence: number
   probabilities: PredictionProbabilities
-  warnings: string[]
+  warnings: PredictionWarning[]
   featureOrder: string[]
   features: PredictionFeatures
   featureVectorHash: string

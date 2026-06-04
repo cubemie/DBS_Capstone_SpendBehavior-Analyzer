@@ -37,6 +37,7 @@ export type DashboardPeriod = {
 
 export type DashboardWarning = {
   id: string
+  code?: string
   title: string
   description: string
   label: string

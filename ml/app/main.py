@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Literal
 import numpy as np
 import tensorflow as tf
 import joblib
@@ -39,12 +39,32 @@ class PredictionRequest(BaseModel):
     features: List[float]
     transactions: List[MoneyLeakTransaction] = Field(default_factory=list)
 
+
+class SmartWarning(BaseModel):
+    code: str
+    title: str
+    message: str
+    label: str
+    severity: Literal["info", "warning", "danger", "success"]
+
+
+STABLE_WARNING = SmartWarning(
+    code="spending_stable",
+    title="Pola Pengeluaran Stabil",
+    message="Pola pengeluaran stabil, tidak ada anomali terdeteksi.",
+    label="Aman",
+    severity="success",
+)
+
 # FUNGSI RULE-BASED: SMART WARNING SYSTEM
-def get_smart_warnings(profile: dict) -> list:
-    warnings = detect_behavior_patterns(profile)
+def get_smart_warnings(profile: dict) -> List[SmartWarning]:
+    warnings = [
+        SmartWarning(**warning)
+        for warning in detect_behavior_patterns(profile)
+    ]
     
     if not warnings:
-        warnings.append("✅ Pola pengeluaran stabil, tidak ada anomali terdeteksi.")
+        warnings.append(STABLE_WARNING)
         
     return warnings
 

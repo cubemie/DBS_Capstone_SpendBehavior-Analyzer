@@ -18,11 +18,23 @@ export type PredictionProbabilities = {
 
 export type PredictionFeatures = Record<string, number>
 
+export type PredictionWarningSeverity = 'info' | 'warning' | 'danger' | 'success'
+
+export type PredictionWarning = {
+  code: string
+  title: string
+  message: string
+  label: string
+  severity: PredictionWarningSeverity
+}
+
+export type PredictionStoredWarning = PredictionWarning | string
+
 export type PredictionMlResponse = {
   persona: string
   confidence: number
   probabilities: PredictionProbabilities
-  smart_warnings_system: string[]
+  smart_warnings_system: PredictionWarning[]
   money_leaks?: PredictionMoneyLeak[]
 }
 
@@ -47,7 +59,7 @@ export const predictionResults = pgTable(
     persona: text().notNull(),
     confidence: doublePrecision().notNull(),
     probabilities: jsonb().$type<PredictionProbabilities>().notNull(),
-    warnings: jsonb().$type<string[]>().notNull(),
+    warnings: jsonb().$type<PredictionStoredWarning[]>().notNull(),
     featureOrder: text().array().notNull(),
     features: jsonb().$type<PredictionFeatures>().notNull(),
     featureVectorHash: text().notNull(),

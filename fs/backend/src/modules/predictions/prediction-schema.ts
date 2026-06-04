@@ -30,6 +30,14 @@ export const predictionHistoryQuerySchema = dateRangeSchema.extend({
   limit: z.coerce.number().int().positive().max(100).default(20),
 })
 
+export const predictionWarningSchema = z.object({
+  code: z.string().trim().min(1),
+  title: z.string().trim().min(1),
+  message: z.string().trim().min(1),
+  label: z.string().trim().min(1),
+  severity: z.enum(['info', 'warning', 'danger', 'success']),
+})
+
 export const mlPredictionResponseSchema = z.object({
   persona: z.string().trim().min(1),
   confidence: z.number().min(0).max(1),
@@ -38,7 +46,7 @@ export const mlPredictionResponseSchema = z.object({
     impulsive: z.number().min(0).max(1),
     rational: z.number().min(0).max(1),
   }),
-  smart_warnings_system: z.array(z.string()),
+  smart_warnings_system: z.array(predictionWarningSchema),
   money_leaks: z
     .array(
       z.object({
@@ -61,6 +69,7 @@ export type PredictionHistoryQueryDto = z.output<
 export type MlPredictionResponseDto = z.output<
   typeof mlPredictionResponseSchema
 >
+export type PredictionWarningDto = z.output<typeof predictionWarningSchema>
 export type PredictionResultRecord = typeof predictionResults.$inferSelect
 export type PredictionResultResponseDto = PredictionResultRecord & {
   cached: boolean

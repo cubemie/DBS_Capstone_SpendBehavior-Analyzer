@@ -3,6 +3,16 @@ import { ApiError } from "./ApiError";
 import type { ApiPrediction } from "../types/models";
 
 // ─── Raw backend shape ────────────────────────────────────────────────────────
+type RawPredictionWarning =
+  | string
+  | {
+      code: string;
+      title: string;
+      message: string;
+      label: string;
+      severity: "info" | "warning" | "danger" | "success";
+    };
+
 interface RawPredictionRecord {
   id: string;
   userId: string;
@@ -13,7 +23,7 @@ interface RawPredictionRecord {
     impulsive: number;
     rational: number;
   };
-  warnings: string[];
+  warnings: RawPredictionWarning[];
   featureOrder: string[];
   transactionCount: number;
   createdAt: string;
@@ -43,8 +53,9 @@ function mapPrediction(raw: RawPredictionRecord): ApiPrediction {
     id: raw.id,
     persona: raw.persona,
     description: getPersonaDescription(raw.persona),
-    // warnings from backend become tips in the frontend
-    tips: raw.warnings ?? [],
+    tips: (raw.warnings ?? []).map((warning) =>
+      typeof warning === "string" ? warning : warning.message,
+    ),
     createdAt: raw.createdAt,
   };
 }

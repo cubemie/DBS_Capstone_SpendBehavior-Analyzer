@@ -1,6 +1,24 @@
 import pandas as pd
 import requests
 
+REQUIRED_WARNING_FIELDS = {"code", "title", "message", "label", "severity"}
+
+
+def validate_warning_shape(response_body):
+    warnings = response_body.get("smart_warnings_system", [])
+
+    if not isinstance(warnings, list):
+        raise AssertionError("smart_warnings_system harus berupa list")
+
+    for warning in warnings:
+        if not isinstance(warning, dict):
+            raise AssertionError("Setiap smart warning harus berupa object")
+
+        missing_fields = REQUIRED_WARNING_FIELDS - set(warning)
+        if missing_fields:
+            raise AssertionError(f"Smart warning kurang field: {sorted(missing_fields)}")
+
+
 def test_api_random():
     # 1. Baca data asli
     df = pd.read_csv("data/budu_user_profiles_idr.csv")
@@ -35,7 +53,9 @@ def test_api_random():
     response = requests.post(url, json=payload)
     
     print("\n=== HASIL PREDIKSI AI ===")
-    print(response.json())
+    response_body = response.json()
+    validate_warning_shape(response_body)
+    print(response_body)
 
 if __name__ == "__main__":
     test_api_random()

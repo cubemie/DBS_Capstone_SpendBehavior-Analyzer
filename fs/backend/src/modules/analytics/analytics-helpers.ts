@@ -4,13 +4,16 @@ import type {
   DashboardMoneyLeak,
   DashboardPeriod,
   DashboardWarning,
-  DashboardWarningSeverity,
 } from './analytics-schema.ts'
 import type {
   ExpenseTrendRecord,
   TopCategoryRecord,
 } from './analytics-repository.ts'
-import type { PredictionMoneyLeak } from '../../db/schemas/prediction-results.ts'
+import type {
+  PredictionMoneyLeak,
+  PredictionStoredWarning,
+  PredictionWarning,
+} from '../../db/schemas/prediction-results.ts'
 
 type PeriodInput = {
   from?: string
@@ -120,79 +123,43 @@ export function calculateSavingRatePercent(
   )
 }
 
-function cleanWarningText(message: string): string {
-  return message.replace(/^[^\p{Letter}\p{Number}]+/u, '').trim()
-}
-
-function getWarningMetadata(message: string): {
-  title: string
-  label: string
-  severity: DashboardWarningSeverity
-} {
-  const normalized = message.toLowerCase()
-
-  if (normalized.includes('variability') || normalized.includes('fluktuasi')) {
-    return {
-      title: 'Nominal Transaksi Tidak Stabil',
-      label: 'Variasi',
-      severity: 'info',
-    }
-  }
-
-  if (normalized.includes('weekend') || normalized.includes('akhir pekan')) {
-    return {
-      title: 'Pengeluaran Akhir Pekan Tinggi',
-      label: 'Weekend',
-      severity: 'warning',
-    }
-  }
-
-  if (normalized.includes('night') || normalized.includes('malam')) {
-    return {
-      title: 'Transaksi Malam Meningkat',
-      label: 'Malam',
-      severity: 'warning',
-    }
-  }
-
-  if (normalized.includes('impulsive') || normalized.includes('impulsif')) {
-    return {
-      title: 'Pola Impulsif Terdeteksi',
-      label: 'Impulsif',
-      severity: 'danger',
-    }
-  }
-
-  if (normalized.includes('stabil') || normalized.includes('tidak ada')) {
-    return {
-      title: 'Pola Pengeluaran Stabil',
-      label: 'Aman',
-      severity: 'success',
-    }
-  }
-
+function mapLegacyPredictionWarning(
+  message: string,
+  index: number,
+): DashboardWarning {
   return {
+    id: `warning-${index + 1}`,
     title: 'Peringatan Pengeluaran',
+    description: message,
     label: 'Sinyal',
     severity: 'info',
+    source: 'prediction',
+  }
+}
+
+function mapStructuredPredictionWarning(
+  warning: PredictionWarning,
+  index: number,
+): DashboardWarning {
+  return {
+    id: `warning-${index + 1}`,
+    code: warning.code,
+    title: warning.title,
+    description: warning.message,
+    label: warning.label,
+    severity: warning.severity,
+    source: 'prediction',
   }
 }
 
 export function mapPredictionWarnings(
-  messages: readonly string[],
+  warnings: readonly PredictionStoredWarning[],
 ): DashboardWarning[] {
-  return messages.map((message, index) => {
-    const metadata = getWarningMetadata(message)
-
-    return {
-      id: `warning-${index + 1}`,
-      title: metadata.title,
-      description: cleanWarningText(message),
-      label: metadata.label,
-      severity: metadata.severity,
-      source: 'prediction',
-    }
-  })
+  return warnings.map((warning, index) =>
+    typeof warning === 'string'
+      ? mapLegacyPredictionWarning(warning, index)
+      : mapStructuredPredictionWarning(warning, index),
+  )
 }
 
 export function mapMoneyLeaks(

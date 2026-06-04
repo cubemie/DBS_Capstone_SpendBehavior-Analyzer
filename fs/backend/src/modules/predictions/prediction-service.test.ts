@@ -17,6 +17,14 @@ const originalFindLatest = predictionRepository.findLatest
 const originalBuildAnalysisInputForUser =
   featureEngineeringService.buildAnalysisInputForUser
 
+const stableWarning = {
+  code: 'spending_stable',
+  title: 'Pola Pengeluaran Stabil',
+  message: 'Pola pengeluaran stabil, tidak ada anomali terdeteksi.',
+  label: 'Aman',
+  severity: 'success',
+} as const
+
 function createPredictionRecord(
   overrides: Partial<PredictionRecord> = {},
 ): PredictionRecord {
@@ -33,7 +41,7 @@ function createPredictionRecord(
       impulsive: 0.05,
       rational: 0.9,
     },
-    warnings: ['Pola pengeluaran stabil'],
+    warnings: [stableWarning],
     featureOrder: ['avg_txn_idr'],
     features: {
       avg_txn_idr: 100_000,
@@ -48,7 +56,7 @@ function createPredictionRecord(
         impulsive: 0.05,
         rational: 0.9,
       },
-      smart_warnings_system: ['Pola pengeluaran stabil'],
+      smart_warnings_system: [stableWarning],
       money_leaks: [],
     },
     createdAt: new Date('2026-06-30T23:59:59.000Z'),

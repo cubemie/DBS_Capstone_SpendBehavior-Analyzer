@@ -160,6 +160,7 @@ export interface DashboardInsight {
 
 export interface DashboardWarning {
   id: string;
+  code?: string;
   title: string;
   description: string;
   label: string;

@@ -60,6 +60,7 @@ interface RawInsight {
 
 interface RawWarning {
   id: string;
+  code?: string;
   title: string;
   description: string;
   label: string;
@@ -172,6 +173,7 @@ function mapDashboard(raw: RawDashboard): ApiDashboard {
     })),
     warnings: raw.warnings.map((w) => ({
       id: w.id,
+      code: w.code,
       title: w.title,
       description: w.description,
       label: w.label,
