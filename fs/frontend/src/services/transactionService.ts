@@ -64,7 +64,7 @@ function toApiTransaction(raw: RawTransactionItem): ApiTransaction {
     id: raw.id,
     title: raw.title,
     amount: raw.amountIdr,
-    note: raw.notes ?? raw.title,
+    note: raw.notes ?? undefined,
     merchantName: raw.merchantName ?? undefined,
     paymentMethod: raw.paymentMethod ?? undefined,
     date: raw.transactionDate,
@@ -111,9 +111,7 @@ export const transactionService = {
     if (filters.limit) params.set("limit", String(filters.limit));
     addDateRangeParams(params, filters);
 
-    const raw = await apiRequest<RawTransactionList>(
-      `/transactions?${params}`,
-    );
+    const raw = await apiRequest<RawTransactionList>(`/transactions?${params}`);
 
     return {
       data: raw.items.map(toApiTransaction),
@@ -124,7 +122,9 @@ export const transactionService = {
     };
   },
 
-  async createTransaction(payload: TransactionPayload): Promise<ApiTransaction> {
+  async createTransaction(
+    payload: TransactionPayload,
+  ): Promise<ApiTransaction> {
     const backendPayload = buildCreatePayload(payload);
     const raw = await apiRequest<RawTransactionItem>("/transactions", {
       method: "POST",
@@ -133,11 +133,29 @@ export const transactionService = {
     return toApiTransaction(raw);
   },
 
+  async getTransaction(id: string): Promise<ApiTransaction> {
+    const raw = await apiRequest<RawTransactionItem>(`/transactions/${id}`);
+    return toApiTransaction(raw);
+  },
+
+  async updateTransaction(
+    id: string,
+    payload: TransactionPayload,
+  ): Promise<ApiTransaction> {
+    const raw = await apiRequest<RawTransactionItem>(`/transactions/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    });
+    return toApiTransaction(raw);
+  },
+
   async deleteTransaction(id: string): Promise<void> {
     return apiRequest<void>(`/transactions/${id}`, { method: "DELETE" });
   },
 
-  async getSummary(filters: SummaryFilters = {}): Promise<ApiTransactionSummary> {
+  async getSummary(
+    filters: SummaryFilters = {},
+  ): Promise<ApiTransactionSummary> {
     const params = new URLSearchParams();
     addDateRangeParams(params, filters);
     const query = params.toString();

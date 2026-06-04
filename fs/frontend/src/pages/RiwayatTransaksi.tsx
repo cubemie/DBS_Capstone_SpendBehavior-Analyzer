@@ -1,5 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowDown, ArrowUp, Search, Wallet, Trash2 } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  Pencil,
+  Search,
+  Wallet,
+  Trash2,
+} from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Badge from "../components/Badge";
 import Button from "../components/Button";
@@ -14,10 +21,21 @@ import { cn } from "../utils/cn";
 import { formatCurrency } from "../utils/formatCurrency";
 import { formatDate, formatTime } from "../utils/formatDate";
 import type { CategoryKind, TransactionFilters } from "../types/models";
-import { ShoppingBag, UtensilsCrossed, Car, Banknote, CreditCard } from "lucide-react";
+import {
+  ShoppingBag,
+  UtensilsCrossed,
+  Car,
+  Banknote,
+  CreditCard,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 
-const DEFAULT_FILTERS: TransactionFilters = { page: 1, limit: 10, sort: "date_desc" };
+const DEFAULT_FILTERS: TransactionFilters = {
+  page: 1,
+  limit: 10,
+  sort: "date_desc",
+};
 
 function categoryIcon(name: string): LucideIcon {
   const lower = name.toLowerCase();
@@ -40,7 +58,11 @@ function TransactionListSkeleton() {
   );
 }
 
-function getTransactionTitle(tx: { title: string; note?: string; category: { name: string } }): string {
+function getTransactionTitle(tx: {
+  title: string;
+  note?: string;
+  category: { name: string };
+}): string {
   return tx.note ?? tx.title ?? tx.category.name;
 }
 
@@ -49,19 +71,29 @@ function getTransactionMeta(tx: {
   paymentMethod?: string;
   category: { name: string };
 }): string {
-  return [tx.merchantName, tx.paymentMethod].filter(Boolean).join(" · ") || tx.category.name;
+  return (
+    [tx.merchantName, tx.paymentMethod].filter(Boolean).join(" · ") ||
+    tx.category.name
+  );
 }
 
 function isCategoryKind(value: string | null): value is CategoryKind {
   return value === "income" || value === "expense";
 }
 
-function isSort(value: string | null): value is NonNullable<TransactionFilters["sort"]> {
+function isSort(
+  value: string | null,
+): value is NonNullable<TransactionFilters["sort"]> {
   return value === "date_desc" || value === "date_asc";
 }
 
 function isUuid(value: string | null): value is string {
-  return !!value && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+  return (
+    !!value &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+      value,
+    )
+  );
 }
 
 function readPositiveNumber(value: string | null): number | undefined {
@@ -100,22 +132,27 @@ function filtersFromSearch(searchString: string): TransactionFilters {
 
 function hasUrlFilters(searchString: string): boolean {
   const params = new URLSearchParams(searchString);
-  return ["type", "categoryId", "search", "startDate", "endDate", "sort"].some((key) => params.has(key));
+  return ["type", "categoryId", "search", "startDate", "endDate", "sort"].some(
+    (key) => params.has(key),
+  );
 }
 
 export default function RiwayatTransaksi() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setPredictionPersona } = useAuth();
   const initialFilters = filtersFromSearch(location.search);
   const lastSearchRef = useRef(location.search);
   const [filters, setFilters] = useState<TransactionFilters>(initialFilters);
   const [search, setSearch] = useState(initialFilters.search ?? "");
-  const [activeTypeFilter, setActiveTypeFilter] = useState<"all" | CategoryKind>(initialFilters.type ?? "all");
+  const [activeTypeFilter, setActiveTypeFilter] = useState<
+    "all" | CategoryKind
+  >(initialFilters.type ?? "all");
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [toastMessage, setToastMessage] = useState<string | null>(
-    location.state?.toast || null
+    location.state?.toast || null,
   );
 
   useEffect(() => {
@@ -148,14 +185,21 @@ export default function RiwayatTransaksi() {
     return () => window.clearTimeout(timer);
   }, [search]);
 
-  const { data: txData, isLoading: txLoading, error: txError, refetch } = useApi(
-    () => transactionService.getTransactions(filters),
-    [filters]
-  );
-  const { data: summary } = useApi(
+  const {
+    data: txData,
+    isLoading: txLoading,
+    error: txError,
+    refetch: refetchTransactions,
+  } = useApi(() => transactionService.getTransactions(filters), [filters]);
+  const { data: summary, refetch: refetchSummary } = useApi(
     () => transactionService.getSummary(filters),
     [filters.startDate, filters.endDate],
   );
+
+  const refetchTransactionData = () => {
+    refetchTransactions();
+    refetchSummary();
+  };
 
   const handleTypeFilter = (newType: "all" | CategoryKind) => {
     setActiveTypeFilter(newType);
@@ -197,8 +241,9 @@ export default function RiwayatTransaksi() {
     setIsDeleting(true);
     try {
       await transactionService.deleteTransaction(deleteId);
+      setPredictionPersona(null);
       setToastMessage("Transaksi berhasil dihapus.");
-      refetch();
+      refetchTransactionData();
     } catch {
       setToastMessage("Gagal menghapus transaksi.");
     } finally {
@@ -212,13 +257,27 @@ export default function RiwayatTransaksi() {
       {deleteId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
           <Card className="max-w-sm w-full">
-            <h2 className="text-lg font-black text-[var(--color-text-primary)]">Hapus Transaksi?</h2>
+            <h2 className="text-lg font-black text-[var(--color-text-primary)]">
+              Hapus Transaksi?
+            </h2>
             <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
               Aksi ini tidak bisa dibatalkan.
             </p>
             <div className="mt-5 flex gap-3">
-              <Button variant="outline" fullWidth onClick={() => setDeleteId(null)} disabled={isDeleting}>Batal</Button>
-              <Button variant="danger" fullWidth onClick={confirmDelete} disabled={isDeleting}>
+              <Button
+                variant="outline"
+                fullWidth
+                onClick={() => setDeleteId(null)}
+                disabled={isDeleting}
+              >
+                Batal
+              </Button>
+              <Button
+                variant="danger"
+                fullWidth
+                onClick={confirmDelete}
+                disabled={isDeleting}
+              >
                 {isDeleting ? "Menghapus..." : "Hapus"}
               </Button>
             </div>
@@ -231,13 +290,18 @@ export default function RiwayatTransaksi() {
           {toastMessage}
         </div>
       )}
-      <PageHeader title="Riwayat Transaksi" description="Lihat arus uang bulan ini." />
+      <PageHeader
+        title="Riwayat Transaksi"
+        description="Lihat arus uang bulan ini."
+      />
 
       {hasActiveUrlFilters ? (
         <div className="flex flex-col gap-3 rounded-xl bg-[#e6f7f6] px-4 py-3 text-sm text-[#147a75] sm:flex-row sm:items-center sm:justify-between">
           <p className="font-bold">
             Menampilkan transaksi sesuai filter dari halaman peringatan.
-            {filters.categoryId ? " Kategori sudah dibatasi ke temuan yang dipilih." : ""}
+            {filters.categoryId
+              ? " Kategori sudah dibatasi ke temuan yang dipilih."
+              : ""}
           </p>
           <Button variant="outline" buttonSize="sm" onClick={clearUrlFilters}>
             Tampilkan Semua
@@ -289,7 +353,11 @@ export default function RiwayatTransaksi() {
                     : "border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] hover:border-[var(--color-teal-dark)]",
                 )}
               >
-                {f === "all" ? "Semua" : f === "expense" ? "Pengeluaran" : "Pemasukan"}
+                {f === "all"
+                  ? "Semua"
+                  : f === "expense"
+                    ? "Pengeluaran"
+                    : "Pemasukan"}
               </button>
             ))}
           </div>
@@ -300,7 +368,9 @@ export default function RiwayatTransaksi() {
             name="startDate"
             type="date"
             value={filters.startDate ?? ""}
-            onChange={(event) => handleDateFilter("startDate", event.target.value)}
+            onChange={(event) =>
+              handleDateFilter("startDate", event.target.value)
+            }
             className="bg-white"
           />
           <Input
@@ -308,7 +378,9 @@ export default function RiwayatTransaksi() {
             name="endDate"
             type="date"
             value={filters.endDate ?? ""}
-            onChange={(event) => handleDateFilter("endDate", event.target.value)}
+            onChange={(event) =>
+              handleDateFilter("endDate", event.target.value)
+            }
             className="bg-white"
           />
           <label className="block">
@@ -317,7 +389,11 @@ export default function RiwayatTransaksi() {
             </span>
             <select
               value={filters.sort ?? "date_desc"}
-              onChange={(event) => handleSortChange(event.target.value as NonNullable<TransactionFilters["sort"]>)}
+              onChange={(event) =>
+                handleSortChange(
+                  event.target.value as NonNullable<TransactionFilters["sort"]>,
+                )
+              }
               className="h-12 w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 text-sm font-bold text-[var(--color-text-primary)] outline-none transition focus:border-[var(--color-teal-dark)] focus:ring-4 focus:ring-[var(--color-teal-bg)]"
             >
               <option value="date_desc">Terbaru</option>
@@ -328,7 +404,9 @@ export default function RiwayatTransaksi() {
       </Card>
 
       {txLoading && <TransactionListSkeleton />}
-      {txError && <ErrorState message={txError} onRetry={refetch} />}
+      {txError && (
+        <ErrorState message={txError} onRetry={refetchTransactions} />
+      )}
 
       {!txLoading && !txError && (
         <>
@@ -336,7 +414,9 @@ export default function RiwayatTransaksi() {
           <section className="space-y-3 lg:hidden">
             {transactions.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-[var(--color-border)] p-10 text-center">
-                <p className="text-sm text-[var(--color-text-muted)]">Belum ada transaksi.</p>
+                <p className="text-sm text-[var(--color-text-muted)]">
+                  Belum ada transaksi.
+                </p>
               </div>
             ) : (
               transactions.map((tx) => {
@@ -347,7 +427,10 @@ export default function RiwayatTransaksi() {
                     className="flex items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-white p-3"
                   >
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-soft)] text-[var(--color-text-secondary)]">
-                      {(() => { const Icon = categoryIcon(tx.category.name); return <Icon className="h-5 w-5" />; })()}
+                      {(() => {
+                        const Icon = categoryIcon(tx.category.name);
+                        return <Icon className="h-5 w-5" />;
+                      })()}
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-bold text-[var(--color-text-primary)]">
@@ -358,12 +441,35 @@ export default function RiwayatTransaksi() {
                       </p>
                     </div>
                     <div className="flex shrink-0 flex-col items-end gap-1">
-                      <p className={cn("text-sm font-black", isIncome ? "text-[var(--color-green)]" : "text-[var(--color-red)]")}>
-                        {isIncome ? "+" : "-"}{formatCurrency(tx.amount)}
+                      <p
+                        className={cn(
+                          "text-sm font-black",
+                          isIncome
+                            ? "text-[var(--color-green)]"
+                            : "text-[var(--color-red)]",
+                        )}
+                      >
+                        {isIncome ? "+" : "-"}
+                        {formatCurrency(tx.amount)}
                       </p>
-                      <button type="button" onClick={() => setDeleteId(tx.id)} className="text-[var(--color-text-muted)] hover:text-[var(--color-salmon-dark)]">
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/transaksi/${tx.id}/edit`)}
+                          className="text-[var(--color-text-muted)] hover:text-[var(--color-teal-ink)]"
+                          aria-label="Edit transaksi"
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDeleteId(tx.id)}
+                          className="text-[var(--color-text-muted)] hover:text-[var(--color-salmon-dark)]"
+                          aria-label="Hapus transaksi"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
@@ -373,7 +479,7 @@ export default function RiwayatTransaksi() {
 
           {/* Desktop table */}
           <Card className="hidden overflow-hidden lg:block" padded={false}>
-            <div className="grid grid-cols-[120px_minmax(260px,1fr)_160px_160px_40px] border-b border-[var(--color-border)] bg-white px-5 py-4 text-sm font-black text-[var(--color-text-secondary)]">
+            <div className="grid grid-cols-[120px_minmax(260px,1fr)_160px_160px_72px] border-b border-[var(--color-border)] bg-white px-5 py-4 text-sm font-black text-[var(--color-text-secondary)]">
               <span>Tanggal</span>
               <span>Catatan</span>
               <span>Kategori</span>
@@ -383,7 +489,9 @@ export default function RiwayatTransaksi() {
 
             {transactions.length === 0 ? (
               <div className="px-5 py-10 text-center">
-                <p className="text-sm text-[var(--color-text-muted)]">Belum ada transaksi.</p>
+                <p className="text-sm text-[var(--color-text-muted)]">
+                  Belum ada transaksi.
+                </p>
               </div>
             ) : (
               transactions.map((tx) => {
@@ -392,11 +500,15 @@ export default function RiwayatTransaksi() {
                 return (
                   <div
                     key={tx.id}
-                    className="grid grid-cols-[120px_minmax(260px,1fr)_160px_160px_40px] items-center border-b border-[var(--color-border)] px-5 py-5 last:border-0"
+                    className="grid grid-cols-[120px_minmax(260px,1fr)_160px_160px_72px] items-center border-b border-[var(--color-border)] px-5 py-5 last:border-0"
                   >
                     <div>
-                      <p className="font-bold text-[var(--color-text-primary)]">{formatDate(tx.date)}</p>
-                      <p className="text-sm text-[var(--color-text-muted)]">{formatTime(tx.date)}</p>
+                      <p className="font-bold text-[var(--color-text-primary)]">
+                        {formatDate(tx.date)}
+                      </p>
+                      <p className="text-sm text-[var(--color-text-muted)]">
+                        {formatTime(tx.date)}
+                      </p>
                     </div>
                     <div className="flex min-w-0 items-center gap-4">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-soft)] text-[var(--color-text-secondary)]">
@@ -409,14 +521,37 @@ export default function RiwayatTransaksi() {
                         {getTransactionMeta(tx)}
                       </p>
                     </div>
-                    <Badge variant={isIncome ? "teal" : "neutral"} className="w-fit">
+                    <Badge
+                      variant={isIncome ? "teal" : "neutral"}
+                      className="w-fit"
+                    >
                       {tx.category.name}
                     </Badge>
-                    <p className={cn("text-right font-black", isIncome ? "text-[var(--color-green)]" : "text-[var(--color-red)]")}>
+                    <p
+                      className={cn(
+                        "text-right font-black",
+                        isIncome
+                          ? "text-[var(--color-green)]"
+                          : "text-[var(--color-red)]",
+                      )}
+                    >
                       {isIncome ? "+" : "-"} {formatCurrency(tx.amount)}
                     </p>
-                    <div className="flex justify-end">
-                      <button type="button" onClick={() => setDeleteId(tx.id)} className="text-[var(--color-text-muted)] hover:text-[var(--color-salmon-dark)]">
+                    <div className="flex justify-end gap-2">
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/transaksi/${tx.id}/edit`)}
+                        className="text-[var(--color-text-muted)] hover:text-[var(--color-teal-ink)]"
+                        aria-label="Edit transaksi"
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setDeleteId(tx.id)}
+                        className="text-[var(--color-text-muted)] hover:text-[var(--color-salmon-dark)]"
+                        aria-label="Hapus transaksi"
+                      >
                         <Trash2 className="h-4 w-4" />
                       </button>
                     </div>
@@ -434,7 +569,9 @@ export default function RiwayatTransaksi() {
                   <button
                     type="button"
                     disabled={filters.page === 1}
-                    onClick={() => setFilters((p) => ({ ...p, page: (p.page ?? 1) - 1 }))}
+                    onClick={() =>
+                      setFilters((p) => ({ ...p, page: (p.page ?? 1) - 1 }))
+                    }
                     className="rounded-xl border border-[var(--color-border)] px-3 py-1.5 text-sm font-bold disabled:opacity-40"
                   >
                     ← Prev
@@ -445,7 +582,9 @@ export default function RiwayatTransaksi() {
                   <button
                     type="button"
                     disabled={filters.page === txData.totalPages}
-                    onClick={() => setFilters((p) => ({ ...p, page: (p.page ?? 1) + 1 }))}
+                    onClick={() =>
+                      setFilters((p) => ({ ...p, page: (p.page ?? 1) + 1 }))
+                    }
                     className="rounded-xl border border-[var(--color-border)] px-3 py-1.5 text-sm font-bold disabled:opacity-40"
                   >
                     Next →

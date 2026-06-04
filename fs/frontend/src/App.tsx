@@ -42,6 +42,7 @@ export default function App() {
               <Route path="/peringatan" element={<Peringatan />} />
               <Route path="/profil" element={<Profil />} />
               <Route path="/tambah" element={<TambahTransaksi />} />
+              <Route path="/transaksi/:id/edit" element={<TambahTransaksi />} />
             </Route>
           </Route>
 
@@ -51,4 +52,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-
