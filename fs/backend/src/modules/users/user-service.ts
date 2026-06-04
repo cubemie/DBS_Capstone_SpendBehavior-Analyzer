@@ -1,6 +1,6 @@
 import { AppException } from '../../exception.ts'
-import { hashPassword } from '../../utils/password.ts'
-import type { CreateUserDto, UserResponseDto } from './user-schema.ts'
+import { hashPassword, verifyPassword } from '../../utils/password.ts'
+import type { CreateUserDto, UpdateUserDto, UserResponseDto, ChangePasswordDto } from './user-schema.ts'
 import { type UserRecord, userRepository } from './user-repository.ts'
 
 function toUserResponse(user: UserRecord): UserResponseDto {
@@ -46,5 +46,33 @@ export const userService = {
     }
 
     return toUserResponse(user)
+  },
+
+  async update(id: string, dto: UpdateUserDto): Promise<UserResponseDto> {
+    const user = await userRepository.update(id, {
+      fullName: dto.fullName,
+      phone: dto.phone,
+    })
+
+    if (!user) {
+      throw new AppException('User tidak ditemukan', 404)
+    }
+
+    return toUserResponse(user)
+  },
+
+  async changePassword(id: string, dto: ChangePasswordDto): Promise<void> {
+    const user = await userRepository.findById(id)
+    if (!user) {
+      throw new AppException('User tidak ditemukan', 404)
+    }
+
+    const isValid = await verifyPassword(dto.oldPassword, user.passwordHash)
+    if (!isValid) {
+      throw new AppException('Kata sandi lama salah', 400)
+    }
+
+    const newPasswordHash = await hashPassword(dto.newPassword)
+    await userRepository.update(id, { passwordHash: newPasswordHash })
   },
 }

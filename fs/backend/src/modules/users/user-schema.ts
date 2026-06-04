@@ -13,6 +13,18 @@ export const createUserSchema = z.object({
   phone: z.string().trim().optional().nullable(),
 })
 
+export const updateUserSchema = z.object({
+  fullName: z.string('Harus merupakan string yang valid').trim().optional(),
+  phone: z.string().trim().optional().nullable(),
+})
+export type UpdateUserDto = z.infer<typeof updateUserSchema>
+
+export const changePasswordSchema = z.object({
+  oldPassword: z.string().min(8),
+  newPassword: z.string().min(8),
+})
+export type ChangePasswordDto = z.infer<typeof changePasswordSchema>
+
 export const getUserParamsSchema = z.object({
   id: z.uuid('Harus merupakan format UUID yang valid'),
 })

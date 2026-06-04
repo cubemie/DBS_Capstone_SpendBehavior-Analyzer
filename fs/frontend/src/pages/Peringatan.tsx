@@ -7,53 +7,34 @@ import WarningCard from "../components/WarningCard";
 import ErrorState from "../components/ErrorState";
 import { useApi } from "../hooks/useApi";
 import { analyticsService } from "../services/analyticsService";
-import { formatCurrency } from "../utils/formatCurrency";
 import type { DashboardWarning, MoneyLeak, Warning } from "../types/models";
 
 function toWarning(w: DashboardWarning): Warning {
-  // Map both old (low/medium/high) and new (info/warning/danger/success) backend severity values
-  const severityNorm = ((): "info" | "warning" | "danger" | "success" => {
-    switch (w.severity) {
-      case "high":    return "danger";
-      case "medium":  return "warning";
-      case "low":     return "info";
-      case "danger":  return "danger";
-      case "warning": return "warning";
-      case "success": return "success";
-      case "info":    return "info";
-      default:        return "info";
-    }
-  })();
   const iconForSeverity = {
     danger:  ShieldAlert,
     warning: AlertTriangle,
     success: ShieldCheck,
     info:    Info,
-  }[severityNorm];
-  const labelForSeverity = {
-    danger:  "Bahaya",
-    warning: "Perhatian",
-    success: "Aman",
-    info:    "Info",
-  }[severityNorm];
+  }[w.severity] || Info;
+
   return {
     id: w.id,
-    title: w.category ? `Peringatan Kategori ${w.category}` : "Peringatan Finansial",
-    description: w.message,
-    label: labelForSeverity,
-    severity: severityNorm,
+    title: w.title,
+    description: w.description,
+    label: w.label,
+    severity: w.severity,
     actionLabel: "Lihat Detail",
     icon: iconForSeverity,
   };
 }
 
-function toLeakWarning(l: MoneyLeak, index: number): Warning {
+function toLeakWarning(l: MoneyLeak): Warning {
   return {
-    id: `leak-${index}`,
-    title: `Potensi Kebocoran: ${l.categoryName}`,
-    description: `Pengeluaran berulang terdeteksi di kategori ${l.categoryName} sebanyak ${l.frequency} kali dengan total ${formatCurrency(l.amount)}.`,
-    label: `${l.frequency}x Transaksi`,
-    severity: "danger",
+    id: l.id,
+    title: l.title,
+    description: l.description,
+    label: l.label,
+    severity: l.severity,
     actionLabel: "Cek Detail",
     icon: CalendarClock,
   };

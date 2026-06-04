@@ -124,11 +124,11 @@ function getWarningMetadata(message: string): {
 } {
   const normalized = message.toLowerCase()
 
-  if (normalized.includes('stabil') || normalized.includes('tidak ada')) {
+  if (normalized.includes('variability') || normalized.includes('fluktuasi')) {
     return {
-      title: 'Pola Pengeluaran Stabil',
-      label: 'Aman',
-      severity: 'success',
+      title: 'Nominal Transaksi Tidak Stabil',
+      label: 'Variasi',
+      severity: 'info',
     }
   }
 
@@ -156,11 +156,11 @@ function getWarningMetadata(message: string): {
     }
   }
 
-  if (normalized.includes('variability') || normalized.includes('fluktuasi')) {
+  if (normalized.includes('stabil') || normalized.includes('tidak ada')) {
     return {
-      title: 'Nominal Transaksi Tidak Stabil',
-      label: 'Variasi',
-      severity: 'info',
+      title: 'Pola Pengeluaran Stabil',
+      label: 'Aman',
+      severity: 'success',
     }
   }
 

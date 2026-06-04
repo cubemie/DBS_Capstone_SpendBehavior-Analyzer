@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 import {
   BadgeCheck,
   Bell,
-  CreditCard,
-  Languages,
-  Moon,
   ShieldCheck,
   SlidersHorizontal,
   UserRoundCog,
@@ -48,12 +45,23 @@ function Toggle({ checked, onClick }: ToggleProps) {
 }
 
 export default function Profil() {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const [prediction, setPrediction] = useState<ApiPrediction | null>(null);
   const [isLoadingPred, setIsLoadingPred] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [predError, setPredError] = useState("");
   const [notifPush, setNotifPush] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
+
+  const [name, setName] = useState(user?.name || "");
+  const [phone, setPhone] = useState(user?.phone || "");
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
+  const [profileMessage, setProfileMessage] = useState("");
+
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   useEffect(() => {
     predictionService
@@ -68,19 +76,53 @@ export default function Profil() {
 
   const handleGeneratePrediction = async () => {
     setIsGenerating(true);
+    setPredError("");
     try {
       const res = await predictionService.createPersonaPrediction({ force: true });
       setPrediction(res);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Gagal membuat prediksi persona", err);
+      setPredError(err?.message || "Gagal melakukan analisis. Pastikan kamu memiliki cukup transaksi.");
     } finally {
       setIsGenerating(false);
     }
   };
 
+  const handleSaveProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingProfile(true);
+    setProfileMessage("");
+    try {
+      await updateUser({ fullName: name, phone });
+      setProfileMessage("Profil berhasil diperbarui!");
+    } catch {
+      setProfileMessage("Gagal memperbarui profil.");
+    } finally {
+      setIsSavingProfile(false);
+    }
+  };
+
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+    setIsChangingPassword(true);
+    setPasswordMessage("");
+    setPasswordError("");
+    try {
+      const { authService } = await import("../services/authService");
+      await authService.changePassword(user.id, { oldPassword, newPassword });
+      setPasswordMessage("Kata sandi berhasil diperbarui!");
+      setOldPassword("");
+      setNewPassword("");
+    } catch (err: any) {
+      setPasswordError(err?.message || "Gagal memperbarui kata sandi.");
+    } finally {
+      setIsChangingPassword(false);
+    }
+  };
+
   const displayName = user?.name || "Pengguna";
   const userEmail = user?.email || "";
-  const userPhone = user?.phone || "";
   const avatarUrl = user?.avatarUrl || defaultAvatar;
 
   return (
@@ -110,53 +152,7 @@ export default function Profil() {
       </Card>
 
       <section className="grid gap-5 lg:grid-cols-2">
-        <Card>
-          <div className="mb-6 flex items-center gap-3">
-            <UserRoundCog className="h-6 w-6 text-[var(--color-teal-ink)]" />
-            <h2 className="text-xl font-black text-[var(--color-text-primary)]">Pengaturan Akun</h2>
-          </div>
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
-            <Input label="Nama" name="name" defaultValue={displayName} readOnly />
-            <Input label="Email" name="email" type="email" defaultValue={userEmail} readOnly />
-            <Input label="No. Telepon" name="phone" defaultValue={userPhone} readOnly />
-          </form>
-          <p className="mt-3 text-xs text-[var(--color-text-muted)] italic">
-            Perubahan profil dinonaktifkan di server.
-          </p>
-        </Card>
-
         <div className="space-y-5">
-          <Card>
-            <div className="mb-5 flex items-center gap-3">
-              <SlidersHorizontal className="h-6 w-6 text-[var(--color-teal-ink)]" />
-              <h2 className="text-xl font-black text-[var(--color-text-primary)]">Preferensi Aplikasi</h2>
-            </div>
-            <div className="space-y-3">
-              <SettingsRow
-                icon={<Languages className="h-5 w-5" />}
-                title="Bahasa"
-                description="Tampilan aplikasi"
-                trailing={
-                  <span className="rounded-full bg-[var(--color-soft)] px-3 py-1.5 text-sm font-bold text-[var(--color-text-secondary)]">
-                    Indonesia
-                  </span>
-                }
-              />
-              <SettingsRow
-                icon={<Bell className="h-5 w-5" />}
-                title="Notifikasi"
-                description="Peringatan penting saja"
-                trailing={<Toggle checked={notifPush} onClick={() => setNotifPush((value) => !value)} />}
-              />
-              <SettingsRow
-                icon={<Moon className="h-5 w-5" />}
-                title="Mode Gelap"
-                description="Preferensi tampilan"
-                trailing={<Toggle checked={darkMode} onClick={() => setDarkMode((value) => !value)} />}
-              />
-            </div>
-          </Card>
-
           <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
             {isLoadingPred ? (
               <div className="text-center py-4 text-sm text-[var(--color-text-secondary)] animate-pulse">
@@ -194,6 +190,7 @@ export default function Profil() {
                   >
                     Perbarui Analisis
                   </Button>
+                  {predError && <p className="text-xs text-[var(--color-salmon-dark)]">{predError}</p>}
                 </div>
               </div>
             ) : (
@@ -218,22 +215,63 @@ export default function Profil() {
                 >
                   Analisis Persona Sekarang
                 </Button>
+                {predError && <p className="text-sm text-[var(--color-salmon-dark)] text-center">{predError}</p>}
               </div>
             )}
           </Card>
 
           <Card>
-            <div className="mb-5 flex items-center gap-3">
-              <CreditCard className="h-6 w-6 text-[var(--color-teal-ink)]" />
-              <h2 className="text-xl font-black text-[var(--color-text-primary)]">Langganan</h2>
+            <div className="mb-6 flex items-center gap-3">
+              <UserRoundCog className="h-6 w-6 text-[var(--color-teal-ink)]" />
+              <h2 className="text-xl font-black text-[var(--color-text-primary)]">Pengaturan Akun</h2>
             </div>
-            <SettingsRow
-              icon={<CreditCard className="h-5 w-5" />}
-              title="BUDU Member"
-              description="Status akun saat ini"
-              trailing={<Badge variant="teal">Aktif</Badge>}
-            />
+            <form onSubmit={handleSaveProfile} className="space-y-4">
+              <Input label="Nama" name="name" value={name} onChange={(e) => setName(e.target.value)} />
+              <Input label="Email" name="email" type="email" defaultValue={userEmail} readOnly />
+              <Input label="No. Telepon" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+              {profileMessage && <p className="text-sm font-semibold text-[var(--color-teal-ink)]">{profileMessage}</p>}
+              <Button type="submit" isLoading={isSavingProfile} fullWidth>
+                Simpan Perubahan
+              </Button>
+            </form>
           </Card>
+
+          <Card>
+            <div className="mb-6 flex items-center gap-3">
+              <ShieldCheck className="h-6 w-6 text-[var(--color-teal-ink)]" />
+              <h2 className="text-xl font-black text-[var(--color-text-primary)]">Ubah Kata Sandi</h2>
+            </div>
+            <form onSubmit={handleChangePassword} className="space-y-4">
+              <Input label="Kata Sandi Lama" name="oldPassword" type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} required />
+              <Input label="Kata Sandi Baru" name="newPassword" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+              {passwordMessage && <p className="text-sm font-semibold text-[var(--color-teal-ink)]">{passwordMessage}</p>}
+              {passwordError && <p className="text-sm font-semibold text-[var(--color-salmon-dark)]">{passwordError}</p>}
+              <Button type="submit" isLoading={isChangingPassword} fullWidth variant="outline">
+                Perbarui Sandi
+              </Button>
+            </form>
+          </Card>
+        </div>
+
+        <div className="space-y-5">
+          <Card>
+            <div className="mb-5 flex items-center gap-3">
+              <SlidersHorizontal className="h-6 w-6 text-[var(--color-teal-ink)]" />
+              <h2 className="text-xl font-black text-[var(--color-text-primary)]">Preferensi Aplikasi</h2>
+            </div>
+            <div className="space-y-3">
+              <SettingsRow
+                icon={<Bell className="h-5 w-5" />}
+                title="Notifikasi"
+                description="Peringatan penting saja"
+                trailing={<Toggle checked={notifPush} onClick={() => setNotifPush((value) => !value)} />}
+              />
+            </div>
+          </Card>
+
+
+
+
         </div>
       </section>
     </div>

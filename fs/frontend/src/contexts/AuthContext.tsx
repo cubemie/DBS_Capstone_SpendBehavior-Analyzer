@@ -15,6 +15,7 @@ interface AuthContextValue {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (fullName: string, email: string, password: string) => Promise<void>;
+  updateUser: (payload: { fullName?: string; phone?: string }) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -57,6 +58,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [],
   );
 
+  const updateUser = useCallback(
+    async (payload: { fullName?: string; phone?: string }) => {
+      if (!user) return;
+      const updatedUser = await authService.updateUser(user.id, payload);
+      setUser(updatedUser);
+    },
+    [user],
+  );
+
   const logout = useCallback(async () => {
     await authService.logout().catch(() => {}); // tetap logout meski request gagal
     tokenStore.clear();
@@ -71,6 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         login,
         register,
+        updateUser,
         logout,
       }}
     >

@@ -153,15 +153,22 @@ export interface DashboardInsight {
 
 export interface DashboardWarning {
   id: string;
-  severity: "low" | "medium" | "high" | "info" | "warning" | "danger" | "success";
-  message: string;
-  category?: string;
+  title: string;
+  description: string;
+  label: string;
+  severity: "info" | "warning" | "danger" | "success";
+  source: string;
 }
 
 export interface MoneyLeak {
-  categoryName: string;
-  amount: number;
-  frequency: number;
+  id: string;
+  title: string;
+  description: string;
+  label: string;
+  severity: "warning" | "danger";
+  categoryId: string;
+  amountIdr: number;
+  transactionCount: number;
 }
 
 export interface ApiDashboard {

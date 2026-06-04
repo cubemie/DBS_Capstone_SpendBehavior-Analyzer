@@ -53,6 +53,29 @@ export const authService = {
     };
   },
 
+  async updateUser(userId: string, payload: { fullName?: string; phone?: string }): Promise<ApiUser> {
+    const res = await apiRequest<any>(`/users/${userId}`, {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    });
+    return {
+      id: res.id,
+      name: res.fullName,
+      email: res.email,
+      avatarUrl: res.avatarUrl || undefined,
+      phone: res.phone || undefined,
+      persona: res.persona || undefined,
+      createdAt: res.createdAt,
+    };
+  },
+
+  async changePassword(userId: string, payload: { oldPassword: string; newPassword: string }): Promise<void> {
+    await apiRequest<any>(`/users/${userId}/password`, {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    });
+  },
+
   // Dipanggil saat app mount — restore session dari refresh cookie
   async tryRestoreSession(): Promise<AuthTokens | null> {
     try {

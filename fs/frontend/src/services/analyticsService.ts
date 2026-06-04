@@ -132,13 +132,21 @@ function mapDashboard(raw: RawDashboard): ApiDashboard {
     })),
     warnings: raw.warnings.map((w) => ({
       id: w.id,
+      title: w.title,
+      description: w.description,
+      label: w.label,
       severity: w.severity,
-      message: w.description,
+      source: w.source,
     })),
     moneyLeaks: raw.moneyLeaks.map((ml) => ({
-      categoryName: ml.title.replace(" Sering Kecil-Kecil", "") || `Kategori`,
-      amount: ml.amountIdr,
-      frequency: ml.transactionCount,
+      id: ml.id,
+      title: ml.title,
+      description: ml.description,
+      label: ml.label,
+      severity: ml.severity,
+      categoryId: ml.categoryId,
+      amountIdr: ml.amountIdr,
+      transactionCount: ml.transactionCount,
     })),
   };
 }

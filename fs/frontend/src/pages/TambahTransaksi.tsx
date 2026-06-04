@@ -46,7 +46,11 @@ export default function TambahTransaksi() {
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [date, setDate] = useState(() => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
+  });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -90,16 +94,19 @@ export default function TambahTransaksi() {
 
     setIsSubmitting(true);
     try {
-      const isoDate = date.includes("T")
-        ? date
-        : `${date}T00:00:00+07:00`;
+      const transactionDateObj = new Date(date);
+      if (isNaN(transactionDateObj.getTime())) {
+        setError("Format tanggal dan jam tidak valid.");
+        setIsSubmitting(false);
+        return;
+      }
 
       await transactionService.createTransaction({
         amountIdr: Number(amount),
         categoryId: selectedCategoryId,
         type,
         notes: note || undefined,
-        transactionDate: isoDate,
+        transactionDate: transactionDateObj.toISOString(),
         title: note || selectedCat?.name || (type === "income" ? "Pemasukan" : "Pengeluaran"),
       });
       navigate("/riwayat", { state: { toast: "Transaksi berhasil disimpan! ✅" } });
@@ -158,9 +165,12 @@ export default function TambahTransaksi() {
                   min="1"
                   className={cn(
                     "min-w-0 flex-1 bg-transparent text-center text-5xl font-black outline-none placeholder:text-[var(--color-track)]",
+                    "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
                     type === "expense" ? "text-[var(--color-salmon-dark)]" : "text-[var(--color-teal-ink)]",
                   )}
                 />
+                {/* Spacer transparan agar input '0' benar-benar berada di tengah */}
+                <span className="text-2xl font-black invisible pointer-events-none">Rp</span>
               </div>
             </div>
 
@@ -214,8 +224,8 @@ export default function TambahTransaksi() {
             />
             <Input
               name="date"
-              label="Tanggal"
-              type="date"
+              label="Tanggal & Jam"
+              type="datetime-local"
               value={date}
               onChange={(e) => setDate(e.target.value)}
               iconLeft={<Calendar className="h-5 w-5" />}

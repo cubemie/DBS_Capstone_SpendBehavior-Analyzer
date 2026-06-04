@@ -70,7 +70,7 @@ export default function Dashboard() {
 
   const displayWarning =
     warnings && warnings.length > 0
-      ? { title: warnings[0].message, description: warnings[0].message }
+      ? { title: warnings[0].title, description: warnings[0].description }
       : { title: "Belum ada peringatan.", description: "Terus pantau pengeluaran harianmu." };
 
   return (
@@ -126,6 +126,24 @@ export default function Dashboard() {
                 </p>
               </div>
             </div>
+          </Card>
+
+          <Card className="!border-[var(--color-salmon-light)] !bg-[var(--color-salmon-bg)]">
+            <div className="flex items-start gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-salmon-dark)]">
+                <Bell className="h-6 w-6" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-xs font-black uppercase tracking-[0.14em] text-[var(--color-salmon-dark)]">Perlu dicek</p>
+                <h2 className="mt-2 text-xl font-black leading-tight text-[var(--color-text-primary)]">
+                  {displayWarning.title}
+                </h2>
+              </div>
+            </div>
+            <p className="mt-4 text-sm leading-6 text-[var(--color-text-secondary)]">
+              {displayWarning.description}
+            </p>
+            <Button fullWidth className="mt-5" onClick={() => navigate("/peringatan")}>Lihat Peringatan</Button>
           </Card>
 
           {/* Top Categories — replaces Budget Bulanan */}
@@ -196,23 +214,6 @@ export default function Dashboard() {
             <Button variant="outline" fullWidth className="mt-5" onClick={() => navigate("/profil")}>Lihat Profil</Button>
           </Card>
 
-          <Card className="!border-[var(--color-salmon-light)] !bg-[var(--color-salmon-bg)]">
-            <div className="flex items-start gap-4">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-salmon-dark)]">
-                <Bell className="h-6 w-6" />
-              </span>
-              <div className="min-w-0">
-                <p className="text-xs font-black uppercase tracking-[0.14em] text-[var(--color-salmon-dark)]">Perlu dicek</p>
-                <h2 className="mt-2 text-xl font-black leading-tight text-[var(--color-text-primary)]">
-                  {displayWarning.title}
-                </h2>
-              </div>
-            </div>
-            <p className="mt-4 text-sm leading-6 text-[var(--color-text-secondary)]">
-              {displayWarning.description}
-            </p>
-            <Button fullWidth className="mt-5" onClick={() => navigate("/peringatan")}>Lihat Peringatan</Button>
-          </Card>
         </aside>
       </section>
     </div>
