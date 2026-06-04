@@ -6,14 +6,14 @@
 // ─── ANSI Color Codes ────────────────────────────────────────────────────────
 const USE_COLOR = process.stdout.isTTY ?? false
 
-const RESET  = USE_COLOR ? '\x1b[0m' : ''
-const BOLD   = USE_COLOR ? '\x1b[1m' : ''
-const DIM    = USE_COLOR ? '\x1b[2m' : ''
-const GREEN  = USE_COLOR ? '\x1b[32m' : ''
+const RESET = USE_COLOR ? '\x1b[0m' : ''
+const BOLD = USE_COLOR ? '\x1b[1m' : ''
+const DIM = USE_COLOR ? '\x1b[2m' : ''
+const GREEN = USE_COLOR ? '\x1b[32m' : ''
 const YELLOW = USE_COLOR ? '\x1b[33m' : ''
-const RED    = USE_COLOR ? '\x1b[31m' : ''
-const CYAN   = USE_COLOR ? '\x1b[36m' : ''
-const WHITE  = USE_COLOR ? '\x1b[37m' : ''
+const RED = USE_COLOR ? '\x1b[31m' : ''
+const CYAN = USE_COLOR ? '\x1b[36m' : ''
+const WHITE = USE_COLOR ? '\x1b[37m' : ''
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -22,8 +22,10 @@ function pad(str: string, length: number): string {
 }
 
 function getStatusLabel(status: number): string {
-  if (status >= 500) return `${RED}${BOLD}${status} Internal Server Error${RESET}`
-  if (status >= 400) return `${YELLOW}${status} ${getStatusText(status)}${RESET}`
+  if (status >= 500)
+    return `${RED}${BOLD}${status} Internal Server Error${RESET}`
+  if (status >= 400)
+    return `${YELLOW}${status} ${getStatusText(status)}${RESET}`
   return `${GREEN}${status}${RESET}`
 }
 
@@ -57,15 +59,17 @@ export function logRequest(
   status: number,
   durationMs: number,
 ): void {
-  const symbol    = getSymbol(status)
+  const symbol = getSymbol(status)
   const methodStr = `${CYAN}${BOLD}${method.padEnd(5)}${RESET}`
-  const label     = getStatusLabel(status)
-  const timing    = `${DIM}(${durationMs}ms)${RESET}`
-  const ts        = new Date().toISOString()
+  const label = getStatusLabel(status)
+  const timing = `${DIM}(${durationMs}ms)${RESET}`
+  const ts = new Date().toISOString()
 
   const paddedUrl = pad(`${url} `, 45)
 
-  console.log(`${DIM}${ts}${RESET} ${symbol} ${methodStr}${WHITE}${paddedUrl}${RESET} ${label} ${timing}`)
+  console.log(
+    `${DIM}${ts}${RESET} ${symbol} ${methodStr}${WHITE}${paddedUrl}${RESET} ${label} ${timing}`,
+  )
 }
 
 /**
@@ -83,9 +87,9 @@ export function logError(err: Error, context?: string): void {
     // Tampilkan stack trace tapi filter baris node_modules
     const stack = err.stack
       .split('\n')
-      .slice(1)                                    // buang baris pertama (sudah ada di atas)
-      .filter(line => !line.includes('node_modules'))
-      .map(line => `  ${DIM}${line.trim()}${RESET}`)
+      .slice(1) // buang baris pertama (sudah ada di atas)
+      .filter((line) => !line.includes('node_modules'))
+      .map((line) => `  ${DIM}${line.trim()}${RESET}`)
       .join('\n')
     if (stack) console.error(stack)
   }

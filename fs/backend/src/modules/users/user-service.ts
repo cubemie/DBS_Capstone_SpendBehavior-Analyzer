@@ -2,7 +2,12 @@ import { AppException } from '../../exception.ts'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { hashPassword, verifyPassword } from '../../utils/password.ts'
-import type { CreateUserDto, UpdateUserDto, UserResponseDto, ChangePasswordDto } from './user-schema.ts'
+import type {
+  CreateUserDto,
+  UpdateUserDto,
+  UserResponseDto,
+  ChangePasswordDto,
+} from './user-schema.ts'
 import { type UserRecord, userRepository } from './user-repository.ts'
 import { avatarUpload } from './avatar-upload-middleware.ts'
 

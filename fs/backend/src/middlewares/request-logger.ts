@@ -9,15 +9,10 @@ export function requestLogger(
   const startAt = process.hrtime.bigint() // nanosecond precision
 
   res.on('finish', () => {
-    const endAt      = process.hrtime.bigint()
+    const endAt = process.hrtime.bigint()
     const durationMs = Number((endAt - startAt) / BigInt(1_000_000))
 
-    logRequest(
-      req.method,
-      req.originalUrl,
-      res.statusCode,
-      durationMs,
-    )
+    logRequest(req.method, req.originalUrl, res.statusCode, durationMs)
   })
 
   next()

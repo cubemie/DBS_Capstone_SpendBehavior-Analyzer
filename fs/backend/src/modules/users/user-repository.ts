@@ -31,7 +31,10 @@ export const userRepository = {
     return user
   },
 
-  async update(id: string, record: Partial<CreateUserRecord>): Promise<UserRecord | undefined> {
+  async update(
+    id: string,
+    record: Partial<CreateUserRecord>,
+  ): Promise<UserRecord | undefined> {
     const [user] = await db
       .update(users)
       .set({ ...record, updatedAt: new Date() })

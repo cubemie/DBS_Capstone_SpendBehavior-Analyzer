@@ -18,8 +18,6 @@ export type AuthTokens = {
   refreshToken: string
 }
 
-
-
 function createRefreshTokenExpiresAt(): Date {
   const expiresAt = new Date()
   expiresAt.setDate(expiresAt.getDate() + env.REFRESH_TOKEN_EXPIRES_IN_DAYS)
@@ -49,9 +47,7 @@ async function createSession(
 }
 
 export const authService = {
-  async register(
-    dto: RegisterDto,
-  ): Promise<UserResponseDto> {
+  async register(dto: RegisterDto): Promise<UserResponseDto> {
     return await userService.create(dto)
   },
 

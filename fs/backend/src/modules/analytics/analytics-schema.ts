@@ -25,11 +25,7 @@ export const dashboardQuerySchema = dateRangeSchema.extend({
 
 export type DashboardQueryDto = z.output<typeof dashboardQuerySchema>
 
-export type DashboardWarningSeverity =
-  | 'info'
-  | 'warning'
-  | 'danger'
-  | 'success'
+export type DashboardWarningSeverity = 'info' | 'warning' | 'danger' | 'success'
 
 export type DashboardInsightTone = 'teal' | 'coral' | 'yellow' | 'neutral'
 
