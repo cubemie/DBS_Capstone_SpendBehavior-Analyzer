@@ -45,6 +45,8 @@ interface RawSummary {
   transactionCount: number;
 }
 
+type SummaryFilters = Pick<TransactionFilters, "startDate" | "endDate">;
+
 // ─── Create payload the backend actually expects ───────────────────────────────
 export interface TransactionPayload {
   amountIdr: number;
@@ -76,6 +78,19 @@ function buildCreatePayload(p: TransactionPayload) {
   return p;
 }
 
+function toDateTimeWithOffset(date: string, time: string): string {
+  return `${date}T${time}+07:00`;
+}
+
+function addDateRangeParams(params: URLSearchParams, filters: SummaryFilters) {
+  if (filters.startDate) {
+    params.set("from", toDateTimeWithOffset(filters.startDate, "00:00:00.000"));
+  }
+  if (filters.endDate) {
+    params.set("to", toDateTimeWithOffset(filters.endDate, "23:59:59.999"));
+  }
+}
+
 // ─── Service ──────────────────────────────────────────────────────────────────
 export const transactionService = {
   async getTransactions(
@@ -85,8 +100,11 @@ export const transactionService = {
     const params = new URLSearchParams();
     if (filters.type) params.set("type", filters.type);
     if (filters.categoryId) params.set("categoryId", filters.categoryId);
+    if (filters.search?.trim()) params.set("search", filters.search.trim());
+    if (filters.sort) params.set("sort", filters.sort);
     if (filters.page) params.set("page", String(filters.page));
     if (filters.limit) params.set("limit", String(filters.limit));
+    addDateRangeParams(params, filters);
 
     const raw = await apiRequest<RawTransactionList>(
       `/transactions?${params}`,
@@ -114,8 +132,13 @@ export const transactionService = {
     return apiRequest<void>(`/transactions/${id}`, { method: "DELETE" });
   },
 
-  async getSummary(): Promise<ApiTransactionSummary> {
-    const raw = await apiRequest<RawSummary>("/transactions/summary");
+  async getSummary(filters: SummaryFilters = {}): Promise<ApiTransactionSummary> {
+    const params = new URLSearchParams();
+    addDateRangeParams(params, filters);
+    const query = params.toString();
+    const raw = await apiRequest<RawSummary>(
+      query ? `/transactions/summary?${query}` : "/transactions/summary",
+    );
     return {
       totalIncome: raw.incomeTotalIdr,
       totalExpense: raw.expenseTotalIdr,

@@ -6,6 +6,7 @@ import PageHeader from "../components/PageHeader";
 import ProgressBar from "../components/ProgressBar";
 import { useApi } from "../hooks/useApi";
 import { analyticsService } from "../services/analyticsService";
+import type { DashboardPeriodOption } from "../services/analyticsService";
 import { formatCurrency } from "../utils/formatCurrency";
 
 const CHART_COLORS = ["#F28C6A", "#8BDFDD", "#FFE394", "#B7D6A5", "#C4B5FD"];
@@ -23,7 +24,7 @@ function AnalisisSkeleton() {
 }
 
 export default function Analisis() {
-  const [period, setPeriod] = useState("current_month");
+  const [period, setPeriod] = useState<DashboardPeriodOption>("current_month");
   const { data, isLoading, error, refetch } = useApi(() => analyticsService.getDashboard(period), [period]);
 
   if (isLoading) return <div className="space-y-6"><PageHeader title="Analisis" description="Pola pengeluaranmu." /><AnalisisSkeleton /></div>;
@@ -53,7 +54,7 @@ export default function Analisis() {
           <label className="relative block w-full sm:w-44">
             <select
               value={period}
-              onChange={(e) => setPeriod(e.target.value)}
+              onChange={(e) => setPeriod(e.target.value as DashboardPeriodOption)}
               className="h-11 w-full appearance-none rounded-2xl border border-[var(--color-border)] bg-white px-4 pr-10 text-sm font-bold text-[var(--color-text-primary)] outline-none focus:border-[var(--color-teal-dark)]"
             >
               <option value="current_month">Bulan Ini</option>
@@ -201,4 +202,3 @@ export default function Analisis() {
     </div>
   );
 }
-

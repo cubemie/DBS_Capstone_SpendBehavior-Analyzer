@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ArrowDown, ArrowUp, Search, Wallet, Trash2 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import Badge from "../components/Badge";
@@ -39,7 +39,7 @@ function TransactionListSkeleton() {
 }
 
 export default function RiwayatTransaksi() {
-  const [filters, setFilters] = useState<TransactionFilters>({ page: 1, limit: 10 });
+  const [filters, setFilters] = useState<TransactionFilters>({ page: 1, limit: 10, sort: "date_desc" });
   const [search, setSearch] = useState("");
   const [activeTypeFilter, setActiveTypeFilter] = useState<"all" | CategoryKind>("all");
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -58,11 +58,26 @@ export default function RiwayatTransaksi() {
     }
   }, [toastMessage]);
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const nextSearch = search.trim() || undefined;
+      setFilters((prev) => {
+        if (prev.search === nextSearch && prev.page === 1) return prev;
+        return { ...prev, search: nextSearch, page: 1 };
+      });
+    }, 350);
+
+    return () => window.clearTimeout(timer);
+  }, [search]);
+
   const { data: txData, isLoading: txLoading, error: txError, refetch } = useApi(
     () => transactionService.getTransactions(filters),
     [filters]
   );
-  const { data: summary } = useApi(() => transactionService.getSummary());
+  const { data: summary } = useApi(
+    () => transactionService.getSummary(filters),
+    [filters.startDate, filters.endDate],
+  );
 
   const handleTypeFilter = (newType: "all" | CategoryKind) => {
     setActiveTypeFilter(newType);
@@ -73,17 +88,23 @@ export default function RiwayatTransaksi() {
     }));
   };
 
-  // Client-side search filter on the current page results
-  const filteredTransactions = useMemo(() => {
-    if (!txData?.data) return [];
-    const q = search.toLowerCase();
-    if (!q) return txData.data;
-    return txData.data.filter(
-      (tx) =>
-        tx.category.name.toLowerCase().includes(q) ||
-        (tx.note ?? "").toLowerCase().includes(q),
-    );
-  }, [txData, search]);
+  const handleDateFilter = (key: "startDate" | "endDate", value: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value || undefined,
+      page: 1,
+    }));
+  };
+
+  const handleSortChange = (sort: NonNullable<TransactionFilters["sort"]>) => {
+    setFilters((prev) => ({
+      ...prev,
+      sort,
+      page: 1,
+    }));
+  };
+
+  const transactions = txData?.data ?? [];
 
   const confirmDelete = async () => {
     if (!deleteId) return;
@@ -175,6 +196,37 @@ export default function RiwayatTransaksi() {
             ))}
           </div>
         </div>
+        <div className="mt-4 grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_180px]">
+          <Input
+            label="Dari tanggal"
+            name="startDate"
+            type="date"
+            value={filters.startDate ?? ""}
+            onChange={(event) => handleDateFilter("startDate", event.target.value)}
+            className="bg-white"
+          />
+          <Input
+            label="Sampai tanggal"
+            name="endDate"
+            type="date"
+            value={filters.endDate ?? ""}
+            onChange={(event) => handleDateFilter("endDate", event.target.value)}
+            className="bg-white"
+          />
+          <label className="block">
+            <span className="mb-2 block text-sm font-semibold text-[var(--color-text-primary)]">
+              Urutan
+            </span>
+            <select
+              value={filters.sort ?? "date_desc"}
+              onChange={(event) => handleSortChange(event.target.value as NonNullable<TransactionFilters["sort"]>)}
+              className="h-12 w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 text-sm font-bold text-[var(--color-text-primary)] outline-none transition focus:border-[var(--color-teal-dark)] focus:ring-4 focus:ring-[var(--color-teal-bg)]"
+            >
+              <option value="date_desc">Terbaru</option>
+              <option value="date_asc">Terlama</option>
+            </select>
+          </label>
+        </div>
       </Card>
 
       {txLoading && <TransactionListSkeleton />}
@@ -184,12 +236,12 @@ export default function RiwayatTransaksi() {
         <>
           {/* Mobile list */}
           <section className="space-y-3 lg:hidden">
-            {filteredTransactions.length === 0 ? (
+            {transactions.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-[var(--color-border)] p-10 text-center">
                 <p className="text-sm text-[var(--color-text-muted)]">Belum ada transaksi.</p>
               </div>
             ) : (
-              filteredTransactions.map((tx) => {
+              transactions.map((tx) => {
                 const isIncome = tx.type === "income";
                 return (
                   <div
@@ -229,12 +281,12 @@ export default function RiwayatTransaksi() {
               <span></span>
             </div>
 
-            {filteredTransactions.length === 0 ? (
+            {transactions.length === 0 ? (
               <div className="px-5 py-10 text-center">
                 <p className="text-sm text-[var(--color-text-muted)]">Belum ada transaksi.</p>
               </div>
             ) : (
-              filteredTransactions.map((tx) => {
+              transactions.map((tx) => {
                 const Icon = categoryIcon(tx.category.name);
                 const isIncome = tx.type === "income";
                 return (
@@ -272,7 +324,7 @@ export default function RiwayatTransaksi() {
 
             <div className="bg-white px-5 py-4 flex items-center justify-between">
               <p className="text-sm font-medium text-[var(--color-text-secondary)]">
-                {filteredTransactions.length} dari {txData?.total ?? 0} transaksi
+                {transactions.length} dari {txData?.total ?? 0} transaksi
               </p>
               {txData && txData.totalPages > 1 && (
                 <div className="flex gap-2">
@@ -304,4 +356,3 @@ export default function RiwayatTransaksi() {
     </div>
   );
 }
-

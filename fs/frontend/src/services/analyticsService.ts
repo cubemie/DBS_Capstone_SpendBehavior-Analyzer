@@ -1,6 +1,11 @@
 import { apiRequest } from "./apiClient";
 import type { ApiDashboard } from "../types/models";
 
+const DASHBOARD_TIMEZONE = "Asia/Jakarta";
+const JAKARTA_OFFSET = "+07:00";
+
+export type DashboardPeriodOption = "current_month" | "last_month" | "3_months";
+
 // ─── Raw backend shapes ───────────────────────────────────────────────────────
 interface RawSummary {
   incomeTotalIdr: number;
@@ -151,10 +156,84 @@ function mapDashboard(raw: RawDashboard): ApiDashboard {
   };
 }
 
+function pad(value: number): string {
+  return String(value).padStart(2, "0");
+}
+
+function getZonedDateParts(date: Date): { year: number; month: number; day: number } {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: DASHBOARD_TIMEZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+
+  const getPart = (type: string) => Number(parts.find((part) => part.type === type)?.value);
+
+  return {
+    year: getPart("year"),
+    month: getPart("month"),
+    day: getPart("day"),
+  };
+}
+
+function formatJakartaDateTime(
+  year: number,
+  month: number,
+  day: number,
+  time: string,
+): string {
+  return `${year}-${pad(month)}-${pad(day)}T${time}${JAKARTA_OFFSET}`;
+}
+
+function getLastDayOfMonth(year: number, month: number): number {
+  return new Date(Date.UTC(year, month, 0)).getUTCDate();
+}
+
+function addMonths(year: number, month: number, delta: number): { year: number; month: number } {
+  const date = new Date(Date.UTC(year, month - 1 + delta, 1));
+  return {
+    year: date.getUTCFullYear(),
+    month: date.getUTCMonth() + 1,
+  };
+}
+
+function buildPeriodParams(period: DashboardPeriodOption): URLSearchParams {
+  const now = getZonedDateParts(new Date());
+  const params = new URLSearchParams({ timezone: DASHBOARD_TIMEZONE });
+
+  if (period === "last_month") {
+    const target = addMonths(now.year, now.month, -1);
+    params.set("from", formatJakartaDateTime(target.year, target.month, 1, "00:00:00.000"));
+    params.set(
+      "to",
+      formatJakartaDateTime(
+        target.year,
+        target.month,
+        getLastDayOfMonth(target.year, target.month),
+        "23:59:59.999",
+      ),
+    );
+    return params;
+  }
+
+  if (period === "3_months") {
+    const start = addMonths(now.year, now.month, -2);
+    params.set("from", formatJakartaDateTime(start.year, start.month, 1, "00:00:00.000"));
+    params.set("to", formatJakartaDateTime(now.year, now.month, now.day, "23:59:59.999"));
+    return params;
+  }
+
+  params.set("from", formatJakartaDateTime(now.year, now.month, 1, "00:00:00.000"));
+  params.set("to", formatJakartaDateTime(now.year, now.month, now.day, "23:59:59.999"));
+  return params;
+}
+
 // ─── Service ──────────────────────────────────────────────────────────────────
 export const analyticsService = {
-  async getDashboard(period: string = "current_month"): Promise<ApiDashboard> {
-    const raw = await apiRequest<RawDashboard>(`/analytics/dashboard?period=${period}`);
+  async getDashboard(period: DashboardPeriodOption = "current_month"): Promise<ApiDashboard> {
+    const params = buildPeriodParams(period);
+    const raw = await apiRequest<RawDashboard>(`/analytics/dashboard?${params}`);
     return mapDashboard(raw);
   },
 };

@@ -111,8 +111,10 @@ export interface ApiTransaction {
 export interface TransactionFilters {
   type?: CategoryKind;
   categoryId?: string;
+  search?: string;
   startDate?: string;
   endDate?: string;
+  sort?: "date_desc" | "date_asc";
   page?: number;
   limit?: number;
 }
