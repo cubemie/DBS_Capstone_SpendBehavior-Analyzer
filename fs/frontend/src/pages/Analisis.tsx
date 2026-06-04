@@ -66,7 +66,7 @@ export default function Analisis() {
         }
       />
 
-      <section className="grid gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)]">
+      <section className="grid gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)]">
         {/* Top Categories bar chart */}
         <Card className="min-h-[300px]">
           <div className="mb-6 flex items-center justify-between gap-4">
@@ -100,7 +100,7 @@ export default function Analisis() {
         </Card>
 
         {/* Donut chart */}
-        <Card>
+        <Card className="h-full">
           <h2 className="text-xl font-black text-[var(--color-text-primary)]">Distribusi</h2>
           <p className="mt-1 text-sm text-[var(--color-text-muted)]">Komposisi pengeluaran.</p>
 
@@ -149,7 +149,7 @@ export default function Analisis() {
 
       <section className="grid gap-5 lg:grid-cols-2">
         {/* Weekday vs Weekend */}
-        <Card>
+        <Card className="h-full">
           <div className="mb-6 flex items-center gap-3">
             <BarChart3 className="h-6 w-6 text-[var(--color-teal-ink)]" />
             <h2 className="text-xl font-black text-[var(--color-text-primary)]">Hari Kerja vs Akhir Pekan</h2>
@@ -176,7 +176,7 @@ export default function Analisis() {
         </Card>
 
         {/* Insights from API */}
-        <Card className="!border-[var(--color-teal)] !bg-[var(--color-teal-bg)]">
+        <Card className="h-full !border-[var(--color-teal)] !bg-[var(--color-teal-bg)]">
           <h2 className="text-xl font-black text-[var(--color-teal-ink)]">Rekomendasi</h2>
           <div className="mt-5 space-y-3">
             {insights.length === 0 ? (

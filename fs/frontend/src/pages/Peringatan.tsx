@@ -275,7 +275,7 @@ export default function Peringatan() {
             </p>
           </div>
         ) : (
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2">
             {mappedLeaks.map((leak, index) => (
               <MoneyLeakCard
                 key={leak.id}

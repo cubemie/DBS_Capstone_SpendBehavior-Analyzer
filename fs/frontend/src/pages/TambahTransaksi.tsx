@@ -239,10 +239,10 @@ export default function TambahTransaksi() {
         }
       />
 
-      <Card className="mx-auto max-w-5xl">
+      <Card>
         <form
           onSubmit={handleSubmit}
-          className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
+          className="grid gap-8 lg:grid-cols-2"
         >
           <div className="rounded-[1.5rem] bg-[var(--color-soft)] p-5">
             <p className="text-sm font-black text-[var(--color-text-primary)]">

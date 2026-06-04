@@ -1,4 +1,4 @@
-import { Bell, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
@@ -47,15 +47,7 @@ function TopBar() {
         </form>
 
         <div className="flex items-center gap-2 sm:gap-3 md:ml-auto">
-          <button
-            type="button"
-            aria-label="Buka peringatan"
-            onClick={() => navigate("/peringatan")}
-            className="relative flex h-10 w-10 items-center justify-center rounded-2xl border border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] transition hover:bg-[var(--color-soft)]"
-          >
-            <Bell className="h-5 w-5" />
-          </button>
-          <div className="flex items-center gap-3 sm:border-l sm:border-[var(--color-border)] sm:pl-4">
+          <div className="flex items-center gap-3">
             <div className="hidden text-right sm:block">
               <p className="text-sm font-black text-[var(--color-text-primary)]">{displayName}</p>
               <p className="text-xs font-medium text-[var(--color-text-secondary)]">

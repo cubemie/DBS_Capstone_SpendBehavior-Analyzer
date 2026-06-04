@@ -115,7 +115,7 @@ export default function Dashboard() {
     <div className="space-y-6">
       <PageHeader title="Dashboard" description="Pantau pengeluaranmu bulan ini." />
 
-      <section className="grid gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.75fr)]">
+      <section className="grid gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)]">
         <div className="min-w-0 space-y-5">
           <Card className="overflow-hidden bg-[linear-gradient(135deg,#FFFFFF_0%,#FFF8E4_100%)]">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">

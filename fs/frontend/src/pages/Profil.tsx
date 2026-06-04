@@ -118,99 +118,45 @@ export default function Profil() {
     <div className="space-y-6">
       <PageHeader title="Profil Saya" description="Atur akun dan preferensimu." />
 
-      <Card>
-        <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:text-left">
-          <img
-            src={avatarUrl}
-            alt={displayName}
-            className="h-24 w-24 rounded-full object-cover ring-8 ring-[var(--color-soft)]"
-          />
-          <div className="min-w-0 flex-1">
-            <h2 className="text-2xl font-black text-[var(--color-text-primary)]">{displayName}</h2>
-            <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{userEmail}</p>
-            <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
-              <Badge variant="coral">
-                {persona?.persona || "Belum ada persona"}
-              </Badge>
-            </div>
-            <div className="mt-4 flex justify-center sm:justify-start">
-              <input
-                ref={avatarInputRef}
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                className="hidden"
-                onChange={handleAvatarChange}
+      <section className="grid gap-5 md:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)]">
+        <div className="min-w-0 space-y-5">
+          <Card>
+            <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:text-left">
+              <img
+                src={avatarUrl}
+                alt={displayName}
+                className="h-24 w-24 rounded-full object-cover ring-8 ring-[var(--color-soft)]"
               />
-              <Button
-                type="button"
-                variant="outline"
-                buttonSize="sm"
-                iconLeft={<Camera className="h-4 w-4" />}
-                isLoading={isUploadingAvatar}
-                onClick={() => avatarInputRef.current?.click()}
-              >
-                Ganti Foto
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Card>
-
-      <section className="max-w-3xl">
-        <div className="space-y-5">
-          {isLoadingDashboard ? (
-            <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
-              <div className="text-center py-4 text-sm text-[var(--color-text-secondary)] animate-pulse">
-                Memuat analisis periode ini...
+              <div className="min-w-0 flex-1">
+                <h2 className="text-2xl font-black text-[var(--color-text-primary)]">{displayName}</h2>
+                <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{userEmail}</p>
+                <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
+                  <Badge variant="coral">
+                    {persona?.persona || "Belum ada persona"}
+                  </Badge>
+                </div>
+                <div className="mt-4 flex justify-center sm:justify-start">
+                  <input
+                    ref={avatarInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    className="hidden"
+                    onChange={handleAvatarChange}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    buttonSize="sm"
+                    iconLeft={<Camera className="h-4 w-4" />}
+                    isLoading={isUploadingAvatar}
+                    onClick={() => avatarInputRef.current?.click()}
+                  >
+                    Ganti Foto
+                  </Button>
+                </div>
               </div>
-            </Card>
-          ) : dashboardError ? (
-            <Card className="!border-[var(--color-salmon-light)] !bg-[var(--color-salmon-bg)]">
-              <p className="text-sm font-semibold text-[var(--color-salmon-dark)]">
-                {dashboardError}
-              </p>
-            </Card>
-          ) : predictionStatus ? (
-            <>
-              <PredictionStatusCard
-                status={predictionStatus}
-                persona={persona}
-                onRefresh={refreshAnalysis}
-                onAddTransaction={goToAddTransaction}
-                isRefreshing={isRefreshing}
-                error={refreshError}
-              />
-              {persona && (
-                <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
-                  <div className="flex items-start gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-yellow-ink)]">
-                      <ShieldCheck className="h-5 w-5" />
-                    </span>
-                    <div className="space-y-2">
-                      <h2 className="text-xl font-black text-[var(--color-text-primary)]">
-                        Persona: {persona.persona}
-                      </h2>
-                      <p className="text-sm leading-6 text-[var(--color-text-secondary)]">
-                        {getPersonaDescription(persona.persona)}
-                      </p>
-                      {dashboard?.warnings && dashboard.warnings.length > 0 && (
-                        <div className="mt-4 pt-4 border-t border-[rgba(0,0,0,0.05)]">
-                          <p className="text-xs font-black uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
-                            Tips Keuangan
-                          </p>
-                          <ul className="list-disc pl-5 text-xs text-[var(--color-text-secondary)] space-y-1">
-                            {dashboard.warnings.map((warning) => (
-                              <li key={warning.id}>{warning.description}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </Card>
-              )}
-            </>
-          ) : null}
+            </div>
+          </Card>
 
           <Card>
             <div className="mb-6 flex items-center gap-3">
@@ -244,6 +190,62 @@ export default function Profil() {
             </form>
           </Card>
         </div>
+
+        <aside className="min-w-0 space-y-5">
+          {isLoadingDashboard ? (
+            <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
+              <div className="animate-pulse py-4 text-center text-sm text-[var(--color-text-secondary)]">
+                Memuat analisis periode ini...
+              </div>
+            </Card>
+          ) : dashboardError ? (
+            <Card className="!border-[var(--color-salmon-light)] !bg-[var(--color-salmon-bg)]">
+              <p className="text-sm font-semibold text-[var(--color-salmon-dark)]">
+                {dashboardError}
+              </p>
+            </Card>
+          ) : predictionStatus ? (
+            <>
+              <PredictionStatusCard
+                status={predictionStatus}
+                persona={persona}
+                onRefresh={refreshAnalysis}
+                onAddTransaction={goToAddTransaction}
+                isRefreshing={isRefreshing}
+                error={refreshError}
+              />
+              {persona && (
+                <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-yellow-ink)]">
+                      <ShieldCheck className="h-5 w-5" />
+                    </span>
+                    <div className="space-y-2">
+                      <h2 className="text-xl font-black text-[var(--color-text-primary)]">
+                        Persona: {persona.persona}
+                      </h2>
+                      <p className="text-sm leading-6 text-[var(--color-text-secondary)]">
+                        {getPersonaDescription(persona.persona)}
+                      </p>
+                      {dashboard?.warnings && dashboard.warnings.length > 0 && (
+                        <div className="mt-4 border-t border-[rgba(0,0,0,0.05)] pt-4">
+                          <p className="mb-2 text-xs font-black uppercase tracking-wider text-[var(--color-text-muted)]">
+                            Tips Keuangan
+                          </p>
+                          <ul className="list-disc space-y-1 pl-5 text-xs text-[var(--color-text-secondary)]">
+                            {dashboard.warnings.map((warning) => (
+                              <li key={warning.id}>{warning.description}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </Card>
+              )}
+            </>
+          ) : null}
+        </aside>
       </section>
     </div>
   );
