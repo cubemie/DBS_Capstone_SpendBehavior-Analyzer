@@ -1,11 +1,13 @@
+import type { ValidationIssue } from "../types/models";
+
 export class ApiError extends Error {
   status: number;
-  details?: Record<string, string[]>;
+  details?: ValidationIssue[];
 
   constructor(
     status: number,
     message: string,
-    details?: Record<string, string[]>,
+    details?: ValidationIssue[],
   ) {
     super(message);
     this.name = "ApiError";
@@ -13,4 +15,3 @@ export class ApiError extends Error {
     this.details = details;
   }
 }
-

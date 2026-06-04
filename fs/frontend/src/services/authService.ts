@@ -53,8 +53,8 @@ export const authService = {
     };
   },
 
-  async updateUser(userId: string, payload: { fullName?: string; phone?: string }): Promise<ApiUser> {
-    const res = await apiRequest<any>(`/users/${userId}`, {
+  async updateUser(payload: { fullName?: string; phone?: string }): Promise<ApiUser> {
+    const res = await apiRequest<any>("/users/me", {
       method: "PATCH",
       body: JSON.stringify(payload),
     });
@@ -69,8 +69,8 @@ export const authService = {
     };
   },
 
-  async changePassword(userId: string, payload: { oldPassword: string; newPassword: string }): Promise<void> {
-    await apiRequest<any>(`/users/${userId}/password`, {
+  async changePassword(payload: { oldPassword: string; newPassword: string }): Promise<void> {
+    await apiRequest<any>("/users/me/password", {
       method: "PATCH",
       body: JSON.stringify(payload),
     });
@@ -91,4 +91,3 @@ export const authService = {
     }
   },
 };
-

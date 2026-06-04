@@ -110,7 +110,7 @@ export default function Profil() {
     setPasswordError("");
     try {
       const { authService } = await import("../services/authService");
-      await authService.changePassword(user.id, { oldPassword, newPassword });
+      await authService.changePassword({ oldPassword, newPassword });
       setPasswordMessage("Kata sandi berhasil diperbarui!");
       setOldPassword("");
       setNewPassword("");
@@ -277,4 +277,3 @@ export default function Profil() {
     </div>
   );
 }
-

@@ -82,7 +82,6 @@ export interface ApiUser {
 
 export interface AuthTokens {
   accessToken: string;
-  user: ApiUser;
 }
 
 // ─── Categories ──────────────────────────────────────────────────────────────
@@ -199,5 +198,10 @@ export interface ApiPrediction {
 // ─── Error ───────────────────────────────────────────────────────────────────
 export interface ApiErrorBody {
   message: string;
-  details?: Record<string, string[]>;
+  details?: ValidationIssue[];
+}
+
+export interface ValidationIssue {
+  field: string;
+  message: string;
 }

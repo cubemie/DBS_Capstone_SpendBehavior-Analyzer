@@ -61,7 +61,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const updateUser = useCallback(
     async (payload: { fullName?: string; phone?: string }) => {
       if (!user) return;
-      const updatedUser = await authService.updateUser(user.id, payload);
+      const updatedUser = await authService.updateUser(payload);
       setUser(updatedUser);
     },
     [user],

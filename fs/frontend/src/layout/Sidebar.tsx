@@ -1,12 +1,20 @@
 import { LogOut } from "lucide-react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { navigationItems } from "../utils/navigation";
 import { cn } from "../utils/cn";
+import { useAuth } from "../contexts/AuthContext";
 
 import buduLogo from "../assets/budu-logo.png";
 
-// ... inside the component
 function Sidebar() {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/", { replace: true });
+  };
+
   return (
     <aside className="sticky top-0 hidden h-dvh border-r border-[var(--color-border)] bg-white/70 px-3 py-6 backdrop-blur md:flex md:flex-col xl:px-5">
       <Link to="/dashboard" className="flex items-center justify-center gap-3 px-2 xl:justify-start">
@@ -41,13 +49,14 @@ function Sidebar() {
         })}
       </nav>
 
-      <NavLink
-        to="/"
+      <button
+        type="button"
+        onClick={handleLogout}
         className="flex items-center justify-center gap-3 rounded-2xl px-3 py-3 text-sm font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-soft)] xl:justify-start xl:px-4"
       >
         <LogOut className="h-5 w-5" />
         <span className="hidden xl:inline">Keluar</span>
-      </NavLink>
+      </button>
     </aside>
   );
 }
