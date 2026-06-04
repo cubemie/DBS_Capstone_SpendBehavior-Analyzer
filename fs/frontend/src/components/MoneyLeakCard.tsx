@@ -6,9 +6,10 @@ import type { Warning } from "../types/models";
 
 interface MoneyLeakCardProps {
   leak: Warning;
+  onAction?: () => void;
 }
 
-function MoneyLeakCard({ leak }: MoneyLeakCardProps) {
+function MoneyLeakCard({ leak, onAction }: MoneyLeakCardProps) {
   const Icon = leak.icon;
   const isClear = leak.severity === "success";
   const toneClass = {
@@ -35,13 +36,16 @@ function MoneyLeakCard({ leak }: MoneyLeakCardProps) {
         <h3 className="text-lg font-black text-[var(--color-text-primary)]">{leak.title}</h3>
         <p className="mt-3 text-sm leading-6 text-[var(--color-text-secondary)]">{leak.description}</p>
       </div>
-      <Button
-        variant={isClear ? "outline" : leak.severity === "danger" ? "danger" : "primary"}
-        fullWidth
-        className="mt-6"
-      >
-        {leak.actionLabel}
-      </Button>
+      {leak.actionLabel && onAction ? (
+        <Button
+          variant={isClear ? "outline" : leak.severity === "danger" ? "danger" : "primary"}
+          fullWidth
+          className="mt-6"
+          onClick={onAction}
+        >
+          {leak.actionLabel}
+        </Button>
+      ) : null}
     </Card>
   );
 }

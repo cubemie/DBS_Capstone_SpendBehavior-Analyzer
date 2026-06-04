@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowDown, ArrowUp, Search, Wallet, Trash2 } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Badge from "../components/Badge";
 import Button from "../components/Button";
 import Card from "../components/Card";
@@ -16,6 +16,8 @@ import { formatDate, formatTime } from "../utils/formatDate";
 import type { CategoryKind, TransactionFilters } from "../types/models";
 import { ShoppingBag, UtensilsCrossed, Car, Banknote, CreditCard } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+
+const DEFAULT_FILTERS: TransactionFilters = { page: 1, limit: 10, sort: "date_desc" };
 
 function categoryIcon(name: string): LucideIcon {
   const lower = name.toLowerCase();
@@ -50,17 +52,81 @@ function getTransactionMeta(tx: {
   return [tx.merchantName, tx.paymentMethod].filter(Boolean).join(" · ") || tx.category.name;
 }
 
+function isCategoryKind(value: string | null): value is CategoryKind {
+  return value === "income" || value === "expense";
+}
+
+function isSort(value: string | null): value is NonNullable<TransactionFilters["sort"]> {
+  return value === "date_desc" || value === "date_asc";
+}
+
+function isUuid(value: string | null): value is string {
+  return !!value && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+}
+
+function readPositiveNumber(value: string | null): number | undefined {
+  if (!value) return undefined;
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : undefined;
+}
+
+function readDate(value: string | null): string | undefined {
+  return value && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : undefined;
+}
+
+function filtersFromSearch(searchString: string): TransactionFilters {
+  const params = new URLSearchParams(searchString);
+  const filters: TransactionFilters = { ...DEFAULT_FILTERS };
+  const type = params.get("type");
+  const sort = params.get("sort");
+  const categoryId = params.get("categoryId");
+  const page = readPositiveNumber(params.get("page"));
+  const limit = readPositiveNumber(params.get("limit"));
+  const search = params.get("search")?.trim();
+  const startDate = readDate(params.get("startDate"));
+  const endDate = readDate(params.get("endDate"));
+
+  if (isCategoryKind(type)) filters.type = type;
+  if (isUuid(categoryId)) filters.categoryId = categoryId;
+  if (search) filters.search = search;
+  if (startDate) filters.startDate = startDate;
+  if (endDate) filters.endDate = endDate;
+  if (isSort(sort)) filters.sort = sort;
+  if (page) filters.page = page;
+  if (limit) filters.limit = Math.min(limit, 100);
+
+  return filters;
+}
+
+function hasUrlFilters(searchString: string): boolean {
+  const params = new URLSearchParams(searchString);
+  return ["type", "categoryId", "search", "startDate", "endDate", "sort"].some((key) => params.has(key));
+}
+
 export default function RiwayatTransaksi() {
-  const [filters, setFilters] = useState<TransactionFilters>({ page: 1, limit: 10, sort: "date_desc" });
-  const [search, setSearch] = useState("");
-  const [activeTypeFilter, setActiveTypeFilter] = useState<"all" | CategoryKind>("all");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const initialFilters = filtersFromSearch(location.search);
+  const lastSearchRef = useRef(location.search);
+  const [filters, setFilters] = useState<TransactionFilters>(initialFilters);
+  const [search, setSearch] = useState(initialFilters.search ?? "");
+  const [activeTypeFilter, setActiveTypeFilter] = useState<"all" | CategoryKind>(initialFilters.type ?? "all");
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const location = useLocation();
   const [toastMessage, setToastMessage] = useState<string | null>(
     location.state?.toast || null
   );
+
+  useEffect(() => {
+    if (lastSearchRef.current === location.search) return;
+    lastSearchRef.current = location.search;
+
+    const nextFilters = filtersFromSearch(location.search);
+    setFilters(nextFilters);
+    setSearch(nextFilters.search ?? "");
+    setActiveTypeFilter(nextFilters.type ?? "all");
+  }, [location.search]);
 
   useEffect(() => {
     if (toastMessage) {
@@ -74,7 +140,7 @@ export default function RiwayatTransaksi() {
     const timer = window.setTimeout(() => {
       const nextSearch = search.trim() || undefined;
       setFilters((prev) => {
-        if (prev.search === nextSearch && prev.page === 1) return prev;
+        if (prev.search === nextSearch) return prev;
         return { ...prev, search: nextSearch, page: 1 };
       });
     }, 350);
@@ -116,7 +182,15 @@ export default function RiwayatTransaksi() {
     }));
   };
 
+  const clearUrlFilters = () => {
+    navigate(location.pathname, { replace: true });
+    setFilters({ ...DEFAULT_FILTERS });
+    setSearch("");
+    setActiveTypeFilter("all");
+  };
+
   const transactions = txData?.data ?? [];
+  const hasActiveUrlFilters = hasUrlFilters(location.search);
 
   const confirmDelete = async () => {
     if (!deleteId) return;
@@ -158,6 +232,18 @@ export default function RiwayatTransaksi() {
         </div>
       )}
       <PageHeader title="Riwayat Transaksi" description="Lihat arus uang bulan ini." />
+
+      {hasActiveUrlFilters ? (
+        <div className="flex flex-col gap-3 rounded-xl bg-[#e6f7f6] px-4 py-3 text-sm text-[#147a75] sm:flex-row sm:items-center sm:justify-between">
+          <p className="font-bold">
+            Menampilkan transaksi sesuai filter dari halaman peringatan.
+            {filters.categoryId ? " Kategori sudah dibatasi ke temuan yang dipilih." : ""}
+          </p>
+          <Button variant="outline" buttonSize="sm" onClick={clearUrlFilters}>
+            Tampilkan Semua
+          </Button>
+        </div>
+      ) : null}
 
       <section className="grid gap-4 md:grid-cols-3">
         <StatCard

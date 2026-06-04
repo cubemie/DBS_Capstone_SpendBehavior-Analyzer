@@ -6,9 +6,10 @@ import type { Warning } from "../types/models";
 
 interface WarningCardProps {
   warning: Warning;
+  onAction?: () => void;
 }
 
-function WarningCard({ warning }: WarningCardProps) {
+function WarningCard({ warning, onAction }: WarningCardProps) {
   const Icon = warning.icon;
   const severityClass = {
     info: "bg-[var(--color-teal-bg)] text-[var(--color-teal-ink)]",
@@ -35,9 +36,11 @@ function WarningCard({ warning }: WarningCardProps) {
           {warning.description}
         </p>
       </div>
-      <Button variant={warning.severity === "warning" ? "primary" : "outline"} fullWidth>
-        {warning.actionLabel}
-      </Button>
+      {warning.actionLabel && onAction ? (
+        <Button variant={warning.severity === "warning" ? "primary" : "outline"} fullWidth onClick={onAction}>
+          {warning.actionLabel}
+        </Button>
+      ) : null}
     </Card>
   );
 }

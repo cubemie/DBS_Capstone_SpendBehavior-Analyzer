@@ -48,7 +48,7 @@ export interface Warning {
   description: string;
   label: string;
   severity: "info" | "warning" | "danger" | "success";
-  actionLabel: string;
+  actionLabel?: string;
   icon: LucideIcon;
 }
 

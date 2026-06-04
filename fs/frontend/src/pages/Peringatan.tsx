@@ -1,5 +1,9 @@
-import { ShieldCheck, TrendingUp, AlertTriangle, ShieldAlert, Info, CalendarClock, Droplets } from "lucide-react";
+import { useState } from "react";
+import { ShieldCheck, TrendingUp, AlertTriangle, ShieldAlert, Info, CalendarClock, Droplets, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import quokkaImg from "../assets/budu-logo.png";
+import Badge from "../components/Badge";
+import Button from "../components/Button";
 import Card from "../components/Card";
 import MoneyLeakCard from "../components/MoneyLeakCard";
 import PageHeader from "../components/PageHeader";
@@ -9,7 +13,13 @@ import ErrorState from "../components/ErrorState";
 import { useApi } from "../hooks/useApi";
 import { usePredictionRefresh } from "../hooks/usePredictionRefresh";
 import { analyticsService } from "../services/analyticsService";
+import { formatDate } from "../utils/formatDate";
 import type { DashboardWarning, MoneyLeak, Warning } from "../types/models";
+
+type SelectedWarning = {
+  warning: DashboardWarning;
+  viewModel: Warning;
+};
 
 function toWarning(w: DashboardWarning): Warning {
   const iconForSeverity = {
@@ -42,6 +52,10 @@ function toLeakWarning(l: MoneyLeak): Warning {
   };
 }
 
+function toDateInputValue(date: string): string {
+  return date.slice(0, 10);
+}
+
 function PeringatanSkeleton() {
   return (
     <div className="space-y-6 animate-pulse">
@@ -58,6 +72,8 @@ function PeringatanSkeleton() {
 }
 
 export default function Peringatan() {
+  const navigate = useNavigate();
+  const [selectedWarning, setSelectedWarning] = useState<SelectedWarning | null>(null);
   const { data, isLoading, error, refetch } = useApi(() => analyticsService.getDashboard());
   const {
     refreshAnalysis,
@@ -104,8 +120,105 @@ export default function Peringatan() {
     });
   }
 
+  const goToPeriodExpenses = () => {
+    if (!data) return;
+
+    const params = new URLSearchParams({
+      type: "expense",
+      startDate: toDateInputValue(data.period.from),
+      endDate: toDateInputValue(data.period.to),
+      sort: "date_desc",
+    });
+
+    navigate(`/riwayat?${params.toString()}`);
+  };
+
+  const goToLeakTransactions = (leak: MoneyLeak) => {
+    if (!data) return;
+
+    const params = new URLSearchParams({
+      type: "expense",
+      categoryId: leak.categoryId,
+      startDate: toDateInputValue(data.period.from),
+      endDate: toDateInputValue(data.period.to),
+      sort: "date_desc",
+    });
+
+    navigate(`/riwayat?${params.toString()}`);
+  };
+
   return (
     <div className="space-y-7">
+      {selectedWarning && data ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
+          <Card className="max-h-[calc(100vh-2rem)] w-full max-w-lg overflow-y-auto">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex min-w-0 items-start gap-3">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-salmon-bg)] text-[var(--color-salmon-dark)]">
+                  <selectedWarning.viewModel.icon className="h-6 w-6" />
+                </span>
+                <div className="min-w-0">
+                  <Badge variant={selectedWarning.viewModel.severity === "warning" ? "coral" : "neutral"}>
+                    {selectedWarning.warning.label}
+                  </Badge>
+                  <h2 className="mt-3 text-xl font-black leading-tight text-[var(--color-text-primary)]">
+                    {selectedWarning.warning.title}
+                  </h2>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedWarning(null)}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-[var(--color-text-muted)] hover:bg-[var(--color-soft)] hover:text-[var(--color-text-primary)]"
+                aria-label="Tutup detail peringatan"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <p className="mt-5 text-sm leading-6 text-[var(--color-text-secondary)]">
+              {selectedWarning.warning.description}
+            </p>
+
+            <div className="mt-5 grid gap-3 rounded-2xl bg-[var(--color-soft)] p-4 text-sm">
+              <div className="flex justify-between gap-4">
+                <span className="font-semibold text-[var(--color-text-muted)]">Sumber</span>
+                <span className="text-right font-bold text-[var(--color-text-primary)]">Prediksi persona</span>
+              </div>
+              <div className="flex justify-between gap-4">
+                <span className="font-semibold text-[var(--color-text-muted)]">Periode</span>
+                <span className="text-right font-bold text-[var(--color-text-primary)]">
+                  {formatDate(data.period.from)} - {formatDate(data.period.to)}
+                </span>
+              </div>
+              <div className="flex justify-between gap-4">
+                <span className="font-semibold text-[var(--color-text-muted)]">Transaksi dianalisis</span>
+                <span className="text-right font-bold text-[var(--color-text-primary)]">
+                  {data.predictionStatus.transactionCount}
+                </span>
+              </div>
+              {data.predictionStatus.lastPredictedAt ? (
+                <div className="flex justify-between gap-4">
+                  <span className="font-semibold text-[var(--color-text-muted)]">Terakhir dianalisis</span>
+                  <span className="text-right font-bold text-[var(--color-text-primary)]">
+                    {formatDate(data.predictionStatus.lastPredictedAt)}
+                  </span>
+                </div>
+              ) : null}
+            </div>
+
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <Button variant="outline" fullWidth onClick={() => setSelectedWarning(null)}>
+                Tutup
+              </Button>
+              <Button fullWidth onClick={goToPeriodExpenses}>
+                Lihat Transaksi
+              </Button>
+            </div>
+          </Card>
+        </div>
+      ) : null}
+
       <PageHeader title="Peringatan" description="Cek sinyal yang butuh perhatian." />
 
       <Card className="!bg-[var(--color-yellow-bg)]">
@@ -146,8 +259,12 @@ export default function Peringatan() {
           <p className="text-sm text-[var(--color-text-secondary)] italic">Tidak ada peringatan pintar saat ini.</p>
         ) : (
           <div className="grid gap-5 lg:grid-cols-2">
-            {mappedWarnings.map((warning) => (
-              <WarningCard key={warning.id} warning={warning} />
+            {mappedWarnings.map((warning, index) => (
+              <WarningCard
+                key={warning.id}
+                warning={warning}
+                onAction={() => setSelectedWarning({ warning: warnings[index]!, viewModel: warning })}
+              />
             ))}
           </div>
         )}
@@ -161,8 +278,12 @@ export default function Peringatan() {
           <h2 className="text-xl font-black text-[var(--color-text-primary)]">Deteksi Kebocoran</h2>
         </div>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {mappedLeaks.map((leak) => (
-            <MoneyLeakCard key={leak.id} leak={leak} />
+          {mappedLeaks.map((leak, index) => (
+            <MoneyLeakCard
+              key={leak.id}
+              leak={leak}
+              onAction={moneyLeaks[index] ? () => goToLeakTransactions(moneyLeaks[index]!) : undefined}
+            />
           ))}
         </div>
       </section>
