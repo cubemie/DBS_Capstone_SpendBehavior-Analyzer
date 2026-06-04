@@ -54,7 +54,7 @@ function getErrorMessage(error: unknown, fallback: string): string {
 }
 
 export default function Profil() {
-  const { user, updateUser, uploadAvatar } = useAuth();
+  const { user, updateUser, uploadAvatar, setPredictionPersona } = useAuth();
   const avatarInputRef = useRef<HTMLInputElement | null>(null);
   const [prediction, setPrediction] = useState<ApiPrediction | null>(null);
   const [isLoadingPred, setIsLoadingPred] = useState(true);
@@ -79,11 +79,17 @@ export default function Profil() {
       .getLatestPrediction()
       .then((res) => {
         setPrediction(res);
+        setPredictionPersona(res?.persona ?? null);
+      })
+      .catch((err: unknown) => {
+        setPrediction(null);
+        setPredictionPersona(null);
+        setPredError(getErrorMessage(err, "Gagal memuat prediksi terbaru."));
       })
       .finally(() => {
         setIsLoadingPred(false);
       });
-  }, []);
+  }, [setPredictionPersona]);
 
   const handleGeneratePrediction = async () => {
     setIsGenerating(true);
@@ -91,6 +97,7 @@ export default function Profil() {
     try {
       const res = await predictionService.createPersonaPrediction({ force: true });
       setPrediction(res);
+      setPredictionPersona(res.persona);
     } catch (err: unknown) {
       console.error("Gagal membuat prediksi persona", err);
       setPredError(getErrorMessage(err, "Gagal melakukan analisis. Pastikan kamu memiliki cukup transaksi."));
@@ -170,7 +177,7 @@ export default function Profil() {
             <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{userEmail}</p>
             <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
               <Badge variant="coral">
-                {prediction?.persona || "Belum ada Persona"}
+                {prediction?.persona || "Belum ada persona"}
               </Badge>
               <Badge variant="teal" icon={<BadgeCheck className="h-3.5 w-3.5" />}>
                 BUDU Member

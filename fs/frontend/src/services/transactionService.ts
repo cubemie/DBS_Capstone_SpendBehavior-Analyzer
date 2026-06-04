@@ -52,6 +52,8 @@ export interface TransactionPayload {
   amountIdr: number;
   categoryId: string;
   type: "income" | "expense";
+  merchantName?: string;
+  paymentMethod?: string;
   notes?: string;
   transactionDate: string; // ISO 8601 string
   title: string;
@@ -60,8 +62,11 @@ export interface TransactionPayload {
 function toApiTransaction(raw: RawTransactionItem): ApiTransaction {
   return {
     id: raw.id,
+    title: raw.title,
     amount: raw.amountIdr,
     note: raw.notes ?? raw.title,
+    merchantName: raw.merchantName ?? undefined,
+    paymentMethod: raw.paymentMethod ?? undefined,
     date: raw.transactionDate,
     type: raw.type,
     category: {

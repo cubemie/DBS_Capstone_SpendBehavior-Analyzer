@@ -1,4 +1,5 @@
 import { apiRequest } from "./apiClient";
+import { ApiError } from "./ApiError";
 import type { ApiPrediction } from "../types/models";
 
 // ─── Raw backend shape ────────────────────────────────────────────────────────
@@ -77,8 +78,12 @@ export const predictionService = {
     try {
       const raw = await apiRequest<RawPredictionRecord>("/predictions/latest");
       return mapPrediction(raw);
-    } catch {
-      return null; // null jika belum ada prediksi
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 404) {
+        return null;
+      }
+
+      throw error;
     }
   },
 };

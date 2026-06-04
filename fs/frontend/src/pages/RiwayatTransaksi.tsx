@@ -38,6 +38,18 @@ function TransactionListSkeleton() {
   );
 }
 
+function getTransactionTitle(tx: { title: string; note?: string; category: { name: string } }): string {
+  return tx.note ?? tx.title ?? tx.category.name;
+}
+
+function getTransactionMeta(tx: {
+  merchantName?: string;
+  paymentMethod?: string;
+  category: { name: string };
+}): string {
+  return [tx.merchantName, tx.paymentMethod].filter(Boolean).join(" · ") || tx.category.name;
+}
+
 export default function RiwayatTransaksi() {
   const [filters, setFilters] = useState<TransactionFilters>({ page: 1, limit: 10, sort: "date_desc" });
   const [search, setSearch] = useState("");
@@ -113,7 +125,7 @@ export default function RiwayatTransaksi() {
       await transactionService.deleteTransaction(deleteId);
       setToastMessage("Transaksi berhasil dihapus.");
       refetch();
-    } catch (err) {
+    } catch {
       setToastMessage("Gagal menghapus transaksi.");
     } finally {
       setIsDeleting(false);
@@ -253,9 +265,11 @@ export default function RiwayatTransaksi() {
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-bold text-[var(--color-text-primary)]">
-                        {tx.note ?? tx.category.name}
+                        {getTransactionTitle(tx)}
                       </p>
-                      <p className="text-xs text-[var(--color-text-muted)]">{formatDate(tx.date)}</p>
+                      <p className="text-xs text-[var(--color-text-muted)]">
+                        {getTransactionMeta(tx)} · {formatDate(tx.date)}
+                      </p>
                     </div>
                     <div className="flex shrink-0 flex-col items-end gap-1">
                       <p className={cn("text-sm font-black", isIncome ? "text-[var(--color-green)]" : "text-[var(--color-red)]")}>
@@ -303,7 +317,10 @@ export default function RiwayatTransaksi() {
                         <Icon className="h-5 w-5" />
                       </span>
                       <p className="truncate font-black text-[var(--color-text-primary)]">
-                        {tx.note ?? tx.category.name}
+                        {getTransactionTitle(tx)}
+                      </p>
+                      <p className="truncate text-sm text-[var(--color-text-muted)]">
+                        {getTransactionMeta(tx)}
                       </p>
                     </div>
                     <Badge variant={isIncome ? "teal" : "neutral"} className="w-fit">

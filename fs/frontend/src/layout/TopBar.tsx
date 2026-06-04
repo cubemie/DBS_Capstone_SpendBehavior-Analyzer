@@ -3,10 +3,11 @@ import { useAuth } from "../contexts/AuthContext";
 import defaultAvatar from "../assets/budu-logo.png";
 
 function TopBar() {
-  const { user } = useAuth();
+  const { user, predictionPersona } = useAuth();
 
   const displayName = user?.name ? user.name.split(" ")[0] : "Pengguna";
   const avatarUrl = user?.avatarUrl || defaultAvatar;
+  const personaLabel = predictionPersona ?? "Belum ada persona";
 
   return (
     <header className="sticky top-0 z-20 border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur">
@@ -31,7 +32,7 @@ function TopBar() {
             <div className="hidden text-right sm:block">
               <p className="text-sm font-black text-[var(--color-text-primary)]">{displayName}</p>
               <p className="text-xs font-medium text-[var(--color-text-secondary)]">
-                {user?.persona || "Rational Spender"}
+                {personaLabel}
               </p>
             </div>
             <img

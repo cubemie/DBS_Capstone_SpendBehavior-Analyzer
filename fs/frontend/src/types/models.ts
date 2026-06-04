@@ -98,9 +98,12 @@ export interface ApiCategory {
 /** Shape returned by the backend for individual transactions */
 export interface ApiTransaction {
   id: string;
+  title: string;
   /** Amount in IDR (always positive) */
   amount: number;
   note?: string;
+  merchantName?: string;
+  paymentMethod?: string;
   /** ISO 8601 date string */
   date: string;
   type: CategoryKind;
@@ -174,12 +177,22 @@ export interface MoneyLeak {
 
 export interface ApiDashboard {
   summary: ApiTransactionSummary;
+  persona: DashboardPersona | null;
   topCategories: TopCategory[];
   recentTransactions: ApiTransaction[];
   weekdayWeekend: WeekdayWeekendSplit;
   insights: DashboardInsight[];
   warnings: DashboardWarning[];
   moneyLeaks: MoneyLeak[];
+}
+
+export interface DashboardPersona {
+  id: string;
+  persona: string;
+  confidence: number;
+  transactionCount: number;
+  createdAt: string;
+  predictionSource: "period" | "latest" | null;
 }
 
 // ─── Predictions ─────────────────────────────────────────────────────────────

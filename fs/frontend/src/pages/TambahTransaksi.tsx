@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ArrowLeft,
   BookOpen,
@@ -45,6 +45,8 @@ export default function TambahTransaksi() {
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [amount, setAmount] = useState("");
+  const [merchantName, setMerchantName] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [note, setNote] = useState("");
   const [date, setDate] = useState(() => {
     const now = new Date();
@@ -52,23 +54,46 @@ export default function TambahTransaksi() {
     return now.toISOString().slice(0, 16);
   });
   const [error, setError] = useState<string | null>(null);
+  const [categoryError, setCategoryError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Load categories from API on mount
-  useEffect(() => {
-    categoryService.getCategories().then((cats) => {
-      setCategories(cats);
-    }).catch(() => {
-      // silently ignore — UI will show empty state
-    }).finally(() => {
-      setIsLoadingCategories(false);
+  const loadCategories = useCallback((categoryType: CategoryKind) => {
+    let isCurrent = true;
+
+    queueMicrotask(() => {
+      if (!isCurrent) return;
+      setIsLoadingCategories(true);
+      setCategoryError(null);
+      setSelectedCategoryId("");
+
+      categoryService
+        .getCategories({ kind: categoryType })
+        .then((cats) => {
+          if (!isCurrent) return;
+          setCategories(cats);
+        })
+        .catch((err: unknown) => {
+          if (!isCurrent) return;
+          setCategories([]);
+          setCategoryError(
+            err instanceof ApiError
+              ? err.message
+              : "Gagal memuat kategori. Coba muat ulang halaman.",
+          );
+        })
+        .finally(() => {
+          if (!isCurrent) return;
+          setIsLoadingCategories(false);
+        });
     });
+
+    return () => {
+      if (!isCurrent) return;
+      isCurrent = false;
+    };
   }, []);
 
-  // Reset category selection whenever type changes
-  useEffect(() => {
-    setSelectedCategoryId("");
-  }, [type]);
+  useEffect(() => loadCategories(type), [loadCategories, type]);
 
   const filteredCategories = categories.filter((c) => c.kind === type);
 
@@ -105,9 +130,15 @@ export default function TambahTransaksi() {
         amountIdr: Number(amount),
         categoryId: selectedCategoryId,
         type,
+        merchantName: merchantName || undefined,
+        paymentMethod: paymentMethod || undefined,
         notes: note || undefined,
         transactionDate: transactionDateObj.toISOString(),
-        title: note || selectedCat?.name || (type === "income" ? "Pemasukan" : "Pengeluaran"),
+        title:
+          note ||
+          merchantName ||
+          selectedCat?.name ||
+          (type === "income" ? "Pemasukan" : "Pengeluaran"),
       });
       navigate("/riwayat", { state: { toast: "Transaksi berhasil disimpan! ✅" } });
     } catch (err) {
@@ -185,7 +216,7 @@ export default function TambahTransaksi() {
                 </div>
               ) : filteredCategories.length === 0 ? (
                 <p className="text-sm text-[var(--color-text-muted)]">
-                  Belum ada kategori untuk tipe ini.
+                  {categoryError ?? "Belum ada kategori untuk tipe ini."}
                 </p>
               ) : (
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2">
@@ -215,6 +246,20 @@ export default function TambahTransaksi() {
           </div>
 
           <div className="space-y-5">
+            <Input
+              name="merchantName"
+              label="Merchant"
+              placeholder="Contoh: Warung Bu Sari"
+              value={merchantName}
+              onChange={(e) => setMerchantName(e.target.value)}
+            />
+            <Input
+              name="paymentMethod"
+              label="Metode Pembayaran"
+              placeholder="Contoh: QRIS, Tunai, Debit"
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            />
             <Input
               name="note"
               label="Catatan"

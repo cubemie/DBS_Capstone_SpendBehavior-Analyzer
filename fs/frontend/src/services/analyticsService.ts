@@ -78,10 +78,19 @@ interface RawMoneyLeak {
   transactionCount: number;
 }
 
+interface RawDashboardPersona {
+  id: string;
+  persona: string;
+  confidence: number;
+  transactionCount: number;
+  createdAt: string;
+  predictionSource: "period" | "latest" | null;
+}
+
 interface RawDashboard {
   period: { from: string; to: string; timezone: string };
   summary: RawSummary;
-  persona: unknown;
+  persona: RawDashboardPersona | null;
   recentTransactions: RawRecentTransaction[];
   topCategories: RawTopCategory[];
   trends: {
@@ -107,6 +116,16 @@ function mapDashboard(raw: RawDashboard): ApiDashboard {
       totalExpense: raw.summary.expenseTotalIdr,
       netBalance: raw.summary.netTotalIdr,
     },
+    persona: raw.persona
+      ? {
+          id: raw.persona.id,
+          persona: raw.persona.persona,
+          confidence: raw.persona.confidence,
+          transactionCount: raw.persona.transactionCount,
+          createdAt: raw.persona.createdAt,
+          predictionSource: raw.persona.predictionSource,
+        }
+      : null,
     topCategories: raw.topCategories.map((cat) => ({
       categoryId: cat.categoryId,
       categoryName: cat.name,
@@ -115,8 +134,11 @@ function mapDashboard(raw: RawDashboard): ApiDashboard {
     })),
     recentTransactions: raw.recentTransactions.map((tx) => ({
       id: tx.id,
+      title: tx.title,
       amount: tx.amountIdr,
       note: tx.title, // backend 'title' maps to frontend 'note'
+      merchantName: tx.merchantName ?? undefined,
+      paymentMethod: tx.paymentMethod ?? undefined,
       date: tx.transactionDate,
       type: tx.type,
       category: {

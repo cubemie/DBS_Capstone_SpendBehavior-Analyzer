@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ArrowDown, ArrowRight, ArrowUp, Bell, Trophy, Wallet } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import quokkaImg from "../assets/budu-logo.png";
@@ -32,9 +33,9 @@ function toTransactionItem(tx: ApiTransaction) {
   const Icon = categoryIcon(tx.category.name);
   return {
     id: tx.id,
-    title: tx.note ?? tx.category.name,
-    merchant: tx.category.name,
-    method: "",
+    title: tx.note ?? tx.title,
+    merchant: tx.merchantName ?? tx.category.name,
+    method: tx.paymentMethod ?? "",
     category: tx.category.name,
     type: tx.type as "income" | "expense",
     amount: Math.abs(tx.amount),
@@ -59,13 +60,18 @@ const CATEGORY_COLORS = ["#8BDFDD", "#F28C6A", "#FFE394", "#B7D6A5", "#C4B5FD"];
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, setPredictionPersona } = useAuth();
   const { data, isLoading, error } = useApi(() => analyticsService.getDashboard());
+
+  useEffect(() => {
+    if (!data) return;
+    setPredictionPersona(data.persona?.persona ?? null);
+  }, [data, setPredictionPersona]);
 
   if (isLoading) return <div className="space-y-6"><PageHeader title="Dashboard" description="Pantau pengeluaranmu bulan ini." /><DashboardSkeleton /></div>;
   if (error) return <div className="space-y-6"><PageHeader title="Dashboard" description="Pantau pengeluaranmu bulan ini." /><ErrorState message={error} /></div>;
 
-  const { summary, topCategories, recentTransactions, warnings, moneyLeaks } = data!;
+  const { summary, persona, topCategories, recentTransactions, warnings } = data!;
   const recentMapped = recentTransactions.slice(0, 3).map(toTransactionItem);
 
   const displayWarning =
@@ -202,14 +208,17 @@ export default function Dashboard() {
                   {user?.name?.split(" ")[0] ?? "BUDU User"}
                 </h2>
               </div>
-              <Badge variant="teal" icon={<Trophy className="h-3.5 w-3.5" />}>
-                Stabil
+              <Badge
+                variant={persona ? "teal" : "neutral"}
+                icon={persona ? <Trophy className="h-3.5 w-3.5" /> : undefined}
+              >
+                {persona?.persona ?? "Belum ada persona"}
               </Badge>
             </div>
             <p className="mt-4 text-sm leading-6 text-[var(--color-text-secondary)]">
-              {moneyLeaks && moneyLeaks.length > 0
-                ? `Terdeteksi ${moneyLeaks.length} potensi kebocoran. Cek halaman peringatan.`
-                : "Pilihanmu cukup rapi. Tetap beri batas untuk jajan impulsif."}
+              {persona
+                ? `Persona terbaru: ${persona.persona}.`
+                : "Belum ada hasil prediksi persona. Jalankan analisis di halaman profil."}
             </p>
             <Button variant="outline" fullWidth className="mt-5" onClick={() => navigate("/profil")}>Lihat Profil</Button>
           </Card>
@@ -219,4 +228,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
