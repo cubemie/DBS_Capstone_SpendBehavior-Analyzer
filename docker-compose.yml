@@ -1,0 +1,107 @@
+name: spendbehavior-analyzer
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    env_file:
+      - ${COMPOSE_ENV_FILE:-.env}
+    ports:
+      - "127.0.0.1:5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ml:
+    build:
+      context: ./ml
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8000:8000"
+    networks:
+      - app
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "python -c \"import sys, urllib.request; response = urllib.request.urlopen('http://127.0.0.1:8000/openapi.json', timeout=3); sys.exit(0 if response.status == 200 else 1)\"",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  backend-migrate:
+    build:
+      context: ./fs/backend
+      target: tools
+    env_file:
+      - ${COMPOSE_ENV_FILE:-.env}
+    profiles:
+      - migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - app
+
+  backend:
+    build:
+      context: ./fs/backend
+    restart: unless-stopped
+    env_file:
+      - ${COMPOSE_ENV_FILE:-.env}
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - backend_uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ml:
+        condition: service_healthy
+    networks:
+      - app
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "node -e \"fetch('http://127.0.0.1:3000/health').then((response) => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))\"",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  frontend:
+    build:
+      context: ./fs/frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+networks:
+  app:
+
+volumes:
+  postgres_data:
+  backend_uploads:
