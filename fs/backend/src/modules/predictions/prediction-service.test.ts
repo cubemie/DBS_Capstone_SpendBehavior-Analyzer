@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { afterEach, test } from 'node:test'
 import type { PredictionRecord } from './prediction-repository.ts'
 import { featureEngineeringService } from '../feature-engineering/feature-service.ts'
-import type { FeatureEngineeringResult } from '../feature-engineering/feature-schema.ts'
+import type { UserAnalysisInput } from '../feature-engineering/feature-schema.ts'
 import { predictionRepository } from './prediction-repository.ts'
 import {
   createFeatureVectorHash,
@@ -14,7 +14,8 @@ type FindLatest = typeof predictionRepository.findLatest
 
 const originalFindLatestForPeriod = predictionRepository.findLatestForPeriod
 const originalFindLatest = predictionRepository.findLatest
-const originalBuildForUser = featureEngineeringService.buildForUser
+const originalBuildAnalysisInputForUser =
+  featureEngineeringService.buildAnalysisInputForUser
 
 function createPredictionRecord(
   overrides: Partial<PredictionRecord> = {},
@@ -48,6 +49,7 @@ function createPredictionRecord(
         rational: 0.9,
       },
       smart_warnings_system: ['Pola pengeluaran stabil'],
+      money_leaks: [],
     },
     createdAt: new Date('2026-06-30T23:59:59.000Z'),
     ...overrides,
@@ -57,12 +59,13 @@ function createPredictionRecord(
 afterEach(() => {
   predictionRepository.findLatestForPeriod = originalFindLatestForPeriod
   predictionRepository.findLatest = originalFindLatest
-  featureEngineeringService.buildForUser = originalBuildForUser
+  featureEngineeringService.buildAnalysisInputForUser =
+    originalBuildAnalysisInputForUser
 })
 
-function createFeatureResult(
-  overrides: Partial<FeatureEngineeringResult> = {},
-): FeatureEngineeringResult {
+function createAnalysisResult(
+  overrides: Partial<UserAnalysisInput> = {},
+): UserAnalysisInput {
   return {
     featureOrder: ['avg_txn_idr'],
     featuresByName: {
@@ -74,8 +77,18 @@ function createFeatureResult(
       from: '2026-06-01T00:00:00.000Z',
       to: '2026-06-30T23:59:59.000Z',
     },
+    moneyLeakTransactions: [
+      {
+        txn_id: '66666666-6666-6666-6666-666666666666',
+        type: 'expense',
+        category_id: '77777777-7777-7777-7777-777777777777',
+        category: 'Makanan & Minuman',
+        amount: 50_000,
+        transaction_date: '2026-06-10T12:00:00.000Z',
+      },
+    ],
     ...overrides,
-  } as FeatureEngineeringResult
+  } as UserAnalysisInput
 }
 
 test('dashboard prediction selection prefers an exact period prediction', async () => {
@@ -150,11 +163,12 @@ test('dashboard prediction selection returns null when no prediction exists', as
 })
 
 test('dashboard prediction status is empty when current period has no expense transactions', async () => {
-  featureEngineeringService.buildForUser = (async () =>
-    createFeatureResult({
+  featureEngineeringService.buildAnalysisInputForUser = (async () =>
+    createAnalysisResult({
       featureVector: [0],
       transactionCount: 0,
-    })) satisfies typeof featureEngineeringService.buildForUser
+      moneyLeakTransactions: [],
+    })) satisfies typeof featureEngineeringService.buildAnalysisInputForUser
   predictionRepository.findLatestForPeriod = (async () =>
     createPredictionRecord()) satisfies FindLatestForPeriod
 
@@ -173,8 +187,8 @@ test('dashboard prediction status is empty when current period has no expense tr
 })
 
 test('dashboard prediction status is missing when current period has no exact prediction', async () => {
-  featureEngineeringService.buildForUser = (async () =>
-    createFeatureResult()) satisfies typeof featureEngineeringService.buildForUser
+  featureEngineeringService.buildAnalysisInputForUser = (async () =>
+    createAnalysisResult()) satisfies typeof featureEngineeringService.buildAnalysisInputForUser
   predictionRepository.findLatestForPeriod = (async () =>
     undefined) satisfies FindLatestForPeriod
 
@@ -193,17 +207,18 @@ test('dashboard prediction status is missing when current period has no exact pr
 })
 
 test('dashboard prediction status is fresh when feature hash matches exact prediction', async () => {
-  const featureResult = createFeatureResult()
+  const featureResult = createAnalysisResult()
   const featureVectorHash = createFeatureVectorHash({
     featureOrder: featureResult.featureOrder,
     featureVector: featureResult.featureVector,
+    moneyLeakTransactions: featureResult.moneyLeakTransactions,
     period: featureResult.period,
     timezone: 'Asia/Jakarta',
   })
   const prediction = createPredictionRecord({ featureVectorHash })
 
-  featureEngineeringService.buildForUser = (async () =>
-    featureResult) satisfies typeof featureEngineeringService.buildForUser
+  featureEngineeringService.buildAnalysisInputForUser = (async () =>
+    featureResult) satisfies typeof featureEngineeringService.buildAnalysisInputForUser
   predictionRepository.findLatestForPeriod = (async () =>
     prediction) satisfies FindLatestForPeriod
 
@@ -222,8 +237,8 @@ test('dashboard prediction status is fresh when feature hash matches exact predi
 })
 
 test('dashboard prediction status is stale when feature hash changed', async () => {
-  featureEngineeringService.buildForUser = (async () =>
-    createFeatureResult()) satisfies typeof featureEngineeringService.buildForUser
+  featureEngineeringService.buildAnalysisInputForUser = (async () =>
+    createAnalysisResult()) satisfies typeof featureEngineeringService.buildAnalysisInputForUser
   predictionRepository.findLatestForPeriod = (async () =>
     createPredictionRecord({
       featureVectorHash: 'old-feature-vector-hash',
@@ -240,4 +255,33 @@ test('dashboard prediction status is stale when feature hash changed', async () 
 
   assert.equal(status.state, 'stale')
   assert.equal(status.predictionSource, 'period')
+})
+
+test('dashboard prediction status is stale when money leak transaction evidence changed', async () => {
+  const featureResult = createAnalysisResult()
+  const featureVectorHash = createFeatureVectorHash({
+    featureOrder: featureResult.featureOrder,
+    featureVector: featureResult.featureVector,
+    moneyLeakTransactions: [],
+    period: featureResult.period,
+    timezone: 'Asia/Jakarta',
+  })
+
+  featureEngineeringService.buildAnalysisInputForUser = (async () =>
+    featureResult) satisfies typeof featureEngineeringService.buildAnalysisInputForUser
+  predictionRepository.findLatestForPeriod = (async () =>
+    createPredictionRecord({
+      featureVectorHash,
+    })) satisfies FindLatestForPeriod
+
+  const status = await predictionService.getDashboardPredictionStatus(
+    '22222222-2222-2222-2222-222222222222',
+    {
+      from: '2026-06-01T00:00:00.000Z',
+      to: '2026-06-30T23:59:59.000Z',
+      timezone: 'Asia/Jakarta',
+    },
+  )
+
+  assert.equal(status.state, 'stale')
 })

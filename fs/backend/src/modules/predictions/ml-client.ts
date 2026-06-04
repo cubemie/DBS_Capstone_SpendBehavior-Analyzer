@@ -4,6 +4,7 @@ import {
   mlPredictionResponseSchema,
   type MlPredictionResponseDto,
 } from './prediction-schema.ts'
+import type { MoneyLeakAnalysisTransaction } from '../feature-engineering/feature-schema.ts'
 
 type MlErrorBody = {
   detail?: unknown
@@ -33,7 +34,10 @@ function createMlUrl(path: string): string {
 }
 
 export const mlClient = {
-  async predict(features: readonly number[]): Promise<MlPredictionResponseDto> {
+  async predict(input: {
+    features: readonly number[]
+    transactions: readonly MoneyLeakAnalysisTransaction[]
+  }): Promise<MlPredictionResponseDto> {
     const controller = new AbortController()
     const timeout = setTimeout(() => {
       controller.abort()
@@ -45,7 +49,7 @@ export const mlClient = {
         headers: {
           'content-type': 'application/json',
         },
-        body: JSON.stringify({ features }),
+        body: JSON.stringify(input),
         signal: controller.signal,
       })
 

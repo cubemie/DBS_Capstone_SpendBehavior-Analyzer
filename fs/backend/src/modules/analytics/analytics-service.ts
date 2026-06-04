@@ -24,20 +24,20 @@ export const analyticsService = {
       recentTransactions,
       topCategories,
       expenseTransactions,
-      moneyLeakCandidates,
     ] = await Promise.all([
       predictionService.getDashboardPredictionStatus(userId, period),
       analyticsRepository.findRecentTransactions({ userId, ...period }, 3),
       analyticsRepository.findTopCategories({ userId, ...period }, 5),
       analyticsRepository.findExpenseTransactions({ userId, ...period }),
-      analyticsRepository.findMoneyLeakCandidates({ userId, ...period }),
     ])
     const periodPrediction = predictionStatus.prediction
     const savingRatePercent = calculateSavingRatePercent(summary)
     const warnings = periodPrediction
       ? mapPredictionWarnings(periodPrediction.warnings)
       : []
-    const moneyLeaks = mapMoneyLeaks(moneyLeakCandidates)
+    const moneyLeaks = mapMoneyLeaks(
+      periodPrediction?.mlResponse.money_leaks ?? [],
+    )
 
     return {
       period,

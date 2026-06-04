@@ -39,6 +39,17 @@ export const mlPredictionResponseSchema = z.object({
     rational: z.number().min(0).max(1),
   }),
   smart_warnings_system: z.array(z.string()),
+  money_leaks: z
+    .array(
+      z.object({
+        category_id: z.string().trim().min(1),
+        category: z.string().trim().min(1),
+        txn_count: z.number().int().nonnegative(),
+        total_amount: z.number().nonnegative(),
+        severity: z.enum(['warning', 'danger']),
+      }),
+    )
+    .default([]),
 })
 
 export type CreatePersonaPredictionDto = z.output<

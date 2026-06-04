@@ -1,11 +1,12 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List
 import numpy as np
 import tensorflow as tf
 import joblib
 import pandas as pd  
 import json
+from src.models.rules import detect_behavior_patterns, detect_money_leaks
 
 # 0. KONFIGURASI DINAMIS (Configuration-Driven)
 with open("feature_order.json", "r") as f:
@@ -25,25 +26,37 @@ except Exception as e:
 PERSONA_LABELS = {0: "Emotional Spender", 1: "Impulsive Spender", 2: "Rational Spender"}
 
 # Skema Input untuk Production (dari Backend)
+class MoneyLeakTransaction(BaseModel):
+    txn_id: str
+    type: str
+    category_id: str
+    category: str
+    amount: float
+    transaction_date: str
+
+
 class PredictionRequest(BaseModel):
     features: List[float]
+    transactions: List[MoneyLeakTransaction] = Field(default_factory=list)
 
 # FUNGSI RULE-BASED: SMART WARNING SYSTEM
 def get_smart_warnings(profile: dict) -> list:
-    warnings = []
-    if profile.get('weekend_ratio', 0) > 0.4:
-        warnings.append("⚠️ Weekend Spender: Pengeluaran akhir pekan sangat tinggi (>40%).")
-    if profile.get('night_ratio', 0) > 0.3:
-        warnings.append("⚠️ Night Shopper: Aktivitas transaksi malam hari dominan.")
-    if profile.get('impulse_score', 0) > 0.25:
-        warnings.append("🚨 Impulsive Pattern: Tingkat pengeluaran impulsif melewati batas aman.")
-    if profile.get('spending_cov', 0) > 0.8:
-        warnings.append("📉 High Variability: Fluktuasi nominal transaksi tidak stabil.")
+    warnings = detect_behavior_patterns(profile)
     
     if not warnings:
         warnings.append("✅ Pola pengeluaran stabil, tidak ada anomali terdeteksi.")
         
     return warnings
+
+
+def get_money_leaks(transactions: List[MoneyLeakTransaction]) -> list:
+    rows = [transaction.model_dump() for transaction in transactions]
+    transactions_df = pd.DataFrame(
+        rows,
+        columns=["txn_id", "type", "category_id", "category", "amount", "transaction_date"],
+    )
+
+    return detect_money_leaks(transactions_df)
 
 # 1. ENDPOINT PRODUCTION (AI + Rule Based)
 @app.post("/predict")
@@ -70,6 +83,7 @@ def predict_persona(payload: PredictionRequest):
     # --- 2. PROSES RULE-BASED ---
     profile_dict = dict(zip(FEATURE_NAMES, features_list))
     warnings = get_smart_warnings(profile_dict)
+    money_leaks = get_money_leaks(payload.transactions)
     
     # --- 3. KEMBALIKAN SEMUANYA KE FRONTEND ---
     return {
@@ -80,7 +94,8 @@ def predict_persona(payload: PredictionRequest):
             "impulsive": float(preds[1]),
             "rational": float(preds[2])
         },
-        "smart_warnings_system": warnings 
+        "smart_warnings_system": warnings,
+        "money_leaks": money_leaks,
     }
 
 
@@ -97,11 +112,13 @@ def analyze_spending_warnings(payload: PredictionRequest):
     
     profile_dict = dict(zip(FEATURE_NAMES, features_list))
     warnings = get_smart_warnings(profile_dict)
+    money_leaks = get_money_leaks(payload.transactions)
     
     return {
         "status": "success",
         "message": "Analisis kebocoran dana selesai",
-        "smart_warnings_system": warnings
+        "smart_warnings_system": warnings,
+        "money_leaks": money_leaks,
     }
 
 # 3. ENDPOINT DEMO & TESTING (Tanpa Input Manual)
@@ -140,7 +157,8 @@ def test_random_user_directly():
                 "persona_ditebak": PERSONA_LABELS[class_idx],
                 "confidence": float(preds[class_idx])
             },
-            "smart_warnings_system": warnings 
+            "smart_warnings_system": warnings,
+            "money_leaks": [],
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error saat testing: {str(e)}")

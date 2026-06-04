@@ -8,9 +8,9 @@ import type {
 } from './analytics-schema.ts'
 import type {
   ExpenseTrendRecord,
-  MoneyLeakCandidateRecord,
   TopCategoryRecord,
 } from './analytics-repository.ts'
+import type { PredictionMoneyLeak } from '../../db/schemas/prediction-results.ts'
 
 type PeriodInput = {
   from?: string
@@ -196,21 +196,20 @@ export function mapPredictionWarnings(
 }
 
 export function mapMoneyLeaks(
-  candidates: readonly MoneyLeakCandidateRecord[],
+  leaks: readonly PredictionMoneyLeak[],
 ): DashboardMoneyLeak[] {
-  return candidates.map((candidate, index) => {
-    const severity =
-      candidate.totalAmountIdr >= 1_000_000 ? 'danger' : 'warning'
+  return leaks.map((leak, index) => {
+    const totalAmountIdr = Math.round(leak.total_amount)
 
     return {
       id: `money-leak-${index + 1}`,
-      title: `${candidate.categoryName} Sering Kecil-Kecil`,
-      description: `${candidate.transactionCount} transaksi kecil di ${candidate.categoryName} mencapai Rp ${candidate.totalAmountIdr.toLocaleString('id-ID')}.`,
-      label: `Rp ${candidate.totalAmountIdr.toLocaleString('id-ID')}`,
-      severity,
-      categoryId: candidate.categoryId,
-      amountIdr: candidate.totalAmountIdr,
-      transactionCount: candidate.transactionCount,
+      title: `${leak.category} Sering Kecil-Kecil`,
+      description: `${leak.txn_count} transaksi kecil di ${leak.category} mencapai Rp ${totalAmountIdr.toLocaleString('id-ID')}.`,
+      label: `Rp ${totalAmountIdr.toLocaleString('id-ID')}`,
+      severity: leak.severity,
+      categoryId: leak.category_id,
+      amountIdr: totalAmountIdr,
+      transactionCount: leak.txn_count,
     }
   })
 }

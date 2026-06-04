@@ -1,4 +1,4 @@
-import { and, desc, eq, gte, lt, lte, sql, type SQL } from 'drizzle-orm'
+import { and, desc, eq, gte, lte, sql, type SQL } from 'drizzle-orm'
 import { db } from '../../db/index.ts'
 import { categories } from '../../db/schemas/categories.ts'
 import { transactions } from '../../db/schemas/transactions.ts'
@@ -42,13 +42,6 @@ export type ExpenseTrendRecord = {
   id: string
   amountIdr: number
   transactionDate: Date
-}
-
-export type MoneyLeakCandidateRecord = {
-  categoryId: string
-  categoryName: string
-  totalAmountIdr: number
-  transactionCount: number
 }
 
 function getPeriodFilters(filters: AnalyticsPeriodFilters): SQL[] {
@@ -169,29 +162,4 @@ export const analyticsRepository = {
       .orderBy(transactions.transactionDate, transactions.createdAt)
   },
 
-  async findMoneyLeakCandidates(
-    filters: AnalyticsPeriodFilters,
-  ): Promise<MoneyLeakCandidateRecord[]> {
-    const conditions = [
-      ...getExpensePeriodFilters(filters),
-      lt(transactions.amountIdr, 100_000),
-    ]
-    const totalAmountExpression =
-      sql<number>`sum(${transactions.amountIdr})`.mapWith(Number)
-    const transactionCountExpression = sql<number>`count(*)`.mapWith(Number)
-
-    return await db
-      .select({
-        categoryId: categories.id,
-        categoryName: categories.name,
-        totalAmountIdr: totalAmountExpression,
-        transactionCount: transactionCountExpression,
-      })
-      .from(transactions)
-      .innerJoin(categories, eq(transactions.categoryId, categories.id))
-      .where(and(...conditions))
-      .groupBy(categories.id, categories.name)
-      .having(sql`count(*) >= 10 and sum(${transactions.amountIdr}) > 500000`)
-      .orderBy(desc(totalAmountExpression))
-  },
 }

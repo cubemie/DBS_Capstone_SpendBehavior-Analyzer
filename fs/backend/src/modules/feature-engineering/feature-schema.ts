@@ -40,3 +40,16 @@ export type FeatureEngineeringResult = {
     to?: string
   }
 }
+
+export type MoneyLeakAnalysisTransaction = {
+  txn_id: string
+  type: string
+  category_id: string
+  category: string
+  amount: number
+  transaction_date: string
+}
+
+export type UserAnalysisInput = FeatureEngineeringResult & {
+  moneyLeakTransactions: MoneyLeakAnalysisTransaction[]
+}

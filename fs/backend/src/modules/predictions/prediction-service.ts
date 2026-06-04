@@ -9,14 +9,17 @@ import {
 } from './prediction-repository.ts'
 import type {
   CreatePersonaPredictionDto,
+  MlPredictionResponseDto,
   PredictionHistoryQueryDto,
   PredictionHistoryResponseDto,
   PredictionResultResponseDto,
 } from './prediction-schema.ts'
+import type { MoneyLeakAnalysisTransaction } from '../feature-engineering/feature-schema.ts'
 
 type FeatureHashInput = {
   featureOrder: readonly string[]
   featureVector: readonly number[]
+  moneyLeakTransactions: readonly MoneyLeakAnalysisTransaction[]
   period: {
     from?: string
     to?: string
@@ -59,15 +62,47 @@ function normalizeHashPeriod(period: FeatureHashInput['period']): {
   }
 }
 
+function createMoneyLeakTransactionFingerprint(
+  transactions: readonly MoneyLeakAnalysisTransaction[],
+): Array<{
+  txn_id: string
+  type: string
+  category_id: string
+  category: string
+  amount: number
+  transaction_date: string
+}> {
+  return transactions.map((transaction) => ({
+    txn_id: transaction.txn_id,
+    type: transaction.type,
+    category_id: transaction.category_id,
+    category: transaction.category,
+    amount: transaction.amount,
+    transaction_date: new Date(transaction.transaction_date).toISOString(),
+  }))
+}
+
 export function createFeatureVectorHash(input: FeatureHashInput): string {
   return createHash('sha256')
     .update(
       JSON.stringify({
         ...input,
         period: normalizeHashPeriod(input.period),
+        moneyLeakTransactions: createMoneyLeakTransactionFingerprint(
+          input.moneyLeakTransactions,
+        ),
       }),
     )
     .digest('hex')
+}
+
+function normalizeMlResponse(
+  response: MlPredictionResponseDto,
+): MlPredictionResponseDto {
+  return {
+    ...response,
+    money_leaks: response.money_leaks ?? [],
+  }
 }
 
 export const predictionService = {
@@ -75,11 +110,12 @@ export const predictionService = {
     userId: string,
     dto: CreatePersonaPredictionDto,
   ): Promise<PredictionResultResponseDto> {
-    const featureResult = await featureEngineeringService.buildForUser(userId, {
-      from: dto.from,
-      to: dto.to,
-      timezone: dto.timezone,
-    })
+    const featureResult =
+      await featureEngineeringService.buildAnalysisInputForUser(userId, {
+        from: dto.from,
+        to: dto.to,
+        timezone: dto.timezone,
+      })
 
     if (featureResult.transactionCount === 0) {
       throw new AppException(
@@ -93,6 +129,7 @@ export const predictionService = {
     const featureVectorHash = createFeatureVectorHash({
       featureOrder: featureResult.featureOrder,
       featureVector: featureResult.featureVector,
+      moneyLeakTransactions: featureResult.moneyLeakTransactions,
       period: featureResult.period,
       timezone: dto.timezone,
     })
@@ -112,7 +149,12 @@ export const predictionService = {
       }
     }
 
-    const mlResponse = await mlClient.predict(featureResult.featureVector)
+    const mlResponse = normalizeMlResponse(
+      await mlClient.predict({
+        features: featureResult.featureVector,
+        transactions: featureResult.moneyLeakTransactions,
+      }),
+    )
     const prediction = await predictionRepository.create({
       userId,
       periodFrom: dto.from ? new Date(dto.from) : null,
@@ -192,11 +234,12 @@ export const predictionService = {
     userId: string,
     period: PredictionPeriodInput,
   ): Promise<DashboardPredictionStatus> {
-    const featureResult = await featureEngineeringService.buildForUser(userId, {
-      from: period.from,
-      to: period.to,
-      timezone: period.timezone,
-    })
+    const featureResult =
+      await featureEngineeringService.buildAnalysisInputForUser(userId, {
+        from: period.from,
+        to: period.to,
+        timezone: period.timezone,
+      })
     const prediction = await this.getLatestForPeriodOptional(userId, period)
 
     if (featureResult.transactionCount === 0) {
@@ -220,6 +263,7 @@ export const predictionService = {
     const currentFeatureVectorHash = createFeatureVectorHash({
       featureOrder: featureResult.featureOrder,
       featureVector: featureResult.featureVector,
+      moneyLeakTransactions: featureResult.moneyLeakTransactions,
       period: featureResult.period,
       timezone: period.timezone,
     })

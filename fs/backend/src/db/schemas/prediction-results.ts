@@ -23,6 +23,15 @@ export type PredictionMlResponse = {
   confidence: number
   probabilities: PredictionProbabilities
   smart_warnings_system: string[]
+  money_leaks?: PredictionMoneyLeak[]
+}
+
+export type PredictionMoneyLeak = {
+  category_id: string
+  category: string
+  txn_count: number
+  total_amount: number
+  severity: 'warning' | 'danger'
 }
 
 export const predictionResults = pgTable(

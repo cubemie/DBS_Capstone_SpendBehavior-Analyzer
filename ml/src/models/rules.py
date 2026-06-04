@@ -1,17 +1,48 @@
 import pandas as pd
 
-def detect_money_leaks(transactions_df: pd.DataFrame, user_id: str):
-    user_txns = transactions_df[transactions_df['user_id'] == user_id]
-    micro_txns = user_txns[user_txns['amount'] < 100000]
-    
+MICRO_TRANSACTION_LIMIT = 100000
+MIN_LEAK_TRANSACTION_COUNT = 10
+MIN_LEAK_TOTAL_AMOUNT = 500000
+DANGER_LEAK_TOTAL_AMOUNT = 1000000
+
+
+def _leak_severity(total_amount: float) -> str:
+    return "danger" if total_amount >= DANGER_LEAK_TOTAL_AMOUNT else "warning"
+
+
+def detect_money_leaks(transactions_df: pd.DataFrame):
+    if transactions_df.empty:
+        return []
+
+    expense_txns = transactions_df[transactions_df["type"] == "expense"]
+    micro_txns = expense_txns[expense_txns["amount"] < MICRO_TRANSACTION_LIMIT]
+
+    if micro_txns.empty:
+        return []
+
     leak_summary = micro_txns.groupby('category').agg(
         txn_count=('txn_id', 'count'),
-        total_amount=('amount', 'sum')
+        total_amount=('amount', 'sum'),
+        category_id=('category_id', 'first'),
     ).reset_index()
-    
-    # Rule: Transaksi >= 10 kali dan total > Rp 500.000
-    leaks = leak_summary[(leak_summary['txn_count'] >= 10) & (leak_summary['total_amount'] > 500000)]
-    return leaks.to_dict('records')
+
+    leaks = leak_summary[
+        (leak_summary["txn_count"] >= MIN_LEAK_TRANSACTION_COUNT)
+        & (leak_summary["total_amount"] > MIN_LEAK_TOTAL_AMOUNT)
+    ].sort_values("total_amount", ascending=False)
+
+    records = []
+    for leak in leaks.to_dict("records"):
+        total_amount = float(leak["total_amount"])
+        records.append({
+            "category_id": leak["category_id"],
+            "category": leak["category"],
+            "txn_count": int(leak["txn_count"]),
+            "total_amount": total_amount,
+            "severity": _leak_severity(total_amount),
+        })
+
+    return records
 
 def detect_behavior_patterns(profile: dict):
     warnings = []
