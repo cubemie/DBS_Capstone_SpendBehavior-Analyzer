@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from 'express'
 import { AppException } from '../exception.ts'
+import multer from 'multer'
 import { ZodError } from 'zod'
 import { logError } from '../utils/logger.ts'
 
@@ -25,6 +26,15 @@ export function errorHandler(
       message: 'Validasi gagal',
       details: formattedErrors,
     })
+  }
+
+  if (err instanceof multer.MulterError) {
+    const message =
+      err.code === 'LIMIT_FILE_SIZE'
+        ? 'Ukuran foto maksimal 2MB'
+        : 'Upload foto tidak valid'
+
+    return res.status(400).json({ message })
   }
 
   logError(err, `${_req.method} ${_req.originalUrl}`)

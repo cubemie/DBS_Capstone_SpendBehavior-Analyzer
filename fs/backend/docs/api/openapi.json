@@ -1,0 +1,2838 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SpendBehavior Analyzer Backend API",
+    "version": "1.0.0",
+    "description": "OpenAPI documentation for the implemented backend MVP endpoints."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Health"
+    },
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Users"
+    },
+    {
+      "name": "Categories"
+    },
+    {
+      "name": "Transactions"
+    },
+    {
+      "name": "Predictions"
+    },
+    {
+      "name": "Analytics"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["Health"],
+        "summary": "Root API metadata and health check",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Backend process is responding with API metadata.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "name",
+                    "version",
+                    "uptime",
+                    "endpoints"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "ok"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "SpendBehavior Analyzer API"
+                    },
+                    "version": {
+                      "type": "string",
+                      "example": "1.0.0"
+                    },
+                    "uptime": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "example": 123
+                    },
+                    "endpoints": {
+                      "type": "object",
+                      "required": [
+                        "auth",
+                        "users",
+                        "categories",
+                        "transactions",
+                        "predictions",
+                        "analytics"
+                      ],
+                      "properties": {
+                        "auth": {
+                          "type": "string",
+                          "example": "/api/v1/auth"
+                        },
+                        "categories": {
+                          "type": "string",
+                          "example": "/api/v1/categories"
+                        },
+                        "transactions": {
+                          "type": "string",
+                          "example": "/api/v1/transactions"
+                        },
+                        "predictions": {
+                          "type": "string",
+                          "example": "/api/v1/predictions"
+                        },
+                        "analytics": {
+                          "type": "string",
+                          "example": "/api/v1/analytics"
+                        },
+                        "users": {
+                          "type": "string",
+                          "example": "/api/v1/users"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "example": {
+                  "status": "ok",
+                  "name": "SpendBehavior Analyzer API",
+                  "version": "1.0.0",
+                  "uptime": 123,
+                  "endpoints": {
+                    "auth": "/api/v1/auth",
+                    "users": "/api/v1/users",
+                    "categories": "/api/v1/categories",
+                    "transactions": "/api/v1/transactions",
+                    "predictions": "/api/v1/predictions",
+                    "analytics": "/api/v1/analytics"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": ["Health"],
+        "summary": "Health check",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Backend process is responding.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "uptime"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "ok"
+                    },
+                    "uptime": {
+                      "type": "number",
+                      "minimum": 0,
+                      "example": 123.45
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "example": {
+                  "status": "ok",
+                  "uptime": 123.45
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register a user",
+        "description": "Creates a user and returns the created user. This endpoint does not create a refresh-token session and does not return an access token.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              },
+              "example": {
+                "fullName": "Makise Kurisu",
+                "email": "makise@amadeus.com",
+                "password": "supersecretpassword",
+                "avatarUrl": "https://example.com/avatar.png",
+                "phone": "+6281234567890"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterResponse"
+                },
+                "example": {
+                  "user": {
+                    "id": "018f2e90-3b95-7c83-a996-2b89420f0342",
+                    "fullName": "Makise Kurisu",
+                    "email": "makise@amadeus.com",
+                    "avatarUrl": "https://example.com/avatar.png",
+                    "phone": "+6281234567890",
+                    "locale": "id-ID",
+                    "timezone": "Asia/Jakarta",
+                    "persona": null,
+                    "updatedAt": "2026-06-03T04:20:00.000Z",
+                    "createdAt": "2026-06-03T04:20:00.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "409": {
+            "description": "Email is already registered.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Email sudah terdaftar"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many auth attempts in the rate-limit window.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Terlalu banyak percobaan. Coba lagi dalam 15 menit."
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login",
+        "description": "Authenticates credentials, creates a refresh-token session, sets the HTTP-only refresh_token cookie, and returns an access token.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              },
+              "example": {
+                "email": "makise@amadeus.com",
+                "password": "supersecretpassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authenticated.",
+            "headers": {
+              "Set-Cookie": {
+                "description": "HTTP-only refresh_token cookie scoped to /api/v1/auth.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessTokenResponse"
+                },
+                "example": {
+                  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "description": "Invalid email or password.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Email atau password salah"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many auth attempts in the rate-limit window.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Terlalu banyak percobaan. Coba lagi dalam 15 menit."
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Refresh access token",
+        "description": "Uses the HTTP-only refresh_token cookie, rotates the refresh token, and returns a new access token.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Access token refreshed.",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Rotated HTTP-only refresh_token cookie scoped to /api/v1/auth.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessTokenResponse"
+                },
+                "example": {
+                  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Refresh token is missing or invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "missing": {
+                    "value": {
+                      "message": "Refresh token tidak ditemukan"
+                    }
+                  },
+                  "invalid": {
+                    "value": {
+                      "message": "Refresh token tidak valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout",
+        "description": "Revokes the active refresh token when present and clears the refresh_token cookie.",
+        "security": [],
+        "responses": {
+          "204": {
+            "description": "Logged out. No response body."
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get authenticated user profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authenticated user profile.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "id": "018f2e90-3b95-7c83-a996-2b89420f0342",
+                  "fullName": "Makise Kurisu",
+                  "email": "makise@amadeus.com",
+                  "avatarUrl": null,
+                  "phone": null,
+                  "locale": "id-ID",
+                  "timezone": "Asia/Jakarta",
+                  "persona": "rational",
+                  "updatedAt": "2026-06-03T04:20:00.000Z",
+                  "createdAt": "2026-06-03T04:20:00.000Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "description": "User no longer exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "User tidak ditemukan"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/users/me": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update authenticated user profile",
+        "description": "Updates profile fields for the authenticated user. This route never accepts a user id path parameter.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              },
+              "example": {
+                "fullName": "Makise Kurisu",
+                "phone": "+6281234567890"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated authenticated user profile.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "id": "018f2e90-3b95-7c83-a996-2b89420f0342",
+                  "fullName": "Makise Kurisu",
+                  "email": "makise@amadeus.com",
+                  "avatarUrl": null,
+                  "phone": "+6281234567890",
+                  "locale": "id-ID",
+                  "timezone": "Asia/Jakarta",
+                  "persona": null,
+                  "updatedAt": "2026-06-03T04:25:00.000Z",
+                  "createdAt": "2026-06-03T04:20:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "description": "User no longer exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "User tidak ditemukan"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/users/me/password": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Change authenticated user password",
+        "description": "Changes the password for the authenticated user after validating the old password.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              },
+              "example": {
+                "oldPassword": "supersecretpassword",
+                "newPassword": "newsecretpassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password changed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed or old password is incorrect.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Kata sandi lama salah"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "description": "User no longer exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "User tidak ditemukan"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "List categories",
+        "description": "Returns system categories plus categories owned by the authenticated user.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CategoryKindQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "018f2e90-49b4-7a0d-a3f7-9b77d3f52a45",
+                    "userId": null,
+                    "name": "Makanan & Minuman",
+                    "slug": "makanan-and-minuman",
+                    "kind": "expense",
+                    "mlKey": "food_beverage",
+                    "color": "#F97316",
+                    "icon": "utensils",
+                    "isSystem": true,
+                    "updatedAt": "2026-06-03T04:20:00.000Z",
+                    "createdAt": "2026-06-03T04:20:00.000Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Create a custom category",
+        "description": "Creates a category owned by the authenticated user. Slug is generated by the backend from name.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategoryRequest"
+              },
+              "example": {
+                "name": "Kopi",
+                "kind": "expense",
+                "color": "#8B5CF6",
+                "icon": "coffee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Category created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "409": {
+            "description": "Duplicate category for this user and kind.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Kategori sudah ada"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/categories/{id}": {
+      "patch": {
+        "tags": ["Categories"],
+        "summary": "Update a custom category",
+        "description": "Only user-owned categories can be updated. System categories are read-only.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCategoryRequest"
+              },
+              "example": {
+                "name": "Kopi Harian",
+                "color": "#14B8A6",
+                "icon": "coffee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Category updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "description": "System category cannot be changed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Kategori sistem tidak dapat diubah"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Category not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Kategori tidak ditemukan"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate category for this user and kind.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Kategori sudah ada"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Categories"],
+        "summary": "Delete a custom category",
+        "description": "Only user-owned categories can be deleted. Categories used by transactions cannot be deleted.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Category deleted. No response body."
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "description": "System category cannot be deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Kategori sistem tidak dapat dihapus"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Category not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Kategori tidak ditemukan"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Category is used by transactions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Kategori masih digunakan transaksi"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "List transactions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageQuery"
+          },
+          {
+            "$ref": "#/components/parameters/LimitQuery"
+          },
+          {
+            "$ref": "#/components/parameters/FromQuery"
+          },
+          {
+            "$ref": "#/components/parameters/ToQuery"
+          },
+          {
+            "$ref": "#/components/parameters/CategoryIdQuery"
+          },
+          {
+            "$ref": "#/components/parameters/TransactionTypeQuery"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQuery"
+          },
+          {
+            "$ref": "#/components/parameters/SortQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated transaction list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionListResponse"
+                },
+                "example": {
+                  "items": [
+                    {
+                      "id": "018f2e91-11d2-795a-bf4c-32a95bbd5b19",
+                      "userId": "018f2e90-3b95-7c83-a996-2b89420f0342",
+                      "categoryId": "018f2e90-49b4-7a0d-a3f7-9b77d3f52a45",
+                      "title": "Makan siang",
+                      "merchantName": "Warung Nasi",
+                      "paymentMethod": "qris",
+                      "type": "expense",
+                      "amountIdr": 35000,
+                      "transactionDate": "2026-06-02T05:00:00.000Z",
+                      "notes": "Manual entry",
+                      "source": "manual",
+                      "updatedAt": "2026-06-02T05:10:00.000Z",
+                      "createdAt": "2026-06-02T05:10:00.000Z",
+                      "category": {
+                        "id": "018f2e90-49b4-7a0d-a3f7-9b77d3f52a45",
+                        "userId": null,
+                        "name": "Makanan & Minuman",
+                        "slug": "makanan-and-minuman",
+                        "kind": "expense",
+                        "mlKey": "food_beverage",
+                        "color": "#F97316",
+                        "icon": "utensils",
+                        "isSystem": true,
+                        "updatedAt": "2026-06-03T04:20:00.000Z",
+                        "createdAt": "2026-06-03T04:20:00.000Z"
+                      }
+                    }
+                  ],
+                  "page": 1,
+                  "limit": 20,
+                  "total": 1
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Create transaction",
+        "description": "Creates a manual income or expense transaction. The selected category must be visible to the user and have the same kind as the transaction type.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTransactionRequest"
+              },
+              "example": {
+                "categoryId": "018f2e90-49b4-7a0d-a3f7-9b77d3f52a45",
+                "title": "Makan siang",
+                "merchantName": "Warung Nasi",
+                "paymentMethod": "qris",
+                "type": "expense",
+                "amountIdr": 35000,
+                "transactionDate": "2026-06-02T12:00:00+07:00",
+                "notes": "Manual entry"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Transaction created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "description": "Category not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Kategori tidak ditemukan"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Transaction type does not match category kind.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Tipe transaksi tidak sesuai kategori"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/summary": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Summarize transactions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FromQuery"
+          },
+          {
+            "$ref": "#/components/parameters/ToQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction summary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionSummary"
+                },
+                "example": {
+                  "incomeTotalIdr": 8000000,
+                  "expenseTotalIdr": 3500000,
+                  "netTotalIdr": 4500000,
+                  "transactionCount": 42
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/{id}": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get transaction by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction detail.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "description": "Transaction not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Transaksi tidak ditemukan"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Transactions"],
+        "summary": "Update transaction",
+        "description": "Updates one or more transaction fields. When categoryId or type changes, the category kind must still match the transaction type.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTransactionRequest"
+              },
+              "example": {
+                "title": "Makan siang kantor",
+                "amountIdr": 42000,
+                "notes": "Updated receipt"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transaction updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "description": "Transaction or category not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "transaction": {
+                    "value": {
+                      "message": "Transaksi tidak ditemukan"
+                    }
+                  },
+                  "category": {
+                    "value": {
+                      "message": "Kategori tidak ditemukan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Transaction type does not match category kind.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Tipe transaksi tidak sesuai kategori"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "Delete transaction",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Transaction deleted. No response body."
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "description": "Transaction not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Transaksi tidak ditemukan"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/predictions/persona": {
+      "post": {
+        "tags": ["Predictions"],
+        "summary": "Create persona prediction",
+        "description": "Builds feature vectors from the user's stored expense transactions, calls the ML service unless a cached prediction exists for the same feature vector, persists the result, and returns the prediction.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePersonaPredictionRequest"
+              },
+              "example": {
+                "from": "2026-06-01T00:00:00+07:00",
+                "to": "2026-06-30T23:59:59+07:00",
+                "timezone": "Asia/Jakarta",
+                "force": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cached prediction returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PredictionWithCachedFlag"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Prediction created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PredictionWithCachedFlag"
+                },
+                "example": {
+                  "id": "018f2e92-3040-70e2-9a62-bfb5cba94f2d",
+                  "userId": "018f2e90-3b95-7c83-a996-2b89420f0342",
+                  "periodFrom": "2026-06-01T00:00:00.000Z",
+                  "periodTo": "2026-06-30T16:59:59.000Z",
+                  "timezone": "Asia/Jakarta",
+                  "persona": "rational",
+                  "confidence": 0.87,
+                  "probabilities": {
+                    "emotional": 0.05,
+                    "impulsive": 0.08,
+                    "rational": 0.87
+                  },
+                  "warnings": ["Pola pengeluaran stabil"],
+                  "featureOrder": [
+                    "total_pengeluaran_bulanan",
+                    "avg_transaksi_harian"
+                  ],
+                  "features": {
+                    "total_pengeluaran_bulanan": 3500000,
+                    "avg_transaksi_harian": 116667
+                  },
+                  "featureVectorHash": "ee91d2e6e33d4f2f7b0c0c0b1c2a31b2e9b6d45fe2b4e3a9bf6b2d48fd6f43b0",
+                  "transactionCount": 42,
+                  "mlResponse": {
+                    "persona": "rational",
+                    "confidence": 0.87,
+                    "probabilities": {
+                      "emotional": 0.05,
+                      "impulsive": 0.08,
+                      "rational": 0.87
+                    },
+                    "smart_warnings_system": ["Pola pengeluaran stabil"]
+                  },
+                  "createdAt": "2026-06-03T04:20:00.000Z",
+                  "cached": false
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "description": "ML service rejected the generated feature vector or category/type data is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Invalid feature vector"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          },
+          "503": {
+            "description": "ML service unavailable or timed out.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "message": "Layanan ML tidak tersedia"
+                    }
+                  },
+                  "timeout": {
+                    "value": {
+                      "message": "Layanan ML melewati batas waktu"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/predictions/latest": {
+      "get": {
+        "tags": ["Predictions"],
+        "summary": "Get latest persona prediction",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Latest prediction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Prediction"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "description": "No prediction exists for this user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Prediksi belum tersedia"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/predictions/history": {
+      "get": {
+        "tags": ["Predictions"],
+        "summary": "List prediction history",
+        "description": "Date filters apply to prediction creation time.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageQuery"
+          },
+          {
+            "$ref": "#/components/parameters/LimitQuery"
+          },
+          {
+            "$ref": "#/components/parameters/FromQuery"
+          },
+          {
+            "$ref": "#/components/parameters/ToQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated prediction history.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PredictionHistoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/v1/analytics/dashboard": {
+      "get": {
+        "tags": ["Analytics"],
+        "summary": "Get dashboard analytics",
+        "description": "Aggregates summary, persona, recent transactions, top categories, weekly trend, weekday/weekend comparison, warnings, money leaks, and insights for the requested period.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FromQuery"
+          },
+          {
+            "$ref": "#/components/parameters/ToQuery"
+          },
+          {
+            "$ref": "#/components/parameters/TimezoneQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard payload.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "IdPath": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "PageQuery": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        }
+      },
+      "LimitQuery": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        }
+      },
+      "FromQuery": {
+        "name": "from",
+        "in": "query",
+        "required": false,
+        "description": "Inclusive ISO datetime with timezone offset.",
+        "schema": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2026-06-01T00:00:00+07:00"
+        }
+      },
+      "ToQuery": {
+        "name": "to",
+        "in": "query",
+        "required": false,
+        "description": "Inclusive ISO datetime with timezone offset.",
+        "schema": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2026-06-30T23:59:59+07:00"
+        }
+      },
+      "TimezoneQuery": {
+        "name": "timezone",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "default": "Asia/Jakarta"
+        }
+      },
+      "CategoryIdQuery": {
+        "name": "categoryId",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "CategoryKindQuery": {
+        "name": "kind",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/CategoryKind"
+        }
+      },
+      "TransactionTypeQuery": {
+        "name": "type",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/TransactionType"
+        }
+      },
+      "SearchQuery": {
+        "name": "search",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      },
+      "SortQuery": {
+        "name": "sort",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": ["date_desc", "date_asc"],
+          "default": "date_desc"
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Missing or invalid access token.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "message": "Akses ditolak, token tidak ditemukan"
+            }
+          }
+        }
+      },
+      "ValidationError": {
+        "description": "Validation failed.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ValidationErrorResponse"
+            },
+            "example": {
+              "message": "Validasi gagal",
+              "details": [
+                {
+                  "field": "email",
+                  "message": "Harus merupakan email yang valid"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Unhandled server error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "message": "Terjadi kesalahan pada server"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationErrorResponse": {
+        "type": "object",
+        "required": ["message", "details"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "const": "Validasi gagal"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationIssue"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationIssue": {
+        "type": "object",
+        "required": ["field", "message"],
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AccessTokenResponse": {
+        "type": "object",
+        "required": ["accessToken"],
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegisterResponse": {
+        "type": "object",
+        "required": ["user"],
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegisterRequest": {
+        "type": "object",
+        "required": ["fullName", "email", "password"],
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          },
+          "avatarUrl": {
+            "type": ["string", "null"],
+            "format": "uri"
+          },
+          "phone": {
+            "type": ["string", "null"]
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "User": {
+        "type": "object",
+        "required": [
+          "id",
+          "fullName",
+          "email",
+          "avatarUrl",
+          "phone",
+          "locale",
+          "timezone",
+          "persona",
+          "updatedAt",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "avatarUrl": {
+            "type": ["string", "null"],
+            "format": "uri"
+          },
+          "phone": {
+            "type": ["string", "null"]
+          },
+          "locale": {
+            "type": "string",
+            "example": "id-ID"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Asia/Jakarta"
+          },
+          "persona": {
+            "type": ["string", "null"]
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CategoryKind": {
+        "type": "string",
+        "enum": ["income", "expense"]
+      },
+      "Category": {
+        "type": "object",
+        "required": [
+          "id",
+          "userId",
+          "name",
+          "slug",
+          "kind",
+          "mlKey",
+          "color",
+          "icon",
+          "isSystem",
+          "updatedAt",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/CategoryKind"
+          },
+          "mlKey": {
+            "type": ["string", "null"]
+          },
+          "color": {
+            "type": ["string", "null"]
+          },
+          "icon": {
+            "type": ["string", "null"]
+          },
+          "isSystem": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateCategoryRequest": {
+        "type": "object",
+        "required": ["name", "kind"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "kind": {
+            "$ref": "#/components/schemas/CategoryKind"
+          },
+          "color": {
+            "type": ["string", "null"],
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "icon": {
+            "type": ["string", "null"],
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateCategoryRequest": {
+        "type": "object",
+        "minProperties": 1,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "color": {
+            "type": ["string", "null"],
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "icon": {
+            "type": ["string", "null"],
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransactionType": {
+        "$ref": "#/components/schemas/CategoryKind"
+      },
+      "TransactionSource": {
+        "type": "string",
+        "enum": ["manual"]
+      },
+      "Transaction": {
+        "type": "object",
+        "required": [
+          "id",
+          "userId",
+          "categoryId",
+          "title",
+          "merchantName",
+          "paymentMethod",
+          "type",
+          "amountIdr",
+          "transactionDate",
+          "notes",
+          "source",
+          "updatedAt",
+          "createdAt",
+          "category"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "categoryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "merchantName": {
+            "type": ["string", "null"]
+          },
+          "paymentMethod": {
+            "type": ["string", "null"]
+          },
+          "type": {
+            "$ref": "#/components/schemas/TransactionType"
+          },
+          "amountIdr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "transactionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": ["string", "null"]
+          },
+          "source": {
+            "$ref": "#/components/schemas/TransactionSource"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateTransactionRequest": {
+        "type": "object",
+        "required": [
+          "categoryId",
+          "title",
+          "type",
+          "amountIdr",
+          "transactionDate"
+        ],
+        "properties": {
+          "categoryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "merchantName": {
+            "type": ["string", "null"],
+            "minLength": 1
+          },
+          "paymentMethod": {
+            "type": ["string", "null"],
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/components/schemas/TransactionType"
+          },
+          "amountIdr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "transactionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": ["string", "null"],
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateTransactionRequest": {
+        "type": "object",
+        "minProperties": 1,
+        "properties": {
+          "categoryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "merchantName": {
+            "type": ["string", "null"],
+            "minLength": 1
+          },
+          "paymentMethod": {
+            "type": ["string", "null"],
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/components/schemas/TransactionType"
+          },
+          "amountIdr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "transactionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": ["string", "null"],
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransactionListResponse": {
+        "type": "object",
+        "required": ["items", "page", "limit", "total"],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransactionSummary": {
+        "type": "object",
+        "required": [
+          "incomeTotalIdr",
+          "expenseTotalIdr",
+          "netTotalIdr",
+          "transactionCount"
+        ],
+        "properties": {
+          "incomeTotalIdr": {
+            "type": "integer"
+          },
+          "expenseTotalIdr": {
+            "type": "integer"
+          },
+          "netTotalIdr": {
+            "type": "integer"
+          },
+          "transactionCount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePersonaPredictionRequest": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timezone": {
+            "type": "string",
+            "default": "Asia/Jakarta"
+          },
+          "force": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "PredictionProbabilities": {
+        "type": "object",
+        "required": ["emotional", "impulsive", "rational"],
+        "properties": {
+          "emotional": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "impulsive": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "rational": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "MlPredictionResponse": {
+        "type": "object",
+        "required": [
+          "persona",
+          "confidence",
+          "probabilities",
+          "smart_warnings_system"
+        ],
+        "properties": {
+          "persona": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "probabilities": {
+            "$ref": "#/components/schemas/PredictionProbabilities"
+          },
+          "smart_warnings_system": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "Prediction": {
+        "type": "object",
+        "required": [
+          "id",
+          "userId",
+          "periodFrom",
+          "periodTo",
+          "timezone",
+          "persona",
+          "confidence",
+          "probabilities",
+          "warnings",
+          "featureOrder",
+          "features",
+          "featureVectorHash",
+          "transactionCount",
+          "mlResponse",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "periodFrom": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "periodTo": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "persona": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "probabilities": {
+            "$ref": "#/components/schemas/PredictionProbabilities"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "featureOrder": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "features": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "featureVectorHash": {
+            "type": "string"
+          },
+          "transactionCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "mlResponse": {
+            "$ref": "#/components/schemas/MlPredictionResponse"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PredictionWithCachedFlag": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Prediction"
+          },
+          {
+            "type": "object",
+            "required": ["cached"],
+            "properties": {
+              "cached": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "PredictionHistoryResponse": {
+        "type": "object",
+        "required": ["items", "page", "limit", "total"],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Prediction"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardPeriod": {
+        "type": "object",
+        "required": ["from", "to", "timezone"],
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timezone": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardPersona": {
+        "type": "object",
+        "required": [
+          "id",
+          "persona",
+          "confidence",
+          "probabilities",
+          "transactionCount",
+          "createdAt",
+          "predictionSource"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "persona": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number"
+          },
+          "probabilities": {
+            "$ref": "#/components/schemas/PredictionProbabilities"
+          },
+          "transactionCount": {
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "predictionSource": {
+            "type": ["string", "null"],
+            "enum": ["period", "latest", null]
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardRecentTransaction": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "merchantName",
+          "paymentMethod",
+          "type",
+          "amountIdr",
+          "signedAmountIdr",
+          "transactionDate",
+          "category"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "merchantName": {
+            "type": ["string", "null"]
+          },
+          "paymentMethod": {
+            "type": ["string", "null"]
+          },
+          "type": {
+            "$ref": "#/components/schemas/TransactionType"
+          },
+          "amountIdr": {
+            "type": "integer"
+          },
+          "signedAmountIdr": {
+            "type": "integer"
+          },
+          "transactionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "category": {
+            "$ref": "#/components/schemas/DashboardCategory"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardCategory": {
+        "type": "object",
+        "required": ["id", "name", "slug", "color", "icon"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "color": {
+            "type": ["string", "null"]
+          },
+          "icon": {
+            "type": ["string", "null"]
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardTopCategory": {
+        "type": "object",
+        "required": [
+          "categoryId",
+          "name",
+          "slug",
+          "color",
+          "icon",
+          "amountIdr",
+          "percentage",
+          "transactionCount"
+        ],
+        "properties": {
+          "categoryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "color": {
+            "type": ["string", "null"]
+          },
+          "icon": {
+            "type": ["string", "null"]
+          },
+          "amountIdr": {
+            "type": "integer"
+          },
+          "percentage": {
+            "type": "integer"
+          },
+          "transactionCount": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardWeeklyTrendItem": {
+        "type": "object",
+        "required": ["label", "from", "to", "expenseTotalIdr"],
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expenseTotalIdr": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardWeekdayWeekend": {
+        "type": "object",
+        "required": [
+          "weekdayTotalIdr",
+          "weekendTotalIdr",
+          "weekdayAverageDailyIdr",
+          "weekendAverageDailyIdr"
+        ],
+        "properties": {
+          "weekdayTotalIdr": {
+            "type": "integer"
+          },
+          "weekendTotalIdr": {
+            "type": "integer"
+          },
+          "weekdayAverageDailyIdr": {
+            "type": "integer"
+          },
+          "weekendAverageDailyIdr": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardWarning": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "description",
+          "label",
+          "severity",
+          "source"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["info", "warning", "danger", "success"]
+          },
+          "source": {
+            "type": "string",
+            "enum": ["prediction"]
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardMoneyLeak": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "description",
+          "label",
+          "severity",
+          "categoryId",
+          "amountIdr",
+          "transactionCount"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["warning", "danger"]
+          },
+          "categoryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "amountIdr": {
+            "type": "integer"
+          },
+          "transactionCount": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardInsight": {
+        "type": "object",
+        "required": ["id", "title", "description", "tone"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tone": {
+            "type": "string",
+            "enum": ["teal", "coral", "yellow", "neutral"]
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardResponse": {
+        "type": "object",
+        "required": [
+          "period",
+          "summary",
+          "persona",
+          "predictionSource",
+          "recentTransactions",
+          "topCategories",
+          "trends",
+          "warnings",
+          "moneyLeaks",
+          "insights"
+        ],
+        "properties": {
+          "period": {
+            "$ref": "#/components/schemas/DashboardPeriod"
+          },
+          "summary": {
+            "type": "object",
+            "required": [
+              "incomeTotalIdr",
+              "expenseTotalIdr",
+              "netTotalIdr",
+              "transactionCount",
+              "savingRatePercent"
+            ],
+            "properties": {
+              "incomeTotalIdr": {
+                "type": "integer"
+              },
+              "expenseTotalIdr": {
+                "type": "integer"
+              },
+              "netTotalIdr": {
+                "type": "integer"
+              },
+              "transactionCount": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "savingRatePercent": {
+                "type": "integer"
+              }
+            },
+            "additionalProperties": false
+          },
+          "persona": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DashboardPersona"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "predictionSource": {
+            "type": ["string", "null"],
+            "enum": ["period", "latest", null]
+          },
+          "recentTransactions": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "$ref": "#/components/schemas/DashboardRecentTransaction"
+            }
+          },
+          "topCategories": {
+            "type": "array",
+            "maxItems": 5,
+            "items": {
+              "$ref": "#/components/schemas/DashboardTopCategory"
+            }
+          },
+          "trends": {
+            "type": "object",
+            "required": ["weekly", "weekdayWeekend"],
+            "properties": {
+              "weekly": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DashboardWeeklyTrendItem"
+                }
+              },
+              "weekdayWeekend": {
+                "$ref": "#/components/schemas/DashboardWeekdayWeekend"
+              }
+            },
+            "additionalProperties": false
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DashboardWarning"
+            }
+          },
+          "moneyLeaks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DashboardMoneyLeak"
+            }
+          },
+          "insights": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "$ref": "#/components/schemas/DashboardInsight"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "phone": {
+            "type": ["string", "null"]
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChangePasswordRequest": {
+        "type": "object",
+        "required": ["oldPassword", "newPassword"],
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "minLength": 8
+          },
+          "newPassword": {
+            "type": "string",
+            "minLength": 8
+          }
+        },
+        "additionalProperties": false
+      },
+      "SuccessResponse": {
+        "type": "object",
+        "required": ["success"],
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

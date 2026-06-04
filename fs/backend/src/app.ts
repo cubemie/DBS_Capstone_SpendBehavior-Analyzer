@@ -1,5 +1,6 @@
 import e from 'express'
 import cookieParser from 'cookie-parser'
+import path from 'node:path'
 import { analyticsRouter } from './modules/analytics/analytics-route.ts'
 import { authRouter } from './modules/auth/auth-route.ts'
 import { categoryRouter } from './modules/categories/category-route.ts'
@@ -25,6 +26,14 @@ app.use(requestLogger)
 
 app.use(e.json())
 app.use(cookieParser())
+app.use(
+  '/uploads',
+  e.static(path.resolve('uploads'), {
+    setHeaders(res) {
+      res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
+    },
+  }),
+)
 
 app.get('/', (_, res) => {
   res.json({

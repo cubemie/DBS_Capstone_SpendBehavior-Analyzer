@@ -1,6 +1,7 @@
 node_modules/
 dist/
 build/
+fs/backend/uploads/
 
 __pycache__/
 *.py[cod]
