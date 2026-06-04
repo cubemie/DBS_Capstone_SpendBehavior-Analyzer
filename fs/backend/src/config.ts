@@ -1,7 +1,5 @@
-import { loadEnvFile } from 'node:process'
+import 'dotenv/config'
 import * as z from 'zod'
-
-loadEnvFile()
 
 export const env = z
   .object({
