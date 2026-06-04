@@ -1,7 +1,7 @@
 import { Bell, Search } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import defaultAvatar from "../assets/budu-logo.png";
 
 function TopBar() {

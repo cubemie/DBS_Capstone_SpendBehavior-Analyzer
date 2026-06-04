@@ -6,7 +6,7 @@ import AuthLayout from "../layout/AuthLayout";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { cn } from "../utils/cn";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import { ApiError } from "../services/ApiError";
 
 export default function Register() {

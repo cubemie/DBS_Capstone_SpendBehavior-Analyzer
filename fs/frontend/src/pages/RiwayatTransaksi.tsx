@@ -29,7 +29,7 @@ import {
   CreditCard,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 
 const DEFAULT_FILTERS: TransactionFilters = {
   page: 1,

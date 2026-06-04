@@ -10,7 +10,7 @@ import Card from "../components/Card";
 import Input from "../components/Input";
 import PageHeader from "../components/PageHeader";
 import PredictionStatusCard from "../components/PredictionStatusCard";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import { getPersonaDescription } from "../services/predictionService";
 import { analyticsService } from "../services/analyticsService";
 import { useApi } from "../hooks/useApi";

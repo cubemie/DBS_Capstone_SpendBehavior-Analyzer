@@ -21,7 +21,7 @@ import type { ApiCategory, CategoryKind } from "../types/models";
 import { categoryService } from "../services/categoryService";
 import { transactionService } from "../services/transactionService";
 import { ApiError } from "../services/ApiError";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import type { LucideIcon } from "lucide-react";
 
 // Fallback icon map for categories that come from the API

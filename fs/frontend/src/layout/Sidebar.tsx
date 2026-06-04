@@ -2,7 +2,7 @@ import { LogOut } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { navigationItems } from "../utils/navigation";
 import { cn } from "../utils/cn";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 
 import buduLogo from "../assets/budu-logo.png";
 

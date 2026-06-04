@@ -16,8 +16,13 @@ export function useApi<T>(fetcher: () => Promise<T>, deps: unknown[] = []): UseA
 
   useEffect(() => {
     let cancelled = false;
-    setIsLoading(true);
-    setError(null);
+
+    queueMicrotask(() => {
+      if (!cancelled) {
+        setIsLoading(true);
+        setError(null);
+      }
+    });
 
     fetcher()
       .then((result) => {

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ArrowDown, ArrowRight, ArrowUp, Bell, Trophy, Wallet } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUp, Bell, CalendarClock, Trophy, Wallet } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import quokkaImg from "../assets/budu-logo.png";
 import Badge from "../components/Badge";
@@ -13,7 +13,7 @@ import TransactionItem from "../components/TransactionItem";
 import { formatCurrency } from "../utils/formatCurrency";
 import { useApi } from "../hooks/useApi";
 import { analyticsService } from "../services/analyticsService";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import { usePredictionRefresh } from "../hooks/usePredictionRefresh";
 import type { ApiTransaction } from "../types/models";
 import { ShoppingBag, UtensilsCrossed, Car, Banknote, CreditCard } from "lucide-react";
@@ -60,6 +60,10 @@ function DashboardSkeleton() {
 
 const CATEGORY_COLORS = ["#8BDFDD", "#F28C6A", "#FFE394", "#B7D6A5", "#C4B5FD"];
 
+function toDateInputValue(date: string): string {
+  return date.slice(0, 10);
+}
+
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user, setPredictionPersona } = useAuth();
@@ -79,9 +83,11 @@ export default function Dashboard() {
   if (isLoading) return <div className="space-y-6"><PageHeader title="Dashboard" description="Pantau pengeluaranmu bulan ini." /><DashboardSkeleton /></div>;
   if (error) return <div className="space-y-6"><PageHeader title="Dashboard" description="Pantau pengeluaranmu bulan ini." /><ErrorState message={error} /></div>;
 
-  const { summary, persona, predictionStatus, topCategories, recentTransactions, warnings } = data!;
+  const { summary, persona, predictionStatus, topCategories, recentTransactions, warnings, moneyLeaks } = data!;
   const recentMapped = recentTransactions.slice(0, 3).map(toTransactionItem);
   const hasWarnings = warnings && warnings.length > 0;
+  const hasMoneyLeaks = moneyLeaks.length > 0;
+  const primaryMoneyLeak = moneyLeaks[0];
 
   const displayWarning =
     hasWarnings
@@ -90,6 +96,20 @@ export default function Dashboard() {
           title: "Tidak ada peringatan aktif.",
           description: "Belum ada sinyal pengeluaran yang perlu ditindaklanjuti untuk periode ini.",
         };
+
+  const goToLeakTransactions = () => {
+    if (!primaryMoneyLeak) return;
+
+    const params = new URLSearchParams({
+      type: "expense",
+      categoryId: primaryMoneyLeak.categoryId,
+      startDate: toDateInputValue(data!.period.from),
+      endDate: toDateInputValue(data!.period.to),
+      sort: "date_desc",
+    });
+
+    navigate(`/riwayat?${params.toString()}`);
+  };
 
   return (
     <div className="space-y-6">
@@ -165,6 +185,39 @@ export default function Dashboard() {
             </p>
             <Button fullWidth className="mt-5" onClick={() => navigate("/peringatan")}>Lihat Peringatan</Button>
           </Card>
+
+          {hasMoneyLeaks && primaryMoneyLeak ? (
+            <Card className="!border-[var(--color-yellow)] !bg-[var(--color-yellow-bg)]">
+              <div className="flex items-start gap-4">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-[var(--color-yellow-ink)]">
+                  <CalendarClock className="h-6 w-6" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-[var(--color-yellow-ink)]">
+                    Deteksi kebocoran
+                  </p>
+                  <h2 className="mt-2 text-xl font-black leading-tight text-[var(--color-text-primary)]">
+                    {primaryMoneyLeak.title}
+                  </h2>
+                </div>
+              </div>
+              <p className="mt-4 text-sm leading-6 text-[var(--color-text-secondary)]">
+                {primaryMoneyLeak.description}
+              </p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <Button
+                  variant="outline"
+                  fullWidth
+                  onClick={goToLeakTransactions}
+                >
+                  Lihat Transaksi
+                </Button>
+                <Button fullWidth onClick={() => navigate("/peringatan")}>
+                  Detail Kebocoran
+                </Button>
+              </div>
+            </Card>
+          ) : null}
 
           {/* Top Categories — replaces Budget Bulanan */}
           <Card>

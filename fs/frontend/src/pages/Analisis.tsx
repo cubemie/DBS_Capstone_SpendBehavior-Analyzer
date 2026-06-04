@@ -34,11 +34,11 @@ export default function Analisis() {
 
   // Build donut chart segments from topCategories
   const circumference = 2 * Math.PI * 15.9;
-  let offsetAcc = 0;
   const donutSegments = topCategories.map((cat, i) => {
     const dash = (cat.percentage / 100) * circumference;
-    const offset = offsetAcc;
-    offsetAcc += dash;
+    const offset = topCategories
+      .slice(0, i)
+      .reduce((total, item) => total + (item.percentage / 100) * circumference, 0);
     return { ...cat, dash, offset, color: CHART_COLORS[i % CHART_COLORS.length] };
   });
 
