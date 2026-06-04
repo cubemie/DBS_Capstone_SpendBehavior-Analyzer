@@ -1,8 +1,0 @@
-name: SpendBehavior Analyzer
-variables:
-  - name: baseUrl
-    value: http://localhost:3000
-  - name: loggedInUserId
-    value: ""
-  - name: accessToken
-    value: ""
