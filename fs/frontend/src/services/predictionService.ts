@@ -21,11 +21,11 @@ interface RawPredictionRecord {
 
 // ─── Persona description map ──────────────────────────────────────────────────
 const PERSONA_DESCRIPTIONS: Record<string, string> = {
-  rational:
+  "rational spender":
     "Kamu cenderung berbelanja secara rasional dan terencana. Keputusan keuanganmu didasarkan pada kebutuhan.",
-  impulsive:
+  "impulsive spender":
     "Kamu sesekali melakukan pembelian impulsif. Perhatikan pengeluaran mendadak agar budget tetap terjaga.",
-  emotional:
+  "emotional spender":
     "Emosi sering memengaruhi keputusan belanjamu. Coba terapkan jeda sebelum membeli sesuatu.",
 };
 
