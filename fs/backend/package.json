@@ -11,6 +11,8 @@
     "check": "npm run format && npm run lint:fix",
     "drizzle:generate": "drizzle-kit generate",
     "drizzle:migrate": "drizzle-kit migrate",
+    "seed:demo-personas": "tsx ./scripts/seed-demo-personas.ts",
+    "seed:demo-personas:verify": "tsx ./scripts/seed-demo-personas.ts --verify-only",
     "test": "node --import tsx --test src/modules/**/*.test.ts"
   },
   "keywords": [],
