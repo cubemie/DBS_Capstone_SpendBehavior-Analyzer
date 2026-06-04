@@ -59,6 +59,13 @@ export type DashboardMoneyLeak = {
   transactionCount: number
 }
 
+export type DashboardPredictionStatus = {
+  state: 'empty' | 'missing' | 'stale' | 'fresh'
+  transactionCount: number
+  lastPredictedAt?: Date
+  predictionSource: 'period' | null
+}
+
 export type DashboardInsight = {
   id: string
   title: string

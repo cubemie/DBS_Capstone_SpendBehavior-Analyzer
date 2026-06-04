@@ -35,8 +35,39 @@ export type DashboardPredictionSelection = {
   source: 'period' | 'latest'
 }
 
-function createFeatureVectorHash(input: FeatureHashInput): string {
-  return createHash('sha256').update(JSON.stringify(input)).digest('hex')
+export type DashboardPredictionStatusState =
+  | 'empty'
+  | 'missing'
+  | 'stale'
+  | 'fresh'
+
+export type DashboardPredictionStatus = {
+  state: DashboardPredictionStatusState
+  transactionCount: number
+  lastPredictedAt?: Date
+  predictionSource: 'period' | null
+  prediction: PredictionRecord | null
+}
+
+function normalizeHashPeriod(period: FeatureHashInput['period']): {
+  from?: string
+  to?: string
+} {
+  return {
+    from: period.from ? new Date(period.from).toISOString() : undefined,
+    to: period.to ? new Date(period.to).toISOString() : undefined,
+  }
+}
+
+export function createFeatureVectorHash(input: FeatureHashInput): string {
+  return createHash('sha256')
+    .update(
+      JSON.stringify({
+        ...input,
+        period: normalizeHashPeriod(input.period),
+      }),
+    )
+    .digest('hex')
 }
 
 export const predictionService = {
@@ -49,6 +80,13 @@ export const predictionService = {
       to: dto.to,
       timezone: dto.timezone,
     })
+
+    if (featureResult.transactionCount === 0) {
+      throw new AppException(
+        'Belum ada transaksi pengeluaran untuk periode ini',
+        422,
+      )
+    }
 
     assertFeatureOrderMatches(featureResult.featureOrder)
 
@@ -144,6 +182,55 @@ export const predictionService = {
     return {
       prediction: latestPrediction,
       source: 'latest',
+    }
+  },
+
+  async getDashboardPredictionStatus(
+    userId: string,
+    period: PredictionPeriodInput,
+  ): Promise<DashboardPredictionStatus> {
+    const featureResult = await featureEngineeringService.buildForUser(userId, {
+      from: period.from,
+      to: period.to,
+      timezone: period.timezone,
+    })
+    const prediction = await this.getLatestForPeriodOptional(userId, period)
+
+    if (featureResult.transactionCount === 0) {
+      return {
+        state: 'empty',
+        transactionCount: 0,
+        predictionSource: null,
+        prediction: null,
+      }
+    }
+
+    if (!prediction) {
+      return {
+        state: 'missing',
+        transactionCount: featureResult.transactionCount,
+        predictionSource: null,
+        prediction: null,
+      }
+    }
+
+    const currentFeatureVectorHash = createFeatureVectorHash({
+      featureOrder: featureResult.featureOrder,
+      featureVector: featureResult.featureVector,
+      period: featureResult.period,
+      timezone: period.timezone,
+    })
+    const state =
+      prediction.featureVectorHash === currentFeatureVectorHash
+        ? 'fresh'
+        : 'stale'
+
+    return {
+      state,
+      transactionCount: featureResult.transactionCount,
+      lastPredictedAt: prediction.createdAt,
+      predictionSource: 'period',
+      prediction,
     }
   },
 

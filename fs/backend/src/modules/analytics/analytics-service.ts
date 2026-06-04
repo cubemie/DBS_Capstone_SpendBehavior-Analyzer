@@ -20,23 +20,22 @@ export const analyticsService = {
       to: period.to,
     })
     const [
-      predictionSelection,
+      predictionStatus,
       recentTransactions,
       topCategories,
       expenseTransactions,
       moneyLeakCandidates,
     ] = await Promise.all([
-      predictionService.getDashboardPredictionOptional(userId, period),
+      predictionService.getDashboardPredictionStatus(userId, period),
       analyticsRepository.findRecentTransactions({ userId, ...period }, 3),
       analyticsRepository.findTopCategories({ userId, ...period }, 5),
       analyticsRepository.findExpenseTransactions({ userId, ...period }),
       analyticsRepository.findMoneyLeakCandidates({ userId, ...period }),
     ])
-    const latestPrediction = predictionSelection?.prediction ?? null
-    const predictionSource = predictionSelection?.source ?? null
+    const periodPrediction = predictionStatus.prediction
     const savingRatePercent = calculateSavingRatePercent(summary)
-    const warnings = latestPrediction
-      ? mapPredictionWarnings(latestPrediction.warnings)
+    const warnings = periodPrediction
+      ? mapPredictionWarnings(periodPrediction.warnings)
       : []
     const moneyLeaks = mapMoneyLeaks(moneyLeakCandidates)
 
@@ -46,18 +45,23 @@ export const analyticsService = {
         ...summary,
         savingRatePercent,
       },
-      persona: latestPrediction
+      persona: periodPrediction
         ? {
-            id: latestPrediction.id,
-            persona: latestPrediction.persona,
-            confidence: latestPrediction.confidence,
-            probabilities: latestPrediction.probabilities,
-            transactionCount: latestPrediction.transactionCount,
-            createdAt: latestPrediction.createdAt,
-            predictionSource,
+            id: periodPrediction.id,
+            persona: periodPrediction.persona,
+            confidence: periodPrediction.confidence,
+            probabilities: periodPrediction.probabilities,
+            transactionCount: periodPrediction.transactionCount,
+            createdAt: periodPrediction.createdAt,
+            predictionSource: predictionStatus.predictionSource,
           }
         : null,
-      predictionSource,
+      predictionStatus: {
+        state: predictionStatus.state,
+        transactionCount: predictionStatus.transactionCount,
+        lastPredictedAt: predictionStatus.lastPredictedAt,
+        predictionSource: predictionStatus.predictionSource,
+      },
       recentTransactions,
       topCategories,
       trends: {
