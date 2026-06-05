@@ -44,6 +44,18 @@ function toTransactionResponse(
   }
 }
 
+async function getTransactionById(
+  userId: string,
+  id: string,
+): Promise<TransactionResponse> {
+  const transaction = await transactionRepository.findByIdForUser(id, userId)
+  if (!transaction) {
+    throw new AppException('Transaksi tidak ditemukan', 404)
+  }
+
+  return toTransactionResponse(transaction)
+}
+
 export const transactionService = {
   async list(
     userId: string,
@@ -75,12 +87,7 @@ export const transactionService = {
   },
 
   async getById(userId: string, id: string): Promise<TransactionResponse> {
-    const transaction = await transactionRepository.findByIdForUser(id, userId)
-    if (!transaction) {
-      throw new AppException('Transaksi tidak ditemukan', 404)
-    }
-
-    return toTransactionResponse(transaction)
+    return await getTransactionById(userId, id)
   },
 
   async create(
@@ -102,7 +109,7 @@ export const transactionService = {
       source: 'manual',
     })
 
-    return await this.getById(userId, transaction.id)
+    return await getTransactionById(userId, transaction.id)
   },
 
   async update(
@@ -133,11 +140,11 @@ export const transactionService = {
       updatedAt: new Date(),
     })
 
-    return await this.getById(userId, id)
+    return await getTransactionById(userId, id)
   },
 
   async delete(userId: string, id: string): Promise<void> {
-    await this.getById(userId, id)
+    await getTransactionById(userId, id)
     await transactionRepository.delete(id, userId)
   },
 

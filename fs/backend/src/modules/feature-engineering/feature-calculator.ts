@@ -6,6 +6,7 @@ import {
   type FeatureValues,
 } from './feature-contract.ts'
 import type { FeatureEngineeringResult } from './feature-schema.ts'
+import { isWeekendInTimezone } from '../../utils/timezone.ts'
 
 type FeatureCalculatorTransaction = {
   id: string
@@ -106,9 +107,7 @@ function getLocalDateParts(date: Date, timezone: string): LocalDateParts {
 }
 
 function isWeekend(date: Date, timezone: string): boolean {
-  const { weekday } = getLocalDateParts(date, timezone)
-
-  return weekday === 'Sat' || weekday === 'Sun'
+  return isWeekendInTimezone(date, timezone)
 }
 
 function isNight(date: Date, timezone: string): boolean {

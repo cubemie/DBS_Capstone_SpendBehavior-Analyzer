@@ -14,6 +14,7 @@ import type {
   PredictionStoredWarning,
   PredictionWarning,
 } from '../../db/schemas/prediction-results.ts'
+import { isWeekendInTimezone } from '../../utils/timezone.ts'
 
 type PeriodInput = {
   from?: string
@@ -216,17 +217,8 @@ export function buildWeeklyTrend(
   return buckets
 }
 
-function getLocalWeekday(date: Date, timezone: string): string {
-  return new Intl.DateTimeFormat('en-US', {
-    timeZone: timezone,
-    weekday: 'short',
-  }).format(date)
-}
-
 function isWeekend(date: Date, timezone: string): boolean {
-  const weekday = getLocalWeekday(date, timezone)
-
-  return weekday === 'Sat' || weekday === 'Sun'
+  return isWeekendInTimezone(date, timezone)
 }
 
 function countDayTypes(period: DashboardPeriod): {

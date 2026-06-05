@@ -1,4 +1,5 @@
 import * as z from 'zod'
+import { createUserSchema } from '../users/user-schema.ts'
 
 export type LoginDto = z.infer<typeof loginSchema>
 export type RegisterDto = z.infer<typeof registerSchema>
@@ -23,10 +24,4 @@ export const loginSchema = z.object({
   password: z.string('Harus merupakan string yang valid'),
 })
 
-export const registerSchema = z.object({
-  fullName: z.string('Harus merupakan string yang valid').trim(),
-  email: z.email('Harus merupakan email yang valid'),
-  password: z.string('Harus merupakan string yang valid').min(8),
-  avatarUrl: z.url().optional().nullable(),
-  phone: z.string().trim().optional().nullable(),
-})
+export const registerSchema = createUserSchema

@@ -1,7 +1,8 @@
-import { and, asc, eq, gte, lte, type SQL } from 'drizzle-orm'
+import { and, asc, eq } from 'drizzle-orm'
 import { db } from '../../db/index.ts'
 import { categories } from '../../db/schemas/categories.ts'
 import { transactions } from '../../db/schemas/transactions.ts'
+import { addTimestampRangeFilters } from '../../utils/db-filters.ts'
 
 export type FeatureTransactionRecord = {
   id: string
@@ -21,16 +22,6 @@ export type FeatureTransactionFilters = {
   to?: string
 }
 
-function addDateRangeFilters(filters: SQL[], from?: string, to?: string): void {
-  if (from) {
-    filters.push(gte(transactions.transactionDate, new Date(from)))
-  }
-
-  if (to) {
-    filters.push(lte(transactions.transactionDate, new Date(to)))
-  }
-}
-
 export const featureRepository = {
   async findExpenseTransactions(
     filters: FeatureTransactionFilters,
@@ -39,7 +30,12 @@ export const featureRepository = {
       eq(transactions.userId, filters.userId),
       eq(transactions.type, 'expense'),
     ]
-    addDateRangeFilters(conditions, filters.from, filters.to)
+    addTimestampRangeFilters(
+      conditions,
+      transactions.transactionDate,
+      filters.from,
+      filters.to,
+    )
 
     return await db
       .select({
@@ -67,7 +63,12 @@ export const featureRepository = {
     filters: FeatureTransactionFilters,
   ): Promise<FeatureTransactionRecord[]> {
     const conditions = [eq(transactions.userId, filters.userId)]
-    addDateRangeFilters(conditions, filters.from, filters.to)
+    addTimestampRangeFilters(
+      conditions,
+      transactions.transactionDate,
+      filters.from,
+      filters.to,
+    )
 
     return await db
       .select({

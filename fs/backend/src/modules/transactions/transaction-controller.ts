@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express'
+import { getAuthPayload } from '../../utils/auth-request.ts'
 import {
   createTransactionSchema,
   listTransactionsQuerySchema,
@@ -11,7 +12,7 @@ import { transactionService } from './transaction-service.ts'
 
 export const transactionController = {
   async list(req: Request, res: Response) {
-    const userId = req.payload!.sub
+    const userId = getAuthPayload(req).sub
     const query = listTransactionsQuerySchema.parse(req.query)
     const transactions = await transactionService.list(userId, query)
 
@@ -19,7 +20,7 @@ export const transactionController = {
   },
 
   async create(req: Request, res: Response) {
-    const userId = req.payload!.sub
+    const userId = getAuthPayload(req).sub
     const payload = createTransactionSchema.parse(req.body)
     const transaction = await transactionService.create(userId, payload)
 
@@ -27,7 +28,7 @@ export const transactionController = {
   },
 
   async getById(req: Request, res: Response) {
-    const userId = req.payload!.sub
+    const userId = getAuthPayload(req).sub
     const { id } = transactionParamsSchema.parse(req.params)
     const transaction = await transactionService.getById(userId, id)
 
@@ -35,7 +36,7 @@ export const transactionController = {
   },
 
   async update(req: Request, res: Response) {
-    const userId = req.payload!.sub
+    const userId = getAuthPayload(req).sub
     const { id } = transactionParamsSchema.parse(req.params)
     const payload = updateTransactionSchema.parse(req.body)
     const transaction = await transactionService.update(userId, id, payload)
@@ -44,7 +45,7 @@ export const transactionController = {
   },
 
   async delete(req: Request, res: Response) {
-    const userId = req.payload!.sub
+    const userId = getAuthPayload(req).sub
     const { id } = transactionParamsSchema.parse(req.params)
     await transactionService.delete(userId, id)
 
@@ -52,7 +53,7 @@ export const transactionController = {
   },
 
   async summarize(req: Request, res: Response) {
-    const userId = req.payload!.sub
+    const userId = getAuthPayload(req).sub
     const query = transactionSummaryQuerySchema.parse(req.query)
     const summary = await transactionService.summarize(userId, query)
 

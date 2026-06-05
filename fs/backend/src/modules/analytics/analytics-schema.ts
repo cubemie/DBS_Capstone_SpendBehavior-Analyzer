@@ -1,23 +1,5 @@
 import * as z from 'zod'
-
-const dateRangeSchema = z
-  .object({
-    from: z.iso.datetime({ offset: true }).optional(),
-    to: z.iso.datetime({ offset: true }).optional(),
-  })
-  .refine(
-    (value) => {
-      if (!value.from || !value.to) {
-        return true
-      }
-
-      return new Date(value.from).getTime() <= new Date(value.to).getTime()
-    },
-    {
-      message: 'Tanggal awal tidak boleh setelah tanggal akhir',
-      path: ['from'],
-    },
-  )
+import { dateRangeSchema } from '../../utils/query-schemas.ts'
 
 export const dashboardQuerySchema = dateRangeSchema.extend({
   timezone: z.string().trim().min(1).default('Asia/Jakarta'),

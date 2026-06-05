@@ -1,6 +1,7 @@
 import type { CookieOptions, Request, Response } from 'express'
 import { loginSchema, registerSchema } from './auth-schema.ts'
 import { env } from '../../config.ts'
+import { getAuthPayload } from '../../utils/auth-request.ts'
 import { sendData } from '../../utils/response.ts'
 import { authService } from './auth-service.ts'
 
@@ -85,7 +86,7 @@ export const authController = {
   },
 
   async me(req: Request, res: Response) {
-    const payload = req.payload!
+    const payload = getAuthPayload(req)
     const user = await authService.me(payload.sub)
 
     sendData(res, user)

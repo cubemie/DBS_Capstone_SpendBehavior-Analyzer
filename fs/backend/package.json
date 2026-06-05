@@ -15,7 +15,7 @@
     "drizzle:migrate": "drizzle-kit migrate",
     "seed:demo-personas": "tsx ./scripts/seed-demo-personas.ts",
     "seed:demo-personas:verify": "tsx ./scripts/seed-demo-personas.ts --verify-only",
-    "test": "node --import tsx --test src/modules/**/*.test.ts"
+    "test": "node --import tsx --import ./src/test/setup-env.ts --test src/modules/**/*.test.ts"
   },
   "keywords": [],
   "author": "",

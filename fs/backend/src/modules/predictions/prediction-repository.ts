@@ -1,4 +1,4 @@
-import { and, desc, eq, gte, isNull, lte, sql, type SQL } from 'drizzle-orm'
+import { and, desc, eq, isNull, sql, type SQL } from 'drizzle-orm'
 import { db } from '../../db/index.ts'
 import {
   predictionResults,
@@ -7,6 +7,7 @@ import {
   type PredictionProbabilities,
   type PredictionWarning,
 } from '../../db/schemas/prediction-results.ts'
+import { addTimestampRangeFilters } from '../../utils/db-filters.ts'
 
 export type PredictionRecord = typeof predictionResults.$inferSelect
 
@@ -43,16 +44,6 @@ export type PredictionPeriodFilters = {
 
 function getBaseFilters(userId: string): SQL[] {
   return [eq(predictionResults.userId, userId)]
-}
-
-function addDateRangeFilters(filters: SQL[], from?: string, to?: string): void {
-  if (from) {
-    filters.push(gte(predictionResults.createdAt, new Date(from)))
-  }
-
-  if (to) {
-    filters.push(lte(predictionResults.createdAt, new Date(to)))
-  }
 }
 
 export const predictionRepository = {
@@ -123,7 +114,12 @@ export const predictionRepository = {
     filters: PredictionHistoryFilters,
   ): Promise<{ items: PredictionRecord[]; total: number }> {
     const conditions = getBaseFilters(filters.userId)
-    addDateRangeFilters(conditions, filters.from, filters.to)
+    addTimestampRangeFilters(
+      conditions,
+      predictionResults.createdAt,
+      filters.from,
+      filters.to,
+    )
     const where = and(...conditions)
 
     const items = await db

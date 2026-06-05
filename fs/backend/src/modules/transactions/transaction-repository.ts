@@ -1,19 +1,9 @@
-import {
-  and,
-  asc,
-  desc,
-  eq,
-  gte,
-  ilike,
-  lte,
-  or,
-  sql,
-  type SQL,
-} from 'drizzle-orm'
+import { and, asc, desc, eq, ilike, or, sql, type SQL } from 'drizzle-orm'
 import { getTableColumns } from 'drizzle-orm'
 import { db } from '../../db/index.ts'
 import { categories } from '../../db/schemas/categories.ts'
 import { transactions } from '../../db/schemas/transactions.ts'
+import { addTimestampRangeFilters } from '../../utils/db-filters.ts'
 import type { CategoryRecord } from '../categories/category-repository.ts'
 
 export type TransactionRecord = typeof transactions.$inferSelect
@@ -69,16 +59,6 @@ function getBaseFilters(userId: string): SQL[] {
   return [eq(transactions.userId, userId)]
 }
 
-function addDateRangeFilters(filters: SQL[], from?: string, to?: string): void {
-  if (from) {
-    filters.push(gte(transactions.transactionDate, new Date(from)))
-  }
-
-  if (to) {
-    filters.push(lte(transactions.transactionDate, new Date(to)))
-  }
-}
-
 const transactionSelection = {
   ...getTableColumns(transactions),
   category: getTableColumns(categories),
@@ -89,7 +69,12 @@ export const transactionRepository = {
     filters: ListTransactionFilters,
   ): Promise<{ items: TransactionListItem[]; total: number }> {
     const conditions = getBaseFilters(filters.userId)
-    addDateRangeFilters(conditions, filters.from, filters.to)
+    addTimestampRangeFilters(
+      conditions,
+      transactions.transactionDate,
+      filters.from,
+      filters.to,
+    )
 
     if (filters.categoryId) {
       conditions.push(eq(transactions.categoryId, filters.categoryId))
@@ -187,7 +172,12 @@ export const transactionRepository = {
     filters: TransactionSummaryFilters,
   ): Promise<TransactionSummary> {
     const conditions = getBaseFilters(filters.userId)
-    addDateRangeFilters(conditions, filters.from, filters.to)
+    addTimestampRangeFilters(
+      conditions,
+      transactions.transactionDate,
+      filters.from,
+      filters.to,
+    )
 
     const [summary] = await db
       .select({

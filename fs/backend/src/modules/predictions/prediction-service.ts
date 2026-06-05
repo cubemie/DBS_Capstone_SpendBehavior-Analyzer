@@ -105,6 +105,26 @@ function normalizeMlResponse(
   }
 }
 
+async function getLatestOptional(
+  userId: string,
+): Promise<PredictionRecord | null> {
+  return (await predictionRepository.findLatest(userId)) ?? null
+}
+
+async function getLatestForPeriodOptional(
+  userId: string,
+  period: PredictionPeriodInput,
+): Promise<PredictionRecord | null> {
+  return (
+    (await predictionRepository.findLatestForPeriod({
+      userId,
+      from: period.from,
+      to: period.to,
+      timezone: period.timezone,
+    })) ?? null
+  )
+}
+
 export const predictionService = {
   async createPersonaPrediction(
     userId: string,
@@ -187,31 +207,21 @@ export const predictionService = {
   },
 
   async getLatestOptional(userId: string): Promise<PredictionRecord | null> {
-    return (await predictionRepository.findLatest(userId)) ?? null
+    return await getLatestOptional(userId)
   },
 
   async getLatestForPeriodOptional(
     userId: string,
     period: PredictionPeriodInput,
   ): Promise<PredictionRecord | null> {
-    return (
-      (await predictionRepository.findLatestForPeriod({
-        userId,
-        from: period.from,
-        to: period.to,
-        timezone: period.timezone,
-      })) ?? null
-    )
+    return await getLatestForPeriodOptional(userId, period)
   },
 
   async getDashboardPredictionOptional(
     userId: string,
     period: PredictionPeriodInput,
   ): Promise<DashboardPredictionSelection | null> {
-    const periodPrediction = await this.getLatestForPeriodOptional(
-      userId,
-      period,
-    )
+    const periodPrediction = await getLatestForPeriodOptional(userId, period)
     if (periodPrediction) {
       return {
         prediction: periodPrediction,
@@ -219,7 +229,7 @@ export const predictionService = {
       }
     }
 
-    const latestPrediction = await this.getLatestOptional(userId)
+    const latestPrediction = await getLatestOptional(userId)
     if (!latestPrediction) {
       return null
     }
@@ -240,7 +250,7 @@ export const predictionService = {
         to: period.to,
         timezone: period.timezone,
       })
-    const prediction = await this.getLatestForPeriodOptional(userId, period)
+    const prediction = await getLatestForPeriodOptional(userId, period)
 
     if (featureResult.transactionCount === 0) {
       return {

@@ -1,34 +1,15 @@
 import * as z from 'zod'
 import type { predictionResults } from '../../db/schemas/prediction-results.ts'
-
-const dateRangeSchema = z
-  .object({
-    from: z.iso.datetime({ offset: true }).optional(),
-    to: z.iso.datetime({ offset: true }).optional(),
-  })
-  .refine(
-    (value) => {
-      if (!value.from || !value.to) {
-        return true
-      }
-
-      return new Date(value.from).getTime() <= new Date(value.to).getTime()
-    },
-    {
-      message: 'Tanggal awal tidak boleh setelah tanggal akhir',
-      path: ['from'],
-    },
-  )
+import { dateRangeSchema, paginationSchema } from '../../utils/query-schemas.ts'
 
 export const createPersonaPredictionSchema = dateRangeSchema.extend({
   timezone: z.string().trim().min(1).default('Asia/Jakarta'),
   force: z.boolean().default(false),
 })
 
-export const predictionHistoryQuerySchema = dateRangeSchema.extend({
-  page: z.coerce.number().int().positive().default(1),
-  limit: z.coerce.number().int().positive().max(100).default(20),
-})
+export const predictionHistoryQuerySchema = dateRangeSchema.extend(
+  paginationSchema.shape,
+)
 
 export const predictionWarningSchema = z.object({
   code: z.string().trim().min(1),
@@ -69,7 +50,6 @@ export type PredictionHistoryQueryDto = z.output<
 export type MlPredictionResponseDto = z.output<
   typeof mlPredictionResponseSchema
 >
-export type PredictionWarningDto = z.output<typeof predictionWarningSchema>
 export type PredictionResultRecord = typeof predictionResults.$inferSelect
 export type PredictionResultResponseDto = PredictionResultRecord & {
   cached: boolean
