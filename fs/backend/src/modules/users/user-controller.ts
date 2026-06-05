@@ -3,12 +3,13 @@ import path from 'node:path'
 import { changePasswordSchema, updateUserSchema } from './user-schema.ts'
 import { env } from '../../config.ts'
 import { AppException } from '../../exception.ts'
+import { getAuthPayload } from '../../utils/auth-request.ts'
 import { sendData } from '../../utils/response.ts'
 import { userService } from './user-service.ts'
 
 export const userController = {
   async updateMe(req: Request, res: Response) {
-    const userId = req.payload!.sub
+    const userId = getAuthPayload(req).sub
     const payload = updateUserSchema.parse(req.body)
     const user = await userService.update(userId, payload)
 
@@ -16,7 +17,7 @@ export const userController = {
   },
 
   async updateMyAvatar(req: Request, res: Response) {
-    const userId = req.payload!.sub
+    const userId = getAuthPayload(req).sub
 
     if (!req.file) {
       throw new AppException('File avatar wajib diunggah', 400)
@@ -33,7 +34,7 @@ export const userController = {
   },
 
   async changeMyPassword(req: Request, res: Response) {
-    const userId = req.payload!.sub
+    const userId = getAuthPayload(req).sub
     const payload = changePasswordSchema.parse(req.body)
     await userService.changePassword(userId, payload)
 
