@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import {
   Camera,
   ShieldCheck,
@@ -13,6 +13,7 @@ import PredictionStatusCard from "../components/PredictionStatusCard";
 import { useAuth } from "../hooks/useAuth";
 import { getPersonaDescription } from "../services/predictionService";
 import { analyticsService } from "../services/analyticsService";
+import { authService } from "../services/authService";
 import { useApi } from "../hooks/useApi";
 import { usePredictionRefresh } from "../hooks/usePredictionRefresh";
 import defaultAvatar from "../assets/budu-logo.png";
@@ -28,12 +29,13 @@ function getErrorMessage(error: unknown, fallback: string): string {
 export default function Profil() {
   const { user, updateUser, uploadAvatar, setPredictionPersona } = useAuth();
   const avatarInputRef = useRef<HTMLInputElement | null>(null);
+  const fetchDashboard = useCallback(() => analyticsService.getDashboard(), []);
   const {
     data: dashboard,
     isLoading: isLoadingDashboard,
     error: dashboardError,
     refetch,
-  } = useApi(() => analyticsService.getDashboard());
+  } = useApi(fetchDashboard);
   const {
     refreshAnalysis,
     goToAddTransaction,
@@ -96,7 +98,6 @@ export default function Profil() {
     setPasswordMessage("");
     setPasswordError("");
     try {
-      const { authService } = await import("../services/authService");
       await authService.changePassword({ oldPassword, newPassword });
       setPasswordMessage("Kata sandi berhasil diperbarui!");
       setOldPassword("");

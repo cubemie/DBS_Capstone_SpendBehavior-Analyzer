@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { ArrowDown, ArrowRight, ArrowUp, Bell, CalendarClock, Trophy, Wallet } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import quokkaImg from "../assets/budu-logo.png";
@@ -9,43 +9,15 @@ import ErrorState from "../components/ErrorState";
 import PageHeader from "../components/PageHeader";
 import PredictionStatusCard from "../components/PredictionStatusCard";
 import ProgressBar from "../components/ProgressBar";
-import TransactionItem from "../components/TransactionItem";
 import { formatCurrency } from "../utils/formatCurrency";
+import { formatDate, formatTime } from "../utils/formatDate";
 import { useApi } from "../hooks/useApi";
 import { analyticsService } from "../services/analyticsService";
 import { useAuth } from "../hooks/useAuth";
 import { usePredictionRefresh } from "../hooks/usePredictionRefresh";
-import type { ApiTransaction } from "../types/models";
-import { ShoppingBag, UtensilsCrossed, Car, Banknote, CreditCard } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-
-// Map category name → lucide icon (best-effort, fallback ke Wallet)
-function categoryIcon(name: string): LucideIcon {
-  const lower = name.toLowerCase();
-  if (lower.includes("makan") || lower.includes("food")) return UtensilsCrossed;
-  if (lower.includes("transport") || lower.includes("kend")) return Car;
-  if (lower.includes("belanja") || lower.includes("shop")) return ShoppingBag;
-  if (lower.includes("gaji") || lower.includes("income") || lower.includes("pendapatan")) return Banknote;
-  if (lower.includes("hiburan") || lower.includes("entertain")) return CreditCard;
-  return Wallet;
-}
-
-// Adapter: ApiTransaction → shape expected by existing TransactionItem component
-function toTransactionItem(tx: ApiTransaction) {
-  const Icon = categoryIcon(tx.category.name);
-  return {
-    id: tx.id,
-    title: tx.note ?? tx.title,
-    merchant: tx.merchantName ?? tx.category.name,
-    method: tx.paymentMethod ?? "",
-    category: tx.category.name,
-    type: tx.type as "income" | "expense",
-    amount: Math.abs(tx.amount),
-    date: tx.date,
-    icon: Icon,
-    accent: (tx.type === "income" ? "teal" : "coral") as "teal" | "coral",
-  };
-}
+import { cn } from "../utils/cn";
+import { getCategoryIcon } from "../utils/categoryIcon";
+import { buildExpenseFilterSearch } from "../utils/transactionFilterLinks";
 
 // Skeleton placeholders
 function DashboardSkeleton() {
@@ -60,14 +32,11 @@ function DashboardSkeleton() {
 
 const CATEGORY_COLORS = ["#8BDFDD", "#F28C6A", "#FFE394", "#B7D6A5", "#C4B5FD"];
 
-function toDateInputValue(date: string): string {
-  return date.slice(0, 10);
-}
-
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user, setPredictionPersona } = useAuth();
-  const { data, isLoading, error, refetch } = useApi(() => analyticsService.getDashboard());
+  const fetchDashboard = useCallback(() => analyticsService.getDashboard(), []);
+  const { data, isLoading, error, refetch } = useApi(fetchDashboard);
   const {
     refreshAnalysis,
     goToAddTransaction,
@@ -84,7 +53,7 @@ export default function Dashboard() {
   if (error) return <div className="space-y-6"><PageHeader title="Dashboard" description="Pantau pengeluaranmu bulan ini." /><ErrorState message={error} /></div>;
 
   const { summary, persona, predictionStatus, topCategories, recentTransactions, warnings, moneyLeaks } = data!;
-  const recentMapped = recentTransactions.slice(0, 3).map(toTransactionItem);
+  const recentPreview = recentTransactions.slice(0, 3);
   const hasWarnings = warnings && warnings.length > 0;
   const hasMoneyLeaks = moneyLeaks.length > 0;
   const primaryMoneyLeak = moneyLeaks[0];
@@ -100,15 +69,7 @@ export default function Dashboard() {
   const goToLeakTransactions = () => {
     if (!primaryMoneyLeak) return;
 
-    const params = new URLSearchParams({
-      type: "expense",
-      categoryId: primaryMoneyLeak.categoryId,
-      startDate: toDateInputValue(data!.period.from),
-      endDate: toDateInputValue(data!.period.to),
-      sort: "date_desc",
-    });
-
-    navigate(`/riwayat?${params.toString()}`);
+    navigate(`/riwayat?${buildExpenseFilterSearch(data!.period, primaryMoneyLeak.categoryId)}`);
   };
 
   return (
@@ -257,11 +218,48 @@ export default function Dashboard() {
               </Button>
             </div>
             <div className="space-y-4">
-              {recentMapped.length === 0
+              {recentPreview.length === 0
                 ? <p className="text-sm text-[var(--color-text-muted)]">Belum ada transaksi.</p>
-                : recentMapped.map((transaction) => (
-                  <TransactionItem key={transaction.id} transaction={transaction} compact />
-                ))}
+                : recentPreview.map((transaction) => {
+                  const Icon = getCategoryIcon(transaction.category.name);
+                  const isIncome = transaction.type === "income";
+
+                  return (
+                    <article key={transaction.id} className="flex items-center gap-3">
+                      <span
+                        className={cn(
+                          "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl",
+                          isIncome
+                            ? "bg-[var(--color-teal-bg)] text-[var(--color-teal-ink)]"
+                            : "bg-[var(--color-salmon-bg)] text-[var(--color-salmon-dark)]",
+                        )}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <h3 className="truncate text-sm font-bold text-[var(--color-text-primary)]">
+                              {transaction.note ?? transaction.title}
+                            </h3>
+                            <p className="mt-0.5 truncate text-xs text-[var(--color-text-muted)]">
+                              {transaction.paymentMethod ?? transaction.category.name} - {formatDate(transaction.date)} {formatTime(transaction.date)}
+                            </p>
+                          </div>
+                          <p
+                            className={cn(
+                              "shrink-0 text-sm font-black",
+                              isIncome ? "text-[var(--color-green)]" : "text-[var(--color-red)]",
+                            )}
+                          >
+                            {isIncome ? "+" : "-"}
+                            {formatCurrency(transaction.amount)}
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
             </div>
           </Card>
         </div>

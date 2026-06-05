@@ -1,4 +1,4 @@
-import { apiRequest } from "./apiClient";
+import { apiRequest, refreshAccessToken } from "./apiClient";
 import type { ApiUser, AuthTokens } from "../types/models";
 
 interface LoginPayload {
@@ -97,13 +97,8 @@ export const authService = {
   // Dipanggil saat app mount — restore session dari refresh cookie
   async tryRestoreSession(): Promise<AuthTokens | null> {
     try {
-      const baseUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api/v1";
-      const res = await fetch(`${baseUrl}/auth/refresh`, {
-        method: "POST",
-        credentials: "include",
-      });
-      if (!res.ok) return null;
-      return res.json();
+      const accessToken = await refreshAccessToken();
+      return { accessToken };
     } catch {
       return null;
     }

@@ -8,7 +8,7 @@ interface UseApiState<T> {
   refetch: () => void;
 }
 
-export function useApi<T>(fetcher: () => Promise<T>, deps: unknown[] = []): UseApiState<T> {
+export function useApi<T>(fetcher: () => Promise<T>): UseApiState<T> {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,8 +42,7 @@ export function useApi<T>(fetcher: () => Promise<T>, deps: unknown[] = []): UseA
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trigger, ...deps]);
+  }, [fetcher, trigger]);
 
   const refetch = useCallback(() => setTrigger((n) => n + 1), []);
 

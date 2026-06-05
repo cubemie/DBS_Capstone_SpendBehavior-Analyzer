@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { BarChart3, ChevronDown, TrendingUp } from "lucide-react";
 import Card from "../components/Card";
 import ErrorState from "../components/ErrorState";
@@ -25,7 +25,8 @@ function AnalisisSkeleton() {
 
 export default function Analisis() {
   const [period, setPeriod] = useState<DashboardPeriodOption>("current_month");
-  const { data, isLoading, error, refetch } = useApi(() => analyticsService.getDashboard(period), [period]);
+  const fetchDashboard = useCallback(() => analyticsService.getDashboard(period), [period]);
+  const { data, isLoading, error, refetch } = useApi(fetchDashboard);
 
   if (isLoading) return <div className="space-y-6"><PageHeader title="Analisis" description="Pola pengeluaranmu." /><AnalisisSkeleton /></div>;
   if (error) return <div className="space-y-6"><PageHeader title="Analisis" description="Pola pengeluaranmu." /><ErrorState message={error} onRetry={refetch} /></div>;

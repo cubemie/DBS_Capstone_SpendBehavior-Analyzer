@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ShieldCheck, TrendingUp, AlertTriangle, ShieldAlert, Info, CalendarClock, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import quokkaImg from "../assets/budu-logo.png";
@@ -14,6 +14,7 @@ import { useApi } from "../hooks/useApi";
 import { usePredictionRefresh } from "../hooks/usePredictionRefresh";
 import { analyticsService } from "../services/analyticsService";
 import { formatDate } from "../utils/formatDate";
+import { buildExpenseFilterSearch } from "../utils/transactionFilterLinks";
 import type { DashboardWarning, MoneyLeak, Warning } from "../types/models";
 
 type SelectedWarning = {
@@ -52,10 +53,6 @@ function toLeakWarning(l: MoneyLeak): Warning {
   };
 }
 
-function toDateInputValue(date: string): string {
-  return date.slice(0, 10);
-}
-
 function PeringatanSkeleton() {
   return (
     <div className="space-y-6 animate-pulse">
@@ -74,7 +71,8 @@ function PeringatanSkeleton() {
 export default function Peringatan() {
   const navigate = useNavigate();
   const [selectedWarning, setSelectedWarning] = useState<SelectedWarning | null>(null);
-  const { data, isLoading, error, refetch } = useApi(() => analyticsService.getDashboard());
+  const fetchDashboard = useCallback(() => analyticsService.getDashboard(), []);
+  const { data, isLoading, error, refetch } = useApi(fetchDashboard);
   const {
     refreshAnalysis,
     goToAddTransaction,
@@ -111,28 +109,13 @@ export default function Peringatan() {
   const goToPeriodExpenses = () => {
     if (!data) return;
 
-    const params = new URLSearchParams({
-      type: "expense",
-      startDate: toDateInputValue(data.period.from),
-      endDate: toDateInputValue(data.period.to),
-      sort: "date_desc",
-    });
-
-    navigate(`/riwayat?${params.toString()}`);
+    navigate(`/riwayat?${buildExpenseFilterSearch(data.period)}`);
   };
 
   const goToLeakTransactions = (leak: MoneyLeak) => {
     if (!data) return;
 
-    const params = new URLSearchParams({
-      type: "expense",
-      categoryId: leak.categoryId,
-      startDate: toDateInputValue(data.period.from),
-      endDate: toDateInputValue(data.period.to),
-      sort: "date_desc",
-    });
-
-    navigate(`/riwayat?${params.toString()}`);
+    navigate(`/riwayat?${buildExpenseFilterSearch(data.period, leak.categoryId)}`);
   };
 
   return (

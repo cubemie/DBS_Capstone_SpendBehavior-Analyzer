@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import {
   ArrowDown,
   ArrowUp,
@@ -21,31 +21,14 @@ import { cn } from "../utils/cn";
 import { formatCurrency } from "../utils/formatCurrency";
 import { formatDate, formatTime } from "../utils/formatDate";
 import type { CategoryKind, TransactionFilters } from "../types/models";
-import {
-  ShoppingBag,
-  UtensilsCrossed,
-  Car,
-  Banknote,
-  CreditCard,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
+import { getCategoryIcon } from "../utils/categoryIcon";
 
 const DEFAULT_FILTERS: TransactionFilters = {
   page: 1,
   limit: 10,
   sort: "date_desc",
 };
-
-function categoryIcon(name: string): LucideIcon {
-  const lower = name.toLowerCase();
-  if (lower.includes("makan") || lower.includes("food")) return UtensilsCrossed;
-  if (lower.includes("transport")) return Car;
-  if (lower.includes("belanja") || lower.includes("shop")) return ShoppingBag;
-  if (lower.includes("gaji") || lower.includes("pendapatan")) return Banknote;
-  if (lower.includes("hiburan")) return CreditCard;
-  return Wallet;
-}
 
 // Skeleton for transaction list
 function TransactionListSkeleton() {
@@ -150,9 +133,10 @@ export default function RiwayatTransaksi() {
   >(initialFilters.type ?? "all");
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const routeToast = location.state?.toast as string | undefined;
 
   const [toastMessage, setToastMessage] = useState<string | null>(
-    location.state?.toast || null,
+    routeToast || null,
   );
 
   useEffect(() => {
@@ -168,10 +152,15 @@ export default function RiwayatTransaksi() {
   useEffect(() => {
     if (toastMessage) {
       const timer = setTimeout(() => setToastMessage(null), 5000);
-      window.history.replaceState({}, document.title);
+      if (routeToast) {
+        navigate(`${location.pathname}${location.search}`, {
+          replace: true,
+          state: null,
+        });
+      }
       return () => clearTimeout(timer);
     }
-  }, [toastMessage]);
+  }, [location.pathname, location.search, navigate, routeToast, toastMessage]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -185,16 +174,25 @@ export default function RiwayatTransaksi() {
     return () => window.clearTimeout(timer);
   }, [search]);
 
+  const fetchTransactions = useCallback(
+    () => transactionService.getTransactions(filters),
+    [filters],
+  );
+  const fetchSummary = useCallback(
+    () =>
+      transactionService.getSummary({
+        startDate: filters.startDate,
+        endDate: filters.endDate,
+      }),
+    [filters.startDate, filters.endDate],
+  );
   const {
     data: txData,
     isLoading: txLoading,
     error: txError,
     refetch: refetchTransactions,
-  } = useApi(() => transactionService.getTransactions(filters), [filters]);
-  const { data: summary, refetch: refetchSummary } = useApi(
-    () => transactionService.getSummary(filters),
-    [filters.startDate, filters.endDate],
-  );
+  } = useApi(fetchTransactions);
+  const { data: summary, refetch: refetchSummary } = useApi(fetchSummary);
 
   const refetchTransactionData = () => {
     refetchTransactions();
@@ -428,7 +426,7 @@ export default function RiwayatTransaksi() {
                   >
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-soft)] text-[var(--color-text-secondary)]">
                       {(() => {
-                        const Icon = categoryIcon(tx.category.name);
+                        const Icon = getCategoryIcon(tx.category.name, Wallet);
                         return <Icon className="h-5 w-5" />;
                       })()}
                     </span>
@@ -495,7 +493,7 @@ export default function RiwayatTransaksi() {
               </div>
             ) : (
               transactions.map((tx) => {
-                const Icon = categoryIcon(tx.category.name);
+                const Icon = getCategoryIcon(tx.category.name, Wallet);
                 const isIncome = tx.type === "income";
                 return (
                   <div

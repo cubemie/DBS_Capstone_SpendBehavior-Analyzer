@@ -1,15 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   ArrowLeft,
-  BookOpen,
   Calendar,
-  Car,
-  Film,
-  HeartPulse,
-  Plus,
-  ShoppingBag,
-  UtensilsCrossed,
-  Wallet,
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
@@ -22,22 +14,7 @@ import { categoryService } from "../services/categoryService";
 import { transactionService } from "../services/transactionService";
 import { ApiError } from "../services/ApiError";
 import { useAuth } from "../hooks/useAuth";
-import type { LucideIcon } from "lucide-react";
-
-// Fallback icon map for categories that come from the API
-const ICON_MAP: Record<string, LucideIcon> = {
-  makanan: UtensilsCrossed,
-  transportasi: Car,
-  belanja: ShoppingBag,
-  hiburan: Film,
-  kesehatan: HeartPulse,
-  pendidikan: BookOpen,
-  tabungan: Wallet,
-};
-
-function getCategoryIcon(name: string): LucideIcon {
-  return ICON_MAP[name.toLowerCase()] ?? Plus;
-}
+import { getCategoryPickerIcon } from "../utils/categoryIcon";
 
 function getLocalDateTimeInputValue(date: string): string {
   const parsedDate = new Date(date);
@@ -318,7 +295,7 @@ export default function TambahTransaksi() {
               ) : (
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2">
                   {filteredCategories.map((category) => {
-                    const Icon = getCategoryIcon(category.name);
+                    const Icon = getCategoryPickerIcon(category.name);
                     const isSelected = selectedCategoryId === category.id;
                     return (
                       <button
