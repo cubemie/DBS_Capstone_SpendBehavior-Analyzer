@@ -1,163 +1,247 @@
-# SpendBehavior Analyzer / BUDU
+# SpendBehavior Analyzer (BUDU)
 
-SpendBehavior Analyzer, atau **BUDU (Butuh Duit)**, adalah aplikasi web fintech untuk membantu pengguna memahami pola pengeluaran dari sisi perilaku. MVP ini mencakup autentikasi, pencatatan transaksi, riwayat, dashboard, analisis pengeluaran, smart warning, money leak detection, spending persona, dan profil pengguna.
+**BUDU (Butuh Duit)** adalah aplikasi web yang membantu pengguna memahami pola pengeluaran dan kebiasaan finansial mereka melalui analisis transaksi, spending persona, smart warning, dan deteksi kebocoran pengeluaran (_money leak detection_).
 
-Dokumentasi ini ditujukan untuk developer yang ingin menjalankan, mengintegrasikan, dan merawat project.
+Project ini dibangun sebagai aplikasi full-stack yang terdiri dari frontend React, backend Express.js, PostgreSQL, dan layanan Machine Learning berbasis FastAPI.
 
-## Struktur Project
+## Fitur Utama
 
-```txt
-.
-├── fs/
-│   ├── backend/    # Express API, PostgreSQL, Drizzle ORM
-│   └── frontend/   # React + Vite frontend
-├── ml/             # FastAPI ML service untuk persona dan warning
-├── ds/             # Artefak/data science informasional
-├── docker-compose.yml
-├── .env.example
-└── README.md
+- Analisis perilaku pengeluaran
+- Spending Persona Prediction
+- Smart Warning
+- Money Leak Detection
+
+## Arsitektur Sistem
+
+```mermaid
+flowchart LR
+
+    Frontend["Frontend"]
+
+    Backend["Backend API"]
+
+    Database[("PostgreSQL")]
+
+    ML["ML Service"]
+
+    Frontend -->|Request| Backend
+    Backend -->|Response| Frontend
+
+    Backend -->|Transactions
+    Analytics| Database
+
+    Backend -->|Persona Prediction
+    Smart Warning
+    Money Leak Analysis| ML
+
+    ML -->|Prediction Result| Backend
 ```
 
-Catatan: tidak ada folder `docs/` di root project saat ini. Dokumentasi backend berada di `fs/backend/docs/`.
+## Tech Stack
 
-## Tech Stack Ringkas
+### Frontend
 
-- Backend: Node.js 24, TypeScript, Express 5, PostgreSQL, Drizzle ORM, Zod, JWT.
-- Frontend: React, TypeScript, Vite, Tailwind CSS, React Router, Lucide React.
-- ML service: Python 3.12, FastAPI, Pydantic, TensorFlow/Keras, pandas, numpy, scikit-learn, joblib.
-- Infrastruktur lokal: Docker Compose dengan PostgreSQL, backend, frontend, dan ML service.
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
 
-## Port Lokal
+### Backend
 
-| Service | URL |
-| --- | --- |
-| Frontend dev | `http://localhost:5173` |
-| Frontend Docker | `http://localhost:8080` |
-| Backend API | `http://localhost:3000` |
-| Backend health | `http://localhost:3000/health` |
-| ML service | `http://localhost:8000` |
-| PostgreSQL | `127.0.0.1:5432` |
+- Node.js
+- TypeScript
+- Express.js
+- PostgreSQL
+- Drizzle ORM
+- JWT Authentication
 
-## Environment
+### Machine Learning Service
 
-Salin contoh environment:
+- Python
+- FastAPI
+- TensorFlow / Keras
+- Scikit-Learn
+- Pandas
+- NumPy
+
+## Prasyarat
+
+Sebelum menjalankan project, pastikan salah satu setup berikut telah tersedia.
+
+### Opsi 1 (Direkomendasikan)
+
+Menjalankan seluruh aplikasi menggunakan Docker.
+
+- Docker
+- Docker Compose
+
+### Opsi 2 (Tanpa Docker)
+
+Menjalankan setiap service secara manual.
+
+- Node.js >=24
+- Python 3.12
+- PostgreSQL >=17
+
+## Setup Environment
+
+Salin file environment:
 
 ```bash
 cp .env.example .env
 ```
 
-Variabel penting di root `.env`:
+Sesuaikan nilai pada file `.env` sesuai kebutuhan.
+
+Variabel yang wajib diperiksa:
 
 ```env
-POSTGRES_DB=budu
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-
-PORT=3000
-APP_URL=http://localhost:3000
-FRONTEND_URL=http://localhost:5173
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/budu
-ML_SERVICE_URL=http://localhost:8000
-JWT_SECRET=replace_with_a_long_random_jwt_secret
-VITE_API_URL=http://localhost:3000/api/v1
+APP_URL=
+DATABASE_URL=
+FRONTEND_URL=
+DATABASE_URL=
+JWT_SECRET=
+ML_SERVICE_URL=
+VITE_API_URL=
 ```
 
-Catatan untuk Docker Compose:
+## Menjalankan Dengan Docker (Direkomendasikan)
 
-- `DATABASE_URL` perlu mengarah ke host service Compose, misalnya `postgres://postgres:postgres@postgres:5432/budu`.
-- `ML_SERVICE_URL` perlu mengarah ke `http://ml:8000`.
-- `VITE_API_URL` dipakai sebagai build arg frontend Docker.
-
-## Menjalankan Dengan Docker Compose
-
-Pastikan `.env` sudah dibuat dan disesuaikan.
+### 1. Clone Repository
 
 ```bash
-docker compose up -d --build postgres ml
-docker compose --profile migrate run --rm backend-migrate
-docker compose up -d --build backend frontend
+git clone https://github.com/cubemie/DBS_Capstone_SpendBehavior-Analyzer.git
+cd DBS_Capstone_SpendBehavior-Analyzer
 ```
 
-Untuk menjalankan semua service sekaligus:
+### 2. Buat File Environment
+
+```bash
+cp .env.example .env
+```
+
+### 3. Jalankan Seluruh Service
 
 ```bash
 docker compose up -d --build
 ```
 
-Jika database masih kosong, jalankan migration sebelum memakai aplikasi:
+### 4. Jalankan Migrasi Database
 
 ```bash
 docker compose --profile migrate run --rm backend-migrate
 ```
 
-Frontend Docker tersedia di `http://localhost:8080`.
+### 5. Akses Aplikasi
 
-## Menjalankan Lokal Tanpa Docker
+| Service     | URL                   |
+| ----------- | --------------------- |
+| Frontend    | http://localhost:8080 |
+| Backend API | http://localhost:3000 |
+| ML Service  | http://localhost:8000 |
 
-Jalankan setiap service dari folder masing-masing.
+## Menjalankan Secara Lokal (Tanpa Docker)
 
-Backend:
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/cubemie/DBS_Capstone_SpendBehavior-Analyzer.git
+cd DBS_Capstone_SpendBehavior-Analyzer
+```
+
+## 2. Buat File Environment
+
+```bash
+cp .env.example .env
+```
+
+## 3. Siapkan Database PostgreSQL
+
+Buat database baru sesuai konfigurasi pada `.env`.
+
+Contoh:
+
+```sql
+CREATE DATABASE budu;
+```
+
+## 4. Jalankan Backend
 
 ```bash
 cd fs/backend
+
 npm install
+
 npm run drizzle:migrate
+
 npm run dev
 ```
 
-Frontend:
+Backend akan berjalan di:
 
-```bash
-cd fs/frontend
-npm install
-npm run dev
+```text
+http://localhost:3000
 ```
 
-ML service:
+## 5. Jalankan ML Service
+
+Buka terminal baru:
 
 ```bash
 cd ml
+
+python -m venv .venv
+
+source .venv/bin/activate # atau '.\.venv\Scripts\Activate.ps1'
+
 pip install -r requirements.txt
-uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+uvicorn app.main:app --reload # atau 'make run' apabila Make terinstal
 ```
 
-## Validasi Umum
+ML Service akan berjalan di:
 
-Backend:
-
-```bash
-cd fs/backend
-npm run build
-npm run lint
-npm test
+```text
+http://localhost:8000
 ```
 
-Frontend:
+## 6. Jalankan Frontend
+
+Buka terminal baru:
 
 ```bash
 cd fs/frontend
-npm run build
-npm run lint
+
+npm install
+
+npm run dev
 ```
 
-ML service:
+Frontend akan berjalan di:
 
-- Jalankan FastAPI lokal dan buka `http://localhost:8000/docs`.
-- Kirim payload ke `POST /predict` sesuai `ml/feature_order.json`.
+```text
+http://localhost:5173
+```
 
-Catatan: `ml/test_api.py` tersedia sebagai helper lokal, tetapi perlu diverifikasi ulang terhadap kontrak `feature_order.json` sebelum dijadikan validasi utama.
+## Struktur Repository
 
-## Dokumentasi Modul
+```text
+.
+├── fs/
+│   ├── backend/
+│   └── frontend/
+├── ml/
+├── ds/
+├── docker-compose.yml
+├── .env.example
+└── README.md
+```
 
-- Backend: `fs/backend/README.md`
-- Frontend: `fs/frontend/README.md`
-- ML service: `ml/README.md`
-- API backend lengkap: `fs/backend/docs/api/API.md`
-- OpenAPI backend: `fs/backend/docs/api/openapi.json`
+## Dokumentasi Tambahan
 
-## Maintenance Notes
+Dokumentasi teknis untuk masing-masing modul tersedia pada:
 
-- Frontend tidak memanggil ML service langsung. Semua prediksi berjalan melalui backend.
-- Backend memakai refresh token dalam HTTP-only cookie dan access token di sisi frontend.
-- `ml/feature_order.json` adalah source of truth untuk urutan fitur ML.
-- Folder `ds/` berisi artefak data science dan tidak menjadi kontrak production utama.
+- `fs/backend/README.md`
+- `fs/frontend/README.md`
+- `ml/README.md`

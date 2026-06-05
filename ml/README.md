@@ -4,7 +4,7 @@ ML service BUDU adalah FastAPI service untuk klasifikasi spending persona, smart
 
 ## Tech Stack
 
-- Python 3.12 pada Docker image `python:3.12-slim`
+- Python 3.12
 - FastAPI
 - Pydantic
 - TensorFlow/Keras
@@ -62,22 +62,8 @@ Jika model atau scaler gagal dimuat, endpoint prediksi dapat mengembalikan `503`
 Jalankan dari folder `ml`:
 
 ```bash
-pip install -r requirements.txt
-```
-
-Disarankan memakai virtual environment:
-
-```bash
 python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-Untuk shell Unix:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate # atau '.venv\Scripts\Activate.ps1'
 pip install -r requirements.txt
 ```
 
@@ -133,25 +119,8 @@ Request:
 ```json
 {
   "features": [
-    100000,
-    25,
-    0.3,
-    0.2,
-    0.5,
-    0.1,
-    0.2,
-    5,
-    0.6,
-    0.2,
-    0.1,
-    0.05,
-    0.1,
-    0.05,
-    0.02,
-    0.1,
-    0.08,
-    0.05,
-    0.15
+    100000, 25, 0.3, 0.2, 0.5, 0.1, 0.2, 5, 0.6, 0.2, 0.1, 0.05, 0.1, 0.05,
+    0.02, 0.1, 0.08, 0.05, 0.15
   ],
   "transactions": [
     {
@@ -246,13 +215,6 @@ Urutan saat ini:
 19. cat_fashion_pakaian_ratio
 ```
 
-Jika urutan berubah, sinkronkan:
-
-- `ml/feature_order.json`
-- backend `feature-engineering`
-- model training
-- dokumentasi API
-
 ## Integrasi Dengan Backend
 
 Backend Node.js memanggil ML service melalui `ML_SERVICE_URL`.
@@ -304,39 +266,3 @@ Catatan:
 - ML service harus sudah berjalan di `http://127.0.0.1:8000`.
 - Script ini adalah helper lokal, bukan test suite production formal.
 - Perlu dikonfirmasi: sebelum dipakai sebagai validasi utama, pastikan payload di script ini sudah sama dengan `feature_order.json` terbaru.
-
-## Troubleshooting
-
-### `503 Model AI belum siap`
-
-Pastikan file berikut ada dan bisa dibaca:
-
-```txt
-models/persona_classifier.keras
-models/scaler.pkl
-```
-
-### Jumlah fitur salah
-
-Pastikan panjang `features` sama dengan jumlah item di `feature_order.json`.
-
-### Import module gagal
-
-Jalankan command dari folder `ml`, bukan dari root:
-
-```bash
-cd ml
-uvicorn app.main:app --host 0.0.0.0 --port 8000
-```
-
-### TensorFlow lambat saat startup
-
-Model dimuat saat aplikasi start. Startup pertama bisa memakan waktu lebih lama, terutama di mesin tanpa akselerasi.
-
-## Maintenance Notes
-
-- Jangan ubah `feature_order.json` tanpa koordinasi dengan backend.
-- Jangan hapus `models/persona_classifier.keras` atau `models/scaler.pkl` dari runtime image.
-- Endpoint `/test-random` hanya untuk debugging.
-- Rule warning dan money leak berada di `src/models/rules.py`.
-- Training dapat menghasilkan file log di `logs/tensorboard/`.
