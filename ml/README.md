@@ -1,167 +1,136 @@
-# Dokumentasi API SpendBehavior AI
-## 1. Persiapan dan Instalasi
+# ML Service BUDU
 
-Pastikan Python telah terinstal di dalam sistem operasi. Instal seluruh dependensi yang dibutuhkan melalui terminal:
+ML service BUDU adalah FastAPI service untuk klasifikasi spending persona, smart warning, dan money leak detection. Service ini dipakai oleh backend Node.js. Frontend tidak memanggil service ML secara langsung.
+
+## Tech Stack
+
+- Python 3.12 pada Docker image `python:3.12-slim`
+- FastAPI
+- Pydantic
+- TensorFlow/Keras
+- pandas
+- numpy
+- scikit-learn
+- joblib
+- TensorBoard untuk log training
+
+## Struktur Folder
+
+```txt
+ml/
+  app/
+    main.py                 # FastAPI app
+  src/
+    data_clean/
+      preprocessing.py      # Preprocessing dan scaler
+    models/
+      rules.py              # Rule-based warning dan money leak
+      train_model.py        # Definisi dan training model
+  data/
+    budu_user_profiles_idr.csv
+    budu_transactions_clean_idr.csv
+    budu_model_metadata.json
+    budu_dummy_users.csv
+  models/
+    persona_classifier.keras
+    scaler.pkl
+  feature_order.json
+  run_pipeline.py
+  evaluasi_model.py
+  test_api.py
+  requirements.txt
+  Dockerfile
+  Makefile
+```
+
+## Artefak Wajib
+
+Service membutuhkan file berikut saat startup:
+
+- `models/persona_classifier.keras`
+- `models/scaler.pkl`
+- `feature_order.json`
+
+Untuk endpoint debug `/test-random`, service juga membutuhkan:
+
+- `data/budu_user_profiles_idr.csv`
+
+Jika model atau scaler gagal dimuat, endpoint prediksi dapat mengembalikan `503`.
+
+## Install Dependency Lokal
+
+Jalankan dari folder `ml`:
 
 ```bash
-pip install fastapi uvicorn pydantic numpy tensorflow joblib pandas scikit-learn
-
+pip install -r requirements.txt
 ```
 
-Sistem juga membutuhkan file berikut di dalam direktori kerja:
-
-* `models/persona_classifier.keras` (Model Deep Learning)
-* `models/scaler.pkl` (File standardisasi data)
-* `feature_order.json` (File konfigurasi urutan fitur input)
-* `data/budu_user_profiles_idr.csv` (Hanya dibutuhkan untuk endpoint testing)
-
-## 2. Menjalankan Server API
-
-Gunakan Uvicorn untuk menjalankan server FastAPI di lingkungan lokal:
+Disarankan memakai virtual environment:
 
 ```bash
-uvicorn main:app --reload
-
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
-Server akan berjalan pada alamat `http://localhost:8000`. Dokumentasi interaktif (Swagger UI) dapat diakses melalui `http://localhost:8000/docs`.
+Untuk shell Unix:
 
----
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-## 3. Panduan Integrasi (Backend & Frontend)
+## Menjalankan Lokal
 
-Sistem AI ini sangat bergantung pada integritas dan urutan data input. Tim Backend wajib memastikan bahwa data yang dikirim telah melalui proses perhitungan rasio (persentase) untuk kategori pengeluaran, bukan nilai nominal mata uang.
+Jalankan dari folder `ml`:
 
-Semua permintaan (Request) harus menggunakan format JSON murni. Tidak diperbolehkan mengirimkan data bertipe teks (String) seperti "Rp10.000" atau nilai kosong (Null). Jika pengguna belum pernah melakukan transaksi pada kategori tertentu, berikan nilai 0 atau 0.0.
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
 
----
+Atau gunakan Makefile:
 
-## 4. Daftar Endpoint
+```bash
+make run
+```
 
-Sistem ini menyediakan tiga endpoint utama yang dapat digunakan oleh aplikasi.
+Service tersedia di:
 
-### A. Endpoint Utama: Analisis Lengkap
+```txt
+http://localhost:8000
+```
 
-* URL: `/predict`
-* Metode: `POST`
-* Fungsi: Menerima data metrik pengguna, mengembalikan hasil klasifikasi persona AI beserta daftar peringatan sistem pakar.
+Swagger UI tersedia di:
 
-Format Request (Body):
+```txt
+http://localhost:8000/docs
+```
+
+## Menjalankan Dengan Docker
+
+Build dan run manual:
+
+```bash
+docker build -t budu-ml .
+docker run --rm -p 8000:8000 budu-ml
+```
+
+Dalam root Docker Compose, service `ml` dibangun dari folder `./ml` dan diekspos ke host:
+
+```txt
+127.0.0.1:8000:8000
+```
+
+## Endpoint
+
+### `POST /predict`
+
+Menjalankan prediksi persona, smart warning, dan money leak detection.
+
+Request:
 
 ```json
-{
-  "features": [
-    65000.5, 25.0, 0.3, 0.15, 0.1, 0.05, 0.2, 8.0, 0.85, 
-    0.4, 0.15, 0.05, 0.2, 0.0, 0.0, 0.1, 0.05, 0.05, 0.0
-  ]
-}
-
-```
-
-Format Response:
-
-```json
-{
-  "persona": "Impulsive Spender",
-  "confidence": 0.85,
-  "probabilities": {
-    "emotional": 0.10,
-    "impulsive": 0.85,
-    "rational": 0.05
-  },
-  "smart_warnings_system": [
-    "Pola terdeteksi: Pengeluaran akhir pekan sangat tinggi (>40%).",
-    "Peringatan: Tingkat pengeluaran impulsif melewati ambang batas aman."
-  ]
-}
-
-```
-
-### B. Endpoint Microservice: Khusus Peringatan (Rule-Based)
-
-* URL: `/analyze-warnings`
-* Metode: `POST`
-* Fungsi: Hanya menjalankan deteksi anomali keuangan (tanpa menjalankan model Machine Learning). Sangat ringan dan memiliki latensi rendah.
-
-Format Request (Body) sama seperti endpoint `/predict`.
-
-Format Response:
-
-```json
-{
-  "status": "success",
-  "message": "Analisis kebocoran dana selesai",
-  "smart_warnings_system": [
-    "Peringatan: Fluktuasi nominal transaksi tidak stabil."
-  ]
-}
-
-```
-
-### C. Endpoint Pengujian (HANYA UNTUK DEBUGGING BIAR GA INPUT FITUR NYA SATU-SATU MANUAL)
-
-* URL: `/test-random`
-* Metode: `GET`
-* Fungsi: Mengambil satu baris data acak dari dataset CSV internal dan memprosesnya secara otomatis. Digunakan untuk keperluan demonstrasi dan debugging tanpa memerlukan input payload dari klien.
-
----
-
-## 5. Urutan Fitur Input
-
-Ini adalah aturan paling kritis untuk tim Backend. Array `features` yang dikirim ke endpoint `/predict` maupun `/analyze-warnings` harus berjumlah tepat 19 elemen dan tersusun dengan urutan indeks baku di bawah ini:
-
-Indeks 0 hingga 8 (Metrik Perilaku Keuangan):
-0. `avg_txn_idr`: Rata-rata nominal transaksi.
-1. `txn_count`: Jumlah total transaksi.
-2. `weekend_ratio`: Rasio frekuensi transaksi akhir pekan.
-3. `night_ratio`: Rasio frekuensi transaksi malam hari.
-4. `above_avg_ratio`: Rasio transaksi dengan nominal di atas rata-rata.
-5. `spike_ratio`: Rasio lonjakan pengeluaran mendadak.
-6. `impulse_score`: Skor tingkat impulsivitas transaksi.
-7. `unique_categories`: Jumlah variasi kategori pengeluaran.
-8. `spending_cov`: Koefisien variasi pengeluaran (stabilitas).
-
-Indeks 9 hingga 18 (Rasio Pengeluaran Kategori):
-9. `cat_makanan_minuman_ratio`
-10. `cat_transportasi_ratio`
-11. `cat_kesehatan_kecantik_ratio`
-12. `cat_sembako_kebutuhan__ratio`
-13. `cat_kesehatan_ratio`
-14. `cat_pendidikan_ratio`
-15. `cat_belanja_online_ratio`
-16. `cat_pulsa_data_ratio`
-17. `cat_hiburan_ratio`
-18. `cat_fashion_pakaian_ratio`
-
-Urutan fitur harus sesuai dengan file `feature_order.json` dan tidak boleh berubah.
-
-```
-1. avg_txn_idr
-2. txn_count
-3. weekend_ratio
-4. night_ratio
-5. above_avg_ratio
-6. spike_ratio
-7. impulse_score
-8. unique_categories
-9. spending_cov
-10. cat_makanan_minuman_ratio
-11. cat_transportasi_ratio
-12. cat_kesehatan_kecantik_ratio
-13. cat_sembako_kebutuhan__ratio
-14. cat_kesehatan_ratio
-15. cat_pendidikan_ratio
-16. cat_belanja_online_ratio
-17. cat_pulsa_data_ratio
-18. cat_hiburan_ratio
-19. cat_fashion_pakaian_ratio
-```
-
-Jika urutan tidak sesuai, hasil prediksi akan menjadi tidak valid.
-
----
-### Example Request
-```
 {
   "features": [
     100000,
@@ -183,24 +152,191 @@ Jika urutan tidak sesuai, hasil prediksi akan menjadi tidak valid.
     0.08,
     0.05,
     0.15
+  ],
+  "transactions": [
+    {
+      "txn_id": "txn-1",
+      "type": "expense",
+      "category_id": "category-1",
+      "category": "Makanan & Minuman",
+      "amount": 45000,
+      "transaction_date": "2026-06-01T12:00:00.000Z"
+    }
   ]
 }
-Catatan: Fitur kategori harus berbentuk angka desimal (0.0 hingga 1.0) yang merepresentasikan persentase dari total pengeluaran pengguna, bukan total rupiah.
-### Important Notes
+```
 
-* `feature_order.json` adalah source of truth untuk urutan fitur
-* Frontend wajib mengikuti urutan ini secara konsisten
-* Perubahan urutan fitur harus disinkronkan antara:
+`transactions` bersifat optional dan default-nya list kosong. Data ini dipakai untuk money leak detection.
 
-  * Model training
-  * Backend API
-  * Frontend input mapping
+Response ringkas:
 
----
+```json
+{
+  "persona": "Impulsive Spender",
+  "confidence": 0.85,
+  "probabilities": {
+    "emotional": 0.1,
+    "impulsive": 0.85,
+    "rational": 0.05
+  },
+  "smart_warnings_system": [
+    {
+      "code": "impulse_score_high",
+      "title": "Pola Impulsif Terdeteksi",
+      "message": "Peringatan: Tingkat pengeluaran impulsif melewati ambang batas aman.",
+      "label": "Impulsif",
+      "severity": "danger"
+    }
+  ],
+  "money_leaks": []
+}
+```
 
-## 6. Pelatihan Model (Tim Data Science)
+### `POST /analyze-warnings`
 
-Dokumentasi ini juga mencakup modul untuk melatih ulang model Deep Learning:
+Menjalankan rule-based warning dan money leak tanpa klasifikasi persona dari model.
 
-* `preprocessing.py`: Berisi fungsi `load_and_preprocess_data` untuk membaca data, menggabungkan fitur numerik dan rasio kategori, melakukan pemisahan data berlapis (stratified split), dan menyimpan model standardisasi (`StandardScaler`).
-* `train_model.py`: Berisi fungsi arsitektur Jaringan Saraf Tiruan `build_persona_model` dengan lapisan Dense dan Dropout, serta fungsi `train_and_save_model` yang dilengkapi dengan callback EarlyStopping dan TensorBoard untuk pemantauan kualitas pelatihan.
+Request body sama seperti `/predict`.
+
+Response:
+
+```json
+{
+  "status": "success",
+  "message": "Analisis kebocoran dana selesai",
+  "smart_warnings_system": [],
+  "money_leaks": []
+}
+```
+
+### `GET /test-random`
+
+Endpoint debug/demo untuk mengambil satu user acak dari `data/budu_user_profiles_idr.csv`, lalu menjalankan prediksi.
+
+Catatan:
+
+- Endpoint ini hanya untuk debugging/demo.
+- Jangan expose endpoint ini sebagai fitur frontend production.
+
+## Kontrak Feature Order
+
+`feature_order.json` adalah source of truth untuk urutan feature vector. Backend harus mengirim `features` dalam urutan yang sama.
+
+Urutan saat ini:
+
+```txt
+1. avg_txn_idr
+2. txn_count
+3. weekend_ratio
+4. night_ratio
+5. above_avg_ratio
+6. spike_ratio
+7. impulse_score
+8. unique_categories
+9. spending_cov
+10. cat_makanan_minuman_ratio
+11. cat_transportasi_ratio
+12. cat_kesehatan_kecantik_ratio
+13. cat_sembako_kebutuhan__ratio
+14. cat_kesehatan_ratio
+15. cat_pendidikan_ratio
+16. cat_belanja_online_ratio
+17. cat_pulsa_data_ratio
+18. cat_hiburan_ratio
+19. cat_fashion_pakaian_ratio
+```
+
+Jika urutan berubah, sinkronkan:
+
+- `ml/feature_order.json`
+- backend `feature-engineering`
+- model training
+- dokumentasi API
+
+## Integrasi Dengan Backend
+
+Backend Node.js memanggil ML service melalui `ML_SERVICE_URL`.
+
+Alur production:
+
+```txt
+Frontend -> Backend -> Feature Engineering -> ML Service -> Backend -> PostgreSQL
+```
+
+Frontend tidak mengirim feature vector dan tidak memanggil FastAPI langsung. Backend membangun feature vector dari transaksi yang tersimpan.
+
+## Training Model
+
+Jalankan dari folder `ml`:
+
+```bash
+python run_pipeline.py
+```
+
+Pipeline ini:
+
+- membaca `data/budu_user_profiles_idr.csv`
+- membaca urutan fitur dari `feature_order.json`
+- membuat train/validation/test split
+- menyimpan scaler ke `models/scaler.pkl`
+- melatih model
+- menyimpan model ke `models/persona_classifier.keras`
+- menulis log TensorBoard ke `logs/tensorboard/`
+
+## Evaluasi Model
+
+```bash
+python evaluasi_model.py
+```
+
+Script ini memuat model dan menampilkan classification report serta confusion matrix.
+
+Catatan: script evaluasi memakai preprocessing yang juga menulis scaler ke path yang diberikan.
+
+## Test API Lokal
+
+```bash
+python test_api.py
+```
+
+Catatan:
+
+- ML service harus sudah berjalan di `http://127.0.0.1:8000`.
+- Script ini adalah helper lokal, bukan test suite production formal.
+- Perlu dikonfirmasi: sebelum dipakai sebagai validasi utama, pastikan payload di script ini sudah sama dengan `feature_order.json` terbaru.
+
+## Troubleshooting
+
+### `503 Model AI belum siap`
+
+Pastikan file berikut ada dan bisa dibaca:
+
+```txt
+models/persona_classifier.keras
+models/scaler.pkl
+```
+
+### Jumlah fitur salah
+
+Pastikan panjang `features` sama dengan jumlah item di `feature_order.json`.
+
+### Import module gagal
+
+Jalankan command dari folder `ml`, bukan dari root:
+
+```bash
+cd ml
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+### TensorFlow lambat saat startup
+
+Model dimuat saat aplikasi start. Startup pertama bisa memakan waktu lebih lama, terutama di mesin tanpa akselerasi.
+
+## Maintenance Notes
+
+- Jangan ubah `feature_order.json` tanpa koordinasi dengan backend.
+- Jangan hapus `models/persona_classifier.keras` atau `models/scaler.pkl` dari runtime image.
+- Endpoint `/test-random` hanya untuk debugging.
+- Rule warning dan money leak berada di `src/models/rules.py`.
+- Training dapat menghasilkan file log di `logs/tensorboard/`.

@@ -1,73 +1,196 @@
-# React + TypeScript + Vite
+# Frontend BUDU
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend BUDU adalah aplikasi React untuk SpendBehavior Analyzer. Aplikasi ini menyediakan halaman login, register, dashboard, riwayat transaksi, tambah/edit transaksi, analisis, peringatan, dan profil pengguna.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Lucide React
+- Fetch wrapper internal di `src/services/apiClient.ts`
 
-## React Compiler
+Catatan: `axios` ada di dependency package, tetapi integrasi API saat ini memakai fetch wrapper.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Struktur Folder
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```txt
+src/
+  assets/       # Logo/asset visual
+  components/   # Komponen reusable
+  contexts/     # AuthContext
+  hooks/        # Hook reusable seperti useApi dan usePredictionRefresh
+  layout/       # AppLayout, AuthLayout, Sidebar, TopBar, BottomNav
+  lib/          # Utilitas/icon helper lama
+  pages/        # Halaman route utama
+  services/     # Integrasi API backend
+  styles/       # CSS global/Tailwind
+  types/        # TypeScript model
+  utils/        # Formatter, cn, navigasi
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Environment Variable
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+Buat file `.env` atau `.env.local` di `fs/frontend/` jika menjalankan frontend secara lokal:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```env
+VITE_API_URL=http://localhost:3000/api/v1
 ```
+
+Default lokal backend adalah `http://localhost:3000/api/v1`.
+
+Untuk Docker Compose, `VITE_API_URL` dibaca dari root `.env` dan dikirim sebagai build arg di `docker-compose.yml`.
+
+## Instalasi
+
+Jalankan dari folder `fs/frontend`:
+
+```bash
+npm install
+```
+
+## Menjalankan Lokal
+
+```bash
+npm run dev
+```
+
+Vite berjalan di `http://localhost:5173`.
+
+Pastikan backend aktif di URL yang sama dengan `VITE_API_URL`.
+
+## Build dan Preview
+
+```bash
+npm run build
+npm run preview
+```
+
+`npm run build` menjalankan TypeScript build (`tsc -b`) dan Vite build.
+
+## Script Penting
+
+| Command | Fungsi |
+| --- | --- |
+| `npm run dev` | Menjalankan Vite dev server |
+| `npm run build` | Type-check dan build production |
+| `npm run preview` | Preview hasil build Vite |
+| `npm run lint` | Menjalankan ESLint |
+| `npm run lint:fix` | Menjalankan ESLint dengan auto-fix |
+| `npm run format` | Format kode dengan Prettier |
+| `npm run check` | Menjalankan format dan lint fix |
+
+## Route Aplikasi
+
+| Route | Halaman |
+| --- | --- |
+| `/` | Login |
+| `/daftar` | Register |
+| `/dashboard` | Dashboard |
+| `/analisis` | Analisis |
+| `/riwayat` | Riwayat transaksi |
+| `/peringatan` | Peringatan dan money leak |
+| `/profil` | Profil pengguna |
+| `/tambah` | Tambah transaksi |
+| `/transaksi/:id/edit` | Edit transaksi |
+
+Protected route dibungkus oleh `PrivateRoute` dan `AppLayout`.
+
+## Integrasi API
+
+Semua request backend lewat service di `src/services/`:
+
+- `authService.ts`
+- `categoryService.ts`
+- `transactionService.ts`
+- `analyticsService.ts`
+- `predictionService.ts`
+- `apiClient.ts`
+
+`apiClient.ts` bertanggung jawab untuk:
+
+- membaca `VITE_API_URL`
+- mengirim `Authorization: Bearer <accessToken>`
+- mengirim cookie dengan `credentials: "include"`
+- refresh access token saat response `401`
+- redirect ke `/` jika session tidak bisa dipulihkan
+
+## Alur Auth
+
+- Login memanggil `/auth/login`, menyimpan access token di module-level `tokenStore`, lalu mengambil user dari `/auth/me`.
+- Refresh token disimpan backend sebagai HTTP-only cookie.
+- Saat app mount, `AuthProvider` mencoba restore session lewat `/auth/refresh`.
+- Logout memanggil `/auth/logout`, lalu membersihkan token dan user state.
+
+Access token tidak disimpan di `localStorage`.
+
+## Data Fetching
+
+Halaman memakai hook sederhana:
+
+- `useApi` untuk loading, error, data, dan refetch.
+- `usePredictionRefresh` untuk menjalankan ulang prediksi persona dan memperbarui dashboard/peringatan/profil.
+
+Belum ada React Query di MVP ini.
+
+## Docker
+
+Frontend memiliki Dockerfile multi-stage:
+
+- build dengan Node 24 Alpine
+- runtime dengan Nginx 1.29 Alpine
+
+Dalam Docker Compose, frontend tersedia di:
+
+```txt
+http://localhost:8080
+```
+
+Build arg:
+
+```txt
+VITE_API_URL
+```
+
+## Troubleshooting
+
+### Halaman redirect ke login terus
+
+Kemungkinan refresh token cookie tidak terkirim atau backend mengembalikan `401`. Pastikan:
+
+- backend aktif
+- `VITE_API_URL` benar
+- `FRONTEND_URL` di backend sesuai origin frontend
+- request auth memakai cookie dari domain/port yang benar
+
+### Request API gagal
+
+Cek `VITE_API_URL`. Untuk local dev biasanya:
+
+```env
+VITE_API_URL=http://localhost:3000/api/v1
+```
+
+### Build gagal
+
+Jalankan:
+
+```bash
+npm run lint
+npm run build
+```
+
+Perbaiki error TypeScript atau import yang tidak digunakan.
+
+### Dashboard/persona kosong
+
+Tambahkan transaksi terlebih dahulu, lalu jalankan analisis dari kartu status prediksi. Jika ML service tidak aktif, backend dapat mengembalikan error analisis.
+
+## Maintenance Notes
+
+- Jangan hardcode URL backend di service. Gunakan `VITE_API_URL`.
+- Mapping DTO backend ke model UI dilakukan di service, bukan di JSX kecil.
+- Untuk perubahan route baru, update `src/App.tsx`, navigasi, dan README ini.
+- Frontend tidak boleh memanggil ML service langsung.
