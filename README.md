@@ -247,23 +247,26 @@ Dokumentasi teknis untuk masing-masing modul tersedia pada:
 - `ml/README.md`
 
 ## Dokumentasi Web BUDU
-#
+# DASHBOARD
 <img width="1600" height="852" alt="Screenshot 2026-06-11 073236" src="https://github.com/user-attachments/assets/1b30ae79-ce67-4941-a46f-553e6764305d" />
 
-#
+# RIWAYAT TRANSAKSI
 <img width="1600" height="852" alt="Screenshot 2026-06-11 073247" src="https://github.com/user-attachments/assets/30dc78c1-d8c9-45bf-b700-453fce03ffe4" />
 
-#
+# ANALISIS KEUANGAN
 <img width="1600" height="852" alt="Screenshot 2026-06-11 073257" src="https://github.com/user-attachments/assets/6b7b5844-c43d-42da-866d-2fd9268b80e5" />
 
-#
+# TAMBAH TRANSAKSI
 <img width="1600" height="852" alt="Screenshot 2026-06-11 073309" src="https://github.com/user-attachments/assets/af45e47e-0764-4935-af9f-4b2b2a35700d" />
 
-#
+# PERINGATAN
 <img width="1600" height="852" alt="Screenshot 2026-06-11 073326" src="https://github.com/user-attachments/assets/896728e0-dbbe-4d82-870c-a4c0374bf08a" />
 
-#
+# PROFILE SAYA
 <img width="1600" height="852" alt="Screenshot 2026-06-11 073339" src="https://github.com/user-attachments/assets/0cd7476a-e2d8-42cf-a616-ddbafe4a90bd" />
 
-#
+# LOGIN
 <img width="1600" height="852" alt="Screenshot 2026-06-11 073216" src="https://github.com/user-attachments/assets/8cff4f97-c8ba-499f-a35c-ee9f145acf2d" />
+
+# REGISTER
+<img width="1600" height="852" alt="image" src="https://github.com/user-attachments/assets/216bfd23-2ced-461a-9ff7-6c74dd42f4aa" />
